@@ -141,3 +141,39 @@ HWReport.baseLegend = function () {
     '<span class="leg"><span class="leg-sq" style="background:#1D9E75"></span>Test</span>'
   );
 };
+
+HWReport.initChrome = function () {
+  if (document.querySelector('.report-list')) return;
+  var header = document.querySelector('header');
+  if (header && !header.querySelector('.back-to-index')) {
+    var brand = header.querySelector('.brand');
+    var link = document.createElement('a');
+    link.href = 'index.html';
+    link.className = 'back-to-index';
+    link.textContent = '← All reports';
+    if (brand) {
+      var left = document.createElement('div');
+      left.className = 'header-left';
+      header.insertBefore(left, brand);
+      left.appendChild(link);
+      left.appendChild(brand);
+    } else {
+      header.insertBefore(link, header.firstChild);
+    }
+  }
+  var footer = document.querySelector('footer');
+  if (footer && !footer.querySelector('.footer-nav')) {
+    var nav = document.createElement('p');
+    nav.className = 'footer-nav';
+    var flink = document.createElement('a');
+    flink.href = 'index.html';
+    flink.className = 'back-to-index';
+    flink.textContent = '← Back to all reports';
+    nav.appendChild(flink);
+    footer.insertBefore(nav, footer.firstChild);
+  }
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+  HWReport.initChrome();
+});
