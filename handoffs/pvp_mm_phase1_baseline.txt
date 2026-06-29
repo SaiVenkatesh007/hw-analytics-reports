@@ -1,0 +1,33 @@
+PvP Matchmaking — Phase 1 Baseline Read
+Human vs human ARENAS · calibratedTotalInternalStrength · Jun 21–25, 2026
+Dashboard: [link]
+
+*Context: Phase 1 empirical baseline — 5-day window only*
+   - Scope: human vs human ranked PvP (ARENAS, status = completed)
+   - Power from pvp_extra_data.calibratedTotalInternalStrength
+   - Close match = ≤5 runs (batting first) or ≤3 balls remaining (bowling first)
+   - Prior framework targets (30–40% close) were hypotheses — actual baseline is ~55%
+
+*1. Overall match quality is healthy on average, but blowouts are non-trivial*
+   - 888K unique matches (~178K/day); 107K users with ≥4 matches in window
+   - Match-level: 55.3% close, 28.0% one-sided; median power ratio 1.00
+   - Per-user: 57.4% avg close, 26.3% avg one-sided (≥4 matches)
+   - Daily close rate stable (55.1–55.5%); one-sided ticks up +0.7pp Jun 21 → 25
+
+*2. High-frequency players see materially worse match quality*
+   - Casual (1–5/day): 58.1% close, 25.9% one-sided (76% of match volume)
+   - Regular (6–15/day): 53.2% close, 29.5% one-sided
+   - High-freq (15+/day): 46.7% close, 35.5% one-sided — only 1,325 users but worst profile
+   - Worst cell: High-freq × 100k+ power → 41.4% close, 43.6% one-sided
+
+*3. Mid-competitive ranks and Supreme+ carry the most blowouts*
+   - Best: Rookie 60.3% close / 23.6% blowout
+   - Trough: Accomplished 52.1% close / 31.0% blowout; Supreme+ 50.1% / 32.8%
+   - Masterful recovers (58.4% close) — smaller, higher-power pool
+
+*4. Power-ratio parity holds at parity band but tails break at 75k+*
+   - At 0.95–1.0 bucket: ~52% avg user WR across brackets — MM intent looks fair
+   - At 75k–100k facing 1.15+ opponents: ~13% WR; facing <0.85: ~87% WR
+   - 21.6K users in 1.15+ bucket overall — large underdog population
+
+*Takeaway:* Before any MM window changes, prioritize monitoring and diagnosis for high-frequency players, Supreme+, and 75k+ power brackets — where close-match rate drops ~10pp and blowouts rise sharply. Recalibrate Phase 1 benchmarks to ~55% / ~28% (close / one-sided) for this margin definition, not 30–40%.

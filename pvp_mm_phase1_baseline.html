@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PvP Matchmaking — Phase 1 Baseline</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<link rel="stylesheet" href="_kit/report.css">
+</head>
+<body>
+<header>
+  <div class="brand"><div class="dot"></div><h1>PvP Matchmaking — Phase 1 Baseline</h1></div>
+  <span class="meta">Human vs human ARENAS · Jun 21–25, 2026 · All ranks</span>
+</header>
+<div class="caveat-banner">✓ Phase 1 empirical baseline (5-day window). Prior framework targets of 30–40% close match were hypotheses — actual baseline for this margin definition is ~55% close / ~28% one-sided.</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="HWReport.switchTab('overview', this)">Overview</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('segments', this)">By Segment</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('power', this)">Power Calibration</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('method', this)">Methodology</button>
+</div>
+
+<div id="tab-overview" class="tab-content active">
+  <div class="hero-section">
+    <p class="hero-eyebrow">Game Analytics · PvP Matchmaking · Phase 1</p>
+    <h2 class="hero-title">Quality is healthy on average —<br>but high-frequency and top-end players are underserved.</h2>
+    <p class="hero-desc">Across <strong>888K human PvP matches</strong> in five days, close-match rate sits at <strong>55.3%</strong> with median power ratio at <strong>1.00</strong>. The system delivers competitive games for casual and low-power players. Before any MM changes, focus monitoring on <strong>high-frequency players (15+/day)</strong>, <strong>Supreme+</strong>, and <strong>75k+ power</strong> — where close rate drops ~10pp and blowouts exceed one-third of games.</p>
+  </div>
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">01 — Headline KPIs</p><h3 class="section-title">Match-level and per-user baselines</h3></div>
+      <div class="kpi-row">
+        <div class="kpi-card"><p class="kpi-label">Close Match Rate</p><p class="kpi-value neutral">55.3%</p><p class="kpi-note">match-level · 888K matches</p></div>
+        <div class="kpi-card"><p class="kpi-label">One-Sided Rate</p><p class="kpi-value warn">28.0%</p><p class="kpi-note">match-level blowouts</p></div>
+        <div class="kpi-card"><p class="kpi-label">Per-User Close Rate</p><p class="kpi-value neutral">57.4%</p><p class="kpi-note">107K users · ≥4 matches</p></div>
+        <div class="kpi-card"><p class="kpi-label">Median Power Ratio</p><p class="kpi-value up">1.00</p><p class="kpi-note">calibrated strength</p></div>
+      </div>
+      <div class="two-col">
+        <div class="card"><p class="card-title">Close vs One-Sided by Activity Tier</p><div class="chart-wrap" style="height:260px"><canvas id="chart-activity"></canvas></div></div>
+        <div class="card"><p class="card-title">Daily Close Match Rate (stable)</p><div class="chart-wrap" style="height:260px"><canvas id="chart-daily"></canvas></div></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">02 — Key Findings</p><h3 class="section-title">What the baseline tells us</h3></div>
+      <div class="insights">
+        <div class="insight good"><strong>Overall health is solid:</strong> Close matches (~55%) outnumber blowouts (~28%) ~2:1. Median power ratio at 1.00 and ~52% user WR at the 0.95–1.0 parity band suggest MM intent is fair on average.</div>
+        <div class="insight bad"><strong>High-frequency players are the priority segment:</strong> 15+/day players see 46.7% close and 35.5% one-sided (vs 58.1% / 25.9% for casual). Only 1,325 users, but they play the most matches per user and are most sensitive to MM quality.</div>
+        <div class="insight warn"><strong>Mid-competitive ranks are the soft spot:</strong> Accomplished (52.1% close, 31.0% blowout) and Supreme+ (50.1%, 32.8%) underperform Rookie/Challenger. Masterful recovers at 58.4% close — tighter, higher-power pool.</div>
+        <div class="insight warn"><strong>Power tails break above 75k:</strong> At parity band WR is ~50–53%, but when matched outside 0.95–1.0 at 75k–100k+, outcomes become extreme (87% WR as favourite, 13% as underdog).</div>
+        <div class="insight"><strong>Recalibrate benchmarks:</strong> The original 30–40% close-match target does not match this margin definition. Use ~55% / ~28% as the Phase 1 baseline until a longer window confirms.</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">03 — Priority Segments</p><h3 class="section-title">Where to investigate first</h3></div>
+      <table class="comp-table" id="table-priority"></table>
+    </div>
+  </main>
+</div>
+
+<div id="tab-segments" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">01 — Activity Tier</p><h3 class="section-title">Match-level and per-user quality</h3></div>
+      <table class="comp-table" id="table-activity"></table>
+      <div class="card" style="margin-top:1.25rem"><p class="card-title">Close Match Rate by Rep Rank</p><div class="chart-wrap" style="height:280px"><canvas id="chart-rank"></canvas></div></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">02 — Rep Rank</p><h3 class="section-title">Coarse rank bands</h3></div>
+      <table class="comp-table" id="table-rank"></table>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">03 — Power Bracket</p><h3 class="section-title">Team power at match time</h3></div>
+      <table class="comp-table" id="table-power"></table>
+    </div>
+  </main>
+</div>
+
+<div id="tab-power" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">01 — Power Ratio Win Rate</p><h3 class="section-title">Per-user WR by opponent strength bucket (≥4 matches per user per bucket)</h3><p class="section-sub">Monotonic curve confirms weaker opponents → higher WR. Fair band (0.95–1.0) centres near 52%.</p></div>
+      <div class="card"><div class="chart-wrap" style="height:300px"><canvas id="chart-wr-ratio"></canvas></div></div>
+      <table class="comp-table" id="table-wr-ratio" style="margin-top:1.25rem"></table>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">02 — Parity vs Tails by Power Bracket</p><h3 class="section-title">WR at 0.95–1.0 vs extreme buckets</h3></div>
+      <table class="comp-table" id="table-wr-tails"></table>
+      <div class="insights" style="margin-top:1.25rem">
+        <div class="insight bad"><strong>0–50k bracket:</strong> Flat WR curve across power-ratio buckets (~48–53%) — MM parity holds end-to-end at low power.</div>
+        <div class="insight bad"><strong>75k–100k and 100k+:</strong> Extreme tails — facing &lt;0.85 opponents yields 87–93% WR; facing 1.15+ yields 9–13% WR. Search-window widening or strength calibration issue at the top.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-method" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">01 — Methodology</p><h3 class="section-title">Scope, filters, and metric definitions</h3></div>
+      <div class="card">
+        <p class="card-title">Data scope</p>
+        <ul class="method-list" id="method-scope"></ul>
+      </div>
+      <div class="card" style="margin-top:1.25rem">
+        <p class="card-title">Metric definitions</p>
+        <ul class="method-list">
+          <li><strong>Close match:</strong> Batting first → margin ≤5 runs; bowling first → ≤3 balls remaining (18-ball format for Rookie 1–2, else 30).</li>
+          <li><strong>One-sided match:</strong> Batting first → margin ≥15 runs; bowling first → ≥12 balls remaining.</li>
+          <li><strong>Match-level rate:</strong> % of unique matches flagged close / one-sided.</li>
+          <li><strong>Per-user rate:</strong> Each user's personal close % within a segment, then averaged across users (≥4 matches in segment).</li>
+          <li><strong>Power ratio:</strong> opp_team_internal_strength / team_internal_strength from calibratedTotalInternalStrength.</li>
+          <li><strong>Activity tier:</strong> match_count / active_days in window — Casual ≤5, Regular 6–15, High-freq 15+.</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:1.25rem">
+        <p class="card-title">Caveats</p>
+        <ul class="method-list">
+          <li>5-day window only — extend to 4–8 weeks before locking operational targets.</li>
+          <li>~96K rows missing power bracket (null calibrated strength) excluded from power-ratio analysis.</li>
+          <li>Small-n cells (e.g. cross-rank × high power) should not drive product decisions alone.</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:1.25rem">
+        <p class="card-title">Source</p>
+        <ul class="method-list">
+          <li>Notebook: <code>PvP Matchmaking Analysis/Phase 1 - Baseline/Phase 1 - Close Match Baseline [Jun 21-25].ipynb</code></li>
+          <li>Handoff: <code>reports/handoffs/pvp_mm_phase1_baseline.txt</code></li>
+          <li>Data: <code>reports/data/pvp_mm_phase1_baseline.json</code></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer>PvP Matchmaking Phase 1 Baseline · Human vs human · Jun 21–25, 2026 · Hitwicket Analytics</footer>
+
+<script src="_kit/report.js"></script>
+<script>
+const DD = {"overall":{"matches":888497,"matches_per_day":177699,"users_gte4":107038,"close_match_pct":55.3,"one_sided_pct":28.0,"median_power_ratio":1.0,"user_close_pct":57.4,"user_one_sided_pct":26.3},"daily":{"labels":["Jun 21","Jun 22","Jun 23","Jun 24","Jun 25"],"matches":[191976,186445,182670,164553,162853],"close_pct":[55.5,55.4,55.5,55.2,55.2],"one_sided_pct":[27.7,28.0,27.8,28.1,28.4]},"activity_tier":{"labels":["Casual (1–5/day)","Regular (6–15/day)","High-freq (15+/day)"],"close_pct":[58.1,53.2,46.7],"one_sided_pct":[25.9,29.5,35.5],"user_close_pct":[58.5,54.2,48.9],"user_one_sided_pct":[25.4,28.5,33.3],"num_users":[80710,25003,1325]},"rep_rank":{"labels":["Rookie","Challenger","Proven","Accomplished","Remarkable","Masterful","Supreme+"],"close_pct":[60.3,57.5,54.7,52.1,52.5,58.4,50.1],"one_sided_pct":[23.6,25.9,28.1,31.0,30.7,26.3,32.8],"user_close_pct":[60.2,58.3,55.7,53.5,54.4,59.6,51.3],"user_one_sided_pct":[23.5,25.4,27.6,30.0,29.1,24.8,31.5]},"power_bracket":{"labels":["0–50k","50k–75k","75k–100k","100k+"],"close_pct":[57.9,53.1,50.5,51.0],"one_sided_pct":[25.2,30.4,33.0,33.3],"user_close_pct":[59.3,54.0,51.9,54.0],"user_one_sided_pct":[24.0,30.0,32.2,30.5]},"power_ratio_wr":{"labels":["<0.85","0.85–0.9","0.9–0.95","0.95–1.0","1.0–1.05","1.05–1.1","1.1–1.15","1.15+"],"avg_wr":[63.5,57.3,55.8,52.1,47.2,46.4,45.7,38.9],"num_users":[18805,6113,10528,36959,36617,8366,2924,21570]},"power_ratio_wr_at_parity":{"labels":["0–50k","50k–75k","75k–100k","100k+"],"wr_095_100":[52.2,52.3,50.9,52.8],"wr_underdog_115":[43.5,21.8,12.9,8.9],"wr_favorite_under_085":[52.4,82.0,87.3,92.7]},"priority_segments":[{"segment":"High-freq × 100k+","close_pct":41.4,"one_sided_pct":43.6},{"segment":"High-freq × Supreme+","close_pct":45.2,"one_sided_pct":38.1},{"segment":"High-freq overall","close_pct":46.7,"one_sided_pct":35.5},{"segment":"Supreme+ overall","close_pct":50.1,"one_sided_pct":32.8},{"segment":"75k–100k power","close_pct":50.5,"one_sided_pct":33.0}]};
+
+HWReport.charts = HWReport.charts || {};
+
+function dualBar(id, labels, closeData, oneSidedData) {
+  if (HWReport.charts[id]) HWReport.charts[id].destroy();
+  var ctx = document.getElementById(id);
+  if (!ctx) return;
+  HWReport.charts[id] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: 'Close %', data: closeData, backgroundColor: '#378ADD99', borderColor: '#378ADD', borderWidth: 1, borderRadius: 3 },
+        { label: 'One-sided %', data: oneSidedData, backgroundColor: '#D85A3099', borderColor: '#D85A30', borderWidth: 1, borderRadius: 3 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: true, position: 'bottom', labels: { font: { size: 11 }, boxWidth: 10 } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { min: 0, max: 70, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 11 }, callback: function(v) { return v + '%'; } } }
+      }
+    }
+  });
+}
+
+function lineChart(id, labels, datasets) {
+  if (HWReport.charts[id]) HWReport.charts[id].destroy();
+  var ctx = document.getElementById(id);
+  if (!ctx) return;
+  HWReport.charts[id] = new Chart(ctx, {
+    type: 'line',
+    data: { labels: labels, datasets: datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: true, position: 'bottom', labels: { font: { size: 11 }, boxWidth: 10 } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { min: 25, max: 60, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 11 }, callback: function(v) { return v + '%'; } } }
+      }
+    }
+  });
+}
+
+function singleBar(id, labels, data, color) {
+  if (HWReport.charts[id]) HWReport.charts[id].destroy();
+  var ctx = document.getElementById(id);
+  if (!ctx) return;
+  HWReport.charts[id] = new Chart(ctx, {
+    type: 'bar',
+    data: { labels: labels, datasets: [{ label: 'Avg WR %', data: data, backgroundColor: color + '99', borderColor: color, borderWidth: 1, borderRadius: 3 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 45 } },
+        y: { min: 0, max: 100, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 11 }, callback: function(v) { return v + '%'; } } }
+      }
+    }
+  });
+}
+
+function buildTable(id, headers, rows) {
+  var html = '<thead><tr>' + headers.map(function(h, i) {
+    return '<th' + (i === 0 ? '' : '') + '>' + h + '</th>';
+  }).join('') + '</tr></thead><tbody>' + rows.map(function(r) {
+    return '<tr>' + r.map(function(c, i) {
+      return '<td' + (i > 0 ? '' : '') + '>' + c + '</td>';
+    }).join('') + '</tr>';
+  }).join('') + '</tbody>';
+  document.getElementById(id).innerHTML = html;
+}
+
+function pct(v) { return v.toFixed(1) + '%'; }
+function num(v) { return v.toLocaleString(); }
+
+buildTable('table-priority',
+  ['Segment', 'Close %', 'One-sided %'],
+  DD.priority_segments.map(function(r) { return [r.segment, pct(r.close_pct), pct(r.one_sided_pct)]; })
+);
+
+buildTable('table-activity',
+  ['Activity tier', 'Close %', 'One-sided %', 'User close %', 'User one-sided %', 'Users'],
+  DD.activity_tier.labels.map(function(l, i) {
+    return [l, pct(DD.activity_tier.close_pct[i]), pct(DD.activity_tier.one_sided_pct[i]),
+      pct(DD.activity_tier.user_close_pct[i]), pct(DD.activity_tier.user_one_sided_pct[i]),
+      num(DD.activity_tier.num_users[i])];
+  })
+);
+
+buildTable('table-rank',
+  ['Rep rank', 'Close %', 'One-sided %', 'User close %', 'User one-sided %'],
+  DD.rep_rank.labels.map(function(l, i) {
+    return [l, pct(DD.rep_rank.close_pct[i]), pct(DD.rep_rank.one_sided_pct[i]),
+      pct(DD.rep_rank.user_close_pct[i]), pct(DD.rep_rank.user_one_sided_pct[i])];
+  })
+);
+
+buildTable('table-power',
+  ['Power bracket', 'Close %', 'One-sided %', 'User close %', 'User one-sided %'],
+  DD.power_bracket.labels.map(function(l, i) {
+    return [l, pct(DD.power_bracket.close_pct[i]), pct(DD.power_bracket.one_sided_pct[i]),
+      pct(DD.power_bracket.user_close_pct[i]), pct(DD.power_bracket.user_one_sided_pct[i])];
+  })
+);
+
+buildTable('table-wr-ratio',
+  ['Power ratio bucket', 'Avg user WR', 'Users'],
+  DD.power_ratio_wr.labels.map(function(l, i) {
+    return [l, pct(DD.power_ratio_wr.avg_wr[i]), num(DD.power_ratio_wr.num_users[i])];
+  })
+);
+
+buildTable('table-wr-tails',
+  ['Power bracket', 'WR at 0.95–1.0', 'WR when &lt;0.85 (favoured)', 'WR when 1.15+ (underdog)'],
+  DD.power_ratio_wr_at_parity.labels.map(function(l, i) {
+    return [l, pct(DD.power_ratio_wr_at_parity.wr_095_100[i]),
+      pct(DD.power_ratio_wr_at_parity.wr_favorite_under_085[i]),
+      pct(DD.power_ratio_wr_at_parity.wr_underdog_115[i])];
+  })
+);
+
+document.getElementById('method-scope').innerHTML =
+  '<li><strong>Date range:</strong> Jun 21–25, 2026 (5 days)</li>' +
+  '<li><strong>Match type:</strong> PvP ARENAS, status = completed</li>' +
+  '<li><strong>Opponents:</strong> human vs human only (opp_is_bot = 0)</li>' +
+  '<li><strong>Ranks:</strong> all rp_league 1–25 (Rookie through Titan)</li>' +
+  '<li><strong>Power source:</strong> calibratedTotalInternalStrength from pvp_extra_data</li>' +
+  '<li><strong>Volume:</strong> ' + num(DD.overall.matches) + ' unique matches · ' + num(DD.overall.users_gte4) + ' users (≥4 matches)</li>';
+
+dualBar('chart-activity', ['Casual', 'Regular', 'High-freq'],
+  DD.activity_tier.close_pct, DD.activity_tier.one_sided_pct);
+
+lineChart('chart-daily', DD.daily.labels, [
+  { label: 'Close %', data: DD.daily.close_pct, borderColor: '#378ADD', backgroundColor: '#378ADD33', tension: 0.3, fill: false, pointRadius: 4 },
+  { label: 'One-sided %', data: DD.daily.one_sided_pct, borderColor: '#D85A30', backgroundColor: '#D85A3033', tension: 0.3, fill: false, pointRadius: 4 }
+]);
+
+dualBar('chart-rank', DD.rep_rank.labels, DD.rep_rank.close_pct, DD.rep_rank.one_sided_pct);
+
+singleBar('chart-wr-ratio', DD.power_ratio_wr.labels, DD.power_ratio_wr.avg_wr, '#378ADD');
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+Increased Wicket Chance — Updated (Clean) Read
+Real-user matched samples · Base = Test per bracket · 4 power brackets (0–50k to 100k+) · Match-level only · Jun 2026
+Dashboard: [link]
+
+*Context: this supersedes the earlier read*
+   - Removed bot matches (opp must also be a real user), matched base sample size to test per bracket, merged low-base brackets
+   - The earlier dramatic collapse (wickets −25 to −45%) was a bot + sample-skew artefact — not real
+
+*1. Mean wickets up slightly, but not enough to move the median*
+   - Mean wickets +9 to +13% across brackets (e.g. 0–50k: 2.31 → 2.55)
+   - But median (q50) wickets unchanged at 2 in every bracket and view — even q75/q90 barely move
+   - The stated goal of shifting median wickets 1 → 3 is not met. The mean ticked up only because of a small right-tail shift
+
+*2. Players barely changed their shot selection*
+   - Shot mix shifts <1 percentage point in almost every bracket
+   - Only consistent move: fours down −0.4 to −0.9pp, with a small offsetting rise in ones (+0.4 to +0.5pp) — minor risk-aversion, not a behaviour change
+   - First 2 overs are virtually identical base vs test; the tiny fours→ones drift only appears later in the innings, mostly at higher brackets
+
+*3. Scores are essentially flat*
+   - Mean scores move −0.6% to −2.2% overall
+   - Because behaviour didn't change and the wicket bump was small, totals and targets are effectively unchanged
+
+*4. Mechanical effect is most visible in the first 2 overs*
+   - First 2 overs show a larger relative wicket bump (+16 to +22%) — the pure mechanical effect before any adaptation
+   - But on a small base: q50 wickets in the first 2 overs stays at 1
+
+*Takeaway:* The current wicket-chance increase is too small to change how players play or to shift match balance. To trigger the intended squad-diversification behaviour, the magnitude of the increase would need to be meaningfully higher.
