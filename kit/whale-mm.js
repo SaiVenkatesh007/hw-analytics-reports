@@ -648,7 +648,11 @@ HWReport.initWhaleMm = function () {
     document.getElementById('compLabel').textContent = 'Jun 15 – Jun 29';
     document.getElementById('caveatBanner').style.display = 'none';
     document.getElementById('footerLabel').textContent = 'Winstreak A/B · Jun 15 – Jun 29';
-    if (!HWReport.charts['j29_eng_overall']) renderJun29();
+    if (!HWReport._jun29ChartsInit || !HWReport.charts['j29_eng_overall']) {
+      renderJun29Charts();
+      HWReport._jun29ChartsInit = true;
+    }
+    refreshJun29Dom();
     renderJun29KPIs();
   }
 
@@ -850,8 +854,8 @@ HWReport.initWhaleMm = function () {
 
   // ── CUT TOGGLE ──
   function switchCut(cut, btn) {
-    document.querySelectorAll('.monet-cut').forEach(function (el) { el.classList.remove('active'); });
-    document.querySelectorAll('.ab-toggle').forEach(function (el) { el.classList.remove('active'); });
+    document.querySelectorAll('#ab_page .monet-cut').forEach(function (el) { el.classList.remove('active'); });
+    document.querySelectorAll('#ab_page .ab-toggle-row .ab-toggle').forEach(function (el) { el.classList.remove('active'); });
     document.getElementById('cut_' + cut).classList.add('active');
     btn.classList.add('active');
     var cutId = 'ab_conv_' + cut + '_rank';
@@ -869,8 +873,18 @@ HWReport.initWhaleMm = function () {
       test: { mdau: 3.61, wr: 73, rwr: 60, bot: 33, normalMpd: 1.07, ndr: 77.1 }
     },
     engRank: {
-      base: { normalMpd: [0.48, 0.65, 0.88, 1.18, 2.21] },
-      test: { normalMpd: [0.77, 0.90, 1.16, 1.43, 2.40] }
+      base: {
+        mdau: [3.05, 3.33, 4.00, 4.85, 5.20],
+        rwr: [59, 68, 69, 71, 67],
+        normalMpd: [0.48, 0.65, 0.88, 1.18, 2.21],
+        ndr: [29, 43, 52, 58, 58]
+      },
+      test: {
+        mdau: [3.01, 3.46, 3.95, 4.63, 4.82],
+        rwr: [53, 63, 65, 66, 65],
+        normalMpd: [0.77, 0.90, 1.16, 1.43, 2.40],
+        ndr: [30, 43, 54, 57, 58]
+      }
     },
     monet: {
       raw: {
@@ -940,6 +954,96 @@ HWReport.initWhaleMm = function () {
     }
   };
 
+  function getActiveJ29Cut() {
+    const btn = document.querySelector('#j29_monet_toggles .ab-toggle.active');
+    return btn ? (btn.getAttribute('data-cut') || 'raw') : 'raw';
+  }
+
+  function deltaPill(delta, fmt) {
+    const cls = delta > 0 ? 'up' : delta < 0 ? 'down' : 'flat';
+    const sign = delta > 0 ? '+' : '';
+    let text;
+    if (fmt === 'pp') text = sign + delta.toFixed(1) + 'pp';
+    else if (fmt === 'inr') text = sign + '₹' + Math.round(delta).toLocaleString();
+    else text = sign + delta.toFixed(2);
+    return `<span class="delta-pill ${cls}">${text}</span>`;
+  }
+
+  function renderJun29RankEngTable() {
+    const er = jun29Data.engRank;
+    const rows = jun29Data.ranks.map(function (r, i) {
+      const mdauD = er.test.mdau[i] - er.base.mdau[i];
+      const rwrD = er.test.rwr[i] - er.base.rwr[i];
+      const normD = er.test.normalMpd[i] - er.base.normalMpd[i];
+      return `<tr>
+        <td><span class="rank-badge rank-${r}">${r}</span></td>
+        <td style="text-align:center">${er.base.mdau[i].toFixed(2)}</td><td style="text-align:center">${er.test.mdau[i].toFixed(2)}</td><td>${deltaPill(mdauD, 'num')}</td>
+        <td style="text-align:center">${er.base.rwr[i]}%</td><td style="text-align:center">${er.test.rwr[i]}%</td><td>${deltaPill(rwrD, 'pp')}</td>
+        <td style="text-align:center">${er.base.normalMpd[i].toFixed(2)}</td><td style="text-align:center">${er.test.normalMpd[i].toFixed(2)}</td><td>${deltaPill(normD, 'num')}</td>
+      </tr>`;
+    }).join('');
+    document.getElementById('j29_rank_eng_tbl').innerHTML = `
+      <table class="comp-table">
+        <thead>
+          <tr><th>Rank</th><th colspan="3" style="text-align:center">MDAU</th><th colspan="3" style="text-align:center">Real-User WR</th><th colspan="3" style="text-align:center">Normal MM / day</th></tr>
+          <tr><th></th><th class="post">Base</th><th class="pre">Test</th><th class="delta">Δ</th><th class="post">Base</th><th class="pre">Test</th><th class="delta">Δ</th><th class="post">Base</th><th class="pre">Test</th><th class="delta">Δ</th></tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  function renderJun29RankRetTable() {
+    const er = jun29Data.engRank;
+    const rows = jun29Data.ranks.map(function (r, i) {
+      const d = er.test.ndr[i] - er.base.ndr[i];
+      return `<tr>
+        <td><span class="rank-badge rank-${r}">${r}</span></td>
+        <td style="text-align:center">${er.base.ndr[i]}%</td>
+        <td style="text-align:center">${er.test.ndr[i]}%</td>
+        <td>${deltaPill(d, 'pp')}</td>
+      </tr>`;
+    }).join('');
+    document.getElementById('j29_rank_ret_tbl').innerHTML = `
+      <table class="comp-table">
+        <thead><tr><th>Rank</th><th class="post">Base NDR</th><th class="pre">Test NDR</th><th class="delta">Δ</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  function renderJun29RankMonetTable(cut) {
+    const d = jun29Data.monet[cut];
+    const cutLabel = { raw: 'Raw', '5k': 'Excl. >₹5k', '10k': 'Excl. >₹10k', '15k': 'Excl. >₹15k' }[cut];
+    document.getElementById('j29_rank_monet_cut_label').textContent = 'Showing: ' + cutLabel + ' (change cut in Section 02)';
+    const rows = jun29Data.ranks.map(function (r, i) {
+      const bc = d.rank.base.conv[i], tc = d.rank.test.conv[i];
+      const ba = d.rank.base.arpu[i], ta = d.rank.test.arpu[i];
+      const bp = d.rank.base.arppu[i], tp = d.rank.test.arppu[i];
+      return `<tr>
+        <td><span class="rank-badge rank-${r}">${r}</span></td>
+        <td style="text-align:center">${bc}%</td><td style="text-align:center">${tc}%</td><td>${deltaPill(tc - bc, 'pp')}</td>
+        <td style="text-align:center">₹${ba.toLocaleString()}</td><td style="text-align:center">₹${ta.toLocaleString()}</td><td>${deltaPill(ta - ba, 'inr')}</td>
+        <td style="text-align:center">₹${bp.toLocaleString()}</td><td style="text-align:center">₹${tp.toLocaleString()}</td><td>${deltaPill(tp - bp, 'inr')}</td>
+      </tr>`;
+    }).join('');
+    document.getElementById('j29_rank_monet_tbl').innerHTML = `
+      <table class="comp-table">
+        <thead>
+          <tr><th>Rank</th><th colspan="3" style="text-align:center">Conv%</th><th colspan="3" style="text-align:center">ARPU</th><th colspan="3" style="text-align:center">ARPPU</th></tr>
+          <tr><th></th><th class="post">Base</th><th class="pre">Test</th><th class="delta">Δ</th><th class="post">Base</th><th class="pre">Test</th><th class="delta">Δ</th><th class="post">Base</th><th class="pre">Test</th><th class="delta">Δ</th></tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  function switchJ29RankTab(tab, btn) {
+    document.querySelectorAll('#j29_rank_toggles .ab-toggle').forEach(function (el) { el.classList.remove('active'); });
+    btn.classList.add('active');
+    document.querySelectorAll('.j29-rank-panel').forEach(function (el) { el.classList.remove('active'); });
+    document.getElementById('j29_rank_' + tab).classList.add('active');
+    if (tab === 'monet') renderJun29RankMonetTable(getActiveJ29Cut());
+  }
+  window.switchJ29RankTab = switchJ29RankTab;
+
   function renderJun29MonetInsights() {
     renderInsights('j29_monet_insights', [
       ins('warn', '<strong>Raw numbers favour Base — highroller skew.</strong> Raw ARPU ₹355 vs ₹293. 238 payers >₹5k account for ₹40.4L of the gap.'),
@@ -949,14 +1053,17 @@ HWReport.initWhaleMm = function () {
   }
 
   function renderJun29MonetCut(cut) {
+    const bannerEl = document.getElementById('j29_monet_banner');
+    const tblEl = document.getElementById('j29_monet_overall_tbl');
+    if (!bannerEl || !tblEl) return;
     const d = jun29Data.monet[cut];
     const b = d.overall.base;
     const t = d.overall.test;
     const convDelta = (t.conv - b.conv).toFixed(2);
     const arpuDelta = t.arpu - b.arpu;
     const arppuDelta = t.arppu - b.arppu;
-    document.getElementById('j29_monet_banner').textContent = d.banner;
-    document.getElementById('j29_monet_overall_tbl').innerHTML = `
+    bannerEl.textContent = d.banner;
+    tblEl.innerHTML = `
       <div class="card" style="margin-bottom:1.1rem;">
         <p class="card-title">Overall — Conv%, ARPU, ARPPU</p>
         <table class="comp-table">
@@ -974,6 +1081,7 @@ HWReport.initWhaleMm = function () {
     buildABBar('j29_conv_rank', d.rank.base.conv, d.rank.test.conv, { fmt: 'pct', labels: jun29Data.ranks });
     buildABBar('j29_arpu_rank', d.rank.base.arpu, d.rank.test.arpu, { fmt: 'inr', labels: jun29Data.ranks });
     buildABBar('j29_arppu_rank', d.rank.base.arppu, d.rank.test.arppu, { fmt: 'inr', labels: jun29Data.ranks });
+    renderJun29RankMonetTable(cut);
   }
 
   function switchJ29Cut(cut, btn) {
@@ -982,6 +1090,23 @@ HWReport.initWhaleMm = function () {
     renderJun29MonetCut(cut);
   }
   window.switchJ29Cut = switchJ29Cut;
+
+  function refreshJun29Dom() {
+    const cut = getActiveJ29Cut();
+    renderJun29MonetCut(cut);
+    renderJun29MonetInsights();
+    renderJun29RankEngTable();
+    renderJun29RankRetTable();
+    if (document.getElementById('j29_rank_monet') && document.getElementById('j29_rank_monet').classList.contains('active')) {
+      renderJun29RankMonetTable(cut);
+    }
+  }
+
+  function getActiveJ29SkuCut() {
+    const skuBtn = document.querySelector('#j29_sku_toggles .ab-toggle.active');
+    if (!skuBtn) return 'arpu3';
+    return skuBtn.textContent.indexOf('ARPU7') >= 0 ? 'arpu7' : 'arpu3';
+  }
 
   function renderJun29KPIs() {
     const d = jun29Data;
@@ -1027,7 +1152,7 @@ HWReport.initWhaleMm = function () {
     renderJun29SkuInsights(cut);
   }
 
-  function renderJun29() {
+  function renderJun29Charts() {
     const e = jun29Data.eng;
     const er = jun29Data.engRank;
     const d3 = jun29Data.d3whales;
@@ -1037,10 +1162,11 @@ HWReport.initWhaleMm = function () {
       [e.test.mdau, e.test.wr, e.test.rwr, e.test.bot],
       ['MDAU', 'Win Rate %', 'Real-User WR %', 'Bot %']
     );
-    buildABBar('j29_normal_rank', er.base.normalMpd, er.test.normalMpd);
+    buildABBar('j29_normal_rank', er.base.normalMpd, er.test.normalMpd, { labels: jun29Data.ranks });
 
-    renderJun29MonetCut('raw');
-    renderJun29MonetInsights();
+    buildABBar('j29_rank_mdau', er.base.mdau, er.test.mdau, { labels: jun29Data.ranks });
+    buildABBar('j29_rank_rwr', er.base.rwr, er.test.rwr, { fmt: 'pct', labels: jun29Data.ranks, yMin: 40, yMax: 80 });
+    buildABBar('j29_rank_ndr', er.base.ndr, er.test.ndr, { fmt: 'pct', labels: jun29Data.ranks, yMin: 20, yMax: 70 });
 
     buildABGrouped('j29_d3_arpu_overall',
       [d3.arpu3.base.arpu, d3.arpu7.base.arpu],
@@ -1065,7 +1191,7 @@ HWReport.initWhaleMm = function () {
   }
 
   function switchD3Sku(cut, btn) {
-    document.querySelectorAll('#ab_jun29_page .ab-toggle').forEach(function (el) { el.classList.remove('active'); });
+    document.querySelectorAll('#j29_sku_toggles .ab-toggle').forEach(function (el) { el.classList.remove('active'); });
     btn.classList.add('active');
     renderJun29SkuChart(cut);
   }

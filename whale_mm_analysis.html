@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="kit/report.css">
 </head>
 <body>
-<body>
 
 <!-- HEADER -->
 <header>
@@ -28,7 +27,7 @@
         <option value="day1">May 31 (Day 1)</option>
       </select>
     </div>
-    <span class="meta" id="compLabel">vs May 24–26</span>
+    <span class="meta" id="compLabel">Jun 15 – Jun 29</span>
     <a class="data-link" href="https://docs.google.com/document/d/1Jd7k8BmIg-NVPY3vZMu8PTCaXgU5gKpYyPi0Kf9XElc/edit?tab=t.0" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       PRD
@@ -41,7 +40,7 @@
 </header>
 
 <!-- CAVEAT -->
-<div class="caveat-banner warn" id="caveatBanner">
+<div class="caveat-banner warn hidden" id="caveatBanner">
   ⚠ <span id="caveatText">3-day post-change read (May 31 – Jun 2) vs May 24–26. Signals are stabilising but continue monitoring.</span>
 </div>
 
@@ -60,7 +59,7 @@
 
 <main>
 
-  <div id="ranksplit_page">
+  <div id="ranksplit_page" class="hidden">
 
   <!-- S1: ELIGIBLE BASE -->
   <div class="section">
@@ -776,7 +775,7 @@
   </div><!-- end ab_page -->
 
   <!-- ══ JUN 15–29 A/B + D3 WHALES PAGE ══ -->
-  <div id="ab_jun29_page" class="hidden">
+  <div id="ab_jun29_page">
 
     <div class="section">
       <div class="section-header">
@@ -829,6 +828,59 @@
       </div>
     </div>
 
+    <!-- RANK-WISE MINI TABS -->
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">01b — Rank-wise Detail</p>
+        <p class="section-title">Engagement · Retention · Monetisation by rank</p>
+        <p class="section-sub">Rookie → Remarkable · Monetisation tab follows the active highroller cut from Section 02.</p>
+      </div>
+      <div class="ab-toggle-row" id="j29_rank_toggles">
+        <button type="button" class="ab-toggle active" data-rank-tab="eng" onclick="switchJ29RankTab('eng', this)">Engagement</button>
+        <button type="button" class="ab-toggle" data-rank-tab="ret" onclick="switchJ29RankTab('ret', this)">Retention</button>
+        <button type="button" class="ab-toggle" data-rank-tab="monet" onclick="switchJ29RankTab('monet', this)">Monetisation</button>
+      </div>
+
+      <div id="j29_rank_eng" class="j29-rank-panel active">
+        <div class="two-col" style="margin-bottom:1.1rem;">
+          <div class="card">
+            <p class="card-title">MDAU by rank</p>
+            <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+            <div class="chart-wrap" style="height:210px;"><canvas id="j29_rank_mdau"></canvas></div>
+          </div>
+          <div class="card">
+            <p class="card-title">Real-user WR by rank</p>
+            <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+            <div class="chart-wrap" style="height:210px;"><canvas id="j29_rank_rwr"></canvas></div>
+          </div>
+        </div>
+        <div class="card">
+          <p class="card-title">Engagement by rank — table</p>
+          <div id="j29_rank_eng_tbl"></div>
+        </div>
+      </div>
+
+      <div id="j29_rank_ret" class="j29-rank-panel">
+        <div class="card" style="margin-bottom:1.1rem;">
+          <p class="card-title">Next-day PvP retention by rank</p>
+          <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+          <div class="chart-wrap" style="height:220px;"><canvas id="j29_rank_ndr"></canvas></div>
+        </div>
+        <div class="card">
+          <p class="card-title">Retention by rank — table</p>
+          <div id="j29_rank_ret_tbl"></div>
+        </div>
+      </div>
+
+      <div id="j29_rank_monet" class="j29-rank-panel">
+        <p class="section-sub" id="j29_rank_monet_cut_label" style="margin-bottom:0.75rem;"></p>
+        <div class="card">
+          <p class="card-title">Monetisation by rank — table</p>
+          <div id="j29_rank_monet_tbl"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- MM WHALE MONETISATION -->
     <div class="section">
       <div class="section-header">
@@ -837,10 +889,10 @@
         <p class="section-sub">Eligible MM whales · Jun 15 – Jun 29 · Raw numbers skewed by highrollers — use exclusion cuts for a cleaner read.</p>
       </div>
       <div class="ab-toggle-row" id="j29_monet_toggles">
-        <button class="ab-toggle active" onclick="switchJ29Cut('raw', this)">Raw</button>
-        <button class="ab-toggle" onclick="switchJ29Cut('5k', this)">Excl. &gt;₹5k <span style="font-size:10px;color:inherit;opacity:0.7">(238 payers excl.)</span></button>
-        <button class="ab-toggle" onclick="switchJ29Cut('10k', this)">Excl. &gt;₹10k <span style="font-size:10px;color:inherit;opacity:0.7">(118 payers excl.)</span></button>
-        <button class="ab-toggle" onclick="switchJ29Cut('15k', this)">Excl. &gt;₹15k <span style="font-size:10px;color:inherit;opacity:0.7">(77 payers excl.)</span></button>
+        <button type="button" class="ab-toggle active" data-cut="raw" onclick="switchJ29Cut('raw', this)">Raw</button>
+        <button type="button" class="ab-toggle" data-cut="5k" onclick="switchJ29Cut('5k', this)">Excl. &gt;₹5k <span style="font-size:10px;color:inherit;opacity:0.7">(238 payers excl.)</span></button>
+        <button type="button" class="ab-toggle" data-cut="10k" onclick="switchJ29Cut('10k', this)">Excl. &gt;₹10k <span style="font-size:10px;color:inherit;opacity:0.7">(118 payers excl.)</span></button>
+        <button type="button" class="ab-toggle" data-cut="15k" onclick="switchJ29Cut('15k', this)">Excl. &gt;₹15k <span style="font-size:10px;color:inherit;opacity:0.7">(77 payers excl.)</span></button>
       </div>
       <div class="caveat-banner" id="j29_monet_banner" style="margin-bottom:1.1rem;border-radius:var(--radius-sm);"></div>
       <div id="j29_monet_overall_tbl"></div>
@@ -899,9 +951,9 @@
         <p class="section-title">Where the D3 dip and D7 recovery come from</p>
         <p class="section-sub">ARPU per D3 whale user by SKU · Toggle D3 vs D7 window.</p>
       </div>
-      <div class="ab-toggle-row">
-        <button class="ab-toggle active" onclick="switchD3Sku('arpu3', this)">ARPU3 (D0–D3)</button>
-        <button class="ab-toggle" onclick="switchD3Sku('arpu7', this)">ARPU7 (D0–D7)</button>
+      <div class="ab-toggle-row" id="j29_sku_toggles">
+        <button type="button" class="ab-toggle active" onclick="switchD3Sku('arpu3', this)">ARPU3 (D0–D3)</button>
+        <button type="button" class="ab-toggle" onclick="switchD3Sku('arpu7', this)">ARPU7 (D0–D7)</button>
       </div>
       <div class="card" style="margin-bottom:1.1rem;">
         <p class="card-title" id="j29_sku_chart_title">SKU ARPU3 — ₹ per D3 whale user</p>
@@ -926,7 +978,7 @@
 
 <footer>
   Hitwicket Superstars · Internal Analytics · June 2026 &nbsp;·&nbsp;
-  <span id="footerLabel">Post: May 31 – Jun 2 vs Pre: May 24–26</span>
+  <span id="footerLabel">Winstreak A/B · Jun 15 – Jun 29</span>
 </footer>
 
 <script src="kit/report.js"></script>

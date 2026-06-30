@@ -139,6 +139,8 @@ header a.data-link.green:hover { background: var(--teal-light); }
 .ab-toggle.active { background: var(--blue); color: white; border-color: var(--blue); }
 .monet-cut { display: none; }
 .monet-cut.active { display: block; }
+.j29-rank-panel { display: none; }
+.j29-rank-panel.active { display: block; }
 footer a { color: var(--blue); text-decoration: none; }
 
 .caveat-banner.warn {
