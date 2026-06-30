@@ -829,10 +829,45 @@
       </div>
     </div>
 
+    <!-- MM WHALE MONETISATION -->
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">02 — MM Whale Monetisation</p>
+        <p class="section-title">Conv%, ARPU, ARPPU — Overall & by Rank</p>
+        <p class="section-sub">Eligible MM whales · Jun 15 – Jun 29 · Raw numbers skewed by highrollers — use exclusion cuts for a cleaner read.</p>
+      </div>
+      <div class="ab-toggle-row" id="j29_monet_toggles">
+        <button class="ab-toggle active" onclick="switchJ29Cut('raw', this)">Raw</button>
+        <button class="ab-toggle" onclick="switchJ29Cut('5k', this)">Excl. &gt;₹5k <span style="font-size:10px;color:inherit;opacity:0.7">(238 payers excl.)</span></button>
+        <button class="ab-toggle" onclick="switchJ29Cut('10k', this)">Excl. &gt;₹10k <span style="font-size:10px;color:inherit;opacity:0.7">(118 payers excl.)</span></button>
+        <button class="ab-toggle" onclick="switchJ29Cut('15k', this)">Excl. &gt;₹15k <span style="font-size:10px;color:inherit;opacity:0.7">(77 payers excl.)</span></button>
+      </div>
+      <div class="caveat-banner" id="j29_monet_banner" style="margin-bottom:1.1rem;border-radius:var(--radius-sm);"></div>
+      <div id="j29_monet_overall_tbl"></div>
+      <div class="two-col" style="margin-bottom:1.1rem;">
+        <div class="card">
+          <p class="card-title">Conv% by rank</p>
+          <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+          <div class="chart-wrap" style="height:210px;"><canvas id="j29_conv_rank"></canvas></div>
+        </div>
+        <div class="card">
+          <p class="card-title">ARPU by rank (₹)</p>
+          <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+          <div class="chart-wrap" style="height:210px;"><canvas id="j29_arpu_rank"></canvas></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:1.1rem;">
+        <p class="card-title">ARPPU by rank (₹)</p>
+        <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+        <div class="chart-wrap" style="height:210px;"><canvas id="j29_arppu_rank"></canvas></div>
+      </div>
+      <div class="insights" id="j29_monet_insights"></div>
+    </div>
+
     <!-- D3 WHALES OVERALL -->
     <div class="section">
       <div class="section-header">
-        <p class="section-num">02 — New User D3 Revenue Whales</p>
+        <p class="section-num">03 — New User D3 Revenue Whales</p>
         <p class="section-title">ARPU3 dips, ARPU7 ahead in Test</p>
         <p class="section-sub">Users hitting ₹700 (India) or ₹1,000 (International) cumulative revenue by D3 of install · Mature install cohorts (D3 ≤ Jun 26, D7 ≤ Jun 22) · Not restricted to MM-eligible whales · 383 D3 whales total.</p>
       </div>
@@ -860,7 +895,7 @@
     <!-- SKU -->
     <div class="section">
       <div class="section-header">
-        <p class="section-num">03 — D3 Whale SKU Split</p>
+        <p class="section-num">04 — D3 Whale SKU Split</p>
         <p class="section-title">Where the D3 dip and D7 recovery come from</p>
         <p class="section-sub">ARPU per D3 whale user by SKU · Toggle D3 vs D7 window.</p>
       </div>

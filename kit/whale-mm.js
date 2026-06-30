@@ -872,6 +872,52 @@ HWReport.initWhaleMm = function () {
       base: { normalMpd: [0.48, 0.65, 0.88, 1.18, 2.21] },
       test: { normalMpd: [0.77, 0.90, 1.16, 1.43, 2.40] }
     },
+    monet: {
+      raw: {
+        banner: '⚠ Raw cut includes all spenders. Base ARPU ₹355 vs Test ₹293 — gap driven by highrollers concentrated in Base. See exclusion cuts.',
+        overall: {
+          base: { conv: 14.91, arpu: 355, arppu: 2378 },
+          test: { conv: 15.12, arpu: 293, arppu: 1940 }
+        },
+        rank: {
+          base: { conv: [11.58, 13.52, 16.64, 19.7, 23.39], arpu: [174, 366, 349, 605, 831], arppu: [1503, 2705, 2095, 3070, 3553] },
+          test: { conv: [11.45, 14.92, 18.1, 17.77, 26.6], arpu: [168, 283, 351, 388, 770], arppu: [1466, 1894, 1940, 2185, 2895] }
+        }
+      },
+      '5k': {
+        banner: '238 payers excluded · ₹40.4L revenue removed. Test Conv% ahead: 14.17% vs 13.89%.',
+        overall: {
+          base: { conv: 13.89, arpu: 130, arppu: 939 },
+          test: { conv: 14.17, arpu: 129, arppu: 910 }
+        },
+        rank: {
+          base: { conv: [10.97, 12.73, 15.65, 17.93, 21.22], arpu: [92, 135, 141, 179, 216], arppu: [836, 1058, 902, 998, 1020] },
+          test: { conv: [10.74, 14.12, 17.19, 16.44, 24.71], arpu: [93, 121, 148, 141, 306], arppu: [864, 859, 863, 857, 1237] }
+        }
+      },
+      '10k': {
+        banner: '118 payers excluded · ₹32.2L revenue removed. Excl. >₹10k: ARPU Base ₹167 vs Test ₹171; Conv% Test ahead 14.70% vs 14.35%.',
+        overall: {
+          base: { conv: 14.35, arpu: 167, arppu: 1163 },
+          test: { conv: 14.70, arpu: 171, arppu: 1164 }
+        },
+        rank: {
+          base: { conv: [11.33, 12.92, 16.02, 18.77, 22.27], arpu: [118, 152, 173, 246, 308], arppu: [1038, 1175, 1078, 1310, 1382] },
+          test: { conv: [11.28, 14.36, 17.73, 17.06, 25.67], arpu: [134, 140, 191, 194, 380], arppu: [1192, 976, 1078, 1138, 1481] }
+        }
+      },
+      '15k': {
+        banner: '77 payers excluded · ₹27.2L revenue removed. Excl. >₹15k: Test ahead on Conv% (14.87% vs 14.53%), ARPU (₹194 vs ₹192), Remarkable ARPU ₹416 vs ₹325.',
+        overall: {
+          base: { conv: 14.53, arpu: 192, arppu: 1322 },
+          test: { conv: 14.87, arpu: 194, arppu: 1303 }
+        },
+        rank: {
+          base: { conv: [11.45, 12.97, 16.38, 19.08, 22.37], arpu: [134, 158, 225, 292, 325], arppu: [1172, 1220, 1375, 1531, 1451] },
+          test: { conv: [11.39, 14.59, 17.78, 17.36, 25.86], arpu: [149, 171, 197, 239, 416], arppu: [1312, 1174, 1111, 1376, 1608] }
+        }
+      }
+    },
     d3whales: {
       total: 383,
       arpu3: {
@@ -893,6 +939,49 @@ HWReport.initWhaleMm = function () {
       }
     }
   };
+
+  function renderJun29MonetInsights() {
+    renderInsights('j29_monet_insights', [
+      ins('warn', '<strong>Raw numbers favour Base — highroller skew.</strong> Raw ARPU ₹355 vs ₹293. 238 payers >₹5k account for ₹40.4L of the gap.'),
+      ins('good', '<strong>Excl. >₹10k: cases are flat.</strong> ARPU Base ₹167 vs Test ₹171. ARPPU ₹1,163 vs ₹1,164. Conv% Test ahead.'),
+      ins('good', '<strong>Excl. >₹15k: Test ahead on Conv% and ARPU.</strong> Conv% 14.87% vs 14.53%. Remarkable Test ARPU ₹416 vs ₹325.')
+    ]);
+  }
+
+  function renderJun29MonetCut(cut) {
+    const d = jun29Data.monet[cut];
+    const b = d.overall.base;
+    const t = d.overall.test;
+    const convDelta = (t.conv - b.conv).toFixed(2);
+    const arpuDelta = t.arpu - b.arpu;
+    const arppuDelta = t.arppu - b.arppu;
+    document.getElementById('j29_monet_banner').textContent = d.banner;
+    document.getElementById('j29_monet_overall_tbl').innerHTML = `
+      <div class="card" style="margin-bottom:1.1rem;">
+        <p class="card-title">Overall — Conv%, ARPU, ARPPU</p>
+        <table class="comp-table">
+          <thead><tr><th></th><th class="post" style="text-align:center">Base</th><th class="pre" style="text-align:center">Test</th><th class="delta">Δ</th></tr></thead>
+          <tbody>
+            <tr><td>Conv%</td><td style="text-align:center">${b.conv}%</td><td style="text-align:center" class="${t.conv >= b.conv ? 'val-up' : ''}">${t.conv}%</td><td><span class="delta-pill ${t.conv >= b.conv ? 'up' : 'down'}">${convDelta >= 0 ? '+' : ''}${convDelta}pp</span></td></tr>
+            <tr><td>ARPU</td><td style="text-align:center">₹${b.arpu.toLocaleString()}</td><td style="text-align:center">₹${t.arpu.toLocaleString()}</td><td><span class="delta-pill ${arpuDelta >= 0 ? 'up' : 'down'}">${arpuDelta >= 0 ? '+' : ''}₹${arpuDelta.toLocaleString()}</span></td></tr>
+            <tr><td>ARPPU</td><td style="text-align:center">₹${b.arppu.toLocaleString()}</td><td style="text-align:center">₹${t.arppu.toLocaleString()}</td><td><span class="delta-pill ${arppuDelta >= 0 ? 'up' : 'down'}">${arppuDelta >= 0 ? '+' : ''}₹${arppuDelta.toLocaleString()}</span></td></tr>
+          </tbody>
+        </table>
+      </div>`;
+    ['j29_conv_rank', 'j29_arpu_rank', 'j29_arppu_rank'].forEach(function (id) {
+      if (HWReport.charts[id]) { HWReport.charts[id].destroy(); delete HWReport.charts[id]; }
+    });
+    buildABBar('j29_conv_rank', d.rank.base.conv, d.rank.test.conv, { fmt: 'pct', labels: jun29Data.ranks });
+    buildABBar('j29_arpu_rank', d.rank.base.arpu, d.rank.test.arpu, { fmt: 'inr', labels: jun29Data.ranks });
+    buildABBar('j29_arppu_rank', d.rank.base.arppu, d.rank.test.arppu, { fmt: 'inr', labels: jun29Data.ranks });
+  }
+
+  function switchJ29Cut(cut, btn) {
+    document.querySelectorAll('#j29_monet_toggles .ab-toggle').forEach(function (el) { el.classList.remove('active'); });
+    btn.classList.add('active');
+    renderJun29MonetCut(cut);
+  }
+  window.switchJ29Cut = switchJ29Cut;
 
   function renderJun29KPIs() {
     const d = jun29Data;
@@ -949,6 +1038,9 @@ HWReport.initWhaleMm = function () {
       ['MDAU', 'Win Rate %', 'Real-User WR %', 'Bot %']
     );
     buildABBar('j29_normal_rank', er.base.normalMpd, er.test.normalMpd);
+
+    renderJun29MonetCut('raw');
+    renderJun29MonetInsights();
 
     buildABGrouped('j29_d3_arpu_overall',
       [d3.arpu3.base.arpu, d3.arpu7.base.arpu],
