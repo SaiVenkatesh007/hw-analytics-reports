@@ -1,0 +1,33 @@
+Whale MM A/B Read — Win Streak Reversion (May 15 – Jun 21)
+_Base: 1 in 5 wins reverts to normal MM (4-win streak) | Test: 1 in 4 wins (3-win streak)_
+
+Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/whale_mm_analysis.html
+
+*Engagement & Retention*
+
+1. Reversion frequency — working as intended
+Test case triggers normal MM more frequently: 1.15 normal matches/day vs 0.89 in Base. The mechanic is functioning correctly.
+
+2. Real-user WR — expected drop
+Test case real-user WR is 58% vs Base 63%. Expected — more frequent reversion means more hard matches. Not a flag given the design intent.
+
+3. NDR — no difference
+Base 72.4% vs Test 72.3%. Virtually identical across both cases. More frequent hard matches are not driving whales away.
+
+4. Matches/day — marginal dip in Test
+Test case MDAU is 3.76 vs Base 3.91. Small but consistent across ranks. Worth monitoring — could be early signal that harder matches reduce session volume slightly.
+
+*Monetisation*
+
+5. Raw numbers favour Base — driven by highrollers
+Raw ARPU: Base ₹247 vs Test ₹182. Raw ARPPU: Base ₹2,279 vs Test ₹1,672. However, 112 payers spending >5k account for ₹17.7L of this gap. Not a structural difference.
+
+6. Once highrollers excluded — cases are flat
+Excl. >10k: ARPU Base ₹121 vs Test ₹123, ARPPU Base ₹1,155 vs Test ₹1,159.
+Excl. >15k: ARPU Base ₹136 vs Test ₹139, ARPPU Base ₹1,283 vs Test ₹1,299.
+Conv% is also marginally better in Test case (10.57% vs 10.5% at >10k cut, 10.69% vs 10.61% at >15k cut).
+
+7. Remarkable — Test case ahead on monetisation
+At >15k cut, Remarkable Test case Conv% is 21.99% vs Base 17.56%, ARPU ₹328 vs ₹264. Strongest rank-level signal for Test.
+
+*Read:* Test case does not hurt monetisation once highroller noise is removed. NDR is flat. The real-user WR drop is by design. The slight dip in matches/day is the one metric to watch.

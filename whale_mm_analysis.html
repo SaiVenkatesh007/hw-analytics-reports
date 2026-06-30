@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whale PvP Matchmaking — Impact Analysis</title>
+<meta name="description" content="Whale MM win-streak reversion AB read — Test does not hurt monetisation once highrollers excluded; NDR flat; matches/day is the metric to watch.">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<link rel="stylesheet" href="kit/report.css">
+</head>
+<body>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="brand">
+    <div class="dot"></div>
+    <h1>Whale PvP Matchmaking — Impact Analysis</h1>
+  </div>
+  <div class="header-right">
+    <div class="timeline-select-wrap">
+      <select id="timelineSelect">
+        <option value="ab" selected>Winstreak A/B Read</option>
+        <option value="overall">Overall</option>
+        <option value="5day">May 31 – Jun 4 (5-Day)</option>
+        <option value="3day">May 31 – Jun 2 (3-Day)</option>
+        <option value="day1">May 31 (Day 1)</option>
+      </select>
+    </div>
+    <span class="meta" id="compLabel">vs May 24–26</span>
+    <a class="data-link" href="https://docs.google.com/document/d/1Jd7k8BmIg-NVPY3vZMu8PTCaXgU5gKpYyPi0Kf9XElc/edit?tab=t.0" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      PRD
+    </a>
+    <a class="data-link green" href="https://docs.google.com/spreadsheets/d/17fKDXQ-mEEVJAV6Bi7r8nn4vCA0CIZVifCcoU8CaxSw/edit?gid=0#gid=0" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+      Data Sheet
+    </a>
+  </div>
+</header>
+
+<!-- CAVEAT -->
+<div class="caveat-banner warn" id="caveatBanner">
+  ⚠ <span id="caveatText">3-day post-change read (May 31 – Jun 2) vs May 24–26. Signals are stabilising but continue monitoring.</span>
+</div>
+
+<!-- HERO -->
+<section class="hero-section">
+  <p class="hero-eyebrow">Game Analytics · PvP Matchmaking</p>
+  <h2 class="hero-title">Whale Matchmaking<br>Impact Analysis</h2>
+  <p class="hero-desc">
+    Evaluating the effect of power-band matchmaking (Option 2) on eligible whale win rates, self-quit behaviour, engagement mode shift, and next-day retention.
+    Eligible whales = users whose Top 11 team strength exceeds the Q90 threshold for their reputation rank. Scope: Rookie → Remarkable.
+  </p>
+  <div class="kpi-row" id="kpiRow">
+    <!-- injected by JS -->
+  </div>
+</section>
+
+<main>
+
+  <div id="ranksplit_page">
+
+  <!-- S1: ELIGIBLE BASE -->
+  <div class="section">
+    <div class="section-header">
+      <p class="section-num">01 — Eligible base</p>
+      <p class="section-title">Who are the eligible whales?</p>
+      <p class="section-sub">Users whose Top 11 strength exceeds the Q90 threshold for their rep rank. Stable across both windows — no meaningful composition shift.</p>
+    </div>
+    <div class="two-col" style="margin-bottom:1.1rem;">
+      <div class="card">
+        <p class="card-title">Eligible whale count by rank — Post window</p>
+        <div class="chart-wrap" style="height:210px;"><canvas id="c_base_post"></canvas></div>
+      </div>
+      <div class="card">
+        <p class="card-title">% of rank population that are eligible whales</p>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--coral)"></span>Pre</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Post</span>
+        </div>
+        <div class="chart-wrap" style="height:210px;"><canvas id="c_base_pct"></canvas></div>
+      </div>
+    </div>
+    <div class="insights" id="ins_base"></div>
+  </div>
+
+  <!-- S2: MECHANISM CHECK -->
+  <div class="section">
+    <div class="section-header">
+      <p class="section-num">02 — Mechanism check</p>
+      <p class="section-title">Is the power band placing weaker opponents?</p>
+      <p class="section-sub">Average opp_top11 / top11 against real users only. PRatio below 1.0 = opponent is weaker. Non-whale PRatio should remain ~1.0.</p>
+    </div>
+    <div class="two-col" style="margin-bottom:1.1rem;">
+      <div class="card">
+        <p class="card-title">Whale average PRatio — Pre vs Post</p>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--coral)"></span>Pre</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Post</span>
+        </div>
+        <div class="chart-wrap" style="height:230px;"><canvas id="c_pratio_whale"></canvas></div>
+      </div>
+      <div class="card">
+        <p class="card-title">Non-whale PRatio — stability check</p>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--coral)"></span>Pre</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--blue-bar)"></span>Post</span>
+        </div>
+        <div class="chart-wrap" style="height:230px;"><canvas id="c_pratio_nonwhale"></canvas></div>
+      </div>
+    </div>
+    <div class="insights" id="ins_pratio"></div>
+  </div>
+
+  <!-- S3: WIN RATE -->
+  <div class="section">
+    <div class="section-header">
+      <p class="section-num">03 — Win rate</p>
+      <p class="section-title">Real-user win rate is the primary success metric</p>
+      <p class="section-sub">Real-user WR strips bot wins out. All-match WR is inflated by the bot mechanic. Min 3 matches played to be included.</p>
+    </div>
+    <div class="card" style="margin-bottom:1.1rem;">
+      <p class="card-title">Whale win rate — All Matches vs Real User, Pre vs Post</p>
+      <div class="legend">
+        <span class="leg"><span class="leg-sq" style="background:rgba(216,90,48,0.35)"></span>Pre — All Matches</span>
+        <span class="leg"><span class="leg-sq" style="background:var(--coral)"></span>Pre — Real-User</span>
+        <span class="leg"><span class="leg-sq" style="background:rgba(29,158,117,0.35)"></span>Post — All Matches</span>
+        <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Post — Real-User</span>
+      </div>
+      <div class="chart-wrap" style="height:250px;"><canvas id="c_wr_whale"></canvas></div>
+    </div>
+    <div class="two-col" style="margin-bottom:1.1rem;">
+      <div class="card">
+        <p class="card-title">Win rate breakdown — all ranks</p>
+        <table class="comp-table" id="tbl_wr"></table>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;justify-content:center;">
+        <div class="insights" id="ins_wr"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S4: QUIT RATE -->
+  <div class="section">
+    <div class="section-header">
+      <p class="section-num">04 — Quit rate</p>
+      <p class="section-title">Opponents quit more — whales quit less</p>
+      <p class="section-sub">Opponent quit = weaker user forfeiting on seeing the mismatch (expected). Self-quit = whale quitting their own match (was a pain signal pre-change). Intentional forfeits only — disconnects not captured.</p>
+    </div>
+    <div class="two-col" style="margin-bottom:1.1rem;">
+      <div class="card">
+        <p class="card-title">Opponent quit rate — Whales</p>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--coral)"></span>Pre</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--amber)"></span>Post</span>
+        </div>
+        <div class="chart-wrap" style="height:210px;"><canvas id="c_quit_opp_whale"></canvas></div>
+      </div>
+      <div class="card">
+        <p class="card-title">Opponent quit rate — Non-Whales</p>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--coral)"></span>Pre</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--blue-bar)"></span>Post</span>
+        </div>
+        <div class="chart-wrap" style="height:210px;"><canvas id="c_quit_opp_nw"></canvas></div>
+      </div>
+    </div>
+    <div class="two-col" id="selfquit_row" style="margin-bottom:1.1rem;">
+      <div class="card">
+        <p class="card-title">Self-quit rate — Whales <span style="font-size:10px;color:var(--teal);background:var(--teal-light);padding:1px 6px;border-radius:4px;margin-left:4px;">3-day & 5-day</span></p>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--coral)"></span>Pre</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Post</span>
+        </div>
+        <div class="chart-wrap" style="height:210px;"><canvas id="c_quit_self_whale"></canvas></div>
+      </div>
+      <div class="card">
+        <p class="card-title">Self-quit rate — Non-Whales <span style="font-size:10px;color:var(--teal);background:var(--teal-light);padding:1px 6px;border-radius:4px;margin-left:4px;">3-day & 5-day</span></p>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--coral)"></span>Pre</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--blue-bar)"></span>Post</span>
+        </div>
+        <div class="chart-wrap" style="height:210px;"><canvas id="c_quit_self_nw"></canvas></div>
+      </div>
+    </div>
+    <div class="insights" id="ins_quit"></div>
+  </div>
+
+  <!-- S5: ENGAGEMENT SHIFT -->
+  <div class="section">
+    <div class="section-header">
+      <p class="section-num">05 — Engagement shift</p>
+      <p class="section-title">Whales are moving from League back to PvP</p>
+      <p class="section-sub">Pre-change, whales refugeed into League where winrates were better. The intended outcome is to make PvP rewarding enough that they return to it.</p>
+    </div>
+    <div class="card" style="margin-bottom:1.1rem;">
+      <p class="card-title">League adoption % — Whale vs Non-Whale, Pre vs Post</p>
+      <div class="legend">
+        <span class="leg"><span class="leg-sq" style="background:#D4A017"></span>Whale Pre</span>
+        <span class="leg"><span class="leg-sq" style="background:var(--amber)"></span>Whale Post</span>
+        <span class="leg"><span class="leg-sq" style="background:var(--blue-bar)"></span>Non-Whale Pre</span>
+        <span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Non-Whale Post</span>
+      </div>
+      <div class="chart-wrap" style="height:250px;"><canvas id="c_league"></canvas></div>
+    </div>
+    <div class="two-col" style="margin-bottom:1.1rem;">
+      <div class="card">
+        <p class="card-title">League & PvP matches/day — Whales</p>
+        <table class="comp-table" id="tbl_matches"></table>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;justify-content:center;">
+        <div class="insights" id="ins_engagement"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S6: NDR -->
+  <div class="section" id="ndr_section">
+    <div class="section-header">
+      <p class="section-num">06 — Next-day retention (PvP)</p>
+      <p class="section-title">Whale PvP retention improved post-change</p>
+      <p class="section-sub">% of users who return to play PvP the next day. Whale NDR is now above non-whale at every rank except Remarkable.</p>
+    </div>
+    <div class="two-col" style="margin-bottom:1.1rem;">
+      <div class="card">
+        <p class="card-title">NDR% by rank — Whales, Pre vs Post</p>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--coral)"></span>Pre</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Post</span>
+        </div>
+        <div class="chart-wrap" style="height:230px;"><canvas id="c_ndr_whale"></canvas></div>
+      </div>
+      <div class="card">
+        <p class="card-title">NDR% by rank — Non-Whales, Pre vs Post</p>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--coral)"></span>Pre</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--blue-bar)"></span>Post</span>
+        </div>
+        <div class="chart-wrap" style="height:230px;"><canvas id="c_ndr_nonwhale"></canvas></div>
+      </div>
+    </div>
+    <div class="insights" id="ins_ndr"></div>
+  </div>
+
+  <!-- S7: TIME SPENT -->
+  <div class="section">
+    <div class="section-header">
+      <p class="section-num" id="timespent_num">07 — Time spent</p>
+      <p class="section-title">Session time is broadly stable — slight uptick at higher ranks</p>
+      <p class="section-sub">Average daily time spent in-game (mins) by rank. The Day 1 dip has fully reversed — whale time spent is up vs pre-change in both the 3-day and 5-day windows.</p>
+    </div>
+    <div class="two-col" style="margin-bottom:1.1rem;">
+      <div class="card">
+        <p class="card-title">Avg. time spent (mins) — Whale, Pre vs Post</p>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--coral)"></span>Pre</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Post</span>
+        </div>
+        <div class="chart-wrap" style="height:230px;"><canvas id="c_time_whale"></canvas></div>
+      </div>
+      <div class="card">
+        <p class="card-title">Avg. time spent (mins) — Non-Whale, Pre vs Post</p>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--coral)"></span>Pre</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--blue-bar)"></span>Post</span>
+        </div>
+        <div class="chart-wrap" style="height:230px;"><canvas id="c_time_nonwhale"></canvas></div>
+      </div>
+    </div>
+    <div class="insights" id="ins_time"></div>
+  </div>
+
+  <!-- S8: WHALES FACED -->
+  <div class="section" id="whalesfaced_section">
+    <div class="section-header">
+      <p class="section-num">08 — Whales faced by non-whales</p>
+      <p class="section-title">Non-whale exposure to Q90 whales — is a same-day cooldown needed?</p>
+      <p class="section-sub">Distribution of how many eligible whales a non-whale user faces per day. Input for deciding urgency of the same-day cooldown (not yet shipped).</p>
+    </div>
+    <div class="card" style="margin-bottom:1.1rem;">
+      <p class="card-title">Non-whale users: whales faced per day — Post window distribution</p>
+      <div class="chart-wrap" style="height:230px;"><canvas id="c_whalesfaced"></canvas></div>
+    </div>
+    <div class="insights" id="ins_whalesfaced"></div>
+  </div>
+
+  <!-- S8b: PAYER MIX -->
+  <div class="section" id="payermix_section">
+    <div class="section-header">
+      <p class="section-num">09 — Payer exposure at risk</p>
+      <p class="section-title">Why the same-day safeguard is being built</p>
+      <p class="section-sub">Of the non-whale users being matched against Q90 whales, a meaningful share are paying users — particularly at higher ranks. This is the primary driver for prioritising the same-day cooldown.</p>
+    </div>
+    <div class="two-col" style="margin-bottom:1.1rem;">
+      <div class="card">
+        <p class="card-title">% of non-whales facing whales who are payers</p>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Any payer</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>$1+ payer (LTV &gt; $80)</span>
+        </div>
+        <div class="chart-wrap" style="height:220px;"><canvas id="c_payer_mix"></canvas></div>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;justify-content:center;">
+        <div class="insights" id="ins_payermix"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S10: OPEN QUESTIONS -->
+  <div class="section">
+    <div class="section-header">
+      <p class="section-num" id="openq_num">10 — Open questions</p>
+      <p class="section-title">What to track going forward</p>
+      <p class="section-sub">With 3 days of data, signals are stabilising. These are the remaining watch items.</p>
+    </div>
+    <div class="opp-grid" id="openq_grid"></div>
+  </div>
+
+
+  </div><!-- end ranksplit_page -->
+
+  <!-- ══ OVERALL PAGE ══ -->
+  <div id="overall_page" class="hidden">
+
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">Overall metrics read</p>
+        <p class="section-title">Pre vs Post — by user type & rank</p>
+        <p class="section-sub">
+          Comparison of May 24–28 (pre) vs May 31–Jun 4 (post) across Free, Payer, and Whale segments.
+          Metrics split by user type; each chart shows Pre vs Post by reputation rank.
+        </p>
+      </div>
+      <div class="caveat-banner" style="margin-bottom:1.5rem;border-radius:var(--radius-sm);">
+        ⚠ Monetisation metrics (ARPPU, ARPU) are directional only — a new character was launched in the post window, making it impossible to isolate the MM change's contribution to revenue. Pre window: Apr 30 – May 9. Post window: May 31 – Jun 9.
+      </div>
+    </div>
+
+    <!-- METRIC 1: Avg PvP Matches/Day -->
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">Metric 01</p>
+        <p class="section-title">Avg PvP Matches per Day</p>
+        <p class="section-sub">Average number of PvP matches played per user per day, by rank and user type.</p>
+      </div>
+      <div class="three-col" style="margin-bottom:1.1rem;">
+        <div class="card"><p class="card-title">Free User</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_matches_free"></canvas></div></div>
+        <div class="card"><p class="card-title">Payer</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_matches_payer"></canvas></div></div>
+        <div class="card"><p class="card-title">Whale</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_matches_whale"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- METRIC 2: Win Rate -->
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">Metric 02</p>
+        <p class="section-title">Win Rate (All Matches)</p>
+        <p class="section-sub">Win rate including bot matches. Min 3 matches per user.</p>
+      </div>
+      <div class="three-col" style="margin-bottom:1.1rem;">
+        <div class="card"><p class="card-title">Free User</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_wr_free"></canvas></div></div>
+        <div class="card"><p class="card-title">Payer</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_wr_payer"></canvas></div></div>
+        <div class="card"><p class="card-title">Whale</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_wr_whale"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- METRIC 3: Real User Win Rate -->
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">Metric 03</p>
+        <p class="section-title">Real-User Opponent Win Rate</p>
+        <p class="section-sub">Win rate against real (non-bot) opponents only. Min 3 real-user matches per user.</p>
+      </div>
+      <div class="three-col" style="margin-bottom:1.1rem;">
+        <div class="card"><p class="card-title">Free User</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_rwr_free"></canvas></div></div>
+        <div class="card"><p class="card-title">Payer</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_rwr_payer"></canvas></div></div>
+        <div class="card"><p class="card-title">Whale</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_rwr_whale"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- METRIC 4: NDR -->
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">Metric 04</p>
+        <p class="section-title">Next-Day PvP Retention</p>
+        <p class="section-sub">% of users who return to play PvP the following day.</p>
+      </div>
+      <div class="three-col" style="margin-bottom:1.1rem;">
+        <div class="card"><p class="card-title">Free User</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_ndr_free"></canvas></div></div>
+        <div class="card"><p class="card-title">Payer</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_ndr_payer"></canvas></div></div>
+        <div class="card"><p class="card-title">Whale</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_ndr_whale"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- METRIC 5: ARPPU -->
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">Metric 05</p>
+        <p class="section-title">ARPPU — Avg Revenue per Paying User (₹)</p>
+        <p class="section-sub">Period revenue averaged across paying users in each segment. Directional only — new character launched in post window.</p>
+      </div>
+      <div class="two-col" style="margin-bottom:1.1rem;">
+        <div class="card"><p class="card-title">Payer</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_arppu_payer"></canvas></div></div>
+        <div class="card"><p class="card-title">Whale</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_arppu_whale"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- METRIC 6: ARPU -->
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">Metric 06</p>
+        <p class="section-title">ARPU — Avg Revenue per User (₹)</p>
+        <p class="section-sub">Period revenue divided by total users in rank segment. Directional only — new character launched in post window.</p>
+      </div>
+      <div class="two-col" style="margin-bottom:1.1rem;">
+        <div class="card"><p class="card-title">Payer</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_arpu_payer"></canvas></div></div>
+        <div class="card"><p class="card-title">Whale</p><div class="chart-wrap" style="height:220px;"><canvas id="ov_arpu_whale"></canvas></div></div>
+      </div>
+    </div>
+
+  </div><!-- end overall_page -->
+
+  <!-- ══ A/B PAGE ══ -->
+  <div id="ab_page" class="hidden">
+
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">Winstreak A/B Read · May 15 – Jun 21</p>
+        <p class="section-title">3-Win Streak vs 4-Win Streak Reversion</p>
+        <p class="section-sub">
+          <span class="ab-tag base">Base</span>&nbsp; 1 in 5 wins reverts to normal MM (4-win streak) &nbsp;·&nbsp;
+          <span class="ab-tag test">Test</span>&nbsp; 1 in 4 wins reverts to normal MM (3-win streak)
+        </p>
+      </div>
+      <div class="read-box">
+        <strong>Read:</strong> Test case triggers normal MM more frequently (1.15 vs 0.89 normal matches/day) — working as intended.
+        Real-user WR is lower in Test (58% vs 63%) — expected, as more frequent reversion means more hard matches.
+        NDR is virtually identical (72.3% vs 72.4%) — more hard matches are not driving whales away.
+        Raw monetisation favours Base, but this is driven by a small number of highrollers.
+        Once excluded (>₹10k, >₹15k cuts), ARPU and ARPPU are flat to marginally better in Test, with Conv% ahead in Test at every cut.
+        <strong>The slight dip in matches/day (3.76 vs 3.91) is the one metric to continue monitoring.</strong>
+      </div>
+    </div>
+
+    <!-- ENGAGEMENT & RETENTION -->
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">01 — Engagement & Retention</p>
+        <p class="section-title">Overall</p>
+        <p class="section-sub">Overall metrics across both cases. Rank-level breakdown below.</p>
+      </div>
+      <div class="two-col" style="margin-bottom:1.1rem;">
+        <div class="card">
+          <p class="card-title">Matches per day, Win Rate, Real-User WR, Bot%</p>
+          <div class="legend">
+            <span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span>
+            <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span>
+          </div>
+          <div class="chart-wrap" style="height:220px;"><canvas id="ab_eng_overall"></canvas></div>
+        </div>
+        <div class="card">
+          <p class="card-title">Match distribution — Whale MM vs Normal MM matches/day</p>
+          <div class="legend">
+            <span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span>
+            <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span>
+          </div>
+          <div class="chart-wrap" style="height:220px;"><canvas id="ab_matches_dist"></canvas></div>
+        </div>
+      </div>
+      <div class="two-col" style="margin-bottom:1.1rem;">
+        <div class="card">
+          <p class="card-title">Real-user WR by rank</p>
+          <div class="legend">
+            <span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span>
+            <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span>
+          </div>
+          <div class="chart-wrap" style="height:220px;"><canvas id="ab_rwr_rank"></canvas></div>
+        </div>
+        <div class="card">
+          <p class="card-title">Normal MM matches/day by rank</p>
+          <div class="legend">
+            <span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span>
+            <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span>
+          </div>
+          <div class="chart-wrap" style="height:220px;"><canvas id="ab_normal_rank"></canvas></div>
+        </div>
+      </div>
+      <div class="two-col" style="margin-bottom:1.1rem;">
+        <div class="card">
+          <p class="card-title">Next-day PvP retention by rank</p>
+          <div class="legend">
+            <span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span>
+            <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span>
+          </div>
+          <div class="chart-wrap" style="height:220px;"><canvas id="ab_ndr_rank"></canvas></div>
+        </div>
+        <div class="card">
+          <p class="card-title">Power ratio — Whale MM vs Normal MM matches</p>
+          <div class="legend">
+            <span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span>
+            <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span>
+          </div>
+          <div class="chart-wrap" style="height:220px;"><canvas id="ab_pratio"></canvas></div>
+        </div>
+      </div>
+      <div class="insights">
+        <div class="insight good"><strong>Reversion frequency working as intended.</strong> Test triggers normal MM at 1.15 matches/day vs Base 0.89 — a 29% increase, consistent with going from 1-in-5 to 1-in-4 matches.</div>
+        <div class="insight warn"><strong>Real-user WR drop in Test is expected.</strong> 58% vs 63% overall. More frequent hard matches by design. Power ratio in normal MM matches is identical (1.01 both cases) — confirming the opponent quality in reversion matches is the same.</div>
+        <div class="insight good"><strong>NDR is flat.</strong> Base 72.4% vs Test 72.3%. More frequent hard matches are not driving whales away the next day.</div>
+        <div class="insight warn"><strong>Matches/day dipped slightly in Test (3.76 vs 3.91).</strong> Small but consistent across ranks. The one metric to watch — could signal that harder matches reduce session volume over time.</div>
+      </div>
+    </div>
+
+    <!-- MONETISATION -->
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">02 — Monetisation</p>
+        <p class="section-title">Conv%, ARPU, ARPPU — Overall & by Rank</p>
+        <p class="section-sub">Raw numbers are skewed by a small number of highrollers. Use the exclusion cuts for a cleaner read.</p>
+      </div>
+
+      <!-- Cut toggle -->
+      <div class="ab-toggle-row">
+        <button class="ab-toggle active" onclick="switchCut('raw', this)">Raw</button>
+        <button class="ab-toggle" onclick="switchCut('5k', this)">Excl. &gt;₹5k <span style="font-size:10px;color:inherit;opacity:0.7">(112 payers excl.)</span></button>
+        <button class="ab-toggle" onclick="switchCut('10k', this)">Excl. &gt;₹10k <span style="font-size:10px;color:inherit;opacity:0.7">(53 payers excl.)</span></button>
+        <button class="ab-toggle" onclick="switchCut('15k', this)">Excl. &gt;₹15k <span style="font-size:10px;color:inherit;opacity:0.7">(34 payers excl.)</span></button>
+      </div>
+
+      <!-- RAW -->
+      <div id="cut_raw" class="monet-cut active">
+        <div class="caveat-banner" style="margin-bottom:1.1rem;border-radius:var(--radius-sm);">
+          ⚠ Raw cut includes all spenders. Base ARPU ₹247 vs Test ₹182 — gap is driven by a small number of very high spenders concentrated in Base. See exclusion cuts for a cleaner comparison.
+        </div>
+        <div class="two-col" style="margin-bottom:1.1rem;">
+        <div class="card" style="margin-bottom:1.1rem;">
+          <p class="card-title">Overall — Conv%, ARPU, ARPPU</p>
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="post" style="text-align:center">Base</th>
+                <th class="pre" style="text-align:center">Test</th>
+                <th class="delta">Δ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Conv%</td>
+                <td style="text-align:center">10.86%</td>
+                <td style="text-align:center" class="val-up">10.86%</td>
+                <td><span class="delta-pill up">+0.00pp</span></td>
+              </tr>
+              <tr>
+                <td>ARPU</td>
+                <td style="text-align:center">₹247</td>
+                <td style="text-align:center">₹182</td>
+                <td><span class="delta-pill down">₹-65</span></td>
+              </tr>
+              <tr>
+                <td>ARPPU</td>
+                <td style="text-align:center">₹2,279</td>
+                <td style="text-align:center">₹1,672</td>
+                <td><span class="delta-pill down">₹-607</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+          <div class="card">
+            <p class="card-title">Conv% by rank</p>
+            <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+            <div class="chart-wrap" style="height:210px;"><canvas id="ab_conv_raw_rank"></canvas></div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <p class="card-title">ARPU by rank (₹)</p>
+            <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+            <div class="chart-wrap" style="height:210px;"><canvas id="ab_arpu_raw_rank"></canvas></div>
+          </div>
+          <div class="card">
+            <p class="card-title">ARPPU by rank (₹)</p>
+            <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+            <div class="chart-wrap" style="height:210px;"><canvas id="ab_arppu_raw_rank"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXCL >5k -->
+      <div id="cut_5k" class="monet-cut">
+        <div class="caveat-banner" style="margin-bottom:1.1rem;border-radius:var(--radius-sm);">
+          112 payers excluded · ₹17,72,072 revenue removed. Test Conv% ahead: 10.24% vs 10.1%.
+        </div>
+        <div class="two-col" style="margin-bottom:1.1rem;">
+        <div class="card" style="margin-bottom:1.1rem;">
+          <p class="card-title">Overall — Conv%, ARPU, ARPPU</p>
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="post" style="text-align:center">Base</th>
+                <th class="pre" style="text-align:center">Test</th>
+                <th class="delta">Δ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Conv%</td>
+                <td style="text-align:center">10.1%</td>
+                <td style="text-align:center" class="val-up">10.24%</td>
+                <td><span class="delta-pill up">+0.14pp</span></td>
+              </tr>
+              <tr>
+                <td>ARPU</td>
+                <td style="text-align:center">₹90</td>
+                <td style="text-align:center">₹97</td>
+                <td><span class="delta-pill up">+₹7</span></td>
+              </tr>
+              <tr>
+                <td>ARPPU</td>
+                <td style="text-align:center">₹892</td>
+                <td style="text-align:center">₹949</td>
+                <td><span class="delta-pill up">+₹57</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+          <div class="card">
+            <p class="card-title">Conv% by rank</p>
+            <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+            <div class="chart-wrap" style="height:210px;"><canvas id="ab_conv_5k_rank"></canvas></div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <p class="card-title">ARPU by rank (₹)</p>
+            <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+            <div class="chart-wrap" style="height:210px;"><canvas id="ab_arpu_5k_rank"></canvas></div>
+          </div>
+          <div class="card">
+            <p class="card-title">ARPPU by rank (₹)</p>
+            <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+            <div class="chart-wrap" style="height:210px;"><canvas id="ab_arppu_5k_rank"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXCL >10k -->
+      <div id="cut_10k" class="monet-cut">
+        <div class="caveat-banner" style="margin-bottom:1.1rem;border-radius:var(--radius-sm);">
+          53 payers excluded · ₹13,53,728 revenue removed. ARPU and ARPPU essentially flat. Test Conv% marginally ahead: 10.57% vs 10.5%.
+        </div>
+        <div class="two-col" style="margin-bottom:1.1rem;">
+        <div class="card" style="margin-bottom:1.1rem;">
+          <p class="card-title">Overall — Conv%, ARPU, ARPPU</p>
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="post" style="text-align:center">Base</th>
+                <th class="pre" style="text-align:center">Test</th>
+                <th class="delta">Δ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Conv%</td>
+                <td style="text-align:center">10.5%</td>
+                <td style="text-align:center" class="val-up">10.57%</td>
+                <td><span class="delta-pill up">+0.07pp</span></td>
+              </tr>
+              <tr>
+                <td>ARPU</td>
+                <td style="text-align:center">₹121</td>
+                <td style="text-align:center">₹123</td>
+                <td><span class="delta-pill up">+₹2</span></td>
+              </tr>
+              <tr>
+                <td>ARPPU</td>
+                <td style="text-align:center">₹1,155</td>
+                <td style="text-align:center">₹1,159</td>
+                <td><span class="delta-pill up">+₹4</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+          <div class="card">
+            <p class="card-title">Conv% by rank</p>
+            <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+            <div class="chart-wrap" style="height:210px;"><canvas id="ab_conv_10k_rank"></canvas></div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <p class="card-title">ARPU by rank (₹)</p>
+            <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+            <div class="chart-wrap" style="height:210px;"><canvas id="ab_arpu_10k_rank"></canvas></div>
+          </div>
+          <div class="card">
+            <p class="card-title">ARPPU by rank (₹)</p>
+            <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+            <div class="chart-wrap" style="height:210px;"><canvas id="ab_arppu_10k_rank"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXCL >15k -->
+      <div id="cut_15k" class="monet-cut">
+        <div class="caveat-banner" style="margin-bottom:1.1rem;border-radius:var(--radius-sm);">
+          34 payers excluded · ₹11,22,828 revenue removed. Test ahead on all three metrics. Remarkable Test Conv% 21.99% vs Base 17.56%.
+        </div>
+        <div class="two-col" style="margin-bottom:1.1rem;">
+        <div class="card" style="margin-bottom:1.1rem;">
+          <p class="card-title">Overall — Conv%, ARPU, ARPPU</p>
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="post" style="text-align:center">Base</th>
+                <th class="pre" style="text-align:center">Test</th>
+                <th class="delta">Δ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Conv%</td>
+                <td style="text-align:center">10.61%</td>
+                <td style="text-align:center" class="val-up">10.69%</td>
+                <td><span class="delta-pill up">+0.08pp</span></td>
+              </tr>
+              <tr>
+                <td>ARPU</td>
+                <td style="text-align:center">₹136</td>
+                <td style="text-align:center">₹139</td>
+                <td><span class="delta-pill up">+₹3</span></td>
+              </tr>
+              <tr>
+                <td>ARPPU</td>
+                <td style="text-align:center">₹1,283</td>
+                <td style="text-align:center">₹1,299</td>
+                <td><span class="delta-pill up">+₹16</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+          <div class="card">
+            <p class="card-title">Conv% by rank</p>
+            <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+            <div class="chart-wrap" style="height:210px;"><canvas id="ab_conv_15k_rank"></canvas></div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <p class="card-title">ARPU by rank (₹)</p>
+            <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+            <div class="chart-wrap" style="height:210px;"><canvas id="ab_arpu_15k_rank"></canvas></div>
+          </div>
+          <div class="card">
+            <p class="card-title">ARPPU by rank (₹)</p>
+            <div class="legend"><span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span><span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span></div>
+            <div class="chart-wrap" style="height:210px;"><canvas id="ab_arppu_15k_rank"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insights" style="margin-top:1.1rem;">
+        <div class="insight warn"><strong>Raw numbers favour Base — driven by highrollers.</strong> 112 payers spending >₹5k account for ₹17.7L of the gap. Excluding them flips the picture.</div>
+        <div class="insight good"><strong>Excl. >₹10k: cases are flat.</strong> ARPU Base ₹121 vs Test ₹123. ARPPU Base ₹1,155 vs Test ₹1,159. Conv% Test ahead: 10.57% vs 10.5%.</div>
+        <div class="insight good"><strong>Excl. >₹15k: Test ahead on all three metrics.</strong> ARPU ₹139 vs ₹136, ARPPU ₹1,299 vs ₹1,283, Conv% 10.69% vs 10.61%.</div>
+        <div class="insight good"><strong>Remarkable is the strongest signal for Test.</strong> At >₹15k cut: Conv% 21.99% vs 17.56%, ARPU ₹328 vs ₹264. High-rank whales in Test are converting better.</div>
+      </div>
+    </div>
+
+  </div><!-- end ab_page -->
+
+</main>
+
+<footer>
+  Hitwicket Superstars · Internal Analytics · June 2026 &nbsp;·&nbsp;
+  <span id="footerLabel">Post: May 31 – Jun 2 vs Pre: May 24–26</span>
+</footer>
+
+<script src="kit/report.js"></script>
+<script src="kit/whale-mm.js"></script>
+</body>
+</html>

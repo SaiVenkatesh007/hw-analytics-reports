@@ -1,6 +1,6 @@
 PvP Matchmaking — Phase 1 Baseline Read
 Human vs human ARENAS · calibratedTotalInternalStrength · Jun 21–25, 2026
-Dashboard: [link]
+Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/pvp_mm_phase1_baseline.html
 
 *Context: Phase 1 empirical baseline — 5-day window only*
    - Scope: human vs human ranked PvP (ARENAS, status = completed)

@@ -1,6 +1,6 @@
 Increased Wicket Chance — Updated (Clean) Read
 Real-user matched samples · Base = Test per bracket · 4 power brackets (0–50k to 100k+) · Match-level only · Jun 2026
-Dashboard: [link]
+Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/wicket_chance_ab_clean_fix.html
 
 *Context: this supersedes the earlier read*
    - Removed bot matches (opp must also be a real user), matched base sample size to test per bracket, merged low-base brackets
