@@ -640,15 +640,34 @@ HWReport.initWhaleMm = function () {
     document.getElementById('caveatBanner').style.display = '';
   }
 
+  function showJun29() {
+    document.getElementById('ranksplit_page').classList.add('hidden');
+    document.getElementById('overall_page').classList.add('hidden');
+    document.getElementById('ab_page').classList.add('hidden');
+    document.getElementById('ab_jun29_page').classList.remove('hidden');
+    document.getElementById('compLabel').textContent = 'Jun 15 – Jun 29';
+    document.getElementById('caveatBanner').style.display = 'none';
+    document.getElementById('footerLabel').textContent = 'Winstreak A/B · Jun 15 – Jun 29';
+    if (!HWReport.charts['j29_eng_overall']) renderJun29();
+    renderJun29KPIs();
+  }
+
+  function hideJun29() {
+    document.getElementById('ab_jun29_page').classList.add('hidden');
+  }
+
   // Patch the existing timeline change handler
   document.getElementById('timelineSelect').addEventListener('change', e => {
     const val = e.target.value;
     hideOverall();
     hideAB();
+    hideJun29();
     if (val === 'overall') {
       showOverall();
     } else if (val === 'ab') {
       showAB();
+    } else if (val === 'ab_jun29') {
+      showJun29();
     } else {
       document.getElementById('ranksplit_page').classList.remove('hidden');
       document.getElementById('caveatBanner').style.display = '';
@@ -764,6 +783,8 @@ HWReport.initWhaleMm = function () {
     const fmtFn = fmt === 'pct' ? v => v.toFixed(1) + '%'
                 : fmt === 'inr' ? v => '₹' + v.toLocaleString()
                 : v => v.toFixed(2);
+    const yScale = { ...baseOpts.scales.y };
+    if (fmt === 'inr') yScale.ticks = { ...yScale.ticks, callback: v => '₹' + v.toLocaleString() };
     HWReport.charts[id] = new Chart(el, {
       type: 'bar',
       data: {
@@ -779,7 +800,7 @@ HWReport.initWhaleMm = function () {
           legend: { display: true, position: 'top', labels: { font:{size:10}, color:tc, boxWidth:10, padding:10 } },
           tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${fmtFn(ctx.parsed.y)}` } }
         },
-        scales: { x: baseOpts.scales.x, y: { ...baseOpts.scales.y } }
+        scales: { x: baseOpts.scales.x, y: yScale }
       }
     });
   }
@@ -838,7 +859,127 @@ HWReport.initWhaleMm = function () {
   }
   window.switchCut = switchCut;
 
-  showAB();
+  // ══════════════════════════════════════════════
+  // JUN 15–29 READ + D3 WHALES
+  // ══════════════════════════════════════════════
+  const jun29Data = {
+    ranks: ['Rookie','Challenger','Proven','Accomplished','Remarkable'],
+    eng: {
+      base: { mdau: 3.70, wr: 75, rwr: 65, bot: 31, normalMpd: 0.81, ndr: 77.4 },
+      test: { mdau: 3.61, wr: 73, rwr: 60, bot: 33, normalMpd: 1.07, ndr: 77.1 }
+    },
+    engRank: {
+      base: { normalMpd: [0.48, 0.65, 0.88, 1.18, 2.21] },
+      test: { normalMpd: [0.77, 0.90, 1.16, 1.43, 2.40] }
+    },
+    d3whales: {
+      total: 383,
+      arpu3: {
+        base: { n: 183, arpu: 2336, median: 1446 },
+        test: { n: 200, arpu: 2082, median: 1349 }
+      },
+      arpu7: {
+        base: { n: 130, arpu: 2373, median: 1546 },
+        test: { n: 132, arpu: 2972, median: 1860 }
+      },
+      region: {
+        arpu3: { base: { india: 2206, intl: 2439 }, test: { india: 1908, intl: 2249 } },
+        arpu7: { base: { india: 2182, intl: 2532 }, test: { india: 2648, intl: 3327 } }
+      },
+      sku: {
+        labels: ['SP', 'HC_Pack', 'Others', 'TP', 'LiveOps', 'Monthly Offer'],
+        arpu3: { base: [851, 665, 674, 84, 45, 0], test: [792, 459, 660, 96, 25, 27] },
+        arpu7: { base: [927, 531, 696, 103, 84, 22], test: [919, 758, 947, 203, 54, 61] }
+      }
+    }
+  };
+
+  function renderJun29KPIs() {
+    const d = jun29Data;
+    const mdauDelta = (d.eng.test.mdau - d.eng.base.mdau).toFixed(2);
+    const arpu7Delta = d.d3whales.arpu7.test.arpu - d.d3whales.arpu7.base.arpu;
+    document.getElementById('kpiRow').innerHTML = `
+      <div class="kpi-card"><p class="kpi-label">MDAU — gap narrowing</p><p class="kpi-value neutral">${d.eng.base.mdau} vs ${d.eng.test.mdau}</p><p class="kpi-note">essentially flat (${mdauDelta} Test)</p></div>
+      <div class="kpi-card" style="border-color:var(--teal);background:var(--teal-light);"><p class="kpi-label">D3 whale ARPU7 ★</p><p class="kpi-value up">+₹${arpu7Delta.toLocaleString()}</p><p class="kpi-note">Test ₹${d.d3whales.arpu7.test.arpu.toLocaleString()} vs Base ₹${d.d3whales.arpu7.base.arpu.toLocaleString()}</p></div>
+      <div class="kpi-card"><p class="kpi-label">Whale NDR</p><p class="kpi-value neutral">${d.eng.base.ndr}% / ${d.eng.test.ndr}%</p><p class="kpi-note">both arms up ~77%</p></div>
+      <div class="kpi-card"><p class="kpi-label">D3 revenue whales</p><p class="kpi-value neutral">${d.d3whales.total}</p><p class="kpi-note">183 Base · 200 Test (mature D3)</p></div>
+      <div class="kpi-card"><p class="kpi-label">D3 whale ARPU3</p><p class="kpi-value down">−₹${(d.d3whales.arpu3.base.arpu - d.d3whales.arpu3.test.arpu).toLocaleString()}</p><p class="kpi-note">back-loaded — recovers by D7</p></div>
+    `;
+  }
+
+  function renderJun29SkuInsights(cut) {
+    const lines = cut === 'arpu3'
+      ? [
+          ins('warn', '<strong>HC_Pack drives D3 dip.</strong> Test ARPU3 ₹459 vs Base ₹665 (−₹206). Conv% also lower (−4.5pp).'),
+          ins('', '<strong>SP still dominant.</strong> ~₹800 ARPU3 both arms; total SP revenue flat/higher in Test — more whales dilute per-user ARPU.'),
+          ins('good', '<strong>Small Test gains in TP and Monthly Offer</strong> — not enough to offset HC_Pack at D3.')
+        ]
+      : [
+          ins('good', '<strong>Test ahead on D7 across tail SKUs.</strong> Others +₹251, HC_Pack +₹227, TP +₹100 ARPU7 per user.'),
+          ins('good', '<strong>SP flat through D7.</strong> Core offer monetisation unchanged — ₹919 vs ₹927.'),
+          ins('warn', '<strong>International lifts D7.</strong> ARPU7 +₹795 Intl vs +₹466 India in Test. Others bucket includes uncategorized offers.')
+        ];
+    renderInsights('j29_sku_insights', lines);
+  }
+
+  function renderJun29SkuChart(cut) {
+    const sku = jun29Data.d3whales.sku;
+    const title = cut === 'arpu3' ? 'SKU ARPU3 — ₹ per D3 whale user' : 'SKU ARPU7 — ₹ per D3 whale user (mature D7 installs)';
+    document.getElementById('j29_sku_chart_title').textContent = title;
+    if (HWReport.charts['j29_d3_sku_arpu']) {
+      HWReport.charts['j29_d3_sku_arpu'].destroy();
+      delete HWReport.charts['j29_d3_sku_arpu'];
+    }
+    buildABBar('j29_d3_sku_arpu', sku[cut].base, sku[cut].test, {
+      fmt: 'inr',
+      labels: sku.labels,
+      yMin: 0
+    });
+    renderJun29SkuInsights(cut);
+  }
+
+  function renderJun29() {
+    const e = jun29Data.eng;
+    const er = jun29Data.engRank;
+    const d3 = jun29Data.d3whales;
+
+    buildABGrouped('j29_eng_overall',
+      [e.base.mdau, e.base.wr, e.base.rwr, e.base.bot],
+      [e.test.mdau, e.test.wr, e.test.rwr, e.test.bot],
+      ['MDAU', 'Win Rate %', 'Real-User WR %', 'Bot %']
+    );
+    buildABBar('j29_normal_rank', er.base.normalMpd, er.test.normalMpd);
+
+    buildABGrouped('j29_d3_arpu_overall',
+      [d3.arpu3.base.arpu, d3.arpu7.base.arpu],
+      [d3.arpu3.test.arpu, d3.arpu7.test.arpu],
+      ['ARPU3 (₹)', 'ARPU7 (₹)'],
+      { fmt: 'inr' }
+    );
+
+    const r = d3.region;
+    document.getElementById('j29_d3_region_tbl').innerHTML = `
+      <thead>
+        <tr><th>Region</th><th>Window</th><th class="post">Base</th><th class="pre">Test</th><th class="delta">Δ</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>India</td><td>ARPU3</td><td style="text-align:center">₹${r.arpu3.base.india.toLocaleString()}</td><td style="text-align:center">₹${r.arpu3.test.india.toLocaleString()}</td><td><span class="delta-pill ${r.arpu3.test.india - r.arpu3.base.india >= 0 ? 'up' : 'down'}">₹${r.arpu3.test.india - r.arpu3.base.india >= 0 ? '+' : ''}${(r.arpu3.test.india - r.arpu3.base.india).toLocaleString()}</span></td></tr>
+        <tr><td>International</td><td>ARPU3</td><td style="text-align:center">₹${r.arpu3.base.intl.toLocaleString()}</td><td style="text-align:center">₹${r.arpu3.test.intl.toLocaleString()}</td><td><span class="delta-pill ${r.arpu3.test.intl - r.arpu3.base.intl >= 0 ? 'up' : 'down'}">₹${r.arpu3.test.intl - r.arpu3.base.intl >= 0 ? '+' : ''}${(r.arpu3.test.intl - r.arpu3.base.intl).toLocaleString()}</span></td></tr>
+        <tr><td>India</td><td>ARPU7</td><td style="text-align:center">₹${r.arpu7.base.india.toLocaleString()}</td><td style="text-align:center">₹${r.arpu7.test.india.toLocaleString()}</td><td><span class="delta-pill up">+₹${(r.arpu7.test.india - r.arpu7.base.india).toLocaleString()}</span></td></tr>
+        <tr><td>International</td><td>ARPU7</td><td style="text-align:center">₹${r.arpu7.base.intl.toLocaleString()}</td><td style="text-align:center">₹${r.arpu7.test.intl.toLocaleString()}</td><td><span class="delta-pill up">+₹${(r.arpu7.test.intl - r.arpu7.base.intl).toLocaleString()}</span></td></tr>
+      </tbody>`;
+
+    renderJun29SkuChart('arpu3');
+  }
+
+  function switchD3Sku(cut, btn) {
+    document.querySelectorAll('#ab_jun29_page .ab-toggle').forEach(function (el) { el.classList.remove('active'); });
+    btn.classList.add('active');
+    renderJun29SkuChart(cut);
+  }
+  window.switchD3Sku = switchD3Sku;
+
+  showJun29();
 };
 
 document.addEventListener('DOMContentLoaded', function () {

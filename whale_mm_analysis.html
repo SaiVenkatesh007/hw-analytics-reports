@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Whale PvP Matchmaking — Impact Analysis</title>
-<meta name="description" content="Whale MM win-streak reversion AB read — Test does not hurt monetisation once highrollers excluded; NDR flat; matches/day is the metric to watch.">
+<meta name="description" content="Whale MM win-streak reversion AB — Jun 15–29 extended read. MDAU essentially flat; D3 whale ARPU7 ahead in Test. Separate May 15–Jun 21 read preserved.">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <link rel="stylesheet" href="kit/report.css">
 </head>
@@ -20,7 +20,8 @@
   <div class="header-right">
     <div class="timeline-select-wrap">
       <select id="timelineSelect">
-        <option value="ab" selected>Winstreak A/B Read</option>
+        <option value="ab_jun29" selected>Winstreak A/B · Jun 15–29</option>
+        <option value="ab">Winstreak A/B · May 15 – Jun 21</option>
         <option value="overall">Overall</option>
         <option value="5day">May 31 – Jun 4 (5-Day)</option>
         <option value="3day">May 31 – Jun 2 (3-Day)</option>
@@ -773,6 +774,118 @@
     </div>
 
   </div><!-- end ab_page -->
+
+  <!-- ══ JUN 15–29 A/B + D3 WHALES PAGE ══ -->
+  <div id="ab_jun29_page" class="hidden">
+
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">Winstreak A/B Read · Jun 15 – Jun 29</p>
+        <p class="section-title">3-Win Streak vs 4-Win Streak Reversion — Extended Read</p>
+        <p class="section-sub">
+          <span class="ab-tag base">Base</span>&nbsp; 1 in 5 wins &nbsp;·&nbsp;
+          <span class="ab-tag test">Test</span>&nbsp; 1 in 4 wins &nbsp;·&nbsp;
+          Separate from the May 15 – Jun 21 read — same experiment, longer window.
+        </p>
+      </div>
+      <div class="read-box">
+        <strong>Read:</strong> MDAU is essentially flat (3.70 vs 3.61) — the engagement gap is narrowing vs earlier windows.
+        NDR is up in both arms (~77%) with no meaningful cross-arm delta. Real-user WR is lower in Test (65% vs 60%) as expected with more frequent normal MM.
+        MM-whale monetisation is flat once highrollers are excluded (ARPU ₹167 vs ₹171 excl. &gt;₹10k).
+        Among <strong>new-install D3 revenue whales</strong> (₹700 India / ₹1,000 Intl by D3), ARPU3 is modestly lower in Test (−₹254), but <strong>ARPU7 is ahead in Test (+₹599)</strong> — spend is back-loaded, driven by HC_Pack and Others recovering by D7.
+        <strong>Continue Test case.</strong>
+      </div>
+    </div>
+
+    <!-- ENGAGEMENT -->
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">01 — Engagement & Retention</p>
+        <p class="section-title">Essentially flat MDAU; NDR up in both arms</p>
+        <p class="section-sub">Eligible MM whales · Jun 15 – Jun 29.</p>
+      </div>
+      <div class="two-col" style="margin-bottom:1.1rem;">
+        <div class="card">
+          <p class="card-title">Matches/day, Win Rate, Real-User WR, Bot%</p>
+          <div class="legend">
+            <span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span>
+            <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span>
+          </div>
+          <div class="chart-wrap" style="height:220px;"><canvas id="j29_eng_overall"></canvas></div>
+        </div>
+        <div class="card">
+          <p class="card-title">Normal MM matches/day by rank</p>
+          <div class="legend">
+            <span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span>
+            <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span>
+          </div>
+          <div class="chart-wrap" style="height:220px;"><canvas id="j29_normal_rank"></canvas></div>
+        </div>
+      </div>
+      <div class="insights">
+        <div class="insight good"><strong>MDAU essentially flat.</strong> Base 3.70 vs Test 3.61 — gap narrowing vs earlier reads. Not a churn signal.</div>
+        <div class="insight good"><strong>NDR up in both arms (~77%).</strong> Base 77.4% vs Test 77.1%. More hard matches are not driving whales away.</div>
+        <div class="insight warn"><strong>Real-user WR lower in Test (65% vs 60%).</strong> Expected — Test triggers normal MM at 1.07 vs 0.81 matches/day.</div>
+      </div>
+    </div>
+
+    <!-- D3 WHALES OVERALL -->
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">02 — New User D3 Revenue Whales</p>
+        <p class="section-title">ARPU3 dips, ARPU7 ahead in Test</p>
+        <p class="section-sub">Users hitting ₹700 (India) or ₹1,000 (International) cumulative revenue by D3 of install · Mature install cohorts (D3 ≤ Jun 26, D7 ≤ Jun 22) · Not restricted to MM-eligible whales · 383 D3 whales total.</p>
+      </div>
+      <div class="two-col" style="margin-bottom:1.1rem;">
+        <div class="card">
+          <p class="card-title">ARPU3 & ARPU7 — Base vs Test (₹)</p>
+          <div class="legend">
+            <span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span>
+            <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span>
+          </div>
+          <div class="chart-wrap" style="height:240px;"><canvas id="j29_d3_arpu_overall"></canvas></div>
+        </div>
+        <div class="card">
+          <p class="card-title">ARPU by region — D3 vs D7</p>
+          <table class="comp-table" id="j29_d3_region_tbl"></table>
+        </div>
+      </div>
+      <div class="insights">
+        <div class="insight warn"><strong>ARPU3 modestly lower in Test.</strong> ₹2,082 vs ₹2,336 (−₹254 mean). HC_Pack and SP softer in first 3 days.</div>
+        <div class="insight good"><strong>ARPU7 ahead in Test (+₹599).</strong> ₹2,972 vs ₹2,373. Median also higher (₹1,860 vs ₹1,546). International drives the D7 lift (+₹795).</div>
+        <div class="insight good"><strong>HC_Pack recovers by D7.</strong> D3 ARPU −₹206 → D7 +₹227 per user. Early dip is timing, not lost LTV.</div>
+      </div>
+    </div>
+
+    <!-- SKU -->
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">03 — D3 Whale SKU Split</p>
+        <p class="section-title">Where the D3 dip and D7 recovery come from</p>
+        <p class="section-sub">ARPU per D3 whale user by SKU · Toggle D3 vs D7 window.</p>
+      </div>
+      <div class="ab-toggle-row">
+        <button class="ab-toggle active" onclick="switchD3Sku('arpu3', this)">ARPU3 (D0–D3)</button>
+        <button class="ab-toggle" onclick="switchD3Sku('arpu7', this)">ARPU7 (D0–D7)</button>
+      </div>
+      <div class="card" style="margin-bottom:1.1rem;">
+        <p class="card-title" id="j29_sku_chart_title">SKU ARPU3 — ₹ per D3 whale user</p>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>Base</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--teal)"></span>Test</span>
+        </div>
+        <div class="chart-wrap" style="height:300px;"><canvas id="j29_d3_sku_arpu"></canvas></div>
+      </div>
+      <div class="insights" id="j29_sku_insights"></div>
+    </div>
+
+    <div class="section">
+      <div class="read-box" style="border-color:var(--teal);background:var(--teal-light);">
+        <strong>Recommendation:</strong> Continue Test case. Engagement gap has narrowed; D7 LTV among fast payers is ahead in Test. No monetisation red flag once highroller noise and immature install cohorts are accounted for.
+      </div>
+    </div>
+
+  </div><!-- end ab_jun29_page -->
 
 </main>
 

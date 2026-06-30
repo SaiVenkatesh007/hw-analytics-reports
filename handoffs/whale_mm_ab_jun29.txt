@@ -1,0 +1,35 @@
+Whale MM A/B Read — Win Streak Reversion (Jun 15 – Jun 29)
+_Base: 1 in 5 wins reverts to normal MM (4-win streak) | Test: 1 in 4 wins (3-win streak)_
+Extended read — separate from May 15 – Jun 21 handoff. Same dashboard, new timeline tab.
+
+Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/whale_mm_analysis.html
+(Select "Winstreak A/B · Jun 15–29" in the timeline dropdown)
+
+*Engagement & Retention*
+
+1. MDAU — essentially flat; gap narrowing
+Base 3.70 vs Test 3.61. Not a churn signal — gap has narrowed vs earlier windows.
+
+2. NDR — both arms up (~77%)
+Base 77.4% vs Test 77.1%. Cross-arm delta unchanged. More hard matches are not driving whales away.
+
+3. Real-user WR — expected drop in Test
+65% vs 60%. Test triggers normal MM at 1.07 vs 0.81 matches/day — by design.
+
+4. MM-whale monetisation — flat once highrollers excluded
+Excl. >₹10k: ARPU Base ₹167 vs Test ₹171. Conv% Test ahead at 14.70% vs 14.35%.
+
+*New User D3 Revenue Whales*
+(₹700 India / ₹1,000 Intl by D3 · mature installs D3 ≤ Jun 26, D7 ≤ Jun 22 · 383 whales · not MM-eligible population)
+
+5. ARPU3 modestly lower in Test
+Base ₹2,336 vs Test ₹2,082 (−₹254). HC_Pack and SP softer in first 3 days.
+
+6. ARPU7 ahead in Test (+₹599) ★
+Base ₹2,373 vs Test ₹2,972. Median ₹1,860 vs ₹1,546. Spend is back-loaded, not lost.
+
+7. SKU — HC_Pack recovers; Others drives D7 lift
+D3: HC_Pack ARPU −₹206 in Test. D7: HC_Pack +₹227, Others +₹251, TP +₹100. SP flat through D7.
+International ARPU7 +₹795 in Test vs +₹466 India.
+
+*Read:* Continue Test case. MDAU gap narrowing; D7 LTV among D3 revenue whales is ahead in Test. No monetisation red flag.
