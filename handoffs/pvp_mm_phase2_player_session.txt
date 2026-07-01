@@ -1,0 +1,29 @@
+PvP Matchmaking — Phase 2 Player & Session Read
+Human vs human ARENAS · rolling-25 + sessions · Jun 15–30, 2026
+Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/pvp_mm_phase2_player_session.html
+
+*Context: Phase 2 — player rolling quality + session experience (builds on Phase 1 baseline)*
+   - Window: Jun 15–30 (pvp_extra_data power available from Jun 15)
+   - Rolling-25 = each user's last 25 human PvP matches in window
+   - Blowout cluster = >40% of last 25 matches one-sided; chronic mismatch = <20% close (rare)
+
+*1. Median rolling experience is healthy — blowout streaks are the real tail*
+   - 2.8M unique matches; 220K PvP users; 72K users with ≥25 matches (33%)
+   - Match-level: 55.5% close, 27.8% one-sided (aligned with Phase 1)
+   - Median rolling close %: 56% (rolling-25 eligible users)
+   - Blowout cluster: 13.8% of rolling-25 users (~10K users)
+   - Chronic mismatch: 0.5% only — too rare to headline
+
+*2. Blowout cluster concentrates in high-frequency play and 75k+ power*
+   - Casual: 12.3% blowout cluster, 56% median rolling close
+   - Regular: 16.0%, 52%
+   - High-freq (15+/day): 26.0%, 48% — ~1,119 rolling-25 users
+   - 75k–100k power: 25.5% blowout cluster; 100k+: 20.7%
+   - High-freq × Supreme+: 30.8% blowout cluster (n=312)
+
+*3. Session marathon frustration is not a product problem*
+   - 89% of sessions are 1–3 matches; 8+ match sessions are 1.2% of all sessions
+   - Zero-close marathons (8+ matches, 0 close): 0.9% of long sessions — negligible
+   - Below-min in 8+ sessions: 5.4% — real but thin base; not the lead story
+
+*Takeaway:* Monitor blowout cluster rate (not chronic mismatch) for high-frequency players and 75k+ power before any MM window changes. Player-level sustained blowout exposure is the actionable tail; session frustration is rare.

@@ -18,6 +18,17 @@
       "handoff": "handoffs/whale_mm_analysis.txt"
     },
     {
+      "slug": "pvp_mm_phase2_player_session",
+      "title": "PvP Matchmaking — Phase 2 Player & Session",
+      "owner": "Venkatesh",
+      "date": "2026-06-30",
+      "date_label": "Jun 15–30, 2026",
+      "tags": ["matchmaking", "pvp", "rolling", "session"],
+      "thesis": "Median rolling close ~56% is healthy — monitor blowout cluster (~14%) in high-freq and 75k+ power; session frustration is rare.",
+      "description": "Phase 2 player rolling-25 and session read — blowout cluster tail in high-frequency and top power; marathon frustration negligible.",
+      "handoff": "handoffs/pvp_mm_phase2_player_session.txt"
+    },
+    {
       "slug": "pvp_mm_phase1_baseline",
       "title": "PvP Matchmaking — Phase 1 Baseline",
       "owner": "Venkatesh",
