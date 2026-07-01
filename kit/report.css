@@ -159,8 +159,7 @@ footer a { color: var(--blue); text-decoration: none; }
   padding: 1.2rem 1.4rem; text-decoration: none; color: inherit; transition: border-color 0.15s; display: block;
 }
 .report-card:hover { border-color: var(--blue-mid); }
-.report-card-muted { opacity: 0.72; }
-.report-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+.report-card-top { display: flex; align-items: center; margin-bottom: 0.6rem; }
 .report-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 0.25rem; }
 .report-card .meta { font-size: 11px; color: var(--text-tertiary); font-family: 'DM Mono', monospace; margin-bottom: 0.5rem; }
 .report-card .thesis { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
@@ -175,13 +174,6 @@ footer a { color: var(--blue); text-decoration: none; }
   font-size: 11px; font-weight: 600; font-family: 'DM Mono', monospace;
   display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.status-badge {
-  font-size: 10px; font-weight: 600; font-family: 'DM Mono', monospace;
-  padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em;
-}
-.status-current { background: var(--teal-light); color: var(--teal); }
-.status-superseded { background: var(--amber-light); color: var(--amber); }
-.status-archived { background: var(--bg); color: var(--text-tertiary); }
 .catalog-empty { font-size: 13px; color: var(--text-secondary); padding: 1rem 0; }
 
 /* Report chrome actions */

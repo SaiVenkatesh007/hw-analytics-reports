@@ -37,18 +37,14 @@ HWReport.initCatalog = function () {
         }
 
         listEl.innerHTML = filtered.map(function (r) {
-          var statusCls = r.status === 'current' ? 'status-current'
-            : r.status === 'superseded' ? 'status-superseded' : 'status-archived';
-          var statusLabel = r.status.charAt(0).toUpperCase() + r.status.slice(1);
           var tagHtml = r.tags.map(function (t) {
             return '<span class="tag-pill">' + t + '</span>';
           }).join('');
 
           return (
-            '<a class="report-card' + (r.status !== 'current' ? ' report-card-muted' : '') + '" href="' + r.slug + '.html">' +
+            '<a class="report-card" href="' + r.slug + '.html">' +
               '<div class="report-card-top">' +
                 '<span class="owner-badge" title="' + r.owner + '">' + ownerInitials(r.owner) + '</span>' +
-                '<span class="status-badge ' + statusCls + '">' + statusLabel + '</span>' +
               '</div>' +
               '<h3>' + r.title + '</h3>' +
               '<p class="meta">' + r.date_label + ' · ' + r.owner + '</p>' +
