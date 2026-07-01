@@ -1,0 +1,45 @@
+{
+  "site": {
+    "title": "Hitwicket Analytics — Stakeholder Reports",
+    "description": "Interactive analysis reads for Hitwicket Superstars stakeholders.",
+    "base_url": "https://saivenkatesh007.github.io/hw-analytics-reports"
+  },
+  "reports": [
+    {
+      "slug": "whale_mm_analysis",
+      "title": "Whale MM — Win Streak Reversion A/B",
+      "owner": "Venkatesh",
+      "date": "2026-06-29",
+      "date_label": "Jun 15 – Jun 29, 2026",
+      "tags": ["matchmaking", "whale", "ab-test"],
+      "status": "current",
+      "thesis": "MDAU essentially flat (gap narrowing); D3 whale ARPU7 ahead in Test (+₹599). Continue Test case. May 15 – Jun 21 read preserved in dashboard.",
+      "description": "Whale MM win-streak reversion AB — Jun 15–29 extended read. MDAU essentially flat; D3 whale ARPU7 ahead in Test.",
+      "handoff": "handoffs/whale_mm_analysis.txt"
+    },
+    {
+      "slug": "pvp_mm_phase1_baseline",
+      "title": "PvP Matchmaking — Phase 1 Baseline",
+      "owner": "Venkatesh",
+      "date": "2026-06-25",
+      "date_label": "Jun 21–25, 2026",
+      "tags": ["matchmaking", "baseline", "pvp"],
+      "status": "current",
+      "thesis": "Quality is healthy on average, but high-frequency and top-end players see ~10pp fewer close matches — monitor before changing MM windows.",
+      "description": "PvP matchmaking Phase 1 baseline — 55% close matches on average; high-frequency and top-end players underserved.",
+      "handoff": "handoffs/pvp_mm_phase1_baseline.txt"
+    },
+    {
+      "slug": "wicket_chance_ab_clean_fix",
+      "title": "Increased Wicket Chance — A/B Test (Clean Read)",
+      "owner": "Venkatesh",
+      "date": "2026-06-01",
+      "date_label": "Jun 2026",
+      "tags": ["pvp", "ab-test", "experiment"],
+      "status": "current",
+      "thesis": "The current wicket-chance increase is too small to change how players play or to shift match balance.",
+      "description": "Wicket Chance AB clean read — increase too small to change how players play; median wickets unchanged at 2.",
+      "handoff": "handoffs/wicket_chance_ab_clean_fix.txt"
+    }
+  ]
+}

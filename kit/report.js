@@ -144,6 +144,16 @@ HWReport.baseLegend = function () {
 
 HWReport.initChrome = function () {
   if (document.querySelector('.report-list')) return;
+
+  var slug = document.body.getAttribute('data-report-slug');
+  if (!slug) {
+    var page = window.location.pathname.split('/').pop() || '';
+    if (page.endsWith('.html') && page !== 'index.html') {
+      slug = page.replace('.html', '');
+    }
+  }
+  var owner = document.body.getAttribute('data-report-owner') || '';
+
   var header = document.querySelector('header');
   if (header && !header.querySelector('.back-to-index')) {
     var brand = header.querySelector('.brand');
@@ -161,6 +171,47 @@ HWReport.initChrome = function () {
       header.insertBefore(link, header.firstChild);
     }
   }
+
+  if (header && slug && !header.querySelector('.header-actions')) {
+    var actions = document.createElement('div');
+    actions.className = 'header-actions';
+    var copyLinkBtn = document.createElement('button');
+    copyLinkBtn.type = 'button';
+    copyLinkBtn.className = 'chrome-btn';
+    copyLinkBtn.textContent = 'Copy link';
+    copyLinkBtn.addEventListener('click', function () {
+      HWReport._copyText(window.location.href, copyLinkBtn, 'Copied!');
+    });
+    actions.appendChild(copyLinkBtn);
+    if (slug) {
+      var copyHandoffBtn = document.createElement('button');
+      copyHandoffBtn.type = 'button';
+      copyHandoffBtn.className = 'chrome-btn';
+      copyHandoffBtn.textContent = 'Copy handoff';
+      copyHandoffBtn.addEventListener('click', function () {
+        fetch('handoffs/' + slug + '.txt')
+          .then(function (r) {
+            if (!r.ok) throw new Error('not found');
+            return r.text();
+          })
+          .then(function (text) {
+            HWReport._copyText(text, copyHandoffBtn, 'Copied!');
+          })
+          .catch(function () {
+            copyHandoffBtn.textContent = 'No handoff file';
+            setTimeout(function () { copyHandoffBtn.textContent = 'Copy handoff'; }, 2000);
+          });
+      });
+      actions.appendChild(copyHandoffBtn);
+    }
+    var headerRight = header.querySelector('.header-right');
+    if (headerRight) {
+      headerRight.insertBefore(actions, headerRight.firstChild);
+    } else {
+      header.appendChild(actions);
+    }
+  }
+
   var footer = document.querySelector('footer');
   if (footer && !footer.querySelector('.footer-nav')) {
     var nav = document.createElement('p');
@@ -172,6 +223,58 @@ HWReport.initChrome = function () {
     nav.appendChild(flink);
     footer.insertBefore(nav, footer.firstChild);
   }
+
+  if (footer && slug && !footer.querySelector('.footer-actions')) {
+    if (owner) {
+      var ownerLine = document.createElement('p');
+      ownerLine.className = 'footer-meta';
+      ownerLine.textContent = 'Analyst: ' + owner;
+      footer.insertBefore(ownerLine, footer.firstChild);
+    }
+    var fActions = document.createElement('div');
+    fActions.className = 'footer-actions';
+    var flCopy = document.createElement('button');
+    flCopy.type = 'button';
+    flCopy.className = 'chrome-btn';
+    flCopy.textContent = 'Copy report URL';
+    flCopy.addEventListener('click', function () {
+      HWReport._copyText(window.location.href, flCopy, 'Copied!');
+    });
+    fActions.appendChild(flCopy);
+    footer.insertBefore(fActions, footer.querySelector('.footer-nav') || footer.firstChild);
+  }
+};
+
+HWReport._copyText = function (text, btn, okLabel) {
+  var done = function () {
+    if (!btn) return;
+    var prev = btn.textContent;
+    btn.textContent = okLabel || 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function () {
+      btn.textContent = prev;
+      btn.classList.remove('copied');
+    }, 2000);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(function () {
+      HWReport._copyTextFallback(text, done);
+    });
+  } else {
+    HWReport._copyTextFallback(text, done);
+  }
+};
+
+HWReport._copyTextFallback = function (text, cb) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch (e) { /* ignore */ }
+  document.body.removeChild(ta);
+  if (cb) cb();
 };
 
 document.addEventListener('DOMContentLoaded', function () {

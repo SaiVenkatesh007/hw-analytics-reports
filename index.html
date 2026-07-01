@@ -4,18 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hitwicket Analytics Reports</title>
+<meta name="description" content="Interactive stakeholder analysis reads for Hitwicket Superstars — PvP, matchmaking, experiments, and monetisation.">
+<meta property="og:title" content="Hitwicket Analytics — Stakeholder Reports">
+<meta property="og:description" content="Interactive analysis reads for stakeholders.">
+<meta property="og:url" content="https://saivenkatesh007.github.io/hw-analytics-reports/">
+<meta property="og:type" content="website">
 <link rel="stylesheet" href="kit/report.css">
-<style>
-  .index-wrap { max-width: 720px; margin: 3rem auto; padding: 0 2rem; }
-  .index-wrap h2 { font-size: 22px; font-weight: 600; margin-bottom: 0.5rem; }
-  .index-wrap p { color: var(--text-secondary); font-size: 14px; margin-bottom: 2rem; }
-  .report-list { display: flex; flex-direction: column; gap: 12px; }
-  .report-card { background: var(--surface); border: 0.5px solid var(--border-strong); border-radius: var(--radius); padding: 1.2rem 1.4rem; text-decoration: none; color: inherit; transition: border-color 0.15s; }
-  .report-card:hover { border-color: var(--blue-mid); }
-  .report-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 0.25rem; }
-  .report-card .meta { font-size: 11px; color: var(--text-tertiary); font-family: 'DM Mono', monospace; margin-bottom: 0.5rem; }
-  .report-card .thesis { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
-</style>
 </head>
 <body>
 <header>
@@ -25,24 +19,10 @@
 <div class="index-wrap">
   <h2>Reports</h2>
   <p>Interactive analysis reads for stakeholders. Each report links to its GChat handoff and source notebook.</p>
-  <div class="report-list">
-    <a class="report-card" href="whale_mm_analysis.html">
-      <h3>Whale MM — Win Streak Reversion A/B</h3>
-      <p class="meta">Jun 15 – Jun 29, 2026 · Matchmaking · Whale segment</p>
-      <p class="thesis">MDAU essentially flat (gap narrowing); D3 whale ARPU7 ahead in Test (+₹599). Continue Test case. May 15 – Jun 21 read preserved in dashboard.</p>
-    </a>
-    <a class="report-card" href="pvp_mm_phase1_baseline.html">
-      <h3>PvP Matchmaking — Phase 1 Baseline</h3>
-      <p class="meta">Jun 21–25, 2026 · Matchmaking · Baseline</p>
-      <p class="thesis">Quality is healthy on average, but high-frequency and top-end players see ~10pp fewer close matches — monitor before changing MM windows.</p>
-    </a>
-    <a class="report-card" href="wicket_chance_ab_clean_fix.html">
-      <h3>Increased Wicket Chance — A/B Test (Clean Read)</h3>
-      <p class="meta">Jun 2026 · PvP Experiment · AB test</p>
-      <p class="thesis">The current wicket-chance increase is too small to change how players play or to shift match balance.</p>
-    </a>
-  </div>
+  <div id="catalog-filters" class="catalog-filters"></div>
+  <div id="report-list" class="report-list"></div>
 </div>
-<footer>Hitwicket Analytics · reports/index.html</footer>
+<footer>Hitwicket Analytics · <a href="catalog.json">catalog.json</a></footer>
+<script src="kit/index.js"></script>
 </body>
 </html>

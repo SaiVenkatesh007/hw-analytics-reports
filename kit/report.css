@@ -143,6 +143,61 @@ header a.data-link.green:hover { background: var(--teal-light); }
 .j29-rank-panel.active { display: block; }
 footer a { color: var(--blue); text-decoration: none; }
 
+/* Index / catalog */
+.index-wrap { max-width: 720px; margin: 3rem auto; padding: 0 2rem; }
+.index-wrap h2 { font-size: 22px; font-weight: 600; margin-bottom: 0.5rem; }
+.index-wrap > p { color: var(--text-secondary); font-size: 14px; margin-bottom: 1.25rem; }
+.catalog-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
+.filter-chip {
+  padding: 5px 12px; font-size: 12px; font-weight: 500; cursor: pointer;
+  border: 0.5px solid var(--border-strong); border-radius: 20px; background: var(--surface); color: var(--text-secondary);
+}
+.filter-chip.active { background: var(--blue); color: white; border-color: var(--blue); }
+.report-list { display: flex; flex-direction: column; gap: 12px; }
+.report-card {
+  background: var(--surface); border: 0.5px solid var(--border-strong); border-radius: var(--radius);
+  padding: 1.2rem 1.4rem; text-decoration: none; color: inherit; transition: border-color 0.15s; display: block;
+}
+.report-card:hover { border-color: var(--blue-mid); }
+.report-card-muted { opacity: 0.72; }
+.report-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+.report-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 0.25rem; }
+.report-card .meta { font-size: 11px; color: var(--text-tertiary); font-family: 'DM Mono', monospace; margin-bottom: 0.5rem; }
+.report-card .thesis { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0.5rem; }
+.tag-pill {
+  font-size: 10px; font-weight: 500; font-family: 'DM Mono', monospace;
+  padding: 2px 8px; border-radius: 4px; background: var(--bg); color: var(--text-secondary);
+  border: 0.5px solid var(--border-strong); text-transform: lowercase;
+}
+.owner-badge {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--blue-light); color: var(--blue);
+  font-size: 11px; font-weight: 600; font-family: 'DM Mono', monospace;
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.status-badge {
+  font-size: 10px; font-weight: 600; font-family: 'DM Mono', monospace;
+  padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em;
+}
+.status-current { background: var(--teal-light); color: var(--teal); }
+.status-superseded { background: var(--amber-light); color: var(--amber); }
+.status-archived { background: var(--bg); color: var(--text-tertiary); }
+.catalog-empty { font-size: 13px; color: var(--text-secondary); padding: 1rem 0; }
+
+/* Report chrome actions */
+.header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.chrome-btn {
+  font-size: 11px; font-weight: 500; font-family: 'DM Mono', monospace;
+  padding: 5px 10px; border-radius: 6px; cursor: pointer;
+  border: 0.5px solid var(--border-strong); background: var(--surface); color: var(--text-secondary);
+  transition: background 0.15s, border-color 0.15s;
+}
+.chrome-btn:hover { background: var(--bg); border-color: var(--blue-mid); color: var(--blue); }
+.chrome-btn.copied { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
+.footer-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 0.75rem; }
+.footer-meta { font-size: 11px; color: var(--text-tertiary); margin-bottom: 0.5rem; }
+.comp-table td, .comp-table th { font-variant-numeric: tabular-nums; }
+
 .caveat-banner.warn {
   background: var(--amber-light);
   border-bottom-color: rgba(186,117,23,0.2);
