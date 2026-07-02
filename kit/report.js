@@ -143,6 +143,11 @@ HWReport.initSkipLink = function () {
   document.body.insertBefore(link, document.body.firstChild);
 };
 
+HWReport.indexHref = function () {
+  var path = window.location.pathname || '';
+  return path.indexOf('/kit/') !== -1 ? '../index.html' : 'index.html';
+};
+
 HWReport.initChrome = function () {
   var isIndex = !!document.getElementById('report-list');
   var slug = document.body.getAttribute('data-report-slug');
@@ -158,7 +163,7 @@ HWReport.initChrome = function () {
   if (header && !isIndex && !header.querySelector('.back-to-index')) {
     var brand = header.querySelector('.brand');
     var link = document.createElement('a');
-    link.href = 'index.html';
+    link.href = HWReport.indexHref();
     link.className = 'back-to-index';
     link.innerHTML = (HWReport.icon ? HWReport.icon('link') : '') + ' All reports';
     if (brand) {
@@ -215,7 +220,7 @@ HWReport.initChrome = function () {
     var nav = document.createElement('p');
     nav.className = 'footer-nav';
     var flink = document.createElement('a');
-    flink.href = 'index.html';
+    flink.href = HWReport.indexHref();
     flink.className = 'back-to-index';
     flink.textContent = '← Back to all reports';
     nav.appendChild(flink);

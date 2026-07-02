@@ -148,17 +148,28 @@ HWReport.initWhaleMm = function () {
   function deltaClass(v) { return v > 0 ? 'up' : v < 0 ? 'down' : 'flat'; }
   function deltaStr(v, decimals=1) { const s = v > 0 ? '+' : ''; return s + v.toFixed(decimals); }
 
+  function destroyChart(id) {
+    if (HWReport._chartInstances[id]) {
+      HWReport._chartInstances[id].destroy();
+      delete HWReport._chartInstances[id];
+      delete HWReport.charts[id];
+    }
+  }
+
   function destroyAll() {
-    Object.keys(HWReport.charts).forEach(function (k) {
-      if (HWReport.charts[k]) HWReport.charts[k].destroy();
-      delete HWReport.charts[k];
-    });
+    Object.keys(HWReport._chartInstances).forEach(destroyChart);
+  }
+
+  function storeChart(id, chart) {
+    destroyChart(id);
+    HWReport._chartInstances[id] = chart;
+    HWReport.charts[id] = chart;
   }
 
   function buildChart(id, config) {
     const el = document.getElementById(id);
     if (!el) return;
-    HWReport.charts[id] = new Chart(el, config);
+    storeChart(id, new Chart(el, config));
   }
 
   function renderKPIs(d) {
@@ -546,6 +557,8 @@ HWReport.initWhaleMm = function () {
   function buildOverallChart(id, preVals, postVals, opts = {}) {
     const el = document.getElementById(id);
     if (!el) return;
+    const baseOpts = chartBaseOpts();
+    const tc = chartTickColor();
     const { yMin, yMax, fmt } = opts;
     const fmtFn = fmt === 'pct' ? v => v.toFixed(1) + '%'
                 : fmt === 'inr' ? v => '₹' + v.toLocaleString()
@@ -557,7 +570,7 @@ HWReport.initWhaleMm = function () {
     if (fmt === 'pct') yScale.ticks = { ...yScale.ticks, callback: v => v + '%' };
     if (fmt === 'inr') yScale.ticks = { ...yScale.ticks, callback: v => '₹' + v.toLocaleString() };
 
-    HWReport.charts[id] = new Chart(el, {
+    storeChart(id, new Chart(el, {
       type: 'bar',
       data: {
         labels: ranks,
@@ -588,7 +601,7 @@ HWReport.initWhaleMm = function () {
         },
         scales: { x: baseOpts.scales.x, y: yScale }
       }
-    });
+    }));
   }
 
   function renderOverall() {
@@ -767,6 +780,7 @@ HWReport.initWhaleMm = function () {
   function buildABBar(id, baseVals, testVals, opts = {}) {
     const el = document.getElementById(id);
     if (!el) return;
+    const baseOpts = chartBaseOpts();
     const { yMin, yMax, fmt, labels } = opts;
     const fmtFn = fmt === 'pct' ? v => v.toFixed(1) + '%'
                 : fmt === 'inr' ? v => '₹' + v.toLocaleString()
@@ -776,7 +790,7 @@ HWReport.initWhaleMm = function () {
     if (yMax !== undefined) yScale.max = yMax;
     if (fmt === 'pct') yScale.ticks = { ...yScale.ticks, callback: v => v + '%' };
     if (fmt === 'inr') yScale.ticks = { ...yScale.ticks, callback: v => '₹' + v.toLocaleString() };
-    HWReport.charts[id] = new Chart(el, {
+    storeChart(id, new Chart(el, {
       type: 'bar',
       data: {
         labels: labels || abData.ranks,
@@ -793,19 +807,21 @@ HWReport.initWhaleMm = function () {
         },
         scales: { x: baseOpts.scales.x, y: yScale }
       }
-    });
+    }));
   }
 
   function buildABGrouped(id, baseVals, testVals, labels, opts = {}) {
     const el = document.getElementById(id);
     if (!el) return;
+    const baseOpts = chartBaseOpts();
+    const tc = chartTickColor();
     const { fmt } = opts;
     const fmtFn = fmt === 'pct' ? v => v.toFixed(1) + '%'
                 : fmt === 'inr' ? v => '₹' + v.toLocaleString()
                 : v => v.toFixed(2);
     const yScale = { ...baseOpts.scales.y };
     if (fmt === 'inr') yScale.ticks = { ...yScale.ticks, callback: v => '₹' + v.toLocaleString() };
-    HWReport.charts[id] = new Chart(el, {
+    storeChart(id, new Chart(el, {
       type: 'bar',
       data: {
         labels,
@@ -822,7 +838,7 @@ HWReport.initWhaleMm = function () {
         },
         scales: { x: baseOpts.scales.x, y: yScale }
       }
-    });
+    }));
   }
 
   // overall monet table is now HTML, no chart needed
@@ -1091,9 +1107,7 @@ HWReport.initWhaleMm = function () {
           </tbody>
         </table>
       </div>`;
-    ['j29_conv_rank', 'j29_arpu_rank', 'j29_arppu_rank'].forEach(function (id) {
-      if (HWReport.charts[id]) { HWReport.charts[id].destroy(); delete HWReport.charts[id]; }
-    });
+    ['j29_conv_rank', 'j29_arpu_rank', 'j29_arppu_rank'].forEach(destroyChart);
     buildABBar('j29_conv_rank', d.rank.base.conv, d.rank.test.conv, { fmt: 'pct', labels: jun29Data.ranks });
     buildABBar('j29_arpu_rank', d.rank.base.arpu, d.rank.test.arpu, { fmt: 'inr', labels: jun29Data.ranks });
     buildABBar('j29_arppu_rank', d.rank.base.arppu, d.rank.test.arppu, { fmt: 'inr', labels: jun29Data.ranks });
@@ -1156,10 +1170,7 @@ HWReport.initWhaleMm = function () {
     const sku = jun29Data.d3whales.sku;
     const title = cut === 'arpu3' ? 'SKU ARPU3 — ₹ per D3 whale user' : 'SKU ARPU7 — ₹ per D3 whale user (mature D7 installs)';
     document.getElementById('j29_sku_chart_title').textContent = title;
-    if (HWReport.charts['j29_d3_sku_arpu']) {
-      HWReport.charts['j29_d3_sku_arpu'].destroy();
-      delete HWReport.charts['j29_d3_sku_arpu'];
-    }
+    destroyChart('j29_d3_sku_arpu');
     buildABBar('j29_d3_sku_arpu', sku[cut].base, sku[cut].test, {
       fmt: 'inr',
       labels: sku.labels,
