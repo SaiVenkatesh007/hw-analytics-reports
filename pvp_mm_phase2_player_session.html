@@ -18,11 +18,12 @@
   <div class="brand"><div class="dot"></div><h1>PvP Matchmaking — Phase 2 Player & Session</h1></div>
   <span class="meta">Human vs human ARENAS · Jun 15–30, 2026 · Rolling-25</span>
 </header>
-<div class="caveat-banner">✓ Phase 2 builds on Phase 1 baseline. Lead metric is <strong>blowout cluster</strong> (rolling-25), not chronic mismatch (0.5%). Session marathon frustration is rare — not a product concern.</div>
+<div class="caveat-banner">✓ Phase 2 builds on Phase 1 baseline. Lead MM-pain metric is <strong>negative blowout cluster</strong> (rolling-25), not unsigned blowout or chronic mismatch. Session marathon frustration is rare.</div>
 
 <div class="tab-bar">
   <button class="tab-btn active" onclick="HWReport.switchTab('overview', this)">Overview</button>
   <button class="tab-btn" onclick="HWReport.switchTab('segments', this)">By Segment</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('extensions', this)">Extensions</button>
   <button class="tab-btn" onclick="HWReport.switchTab('session', this)">Session</button>
   <button class="tab-btn" onclick="HWReport.switchTab('method', this)">Methodology</button>
 </div>
@@ -82,6 +83,33 @@
   </main>
 </div>
 
+<div id="tab-extensions" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">01 — Signed blowout</p><h3 class="section-title">Negative vs positive blowout (match + rolling-25)</h3></div>
+      <div class="kpi-row" id="ext-kpi-row"></div>
+      <div class="two-col">
+        <div class="card"><p class="card-title">Negative vs Positive Blowout Cluster by Activity</p><div class="chart-wrap" style="height:280px"><canvas id="chart-signed-activity"></canvas></div></div>
+        <div class="card"><p class="card-title">Close Match % by Power Ratio Bucket</p><div class="chart-wrap" style="height:280px"><canvas id="chart-close-ratio"></canvas></div></div>
+      </div>
+      <table class="comp-table" id="table-signed-power" style="margin-top:1.25rem"></table>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">02 — Next-match retention</p><h3 class="section-title">Played another match after this one (window only)</h3></div>
+      <div class="insights">
+        <div class="insight warn"><strong>Correlation ≠ causation.</strong> High-engagement users play more matches and accumulate more varied outcomes. Match-level rates exclude each user's last match in the window.</div>
+        <div class="insight bad"><strong>Hypothesis:</strong> Negative blowout correlates with lower next-match rate more than positive blowout at equal activity.</div>
+      </div>
+      <table class="comp-table" id="table-retention-type" style="margin-top:1.25rem"></table>
+      <div class="two-col" style="margin-top:1.25rem">
+        <div class="card"><p class="card-title">Next-Match % by Rolling Close Decile</p><div class="chart-wrap" style="height:260px"><canvas id="chart-ret-decile-close"></canvas></div></div>
+        <div class="card"><p class="card-title">Next-Match % by Rolling Neg Blowout Decile</p><div class="chart-wrap" style="height:260px"><canvas id="chart-ret-decile-neg"></canvas></div></div>
+      </div>
+      <table class="comp-table" id="table-spearman" style="margin-top:1.25rem"></table>
+    </div>
+  </main>
+</div>
+
 <div id="tab-session" class="tab-content">
   <main>
     <div class="section">
@@ -120,7 +148,11 @@
           <li><strong>One-sided / blowout:</strong> Batting first → margin ≥15 runs; bowling first → ≥12 balls remaining.</li>
           <li><strong>Rolling-25:</strong> Each user's last 25 human PvP matches in the window, chronological.</li>
           <li><strong>Rolling close %:</strong> % of those 25 matches that were close.</li>
-          <li><strong>Blowout cluster:</strong> &gt;40% of last 25 matches were one-sided.</li>
+          <li><strong>Blowout cluster:</strong> &gt;40% of last 25 matches were one-sided (unsigned).</li>
+          <li><strong>Negative blowout:</strong> One-sided loss — got stomped.</li>
+          <li><strong>Positive blowout:</strong> One-sided win — dominant victory.</li>
+          <li><strong>Negative blowout cluster:</strong> &gt;40% of last 25 matches were negative blowouts (MM-pain metric).</li>
+          <li><strong>Next-match retention:</strong> User played another human PvP match later in the window.</li>
           <li><strong>Chronic mismatch:</strong> &lt;20% of last 25 matches were close (investigation threshold; almost nobody hits it).</li>
           <li><strong>Session:</strong> Consecutive matches with ≤30 min gap between them.</li>
           <li><strong>Session frustration:</strong> 8+ matches in one session with zero close matches.</li>
@@ -280,6 +312,76 @@ dualBar('chart-activity', ['Casual', 'Regular', 'High-freq'],
 lineChart('chart-deciles', DD.rolling_deciles.labels, DD.rolling_deciles.rolling_close_pct, 'Rolling close %', '#378ADD');
 
 singleBar('chart-power', DD.power_bracket.labels, DD.power_bracket.pct_blowout_cluster, '#D85A30');
+
+// --- Extensions tab (populated after notebook re-run + JSON export) ---
+var ext = DD.signed_blowout_overall || {};
+var hasExt = DD.close_rate_by_power_ratio && DD.close_rate_by_power_ratio.labels;
+
+if (document.getElementById('ext-kpi-row')) {
+  var negCluster = DD.overall.pct_neg_blowout_cluster;
+  var posCluster = DD.overall.pct_pos_blowout_cluster;
+  var negMatch = DD.overall.match_neg_blowout_pct || ext.negative_blowout_pct;
+  var posMatch = DD.overall.match_pos_blowout_pct || ext.positive_blowout_pct;
+  document.getElementById('ext-kpi-row').innerHTML =
+    '<div class="kpi-card"><p class="kpi-label">Match Neg Blowout</p><p class="kpi-value warn">' + (negMatch != null ? pct(negMatch) : '—') + '</p><p class="kpi-note">one-sided loss</p></div>' +
+    '<div class="kpi-card"><p class="kpi-label">Match Pos Blowout</p><p class="kpi-value neutral">' + (posMatch != null ? pct(posMatch) : '—') + '</p><p class="kpi-note">one-sided win</p></div>' +
+    '<div class="kpi-card"><p class="kpi-label">Neg Blowout Cluster</p><p class="kpi-value warn">' + (negCluster != null ? pct(negCluster) : '—') + '</p><p class="kpi-note">rolling-25 users</p></div>' +
+    '<div class="kpi-card"><p class="kpi-label">Pos Blowout Cluster</p><p class="kpi-value neutral">' + (posCluster != null ? pct(posCluster) : '—') + '</p><p class="kpi-note">rolling-25 users</p></div>';
+}
+
+if (hasExt) {
+  lineChart('chart-close-ratio', DD.close_rate_by_power_ratio.labels, DD.close_rate_by_power_ratio.avg_close_pct, 'Avg close %', '#378ADD');
+}
+
+if (DD.signed_blowout_by_activity) {
+  dualBar('chart-signed-activity',
+    DD.signed_blowout_by_activity.labels.map(function(l) { return l.replace(' (', '\n('); }),
+    DD.signed_blowout_by_activity.pct_neg_cluster,
+    DD.signed_blowout_by_activity.pct_pos_cluster,
+    'Neg cluster %', 'Pos cluster %', 35);
+}
+
+if (DD.signed_blowout_by_power) {
+  buildTable('table-signed-power',
+    ['Power bracket', 'Neg cluster %', 'Pos cluster %'],
+    DD.signed_blowout_by_power.labels.map(function(l, i) {
+      return [l, pct(DD.signed_blowout_by_power.pct_neg_cluster[i]), pct(DD.signed_blowout_by_power.pct_pos_cluster[i])];
+    })
+  );
+} else {
+  buildTable('table-signed-power', ['Power bracket', 'Neg cluster %', 'Pos cluster %'], [['VM run pending', '—', '—']]);
+}
+
+if (DD.retention_by_match_type) {
+  buildTable('table-retention-type',
+    ['Match type', 'Next-match %'],
+    DD.retention_by_match_type.labels.map(function(l, i) {
+      return [l, pct(DD.retention_by_match_type.played_next_pct[i])];
+    })
+  );
+} else {
+  buildTable('table-retention-type', ['Match type', 'Next-match %'], [['VM run pending', '—']]);
+}
+
+if (DD.retention_decile_close) {
+  lineChart('chart-ret-decile-close',
+    DD.retention_decile_close.decile.map(function(d) { return 'D' + d; }),
+    DD.retention_decile_close.played_next_pct, 'Next-match %', '#378ADD');
+}
+if (DD.retention_decile_neg_blowout) {
+  lineChart('chart-ret-decile-neg',
+    DD.retention_decile_neg_blowout.decile.map(function(d) { return 'D' + d; }),
+    DD.retention_decile_neg_blowout.played_next_pct, 'Next-match %', '#D85A30');
+}
+
+if (DD.spearman) {
+  var spRows = Object.keys(DD.spearman).map(function(k) {
+    return [k.replace('rolling_', '').replace('_pct_25', ''), DD.spearman[k].toFixed(3), 'mean_played_next'];
+  });
+  buildTable('table-spearman', ['Rolling metric', 'Spearman ρ', 'vs'], spRows);
+} else {
+  buildTable('table-spearman', ['Rolling metric', 'Spearman ρ', 'vs'], [['VM run pending', '—', '—']]);
+}
 </script>
 </body>
 </html>

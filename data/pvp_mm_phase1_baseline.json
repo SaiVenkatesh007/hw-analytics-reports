@@ -5,7 +5,14 @@
     "meta_line": "Human vs human ARENAS · Jun 21–25, 2026 · calibratedTotalInternalStrength",
     "date_range": "2026-06-21 – 2026-06-25",
     "filters": "ARENAS, status=2, opp_is_bot=0, all ranks",
-    "source_notebook": "PvP Matchmaking Analysis/Phase 1 - Baseline/Phase 1 - Close Match Baseline [Jun 21-25].ipynb"
+    "source_notebook": "PvP Matchmaking Analysis/Phase 1 - Baseline/Phase 1 - Close Match Baseline [Jun 21-25].ipynb",
+    "owner": "Venkatesh",
+    "date": "2026-06-25",
+    "date_label": "Jun 21–25, 2026",
+    "tags": ["matchmaking", "baseline", "pvp"],
+    "thesis": "Quality is healthy on average, but high-frequency and top-end players see ~10pp fewer close matches — monitor before changing MM windows.",
+    "description": "PvP matchmaking Phase 1 baseline — 55% close matches on average; high-frequency and top-end players underserved.",
+    "handoff": "handoffs/pvp_mm_phase1_baseline.txt"
   },
   "overall": {
     "matches": 888497,

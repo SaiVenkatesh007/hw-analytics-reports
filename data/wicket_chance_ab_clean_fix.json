@@ -11,7 +11,14 @@
       "100k+"
     ],
     "source_notebook": "Wicket Chance AB [Rank Fix].ipynb",
-    "slug": "wicket_chance_ab_clean_fix"
+    "slug": "wicket_chance_ab_clean_fix",
+    "owner": "Venkatesh",
+    "date": "2026-06-01",
+    "date_label": "Jun 2026",
+    "tags": ["pvp", "ab-test", "experiment"],
+    "thesis": "The current wicket-chance increase is too small to change how players play or to shift match balance.",
+    "description": "Wicket Chance AB clean read — increase too small to change how players play; median wickets unchanged at 2.",
+    "handoff": "handoffs/wicket_chance_ab_clean_fix.txt"
   },
   "dd": {
     "overall": {

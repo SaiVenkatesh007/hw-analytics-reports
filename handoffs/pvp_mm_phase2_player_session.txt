@@ -6,6 +6,7 @@ Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/pvp_mm_phase2_
    - Window: Jun 15–30 (pvp_extra_data power available from Jun 15)
    - Rolling-25 = each user's last 25 human PvP matches in window
    - Blowout cluster = >40% of last 25 matches one-sided; chronic mismatch = <20% close (rare)
+   - Extensions: signed blowout (neg/pos), power-ratio close %, next-match retention
 
 *1. Median rolling experience is healthy — blowout streaks are the real tail*
    - 2.8M unique matches; 220K PvP users; 72K users with ≥25 matches (33%)
@@ -26,4 +27,10 @@ Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/pvp_mm_phase2_
    - Zero-close marathons (8+ matches, 0 close): 0.9% of long sessions — negligible
    - Below-min in 8+ sessions: 5.4% — real but thin base; not the lead story
 
-*Takeaway:* Monitor blowout cluster rate (not chronic mismatch) for high-frequency players and 75k+ power before any MM window changes. Player-level sustained blowout exposure is the actionable tail; session frustration is rare.
+*4. Extensions — paste VM notebook outputs for numbers*
+   - A: Close match % by power_ratio_bucket (parity band ~0.95–1.0 should peak ~50–55%)
+   - B: Split one-sided into negative blowout (loss) vs positive blowout (win); lead **negative blowout cluster** for MM pain
+   - C: Next-match retention (excl last match/user); Spearman vs rolling close / neg / pos blowout %
+   - Match-level neg/pos blowout ≈ half of one-sided each (sanity: neg + pos ≈ one-sided)
+
+*Takeaway:* Monitor **negative blowout cluster** (not unsigned blowout or positive blowout) for high-frequency players and 75k+ power before any MM window changes. Next-match retention dips with negative blowout exposure — correlation only, activity-confounded. Session frustration remains rare.
