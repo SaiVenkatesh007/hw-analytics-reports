@@ -13,4 +13,4 @@ This repository is auto-published from the private [Hitwicket-Analytics](https:/
 Shared kit in `kit/`: cricket-grounded palette, dark mode (auto + toggle), scoreboard hero stat, theme-aware Chart.js helpers, accessibility tab roles.
 
 - **Style guide:** [kit/styleguide.html](kit/styleguide.html)
-- **Agent skill:** `.cursor/skills/hitwicket-report-design-system/SKILL.md`
+- **Agent skill:** `.cursor/skills/hitwicket-report-design-system/SKILL.md` (private repo only — not published)
