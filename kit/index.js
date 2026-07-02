@@ -4,6 +4,11 @@ HWReport.initCatalog = function () {
   var listEl = document.getElementById('report-list');
   if (!listEl) return;
 
+  listEl.innerHTML = '';
+  for (var s = 0; s < 3; s++) {
+    listEl.innerHTML += '<div class="report-card skeleton"><div class="report-card-top"></div><h3>&nbsp;</h3><p class="meta">&nbsp;</p><div class="tag-row"></div><p class="thesis">&nbsp;</p></div>';
+  }
+
   fetch('catalog.json')
     .then(function (r) { return r.json(); })
     .then(function (catalog) {

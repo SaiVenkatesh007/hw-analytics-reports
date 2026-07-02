@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){try{var t=localStorage.getItem('hw-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <title>Increased Wicket Chance — A/B Test (Clean Read)</title>
 <meta name="description" content="Wicket Chance AB clean read — increase too small to change how players play; median wickets unchanged at 2.">
 <meta property="og:title" content="Increased Wicket Chance — A/B Test (Clean Read)">
@@ -33,10 +34,14 @@
     <p class="hero-eyebrow">Game Analytics · PvP Experiment · Corrected Data</p>
     <h2 class="hero-title">The increase was too small to<br>change how players play.</h2>
     <p class="hero-desc">With bot matches removed and samples matched, mean wickets rise a modest ~9–13% in the test — but the <strong>median wickets fallen does not shift</strong> (stays at 2 across every bracket), scores are essentially flat (−0.6% to −2.2%), and players barely change their shot selection. The stated goal of moving median wickets 1→3 is not met.</p>
+    <div class="hero-stat-wrap">
+      <p class="stat-scoreboard-label">Median wickets (q50)</p>
+      <p class="stat-scoreboard neutral" data-value="2" data-suffix="" data-decimals="0">2</p>
+    </div>
   </div>
   <main>
     <div class="section">
-      <div class="section-header"><p class="section-num">01 — Headline</p><h3 class="section-title">What changed at the match level</h3></div>
+      <div class="section-header"><p class="section-num">Headline</p><h3 class="section-title">What changed at the match level</h3></div>
       <div class="kpi-row">
         <div class="kpi-card"><p class="kpi-label">Mean Wickets (Overall)</p><p class="kpi-value up">+9 to +13%</p><p class="kpi-note">ticked up but small</p></div>
         <div class="kpi-card"><p class="kpi-label">Median Wickets (q50)</p><p class="kpi-value neutral">2 → 2</p><p class="kpi-note">no shift · goal was 1→3</p></div>
@@ -49,7 +54,7 @@
       </div>
     </div>
     <div class="section">
-      <div class="section-header"><p class="section-num">02 — Key Findings</p><h3 class="section-title">Narrative summary</h3></div>
+      <div class="section-header"><p class="section-num">Key findings</p><h3 class="section-title">Narrative summary</h3></div>
       <div class="insights">
         <div class="insight warn"><strong>Mean wickets up, median unchanged:</strong> Mean wickets rise ~9–13% across brackets, but even so it was not enough to shift the median wickets fallen — q50 stays at 2 in every bracket and view. The feature's core stated goal (median 1→3) is not achieved.</div>
         <div class="insight bad"><strong>Players did not meaningfully change shot selection:</strong> The shot mix moves less than 1 percentage point in almost every bracket. The only consistent shift is a small dip in fours (−0.4 to −0.9pp) with a marginal rise in ones — minor risk-aversion, not a behavioural change.</div>
@@ -64,7 +69,7 @@
 <div id="tab-innings" class="tab-content">
   <main>
     <div class="section">
-      <div class="section-header"><p class="section-num">01 — Full Innings</p><h3 class="section-title">Overall · Batting First · Bowling First</h3><p class="section-sub">Mean metrics shown with % change. Median behaviour is on the Distribution tab.</p></div>
+      <div class="section-header"><p class="section-num">Full innings</p><h3 class="section-title">Overall · Batting First · Bowling First</h3><p class="section-sub">Mean metrics shown with % change. Median behaviour is on the Distribution tab.</p></div>
       <div class="sub-toggle">
         <button class="sub-btn active" onclick="switchSub('inn','overall',this)">Overall</button>
         <button class="sub-btn" onclick="switchSub('inn','bat1',this)">Batting First</button>
@@ -78,7 +83,7 @@
 <div id="tab-init2" class="tab-content">
   <main>
     <div class="section">
-      <div class="section-header"><p class="section-num">01 — First 2 Overs</p><h3 class="section-title">Early innings — Overall · Batting First · Bowling First</h3><p class="section-sub">Isolates the mechanical effect before adaptation</p></div>
+      <div class="section-header"><p class="section-num">First 2 overs</p><h3 class="section-title">Early innings — Overall · Batting First · Bowling First</h3><p class="section-sub">Isolates the mechanical effect before adaptation</p></div>
       <div class="sub-toggle">
         <button class="sub-btn active" onclick="switchSub('i2','overall_i2',this)">Overall</button>
         <button class="sub-btn" onclick="switchSub('i2','bat1_i2',this)">Batting First</button>
@@ -92,7 +97,7 @@
 <div id="tab-shotsel" class="tab-content">
   <main>
     <div class="section">
-      <div class="section-header"><p class="section-num">01 — Shot Selection</p><h3 class="section-title">Did players change their shots?</h3><p class="section-sub">Shown in <strong>percentage points</strong> (test share − base share). Shot shares sum to 100%, so pp is the honest comparison.</p></div>
+      <div class="section-header"><p class="section-num">Shot selection</p><h3 class="section-title">Did players change their shots?</h3><p class="section-sub">Shown in <strong>percentage points</strong> (test share − base share). Shot shares sum to 100%, so pp is the honest comparison.</p></div>
       <div class="sub-toggle">
         <button class="sub-btn active" onclick="switchSub('ss','overall',this)">Overall</button>
         <button class="sub-btn" onclick="switchSub('ss','bat1',this)">Batting First</button>
@@ -103,7 +108,7 @@
       </div>
       <div id="ss-body"></div>
       <div class="section" style="margin-top:2rem">
-        <div class="section-header"><p class="section-num">02 — Shot Selection Insights</p></div>
+        <div class="section-header"><p class="section-num">Shot selection insights</p></div>
         <div class="insights">
           <div class="insight bad"><strong>Almost no behavioural change:</strong> Across every bracket and view, the shot mix shifts less than 1pp. Players faced a higher wicket risk but kept playing essentially the same shots.</div>
           <div class="insight warn"><strong>Fours are the only consistent mover:</strong> Down −0.4 to −0.9pp, with a small offsetting rise in ones (+0.4 to +0.5pp). A slight pull-back from the riskiest scoring shot toward safe singles — but tiny.</div>
@@ -118,7 +123,7 @@
 <div id="tab-dist" class="tab-content">
   <main>
     <div class="section">
-      <div class="section-header"><p class="section-num">01 — Distribution</p><h3 class="section-title">Quartiles — where the median really sits</h3><p class="section-sub">Wicket quartiles shown as <strong>absolute values</strong> (base → test). This is where the "median didn't move" story is clearest.</p></div>
+      <div class="section-header"><p class="section-num">Distribution</p><h3 class="section-title">Quartiles — where the median really sits</h3><p class="section-sub">Wicket quartiles shown as <strong>absolute values</strong> (base → test). This is where the "median didn't move" story is clearest.</p></div>
       <div class="sub-toggle">
         <button class="sub-btn active" onclick="switchSub('dist','overall',this)">Overall</button>
         <button class="sub-btn" onclick="switchSub('dist','bat1',this)">Batting First</button>
@@ -132,6 +137,10 @@
 
 <footer>Increased Wicket Chance A/B Test · Clean read (real users, matched samples) · Match-level only · Hitwicket Analytics · Jun 2026</footer>
 
+<script src="kit/theme.js"></script>
+<script src="kit/icons.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="kit/charts.js"></script>
 <script src="kit/report.js"></script>
 <script src="kit/ab-test.js"></script>
 <script>

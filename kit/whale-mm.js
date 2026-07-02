@@ -5,7 +5,22 @@ HWReport.initWhaleMm = function () {
   HWReport._whaleMmInit = true;
 
   const ranks = ['Rookie','Challenger','Proven','Accomplished','Remarkable'];
-  const gc = '#e5e5e0', tc = '#5a5a5a';
+
+  function chartBaseOpts() {
+    var t = HWReport.theme.getChartTheme();
+    return {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: t.tick, font: { size: 11 }, maxRotation: 0 }, grid: { color: t.grid } },
+        y: { ticks: { color: t.tick, font: { size: 11 } }, grid: { color: t.grid } }
+      }
+    };
+  }
+
+  function chartTickColor() {
+    return HWReport.theme.getChartTheme().tickSecondary;
+  }
 
   const D = {
     '5day': {
@@ -127,17 +142,6 @@ HWReport.initWhaleMm = function () {
     }
   };
 
-  const baseOpts = {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: {
-      x: { ticks: { color: tc, font: { size: 11 }, maxRotation: 0 }, grid: { color: gc } },
-      y: { ticks: { color: tc, font: { size: 11 } }, grid: { color: gc } }
-    }
-  };
-
-
-
   function pct(v) { return v.toFixed(1) + '%'; }
   function pr(v)  { return v.toFixed(2); }
 
@@ -175,6 +179,16 @@ HWReport.initWhaleMm = function () {
       ${selfLine}
       <div class="kpi-card"><p class="kpi-label">Whale league adoption</p><p class="kpi-value down">${leagueDelta}pp avg</p><p class="kpi-note">shifting to PvP as intended</p></div>
     `;
+    var heroStat = document.getElementById('heroStat');
+    if (heroStat) {
+      heroStat.className = 'stat-scoreboard up';
+      heroStat.setAttribute('data-value', wrDelta);
+      heroStat.setAttribute('data-prefix', '+');
+      heroStat.setAttribute('data-suffix', 'pp');
+      heroStat.setAttribute('data-decimals', '0');
+      heroStat.removeAttribute('data-animated');
+      HWReport.initScoreboard(document.querySelector('.hero-section'));
+    }
   }
 
   function renderInsights(id, htmlArr) {
@@ -239,8 +253,8 @@ HWReport.initWhaleMm = function () {
     // section numbering
     const hasNDR = d.has_ndr;
     const hasPayerMix = d.has_payermix;
-    document.getElementById('timespent_num').textContent = hasNDR ? (hasPayerMix ? '07 — Time spent' : '07 — Time spent') : '06 — Time spent';
-    document.getElementById('openq_num').textContent = hasPayerMix ? '10 — Open questions' : hasNDR ? '09 — Open questions' : '07 — Open questions';
+    document.getElementById('timespent_num').textContent = hasNDR ? 'TIME SPENT' : 'TIME SPENT';
+    document.getElementById('openq_num').textContent = 'OPEN QUESTIONS';
     document.getElementById('ndr_section').classList.toggle('hidden', !hasNDR);
     document.getElementById('whalesfaced_section').classList.toggle('hidden', !d.has_whalesfaced);
     document.getElementById('payermix_section').classList.toggle('hidden', !d.has_payermix);
@@ -250,7 +264,9 @@ HWReport.initWhaleMm = function () {
     buildWRTable(d);
     buildMatchesTable(d);
 
-    // ── CHARTS ──
+    const baseOpts = chartBaseOpts();
+    const tc = chartTickColor();
+
     buildChart('c_base_post', { type:'bar', data:{ labels:ranks, datasets:[{ data:d.base_post, backgroundColor:['#85B7EB','#7AC8D9','#5CC7A4','#D4A017','#D07050'], borderRadius:4 }]}, options:{...baseOpts, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.parsed.y.toLocaleString()} whales`}}}} });
 
     buildChart('c_base_pct', { type:'bar', data:{ labels:ranks, datasets:[

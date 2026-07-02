@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){try{var t=localStorage.getItem('hw-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<title>Hitwicket Report Design System</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="stylesheet" href="report.css">
+<style>
+.sg-wrap { max-width: 960px; margin: 0 auto; padding: 2rem; }
+.sg-wrap h2 { font-size: 20px; margin: 2rem 0 0.75rem; }
+.sg-wrap h3 { font-size: 14px; color: var(--text-secondary); margin-bottom: 0.75rem; font-weight: 500; }
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1rem; }
+.swatch { border: 0.5px solid var(--border-strong); border-radius: var(--radius-sm); overflow: hidden; }
+.swatch-color { height: 48px; }
+.swatch-label { padding: 6px 8px; font-size: 11px; font-family: 'DM Mono', monospace; color: var(--text-secondary); }
+.icon-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+.icon-cell { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); padding: 6px 10px; border: 0.5px solid var(--border); border-radius: 6px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="dot"></div><h1>Hitwicket Report Design System</h1></div>
+  <div class="header-right"></div>
+</header>
+<main id="main-content" class="sg-wrap">
+  <p style="color:var(--text-secondary);font-size:14px;margin-bottom:1.5rem;">Internal reference for stakeholder report kit. Toggle theme in header. Not listed in catalog.</p>
+
+  <h2>Color tokens</h2>
+  <div class="swatches">
+    <div class="swatch"><div class="swatch-color" style="background:var(--bg)"></div><div class="swatch-label">--bg</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--surface)"></div><div class="swatch-label">--surface</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--teal)"></div><div class="swatch-label">--teal positive</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--coral)"></div><div class="swatch-label">--coral negative</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--amber)"></div><div class="swatch-label">--amber warn</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--blue)"></div><div class="swatch-label">--blue neutral</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:var(--purple)"></div><div class="swatch-label">--purple six</div></div>
+  </div>
+
+  <h2>Typography</h2>
+  <p style="font-size:26px;font-weight:600;letter-spacing:-0.03em;margin-bottom:0.5rem;">Hero title — DM Sans 26px</p>
+  <p style="font-size:14px;color:var(--text-secondary);margin-bottom:1rem;">Body secondary — DM Sans 14px</p>
+  <p style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-tertiary);">Data mono — DM Mono 12px tabular-nums: 55.3% · 1,234,567</p>
+
+  <h2>Scoreboard stat (signature)</h2>
+  <div class="hero-stat-wrap">
+    <p class="stat-scoreboard-label">Close match rate</p>
+    <p class="stat-scoreboard neutral" data-value="55.3" data-suffix="%" data-decimals="1">55.3%</p>
+  </div>
+
+  <h2>KPI cards</h2>
+  <div class="kpi-row">
+    <div class="kpi-card"><p class="kpi-label">Positive</p><p class="kpi-value up">+12.4%</p><p class="kpi-note">teal</p></div>
+    <div class="kpi-card"><p class="kpi-label">Negative</p><p class="kpi-value down">−8.1%</p><p class="kpi-note">coral</p></div>
+    <div class="kpi-card"><p class="kpi-label">Neutral</p><p class="kpi-value neutral">55.3%</p><p class="kpi-note">blue</p></div>
+    <div class="kpi-card"><p class="kpi-label">Warning</p><p class="kpi-value warn">28.0%</p><p class="kpi-note">amber</p></div>
+  </div>
+
+  <h2>Insights</h2>
+  <div class="insights">
+    <div class="insight good"><strong>Good:</strong> Close matches outnumber blowouts ~2:1.</div>
+    <div class="insight warn"><strong>Warn:</strong> High-frequency segment needs monitoring.</div>
+    <div class="insight bad"><strong>Bad:</strong> Blowout rate exceeds one-third at 75k+.</div>
+    <div class="insight"><strong>Neutral:</strong> Median power ratio at parity band.</div>
+  </div>
+
+  <h2>Controls</h2>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem;">
+    <button type="button" class="chrome-btn">Chrome button</button>
+    <button type="button" class="filter-chip active">Active chip</button>
+    <button type="button" class="filter-chip">Inactive chip</button>
+    <span class="tag-pill">pvp</span>
+    <span class="delta-pill up">+2.1pp</span>
+    <span class="delta-pill down">−1.4pp</span>
+  </div>
+
+  <h2>Icons</h2>
+  <div class="icon-grid" id="icon-grid"></div>
+
+  <h2>Chart gallery</h2>
+  <div class="two-col">
+    <div class="card"><p class="card-title">Grouped bar (base vs test)</p><div class="chart-wrap" style="height:200px"><canvas id="sg-grouped"></canvas></div></div>
+    <div class="card"><p class="card-title">Line trend</p><div class="chart-wrap" style="height:200px"><canvas id="sg-line"></canvas></div></div>
+    <div class="card"><p class="card-title">Donut composition</p><div class="chart-wrap" style="height:200px"><canvas id="sg-donut"></canvas></div></div>
+    <div class="card"><p class="card-title">Horizontal ranked bar</p><div class="chart-wrap" style="height:200px"><canvas id="sg-hbar"></canvas></div></div>
+  </div>
+</main>
+<footer>Design system reference · <a href="../index.html">← Reports index</a></footer>
+<script src="theme.js"></script>
+<script src="icons.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="charts.js"></script>
+<script src="report.js"></script>
+<script>
+var names = ['trend-up','trend-down','alert','users','calendar','trophy','whale','link','copy'];
+document.getElementById('icon-grid').innerHTML = names.map(function(n) {
+  return '<span class="icon-cell">' + HWReport.icon(n) + ' ' + n + '</span>';
+}).join('');
+HWReport.grouped('sg-grouped', ['0-50k','50k-75k','75k-100k','100k+'], [2.1,2.0,1.8,1.9], [2.3,2.2,2.1,2.1], HWReport.COLORS.BLUE, HWReport.COLORS.TEAL);
+HWReport.lineChartSimple('sg-line', ['W1','W2','W3','W4','W5'], [52,54,53,55,54], 'Close %', HWReport.COLORS.BLUE, { min: 45, max: 60 });
+HWReport.donut('sg-donut', ['0s','1s','2s','4s','6s'], [18,24,16,22,20], [HWReport.COLORS.GRAY, HWReport.COLORS.BLUE, HWReport.COLORS.TEAL, HWReport.COLORS.AMBER, HWReport.COLORS.PURPLE]);
+HWReport.horizontalRankedBar('sg-hbar', ['Rookie','Proven','Masterful'], [60,55,58], HWReport.COLORS.BLUE);
+</script>
+</body>
+</html>

@@ -1,17 +1,10 @@
 window.HWReport = window.HWReport || {};
 
-HWReport.charts = {};
-
-HWReport.COLORS = {
-  BLUE: '#378ADD',
-  TEAL: '#1D9E75',
-  CORAL: '#D85A30',
-  AMBER: '#BA7517',
-  PURPLE: '#534AB7',
-  GRAY: '#9a9a9a',
-};
-
 HWReport._tabSwitchHandler = null;
+
+HWReport._prefersReducedMotion = function () {
+  return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+};
 
 HWReport.switchTab = function (name, btn) {
   document.querySelectorAll('.tab-content').forEach(function (t) {
@@ -19,12 +12,19 @@ HWReport.switchTab = function (name, btn) {
   });
   document.querySelectorAll('.tab-btn').forEach(function (b) {
     b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+    b.setAttribute('tabindex', '-1');
   });
-  document.getElementById('tab-' + name).classList.add('active');
-  btn.classList.add('active');
-  if (HWReport._tabSwitchHandler) {
-    HWReport._tabSwitchHandler(name);
+  var panel = document.getElementById('tab-' + name);
+  if (panel) panel.classList.add('active');
+  if (btn) {
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    btn.setAttribute('tabindex', '0');
+    btn.focus();
   }
+  if (HWReport._tabSwitchHandler) HWReport._tabSwitchHandler(name);
+  HWReport.initScoreboard(panel);
 };
 
 HWReport.setSubActive = function (btn) {
@@ -34,119 +34,119 @@ HWReport.setSubActive = function (btn) {
   btn.classList.add('active');
 };
 
-HWReport.grouped = function (id, labels, d1, d2, c1, c2) {
-  if (HWReport.charts[id]) HWReport.charts[id].destroy();
-  var ctx = document.getElementById(id);
-  if (!ctx) return;
-  HWReport.charts[id] = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: labels,
-      datasets: [
-        { label: 'Base', data: d1, backgroundColor: c1 + '99', borderColor: c1, borderWidth: 1, borderRadius: 3 },
-        { label: 'Test', data: d2, backgroundColor: c2 + '99', borderColor: c2, borderWidth: 1, borderRadius: 3 },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
-        y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 11 } } },
-      },
-    },
+HWReport.countUp = function (el, target, opts) {
+  opts = opts || {};
+  var suffix = opts.suffix || '';
+  var prefix = opts.prefix || '';
+  var decimals = opts.decimals != null ? opts.decimals : (String(target).indexOf('.') >= 0 ? 1 : 0);
+  if (HWReport._prefersReducedMotion()) {
+    el.textContent = prefix + target + suffix;
+    return;
+  }
+  var start = 0;
+  var end = parseFloat(target);
+  if (isNaN(end)) {
+    el.textContent = prefix + target + suffix;
+    return;
+  }
+  var duration = 800;
+  var startTime = null;
+  function step(ts) {
+    if (!startTime) startTime = ts;
+    var p = Math.min((ts - startTime) / duration, 1);
+    var val = start + (end - start) * p;
+    el.textContent = prefix + val.toFixed(decimals) + suffix;
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+};
+
+HWReport.initScoreboard = function (scope) {
+  var root = scope || document;
+  root.querySelectorAll('.stat-scoreboard[data-value]').forEach(function (el) {
+    if (el.getAttribute('data-animated') === '1') return;
+    el.setAttribute('data-animated', '1');
+    var val = el.getAttribute('data-value');
+    var suffix = el.getAttribute('data-suffix') || '';
+    var prefix = el.getAttribute('data-prefix') || '';
+    var decimals = el.getAttribute('data-decimals');
+    HWReport.countUp(el, val, {
+      suffix: suffix,
+      prefix: prefix,
+      decimals: decimals != null ? parseInt(decimals, 10) : undefined,
+    });
   });
 };
 
-HWReport.ppGrouped = function (id, labels, ppObj, shotNames, shotColors) {
-  if (HWReport.charts[id]) HWReport.charts[id].destroy();
-  var ctx = document.getElementById(id);
-  if (!ctx) return;
-  var keys = ['z', 'o', 't', 'f', 's'];
-  var datasets = keys.map(function (k) {
-    return {
-      label: shotNames[k],
-      data: ppObj[k],
-      backgroundColor: shotColors[k] + '99',
-      borderColor: shotColors[k],
-      borderWidth: 1,
-      borderRadius: 2,
-    };
-  });
-  HWReport.charts[id] = new Chart(ctx, {
-    type: 'bar',
-    data: { labels: labels, datasets: datasets },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: true, position: 'bottom', labels: { font: { size: 11 }, boxWidth: 10 } },
-        tooltip: {
-          callbacks: {
-            label: function (c) {
-              return c.dataset.label + ': ' + (c.parsed.y >= 0 ? '+' : '') + c.parsed.y + 'pp';
-            },
-          },
-        },
-      },
-      scales: {
-        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
-        y: {
-          grid: { color: 'rgba(0,0,0,0.04)' },
-          ticks: { font: { size: 11 }, callback: function (v) { return (v > 0 ? '+' : '') + v + 'pp'; } },
-        },
-      },
-    },
+HWReport.initTabs = function () {
+  var tabBar = document.querySelector('.tab-bar');
+  if (!tabBar || tabBar.getAttribute('data-a11y') === '1') return;
+  tabBar.setAttribute('role', 'tablist');
+  tabBar.setAttribute('data-a11y', '1');
+
+  var tabs = tabBar.querySelectorAll('.tab-btn');
+  tabs.forEach(function (btn, i) {
+    var label = btn.textContent.trim();
+    var id = 'tabpanel-' + label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('aria-selected', btn.classList.contains('active') ? 'true' : 'false');
+    btn.setAttribute('tabindex', btn.classList.contains('active') ? '0' : '-1');
+    btn.setAttribute('id', 'tab-' + id);
+    var panel = document.querySelectorAll('.tab-content')[i];
+    if (panel) {
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('aria-labelledby', 'tab-' + id);
+      if (!panel.id) panel.id = id;
+    }
+    btn.addEventListener('keydown', function (e) {
+      var idx = Array.prototype.indexOf.call(tabs, btn);
+      var next = null;
+      if (e.key === 'ArrowRight') next = tabs[idx + 1] || tabs[0];
+      if (e.key === 'ArrowLeft') next = tabs[idx - 1] || tabs[tabs.length - 1];
+      if (e.key === 'Home') next = tabs[0];
+      if (e.key === 'End') next = tabs[tabs.length - 1];
+      if (next) {
+        e.preventDefault();
+        var panelId = next.getAttribute('onclick');
+        if (panelId) {
+          var m = panelId.match(/switchTab\('([^']+)'/);
+          if (m) HWReport.switchTab(m[1], next);
+        }
+      }
+    });
   });
 };
 
-HWReport.stackedMix = function (id, mixBase, mixTest, shotNames, shotColors) {
-  if (HWReport.charts[id]) HWReport.charts[id].destroy();
-  var ctx = document.getElementById(id);
-  if (!ctx) return;
-  var keys = ['z', 'o', 't', 'f', 's'];
-  var datasets = keys.map(function (k) {
-    return {
-      label: shotNames[k],
-      data: [mixBase[k][0], mixTest[k][0]],
-      backgroundColor: shotColors[k] + 'bb',
-      borderColor: shotColors[k],
-      borderWidth: 1,
-    };
-  });
-  HWReport.charts[id] = new Chart(ctx, {
-    type: 'bar',
-    data: { labels: ['Base', 'Test'], datasets: datasets },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      indexAxis: 'y',
-      plugins: { legend: { display: true, position: 'bottom', labels: { font: { size: 11 }, boxWidth: 10 } } },
-      scales: {
-        x: {
-          stacked: true,
-          grid: { color: 'rgba(0,0,0,0.04)' },
-          ticks: { callback: function (v) { return v + '%'; }, font: { size: 11 } },
-        },
-        y: { stacked: true, grid: { display: false } },
-      },
-    },
+HWReport.initInsights = function () {
+  document.querySelectorAll('.insight').forEach(function (el) {
+    if (el.querySelector('.insight-icon')) return;
+    var iconName = 'alert';
+    if (el.classList.contains('good')) iconName = 'trend-up';
+    else if (el.classList.contains('bad')) iconName = 'trend-down';
+    else if (el.classList.contains('warn')) iconName = 'alert';
+    var span = document.createElement('span');
+    span.className = 'insight-icon';
+    span.innerHTML = HWReport.icon ? HWReport.icon(iconName) : '';
+    el.insertBefore(span, el.firstChild);
   });
 };
 
-HWReport.baseLegend = function () {
-  return (
-    '<span class="leg"><span class="leg-sq" style="background:#378ADD"></span>Base</span>' +
-    '<span class="leg"><span class="leg-sq" style="background:#1D9E75"></span>Test</span>'
-  );
+HWReport.initSkipLink = function () {
+  if (document.querySelector('.skip-link')) return;
+  var main = document.querySelector('main');
+  if (!main) return;
+  if (!main.id) main.id = 'main-content';
+  var link = document.createElement('a');
+  link.href = '#' + main.id;
+  link.className = 'skip-link';
+  link.textContent = 'Skip to content';
+  document.body.insertBefore(link, document.body.firstChild);
 };
 
 HWReport.initChrome = function () {
-  if (document.querySelector('.report-list')) return;
-
+  var isIndex = !!document.getElementById('report-list');
   var slug = document.body.getAttribute('data-report-slug');
-  if (!slug) {
+  if (!slug && !isIndex) {
     var page = window.location.pathname.split('/').pop() || '';
     if (page.endsWith('.html') && page !== 'index.html') {
       slug = page.replace('.html', '');
@@ -155,12 +155,12 @@ HWReport.initChrome = function () {
   var owner = document.body.getAttribute('data-report-owner') || '';
 
   var header = document.querySelector('header');
-  if (header && !header.querySelector('.back-to-index')) {
+  if (header && !isIndex && !header.querySelector('.back-to-index')) {
     var brand = header.querySelector('.brand');
     var link = document.createElement('a');
     link.href = 'index.html';
     link.className = 'back-to-index';
-    link.textContent = '← All reports';
+    link.innerHTML = (HWReport.icon ? HWReport.icon('link') : '') + ' All reports';
     if (brand) {
       var left = document.createElement('div');
       left.className = 'header-left';
@@ -178,32 +178,30 @@ HWReport.initChrome = function () {
     var copyLinkBtn = document.createElement('button');
     copyLinkBtn.type = 'button';
     copyLinkBtn.className = 'chrome-btn';
-    copyLinkBtn.textContent = 'Copy link';
+    copyLinkBtn.innerHTML = (HWReport.icon ? HWReport.icon('copy') : '') + ' Copy link';
     copyLinkBtn.addEventListener('click', function () {
       HWReport._copyText(window.location.href, copyLinkBtn, 'Copied!');
     });
     actions.appendChild(copyLinkBtn);
-    if (slug) {
-      var copyHandoffBtn = document.createElement('button');
-      copyHandoffBtn.type = 'button';
-      copyHandoffBtn.className = 'chrome-btn';
-      copyHandoffBtn.textContent = 'Copy handoff';
-      copyHandoffBtn.addEventListener('click', function () {
-        fetch('handoffs/' + slug + '.txt')
-          .then(function (r) {
-            if (!r.ok) throw new Error('not found');
-            return r.text();
-          })
-          .then(function (text) {
-            HWReport._copyText(text, copyHandoffBtn, 'Copied!');
-          })
-          .catch(function () {
-            copyHandoffBtn.textContent = 'No handoff file';
-            setTimeout(function () { copyHandoffBtn.textContent = 'Copy handoff'; }, 2000);
-          });
-      });
-      actions.appendChild(copyHandoffBtn);
-    }
+    var copyHandoffBtn = document.createElement('button');
+    copyHandoffBtn.type = 'button';
+    copyHandoffBtn.className = 'chrome-btn';
+    copyHandoffBtn.textContent = 'Copy handoff';
+    copyHandoffBtn.addEventListener('click', function () {
+      fetch('handoffs/' + slug + '.txt')
+        .then(function (r) {
+          if (!r.ok) throw new Error('not found');
+          return r.text();
+        })
+        .then(function (text) {
+          HWReport._copyText(text, copyHandoffBtn, 'Copied!');
+        })
+        .catch(function () {
+          copyHandoffBtn.textContent = 'No handoff file';
+          setTimeout(function () { copyHandoffBtn.textContent = 'Copy handoff'; }, 2000);
+        });
+    });
+    actions.appendChild(copyHandoffBtn);
     var headerRight = header.querySelector('.header-right');
     if (headerRight) {
       headerRight.insertBefore(actions, headerRight.firstChild);
@@ -213,7 +211,7 @@ HWReport.initChrome = function () {
   }
 
   var footer = document.querySelector('footer');
-  if (footer && !footer.querySelector('.footer-nav')) {
+  if (footer && !isIndex && !footer.querySelector('.footer-nav')) {
     var nav = document.createElement('p');
     nav.className = 'footer-nav';
     var flink = document.createElement('a');
@@ -278,5 +276,9 @@ HWReport._copyTextFallback = function (text, cb) {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
+  HWReport.initSkipLink();
+  HWReport.initTabs();
   HWReport.initChrome();
+  HWReport.initInsights();
+  HWReport.initScoreboard();
 });

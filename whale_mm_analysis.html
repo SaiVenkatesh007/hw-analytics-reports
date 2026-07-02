@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){try{var t=localStorage.getItem('hw-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <title>Whale PvP Matchmaking — Impact Analysis</title>
 <meta name="description" content="Whale MM win-streak reversion AB — Jun 15–29 extended read. MDAU essentially flat; D3 whale ARPU7 ahead in Test. Separate May 15–Jun 21 read preserved.">
 <meta property="og:title" content="Whale PvP Matchmaking — Impact Analysis">
@@ -57,6 +58,10 @@
     Evaluating the effect of power-band matchmaking (Option 2) on eligible whale win rates, self-quit behaviour, engagement mode shift, and next-day retention.
     Eligible whales = users whose Top 11 team strength exceeds the Q90 threshold for their reputation rank. Scope: Rookie → Remarkable.
   </p>
+  <div class="hero-stat-wrap">
+    <p class="stat-scoreboard-label">Whale real-user WR lift (avg)</p>
+    <p class="stat-scoreboard up" id="heroStat" data-value="25" data-prefix="+" data-suffix="pp" data-decimals="0">+25pp</p>
+  </div>
   <div class="kpi-row" id="kpiRow">
     <!-- injected by JS -->
   </div>
@@ -69,7 +74,7 @@
   <!-- S1: ELIGIBLE BASE -->
   <div class="section">
     <div class="section-header">
-      <p class="section-num">01 — Eligible base</p>
+      <p class="section-num">Eligible base</p>
       <p class="section-title">Who are the eligible whales?</p>
       <p class="section-sub">Users whose Top 11 strength exceeds the Q90 threshold for their rep rank. Stable across both windows — no meaningful composition shift.</p>
     </div>
@@ -93,7 +98,7 @@
   <!-- S2: MECHANISM CHECK -->
   <div class="section">
     <div class="section-header">
-      <p class="section-num">02 — Mechanism check</p>
+      <p class="section-num">Mechanism check</p>
       <p class="section-title">Is the power band placing weaker opponents?</p>
       <p class="section-sub">Average opp_top11 / top11 against real users only. PRatio below 1.0 = opponent is weaker. Non-whale PRatio should remain ~1.0.</p>
     </div>
@@ -121,7 +126,7 @@
   <!-- S3: WIN RATE -->
   <div class="section">
     <div class="section-header">
-      <p class="section-num">03 — Win rate</p>
+      <p class="section-num">Win rate</p>
       <p class="section-title">Real-user win rate is the primary success metric</p>
       <p class="section-sub">Real-user WR strips bot wins out. All-match WR is inflated by the bot mechanic. Min 3 matches played to be included.</p>
     </div>
@@ -149,7 +154,7 @@
   <!-- S4: QUIT RATE -->
   <div class="section">
     <div class="section-header">
-      <p class="section-num">04 — Quit rate</p>
+      <p class="section-num">Quit rate</p>
       <p class="section-title">Opponents quit more — whales quit less</p>
       <p class="section-sub">Opponent quit = weaker user forfeiting on seeing the mismatch (expected). Self-quit = whale quitting their own match (was a pain signal pre-change). Intentional forfeits only — disconnects not captured.</p>
     </div>
@@ -195,7 +200,7 @@
   <!-- S5: ENGAGEMENT SHIFT -->
   <div class="section">
     <div class="section-header">
-      <p class="section-num">05 — Engagement shift</p>
+      <p class="section-num">Engagement shift</p>
       <p class="section-title">Whales are moving from League back to PvP</p>
       <p class="section-sub">Pre-change, whales refugeed into League where winrates were better. The intended outcome is to make PvP rewarding enough that they return to it.</p>
     </div>
@@ -223,7 +228,7 @@
   <!-- S6: NDR -->
   <div class="section" id="ndr_section">
     <div class="section-header">
-      <p class="section-num">06 — Next-day retention (PvP)</p>
+      <p class="section-num">Next-day retention</p>
       <p class="section-title">Whale PvP retention improved post-change</p>
       <p class="section-sub">% of users who return to play PvP the next day. Whale NDR is now above non-whale at every rank except Remarkable.</p>
     </div>
@@ -251,7 +256,7 @@
   <!-- S7: TIME SPENT -->
   <div class="section">
     <div class="section-header">
-      <p class="section-num" id="timespent_num">07 — Time spent</p>
+      <p class="section-num" id="timespent_num">TIME SPENT</p>
       <p class="section-title">Session time is broadly stable — slight uptick at higher ranks</p>
       <p class="section-sub">Average daily time spent in-game (mins) by rank. The Day 1 dip has fully reversed — whale time spent is up vs pre-change in both the 3-day and 5-day windows.</p>
     </div>
@@ -279,7 +284,7 @@
   <!-- S8: WHALES FACED -->
   <div class="section" id="whalesfaced_section">
     <div class="section-header">
-      <p class="section-num">08 — Whales faced by non-whales</p>
+      <p class="section-num">Whales faced by non-whales</p>
       <p class="section-title">Non-whale exposure to Q90 whales — is a same-day cooldown needed?</p>
       <p class="section-sub">Distribution of how many eligible whales a non-whale user faces per day. Input for deciding urgency of the same-day cooldown (not yet shipped).</p>
     </div>
@@ -293,7 +298,7 @@
   <!-- S8b: PAYER MIX -->
   <div class="section" id="payermix_section">
     <div class="section-header">
-      <p class="section-num">09 — Payer exposure at risk</p>
+      <p class="section-num">Payer exposure at risk</p>
       <p class="section-title">Why the same-day safeguard is being built</p>
       <p class="section-sub">Of the non-whale users being matched against Q90 whales, a meaningful share are paying users — particularly at higher ranks. This is the primary driver for prioritising the same-day cooldown.</p>
     </div>
@@ -315,7 +320,7 @@
   <!-- S10: OPEN QUESTIONS -->
   <div class="section">
     <div class="section-header">
-      <p class="section-num" id="openq_num">10 — Open questions</p>
+      <p class="section-num" id="openq_num">OPEN QUESTIONS</p>
       <p class="section-title">What to track going forward</p>
       <p class="section-sub">With 3 days of data, signals are stabilising. These are the remaining watch items.</p>
     </div>
@@ -451,7 +456,7 @@
     <!-- ENGAGEMENT & RETENTION -->
     <div class="section">
       <div class="section-header">
-        <p class="section-num">01 — Engagement & Retention</p>
+        <p class="section-num">Engagement & retention</p>
         <p class="section-title">Overall</p>
         <p class="section-sub">Overall metrics across both cases. Rank-level breakdown below.</p>
       </div>
@@ -520,7 +525,7 @@
     <!-- MONETISATION -->
     <div class="section">
       <div class="section-header">
-        <p class="section-num">02 — Monetisation</p>
+        <p class="section-num">Monetisation</p>
         <p class="section-title">Conv%, ARPU, ARPPU — Overall & by Rank</p>
         <p class="section-sub">Raw numbers are skewed by a small number of highrollers. Use the exclusion cuts for a cleaner read.</p>
       </div>
@@ -804,7 +809,7 @@
     <!-- ENGAGEMENT -->
     <div class="section">
       <div class="section-header">
-        <p class="section-num">01 — Engagement & Retention</p>
+        <p class="section-num">Engagement & retention</p>
         <p class="section-title">Essentially flat MDAU; NDR up in both arms</p>
         <p class="section-sub">Eligible MM whales · Jun 15 – Jun 29.</p>
       </div>
@@ -836,7 +841,7 @@
     <!-- RANK-WISE MINI TABS -->
     <div class="section">
       <div class="section-header">
-        <p class="section-num">01b — Rank-wise Detail</p>
+        <p class="section-num">Rank-wise detail</p>
         <p class="section-title">Engagement · Retention · Monetisation by rank</p>
         <p class="section-sub">Rookie → Remarkable · Monetisation tab follows the active highroller cut from Section 02.</p>
       </div>
@@ -889,7 +894,7 @@
     <!-- MM WHALE MONETISATION -->
     <div class="section">
       <div class="section-header">
-        <p class="section-num">02 — MM Whale Monetisation</p>
+        <p class="section-num">MM whale monetisation</p>
         <p class="section-title">Conv%, ARPU, ARPPU — Overall & by Rank</p>
         <p class="section-sub">Eligible MM whales · Jun 15 – Jun 29 · Raw numbers skewed by highrollers — use exclusion cuts for a cleaner read.</p>
       </div>
@@ -924,7 +929,7 @@
     <!-- D3 WHALES OVERALL -->
     <div class="section">
       <div class="section-header">
-        <p class="section-num">03 — New User D3 Revenue Whales</p>
+        <p class="section-num">New user D3 revenue whales</p>
         <p class="section-title">ARPU3 dips, ARPU7 ahead in Test</p>
         <p class="section-sub">Users hitting ₹700 (India) or ₹1,000 (International) cumulative revenue by D3 of install · Mature install cohorts (D3 ≤ Jun 26, D7 ≤ Jun 22) · Not restricted to MM-eligible whales · 383 D3 whales total.</p>
       </div>
@@ -952,7 +957,7 @@
     <!-- SKU -->
     <div class="section">
       <div class="section-header">
-        <p class="section-num">04 — D3 Whale SKU Split</p>
+        <p class="section-num">D3 whale SKU split</p>
         <p class="section-title">Where the D3 dip and D7 recovery come from</p>
         <p class="section-sub">ARPU per D3 whale user by SKU · Toggle D3 vs D7 window.</p>
       </div>
@@ -986,6 +991,10 @@
   <span id="footerLabel">Winstreak A/B · Jun 15 – Jun 29</span>
 </footer>
 
+<script src="kit/theme.js"></script>
+<script src="kit/icons.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="kit/charts.js"></script>
 <script src="kit/report.js"></script>
 <script src="kit/whale-mm.js"></script>
 </body>
