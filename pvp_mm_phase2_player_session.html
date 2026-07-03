@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('hw-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <title>PvP Matchmaking — Phase 2 Player & Session</title>
-<meta name="description" content="Phase 2 PvP matchmaking — healthy median rolling quality; ~14% blowout cluster tail in high-freq and 75k+ power.">
+<meta name="description" content="Phase 2 PvP matchmaking — healthy median rolling quality; blowout tail is positive-blowout streaks in high-freq and 75k+ power.">
 <meta property="og:title" content="PvP Matchmaking — Phase 2 Player & Session">
-<meta property="og:description" content="Phase 2 PvP matchmaking — healthy median rolling quality; blowout cluster tail in high-freq and 75k+ power.">
+<meta property="og:description" content="Phase 2 PvP matchmaking — blowout tail driven by positive blowout streaks; negative stomp cluster vanishingly rare.">
 <meta property="og:url" content="https://saivenkatesh007.github.io/hw-analytics-reports/pvp_mm_phase2_player_session.html">
 <meta property="og:type" content="article">
 <link rel="icon" type="image/png" href="kit/favicon.png">
@@ -19,7 +19,7 @@
   <div class="brand"><div class="dot"></div><h1>PvP Matchmaking — Phase 2 Player & Session</h1></div>
   <span class="meta">Human vs human ARENAS · Jun 15–30, 2026 · Rolling-25</span>
 </header>
-<div class="caveat-banner">✓ Phase 2 builds on Phase 1 baseline. Lead MM-pain metric is <strong>negative blowout cluster</strong> (rolling-25), not unsigned blowout or chronic mismatch. Session marathon frustration is rare.</div>
+<div class="caveat-banner">✓ Phase 2 + extensions. Unsigned blowout cluster (~14%) is almost entirely <strong>positive blowout streaks</strong> — not stompings (neg cluster 0.06%). Monitor high-freq and 75k+ power. In-window retention parked.</div>
 
 <div class="tab-bar">
   <button class="tab-btn active" onclick="HWReport.switchTab('overview', this)">Overview</button>
@@ -32,8 +32,8 @@
 <div id="tab-overview" class="tab-content active">
   <div class="hero-section">
     <p class="hero-eyebrow">Game Analytics · PvP Matchmaking · Phase 2</p>
-    <h2 class="hero-title">Rolling quality is healthy at the median —<br>a ~14% blowout tail needs monitoring.</h2>
-    <p class="hero-desc">Among <strong>72K users</strong> with ≥25 matches, median rolling close rate is <strong>56%</strong>. But <strong>13.8%</strong> hit blowout-heavy streaks (&gt;40% of last 25 matches one-sided) — concentrated in <strong>high-frequency players</strong> and <strong>75k+ power</strong>. Chronic sub-20% close streaks are rare (0.5%). Marathon session frustration is negligible.</p>
+    <h2 class="hero-title">Rolling quality is healthy at the median —<br>blowout tail is winning-big streaks, not stompings.</h2>
+    <p class="hero-desc">Among <strong>72K users</strong> with ≥25 matches, median rolling close is <strong>56%</strong>. <strong>13.8%</strong> hit unsigned blowout-heavy streaks — but extensions show this is <strong>9.2% positive blowout cluster</strong> (dominant wins) vs <strong>0.06% negative</strong> (stomped). High-freq (26%) and 75k+ power (25.5%) remain priority monitor cells. Session frustration negligible.</p>
     <div class="hero-stat-wrap">
       <p class="stat-scoreboard-label">Median rolling close rate</p>
       <p class="stat-scoreboard neutral" data-value="56.0" data-suffix="%" data-decimals="1">56.0%</p>
@@ -44,8 +44,9 @@
       <div class="section-header"><p class="section-num">Headline KPIs</p><h3 class="section-title">Player rolling quality (last 25 matches)</h3></div>
       <div class="kpi-row">
         <div class="kpi-card"><p class="kpi-label">Median Rolling Close %</p><p class="kpi-value neutral">56.0%</p><p class="kpi-note">72K users · ≥25 matches</p></div>
-        <div class="kpi-card"><p class="kpi-label">Blowout Cluster</p><p class="kpi-value warn">13.8%</p><p class="kpi-note">&gt;40% one-sided over last 25</p></div>
-        <div class="kpi-card"><p class="kpi-label">Chronic Mismatch</p><p class="kpi-value up">0.5%</p><p class="kpi-note">&lt;20% close over last 25</p></div>
+        <div class="kpi-card"><p class="kpi-label">Pos Blowout Cluster</p><p class="kpi-value warn">9.2%</p><p class="kpi-note">&gt;40% dominant wins / 25</p></div>
+        <div class="kpi-card"><p class="kpi-label">Neg Blowout Cluster</p><p class="kpi-value up">0.06%</p><p class="kpi-note">40 users · too rare</p></div>
+        <div class="kpi-card"><p class="kpi-label">Match Pos Blowout</p><p class="kpi-value neutral">23.8%</p><p class="kpi-note">vs 4.1% negative</p></div>
         <div class="kpi-card"><p class="kpi-label">Match-Level Close</p><p class="kpi-value neutral">55.5%</p><p class="kpi-note">2.8M unique matches</p></div>
       </div>
       <div class="two-col">
@@ -57,10 +58,11 @@
       <div class="section-header"><p class="section-num">Key findings</p><h3 class="section-title">What Phase 2 adds on top of Phase 1</h3></div>
       <div class="insights">
         <div class="insight good"><strong>Center is healthy:</strong> Median rolling close ~56% matches Phase 1 per-user baseline. Most players with enough history see competitive games.</div>
-        <div class="insight bad"><strong>Blowout cluster is the actionable tail:</strong> 13.8% of rolling-25 users (~10K) see blowout-heavy streaks. High-freq (26%) and 75k–100k power (25.5%) are worst.</div>
-        <div class="insight warn"><strong>High-freq × Supreme+ is the priority cell:</strong> 30.8% blowout cluster, 48% median rolling close (n=312).</div>
-        <div class="insight"><strong>Chronic mismatch is not the story:</strong> Only 0.5% of rolling-25 users fall below 20% close over 25 matches — too rare to headline or operationalize.</div>
-        <div class="insight good"><strong>Sessions are not the problem:</strong> Zero-close marathons (8+ matches, no close game) are 0.9% of long sessions. Pain is sustained blowouts over many matches, not bad single sittings.</div>
+        <div class="insight bad"><strong>Blowout tail = positive blowout streaks:</strong> Match-level 23.8% positive vs 4.1% negative blowout. Rolling-25: 9.2% pos cluster vs 0.06% neg cluster (40 users). Unsigned 13.8% is almost entirely wins-big, not stompings.</div>
+        <div class="insight warn"><strong>High-freq × Supreme+ still priority:</strong> 30.8% unsigned blowout cluster, 22.4% pos cluster, 48% median rolling close (n=312).</div>
+        <div class="insight"><strong>MM calibration (Extension A):</strong> Close % dips to 47% when much stronger (&lt;0.85 ratio); parity band 0.95–1.0 is ~56%. High-freq worse at same ratio band.</div>
+        <div class="insight"><strong>Chronic mismatch is not the story:</strong> Only 0.5% below 20% close over 25 matches.</div>
+        <div class="insight good"><strong>Sessions are not the problem:</strong> Zero-close marathons 0.9% of 8+ sessions. Retention extension parked — in-window next-match ≈100%.</div>
       </div>
     </div>
     <div class="section">
@@ -102,13 +104,13 @@
     <div class="section">
       <div class="section-header"><p class="section-num">Next-match retention</p><h3 class="section-title">Played another match after this one (window only)</h3></div>
       <div class="insights">
-        <div class="insight warn"><strong>Correlation ≠ causation.</strong> High-engagement users play more matches and accumulate more varied outcomes. Match-level rates exclude each user's last match in the window.</div>
-        <div class="insight bad"><strong>Hypothesis:</strong> Negative blowout correlates with lower next-match rate more than positive blowout at equal activity.</div>
+        <div class="insight warn"><strong>Metric not actionable in this window.</strong> In-window next-match ≈100% for all match types (close, negative blowout, positive blowout). Active users almost always have another match within 16 days.</div>
+        <div class="insight"><strong>Spearman (user-level, low signal):</strong> rolling close ρ=-0.15 · neg blowout ρ=-0.01 · pos blowout ρ=+0.13 vs mean_played_next — confounded by volume. Parked pending better return definition.</div>
       </div>
       <table class="comp-table" id="table-retention-type" style="margin-top:1.25rem"></table>
       <div class="two-col" style="margin-top:1.25rem">
-        <div class="card"><p class="card-title">Next-Match % by Rolling Close Decile</p><div class="chart-wrap" style="height:260px"><canvas id="chart-ret-decile-close"></canvas></div></div>
-        <div class="card"><p class="card-title">Next-Match % by Rolling Neg Blowout Decile</p><div class="chart-wrap" style="height:260px"><canvas id="chart-ret-decile-neg"></canvas></div></div>
+        <div class="card"><p class="card-title">Next-Match % by Rolling Close Decile (flat ~98%)</p><div class="chart-wrap" style="height:260px"><canvas id="chart-ret-decile-close"></canvas></div></div>
+        <div class="card"><p class="card-title">Spearman — Rolling Quality vs mean_played_next</p><div class="chart-wrap" style="height:260px"><canvas id="chart-ret-decile-neg"></canvas></div></div>
       </div>
       <table class="comp-table" id="table-spearman" style="margin-top:1.25rem"></table>
     </div>
@@ -156,8 +158,10 @@
           <li><strong>Blowout cluster:</strong> &gt;40% of last 25 matches were one-sided (unsigned).</li>
           <li><strong>Negative blowout:</strong> One-sided loss — got stomped.</li>
           <li><strong>Positive blowout:</strong> One-sided win — dominant victory.</li>
-          <li><strong>Negative blowout cluster:</strong> &gt;40% of last 25 matches were negative blowouts (MM-pain metric).</li>
-          <li><strong>Next-match retention:</strong> User played another human PvP match later in the window.</li>
+          <li><strong>Power ratio:</strong> opp_power / team_power — &lt;1 means you're stronger; &lt;0.85 = much stronger.</li>
+          <li><strong>Positive blowout cluster:</strong> &gt;40% of last 25 matches were dominant wins — the actionable rolling tail.</li>
+          <li><strong>Negative blowout cluster:</strong> &gt;40% stomped over last 25 — vanishingly rare (0.06%).</li>
+          <li><strong>Next-match retention:</strong> Parked — in-window metric ≈100%; needs same-day or next-session definition.</li>
           <li><strong>Chronic mismatch:</strong> &lt;20% of last 25 matches were close (investigation threshold; almost nobody hits it).</li>
           <li><strong>Session:</strong> Consecutive matches with ≤30 min gap between them.</li>
           <li><strong>Session frustration:</strong> 8+ matches in one session with zero close matches.</li>
@@ -196,7 +200,7 @@
 <script src="kit/charts.js"></script>
 <script src="kit/report.js"></script>
 <script>
-const DD = {"overall":{"unique_matches":2803366,"team_match_rows":5606731,"pvp_users":220315,"users_rolling_25":71960,"pct_users_reaching_25":32.7,"match_close_pct":55.5,"match_one_sided_pct":27.8,"median_rolling_close_pct":56.0,"pct_blowout_cluster":13.8,"pct_chronic_mismatch":0.5,"n_sessions":2841111,"pct_session_frustration_all":0.0,"pct_session_below_min_all":0.5,"long_sessions_8plus":34334,"pct_below_min_8plus":5.4,"pct_zero_close_8plus":0.9},"activity_tier":{"labels":["Casual (1–5/day)","Regular (6–15/day)","High-freq (15+/day)"],"n_users_rolling_25":[46506,24335,1119],"pct_blowout_cluster":[12.3,16.0,26.0],"pct_chronic_mismatch":[0.3,0.6,3.2],"median_rolling_close_pct":[56.0,52.0,48.0],"pct_below_min_8plus":[3.7,4.6,8.3]},"rep_rank":{"labels":["Rookie","Challenger","Proven","Accomplished","Remarkable","Masterful","Supreme+"],"n_users_rolling_25":[5184,19918,13770,13525,9123,3346,7094],"pct_blowout_cluster":[5.1,10.0,13.2,20.1,17.2,7.3,18.2],"median_rolling_close_pct":[60.0,60.0,56.0,52.0,56.0,60.0,52.0]},"power_bracket":{"labels":["0–50k","50k–75k","75k–100k","100k+"],"n_users_rolling_25":[40702,16240,8631,6387],"pct_blowout_cluster":[8.5,17.9,25.5,20.7],"median_rolling_close_pct":[56.0,56.0,52.0,52.0],"pct_below_min_8plus":[3.8,4.1,7.0,9.5]},"priority_segments":[{"segment":"High-freq × Supreme+","pct_blowout_cluster":30.8,"median_rolling_close_pct":48.0,"n_users":312},{"segment":"High-freq overall","pct_blowout_cluster":26.0,"median_rolling_close_pct":48.0,"n_users":1119},{"segment":"75k–100k power","pct_blowout_cluster":25.5,"median_rolling_close_pct":52.0,"n_users":8631},{"segment":"High-freq × Accomplished","pct_blowout_cluster":25.2,"median_rolling_close_pct":52.0,"n_users":163},{"segment":"100k+ power","pct_blowout_cluster":20.7,"median_rolling_close_pct":52.0,"n_users":6387}],"rolling_deciles":{"labels":["P10","P20","P30","P40","P50","P60","P70","P80","P90"],"rolling_close_pct":[36.0,44.0,48.0,52.0,56.0,60.0,64.0,68.0,72.0]}};
+const DD = {"meta":{"title":"PvP Matchmaking \u2014 Phase 2 Player & Session","slug":"pvp_mm_phase2_player_session","meta_line":"Human vs human ARENAS \u00b7 Jun 15\u201330, 2026 \u00b7 rolling-25 + extensions","date_range":"2026-06-15 \u2013 2026-06-30","filters":"ARENAS, status=2, opp_is_bot=0, teams2 user mapping, all ranks","source_notebook":"PvP Matchmaking Analysis/Phase 2 - Player Session/Phase 2 - Player Session [Jun 15-30].ipynb","owner":"Venkatesh","date":"2026-06-30","date_label":"Jun 15\u201330, 2026","tags":["matchmaking","pvp","rolling","session","signed-blowout"],"thesis":"Median rolling close ~56% is healthy \u2014 blowout tail (~14%) is positive-blowout streaks in high-freq and 75k+ power, not stompings; session frustration rare.","description":"Phase 2 player rolling-25 + extensions \u2014 unsigned blowout cluster driven by positive blowout; negative blowout cluster vanishingly rare; retention parked.","handoff":"handoffs/pvp_mm_phase2_player_session.txt"},"overall":{"unique_matches":2803366,"team_match_rows":5606732,"pvp_users":220315,"users_rolling_25":71960,"pct_users_reaching_25":32.7,"match_close_pct":55.5,"match_one_sided_pct":27.8,"match_neg_blowout_pct":4.1,"match_pos_blowout_pct":23.8,"median_rolling_close_pct":56.0,"pct_blowout_cluster":13.8,"pct_neg_blowout_cluster":0.1,"pct_pos_blowout_cluster":9.2,"median_rolling_neg_blowout_pct":4.0,"median_rolling_pos_blowout_pct":20.0,"pct_chronic_mismatch":0.5,"n_sessions":2841111,"pct_session_frustration_all":0.0,"pct_session_below_min_all":0.5,"long_sessions_8plus":34334,"pct_below_min_8plus":5.4,"pct_zero_close_8plus":0.9},"activity_tier":{"labels":["Casual (1\u20135/day)","Regular (6\u201315/day)","High-freq (15+/day)"],"n_users_rolling_25":[46506,24335,1119],"pct_blowout_cluster":[12.3,16.0,26.0],"pct_neg_blowout_cluster":[0.0,0.1,0.2],"pct_pos_blowout_cluster":[8.2,10.7,18.1],"pct_chronic_mismatch":[0.3,0.6,3.2],"median_rolling_close_pct":[56.0,52.0,48.0],"pct_below_min_8plus":[3.7,4.6,8.3]},"rep_rank":{"labels":["Rookie","Challenger","Proven","Accomplished","Remarkable","Masterful","Supreme+"],"n_users_rolling_25":[5184,19918,13770,13525,9123,3346,7094],"pct_blowout_cluster":[5.1,10.0,13.2,20.1,17.2,7.3,18.2],"pct_pos_blowout_cluster":[2.5,5.1,9.5,15.4,12.4,4.0,12.0],"median_rolling_close_pct":[60.0,60.0,56.0,52.0,56.0,60.0,52.0]},"power_bracket":{"labels":["0\u201350k","50k\u201375k","75k\u2013100k","100k+"],"n_users_rolling_25":[40702,16240,8631,6387],"pct_blowout_cluster":[8.5,17.9,25.5,20.7],"pct_neg_blowout_cluster":[0.0,0.1,0.0,0.2],"pct_pos_blowout_cluster":[4.4,12.9,20.8,14.9],"median_rolling_close_pct":[56.0,56.0,52.0,52.0],"pct_below_min_8plus":[3.8,4.1,7.0,9.5]},"priority_segments":[{"segment":"High-freq \u00d7 Supreme+","pct_blowout_cluster":30.8,"pct_pos_blowout_cluster":22.4,"median_rolling_close_pct":48.0,"n_users":312},{"segment":"High-freq overall","pct_blowout_cluster":26.0,"pct_pos_blowout_cluster":18.1,"median_rolling_close_pct":48.0,"n_users":1119},{"segment":"75k\u2013100k power","pct_blowout_cluster":25.5,"pct_pos_blowout_cluster":20.8,"median_rolling_close_pct":52.0,"n_users":8631},{"segment":"High-freq \u00d7 Accomplished","pct_blowout_cluster":25.2,"pct_pos_blowout_cluster":20.3,"median_rolling_close_pct":52.0,"n_users":163},{"segment":"100k+ power","pct_blowout_cluster":20.7,"pct_pos_blowout_cluster":14.9,"median_rolling_close_pct":52.0,"n_users":6387}],"rolling_deciles":{"labels":["P10","P20","P30","P40","P50","P60","P70","P80","P90"],"rolling_close_pct":[36.0,44.0,48.0,52.0,56.0,60.0,64.0,68.0,72.0]},"close_rate_by_power_ratio":{"labels":["<0.85","0.85\u20130.9","0.9\u20130.95","0.95\u20131.0","1.0\u20131.05","1.05\u20131.1","1.1\u20131.15","1.15+"],"avg_close_pct":[47.0,52.9,53.6,56.3,59.3,59.7,59.5,63.8],"num_users":[44561,19663,32818,78700,76593,37111,18106,72564]},"signed_blowout_overall":{"negative_blowout_pct":4.1,"positive_blowout_pct":23.8,"one_sided_pct":27.8,"pct_neg_blowout_cluster":0.1,"pct_pos_blowout_cluster":9.2},"signed_blowout_by_activity":{"labels":["Casual (1\u20135/day)","Regular (6\u201315/day)","High-freq (15+/day)"],"pct_neg_cluster":[0.0,0.1,0.2],"pct_pos_cluster":[8.2,10.7,18.1],"match_neg_blowout_pct":[4.3,3.7,3.8],"match_pos_blowout_pct":[21.5,26.0,32.1]},"signed_blowout_by_power":{"labels":["0\u201350k","50k\u201375k","75k\u2013100k","100k+"],"pct_neg_cluster":[0.0,0.1,0.0,0.2],"pct_pos_cluster":[4.4,12.9,20.8,14.9]},"retention_note":"In-window next-match \u2248100% for all match types \u2014 not actionable. Parked pending better return metric.","spearman":{"rolling_close_pct_25":-0.15,"rolling_neg_blowout_pct_25":-0.01,"rolling_pos_blowout_pct_25":0.13},"retention_decile_close":{"decile":[1,2,3,4,5,6,7,8,9,10],"played_next_pct":[98.1,98.0,97.9,97.9,97.8,97.7,97.7,97.7,97.7,97.6]},"retention_decile_neg_blowout":{"decile":[1,2,3,4],"played_next_pct":[97.8,97.8,97.8,97.8]}};
 
 function buildTable(id, headers, rows) {
   var html = '<thead><tr>' + headers.map(function(h) { return '<th>' + h + '</th>'; }).join('') + '</tr></thead><tbody>' +
@@ -208,8 +212,12 @@ function pct(v) { return v.toFixed(1) + '%'; }
 function num(v) { return v.toLocaleString(); }
 
 buildTable('table-priority',
-  ['Segment', 'Blowout cluster %', 'Median rolling close %', 'Users (rolling-25)'],
-  DD.priority_segments.map(function(r) { return [r.segment, pct(r.pct_blowout_cluster), pct(r.median_rolling_close_pct), num(r.n_users)]; })
+  ['Segment', 'Unsigned cluster %', 'Pos cluster %', 'Median rolling close %', 'Users'],
+  DD.priority_segments.map(function(r) {
+    return [r.segment, pct(r.pct_blowout_cluster),
+      r.pct_pos_blowout_cluster != null ? pct(r.pct_pos_blowout_cluster) : '—',
+      pct(r.median_rolling_close_pct), num(r.n_users)];
+  })
 );
 
 buildTable('table-activity',
@@ -299,15 +307,17 @@ if (DD.signed_blowout_by_power) {
   buildTable('table-signed-power', ['Power bracket', 'Neg cluster %', 'Pos cluster %'], [['VM run pending', '—', '—']]);
 }
 
-if (DD.retention_by_match_type) {
+if (DD.retention_note) {
+  buildTable('table-retention-type',
+    ['Status', 'Note'],
+    [['Parked', DD.retention_note]]);
+} else if (DD.retention_by_match_type) {
   buildTable('table-retention-type',
     ['Match type', 'Next-match %'],
     DD.retention_by_match_type.labels.map(function(l, i) {
       return [l, pct(DD.retention_by_match_type.played_next_pct[i])];
     })
   );
-} else {
-  buildTable('table-retention-type', ['Match type', 'Next-match %'], [['VM run pending', '—']]);
 }
 
 if (DD.retention_decile_close) {
@@ -315,19 +325,20 @@ if (DD.retention_decile_close) {
     DD.retention_decile_close.decile.map(function(d) { return 'D' + d; }),
     DD.retention_decile_close.played_next_pct, 'Next-match %', HWReport.COLORS.BLUE);
 }
-if (DD.retention_decile_neg_blowout) {
-  HWReport.lineChartSimple('chart-ret-decile-neg',
-    DD.retention_decile_neg_blowout.decile.map(function(d) { return 'D' + d; }),
-    DD.retention_decile_neg_blowout.played_next_pct, 'Next-match %', HWReport.COLORS.CORAL);
-}
-
 if (DD.spearman) {
+  var spLabels = Object.keys(DD.spearman).map(function(k) {
+    return k.replace('rolling_', '').replace('_pct_25', '').replace('close', 'close %').replace('neg_blowout', 'neg blowout').replace('pos_blowout', 'pos blowout');
+  });
+  var spVals = Object.keys(DD.spearman).map(function(k) { return DD.spearman[k]; });
+  HWReport.singleBar('chart-ret-decile-neg', spLabels, spVals, HWReport.COLORS.CORAL, {
+    min: -0.2, max: 0.2,
+    tickCallback: function(v) { return v.toFixed(2); },
+    label: 'Spearman ρ'
+  });
   var spRows = Object.keys(DD.spearman).map(function(k) {
     return [k.replace('rolling_', '').replace('_pct_25', ''), DD.spearman[k].toFixed(3), 'mean_played_next'];
   });
   buildTable('table-spearman', ['Rolling metric', 'Spearman ρ', 'vs'], spRows);
-} else {
-  buildTable('table-spearman', ['Rolling metric', 'Spearman ρ', 'vs'], [['VM run pending', '—', '—']]);
 }
 </script>
 </body>

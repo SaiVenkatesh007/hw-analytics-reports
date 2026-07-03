@@ -1,53 +1,71 @@
 {
   "site": {
-    "title": "Hitwicket Analytics — Stakeholder Reports",
+    "title": "Hitwicket Analytics \u2014 Stakeholder Reports",
     "description": "Interactive analysis reads for Hitwicket Superstars stakeholders.",
     "base_url": "https://saivenkatesh007.github.io/hw-analytics-reports",
     "favicon": "kit/favicon.png"
   },
   "reports": [
     {
-      "slug": "whale_mm_analysis",
-      "title": "Whale MM — Win Streak Reversion A/B",
-      "owner": "Venkatesh",
-      "date": "2026-06-29",
-      "date_label": "Jun 15 – Jun 29, 2026",
-      "tags": ["matchmaking", "whale", "ab-test"],
-      "thesis": "MDAU essentially flat (gap narrowing); D3 whale ARPU7 ahead in Test (+₹599). Continue Test case. May 15 – Jun 21 read preserved in dashboard.",
-      "description": "Whale MM win-streak reversion AB — Jun 15–29 extended read. MDAU essentially flat; D3 whale ARPU7 ahead in Test.",
-      "handoff": "handoffs/whale_mm_analysis.txt"
-    },
-    {
       "slug": "pvp_mm_phase2_player_session",
-      "title": "PvP Matchmaking — Phase 2 Player & Session",
+      "title": "PvP Matchmaking \u2014 Phase 2 Player & Session",
       "owner": "Venkatesh",
       "date": "2026-06-30",
-      "date_label": "Jun 15–30, 2026",
-      "tags": ["matchmaking", "pvp", "rolling", "session"],
-      "thesis": "Median rolling close ~56% is healthy — monitor blowout cluster (~14%) in high-freq and 75k+ power; session frustration is rare.",
-      "description": "Phase 2 player rolling-25 and session read — blowout cluster tail in high-frequency and top power; marathon frustration negligible.",
+      "date_label": "Jun 15\u201330, 2026",
+      "tags": [
+        "matchmaking",
+        "pvp",
+        "rolling",
+        "session",
+        "signed-blowout"
+      ],
+      "thesis": "Median rolling close ~56% is healthy \u2014 blowout tail (~14%) is positive-blowout streaks in high-freq and 75k+ power, not stompings; session frustration rare.",
+      "description": "Phase 2 player rolling-25 + extensions \u2014 unsigned blowout cluster driven by positive blowout; negative blowout cluster vanishingly rare; retention parked.",
       "handoff": "handoffs/pvp_mm_phase2_player_session.txt"
     },
     {
+      "slug": "whale_mm_analysis",
+      "title": "Whale MM \u2014 Win Streak Reversion A/B",
+      "owner": "Venkatesh",
+      "date": "2026-06-29",
+      "date_label": "Jun 15 \u2013 Jun 29, 2026",
+      "tags": [
+        "matchmaking",
+        "whale",
+        "ab-test"
+      ],
+      "thesis": "MDAU essentially flat (gap narrowing); D3 whale ARPU7 ahead in Test (+\u20b9599). Continue Test case. May 15 \u2013 Jun 21 read preserved in dashboard.",
+      "description": "Whale MM win-streak reversion AB \u2014 Jun 15\u201329 extended read. MDAU essentially flat; D3 whale ARPU7 ahead in Test.",
+      "handoff": "handoffs/whale_mm_analysis.txt"
+    },
+    {
       "slug": "pvp_mm_phase1_baseline",
-      "title": "PvP Matchmaking — Phase 1 Baseline",
+      "title": "PvP Matchmaking \u2014 Phase 1 Baseline",
       "owner": "Venkatesh",
       "date": "2026-06-25",
-      "date_label": "Jun 21–25, 2026",
-      "tags": ["matchmaking", "baseline", "pvp"],
-      "thesis": "Quality is healthy on average, but high-frequency and top-end players see ~10pp fewer close matches — monitor before changing MM windows.",
-      "description": "PvP matchmaking Phase 1 baseline — 55% close matches on average; high-frequency and top-end players underserved.",
+      "date_label": "Jun 21\u201325, 2026",
+      "tags": [
+        "matchmaking",
+        "baseline",
+        "pvp"
+      ],
+      "thesis": "Quality is healthy on average, but high-frequency and top-end players see ~10pp fewer close matches \u2014 monitor before changing MM windows.",
+      "description": "PvP matchmaking Phase 1 baseline \u2014 55% close matches on average; high-frequency and top-end players underserved.",
       "handoff": "handoffs/pvp_mm_phase1_baseline.txt"
     },
     {
       "slug": "wicket_chance_ab_clean_fix",
-      "title": "Increased Wicket Chance — A/B Test (Clean Read)",
+      "title": "Increased Wicket Chance \u2014 A/B Test (Clean Read)",
       "owner": "Venkatesh",
       "date": "2026-06-01",
       "date_label": "Jun 2026",
-      "tags": ["pvp", "ab-test", "experiment"],
+      "tags": [
+        "pvp",
+        "ab-test",
+        "experiment"
+      ],
       "thesis": "The current wicket-chance increase is too small to change how players play or to shift match balance.",
-      "description": "Wicket Chance AB clean read — increase too small to change how players play; median wickets unchanged at 2.",
+      "description": "Wicket Chance AB clean read \u2014 increase too small to change how players play; median wickets unchanged at 2.",
       "handoff": "handoffs/wicket_chance_ab_clean_fix.txt"
     }
   ]

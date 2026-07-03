@@ -1,18 +1,18 @@
 PvP Matchmaking — Phase 2 Player & Session Read
-Human vs human ARENAS · rolling-25 + sessions · Jun 15–30, 2026
+Human vs human ARENAS · rolling-25 + sessions + extensions · Jun 15–30, 2026
 Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/pvp_mm_phase2_player_session.html
 
 *Context: Phase 2 — player rolling quality + session experience (builds on Phase 1 baseline)*
    - Window: Jun 15–30 (pvp_extra_data power available from Jun 15)
    - Rolling-25 = each user's last 25 human PvP matches in window
-   - Blowout cluster = >40% of last 25 matches one-sided; chronic mismatch = <20% close (rare)
-   - Extensions: signed blowout (neg/pos), power-ratio close %, next-match retention
+   - power_ratio = opp_power / team_power (<1 = you're stronger)
+   - Extensions: signed blowout, power-ratio close %, next-match retention (latter not actionable — see §5)
 
 *1. Median rolling experience is healthy — blowout streaks are the real tail*
    - 2.8M unique matches; 220K PvP users; 72K users with ≥25 matches (33%)
    - Match-level: 55.5% close, 27.8% one-sided (aligned with Phase 1)
    - Median rolling close %: 56% (rolling-25 eligible users)
-   - Blowout cluster: 13.8% of rolling-25 users (~10K users)
+   - Unsigned blowout cluster: 13.8% of rolling-25 users (~10K users)
    - Chronic mismatch: 0.5% only — too rare to headline
 
 *2. Blowout cluster concentrates in high-frequency play and 75k+ power*
@@ -27,10 +27,22 @@ Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/pvp_mm_phase2_
    - Zero-close marathons (8+ matches, 0 close): 0.9% of long sessions — negligible
    - Below-min in 8+ sessions: 5.4% — real but thin base; not the lead story
 
-*4. Extensions — paste VM notebook outputs for numbers*
-   - A: Close match % by power_ratio_bucket (parity band ~0.95–1.0 should peak ~50–55%)
-   - B: Split one-sided into negative blowout (loss) vs positive blowout (win); lead **negative blowout cluster** for MM pain
-   - C: Next-match retention (excl last match/user); Spearman vs rolling close / neg / pos blowout %
-   - Match-level neg/pos blowout ≈ half of one-sided each (sanity: neg + pos ≈ one-sided)
+*4. Extensions — signed blowout reframes the blowout tail*
+   - Match-level split: 4.1% negative blowout (stomped) vs 23.8% positive blowout (dominant win) — not 50/50
+   - Rolling-25: negative blowout cluster 0.06% (40 users) · positive blowout cluster 9.2% · unsigned 13.8%
+   - Median rolling over last 25: 4% negative blowout vs 20% positive blowout
+   - High-freq: pos cluster 18.1% (neg 0.2%); 75k–100k: pos cluster 20.8%; High-freq × Supreme+: pos 22.4%, unsigned 30.8%
+   - **Reframe:** unsigned blowout cluster is almost entirely positive-blowout streaks — monitor pos cluster in high-freq / 75k+
 
-*Takeaway:* Monitor **negative blowout cluster** (not unsigned blowout or positive blowout) for high-frequency players and 75k+ power before any MM window changes. Next-match retention dips with negative blowout exposure — correlation only, activity-confounded. Session frustration remains rare.
+*5. Extensions — close % by power ratio (MM calibration)*
+   - Per-user avg close overall: 58.7%
+   - Parity band 0.95–1.0: 56.3% close; lowest when much stronger (<0.85 → 47.0% close, 37% pos blowout)
+   - Undertiered (1.15+ opp stronger): 63.8% close but 6.7% negative blowout
+   - High-freq at parity (0.95–1.0): 49.0% close vs casual 57.8% at same band — activity confound persists
+
+*6. Extensions — next-match retention (parked)*
+   - In-window next-match ≈100% for all match types — metric has no variance in a 16-day window
+   - Spearman vs mean_played_next: close -0.15, neg blowout -0.01, pos blowout +0.13 — not interpretable as churn
+   - Need different return definition (same-day / next-session) for a future pass
+
+*Takeaway:* Median rolling quality healthy. Unsigned blowout cluster (~14%) in high-freq and 75k+ is real but driven by **positive blowout streaks**, not repeated stompings (neg cluster 0.06%). MM calibration looks directionally fine at parity; uncompetitive games spike when much stronger (<0.85 ratio). Park in-window retention — more datapoints coming.
