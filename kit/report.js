@@ -24,6 +24,7 @@ HWReport.switchTab = function (name, btn) {
     btn.focus();
   }
   if (HWReport._tabSwitchHandler) HWReport._tabSwitchHandler(name);
+  document.dispatchEvent(new CustomEvent('hwreport:tabswitch', { detail: { name: name } }));
   HWReport.initScoreboard(panel);
 };
 
@@ -285,5 +286,6 @@ document.addEventListener('DOMContentLoaded', function () {
   HWReport.initTabs();
   HWReport.initChrome();
   HWReport.initInsights();
+  HWReport.initSectionAnchors();
   HWReport.initScoreboard();
 });

@@ -1,0 +1,5 @@
+DM Sans and DM Mono are licensed under the SIL Open Font License, Version 1.1.
+See https://openfontlicense.org
+
+Copyright 2014-2020 Indian Type Foundry (DM Sans)
+Copyright 2020 The DM Mono Project Authors (DM Mono)
