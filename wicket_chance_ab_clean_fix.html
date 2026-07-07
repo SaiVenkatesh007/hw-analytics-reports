@@ -43,15 +43,15 @@
   <main>
     <div class="section">
       <div class="section-header"><p class="section-num">Headline</p><h3 class="section-title">What changed at the match level</h3></div>
-      <div class="kpi-row">
-        <div class="kpi-card"><p class="kpi-label">Mean Wickets (Overall)</p><p class="kpi-value up">+9 to +13%</p><p class="kpi-note">ticked up but small</p></div>
-        <div class="kpi-card"><p class="kpi-label">Median Wickets (q50)</p><p class="kpi-value neutral">2 → 2</p><p class="kpi-note">no shift · goal was 1→3</p></div>
-        <div class="kpi-card"><p class="kpi-label">Mean Score (Overall)</p><p class="kpi-value down">−0.6 to −2.2%</p><p class="kpi-note">essentially flat</p></div>
-        <div class="kpi-card"><p class="kpi-label">Shot Mix Shift</p><p class="kpi-value neutral">&lt; 1pp</p><p class="kpi-note">players barely adapted</p></div>
+      <div class="kpi-row" id="ov-kpi-row">
+        <div class="kpi-card"><p class="kpi-label">Mean Wickets (Overall)</p><p class="kpi-value up" id="ov-kpi-wk">+9 to +13%</p><p class="kpi-note" id="ov-kpi-wk-note">ticked up but small</p></div>
+        <div class="kpi-card"><p class="kpi-label">Median Wickets (q50)</p><p class="kpi-value neutral" id="ov-kpi-med">2 → 2</p><p class="kpi-note">no shift · goal was 1→3</p></div>
+        <div class="kpi-card"><p class="kpi-label">Mean Score (Overall)</p><p class="kpi-value down" id="ov-kpi-sc">−0.6 to −2.2%</p><p class="kpi-note" id="ov-kpi-sc-note">essentially flat</p></div>
+        <div class="kpi-card"><p class="kpi-label">Shot Mix Shift</p><p class="kpi-value neutral" id="ov-kpi-mix">&lt; 1pp</p><p class="kpi-note">players barely adapted</p></div>
       </div>
       <div class="two-col">
-        <div class="card"><p class="card-title">Mean Wickets — Base vs Test by Bracket (Overall)</p><div class="legend" id="ov-wk-legend"></div><div class="chart-wrap"><canvas id="ov-wk"></canvas></div></div>
-        <div class="card"><p class="card-title">Mean Score — Base vs Test by Bracket (Overall)</p><div class="legend" id="ov-sc-legend"></div><div class="chart-wrap"><canvas id="ov-sc"></canvas></div></div>
+        <div class="card"><p class="card-title" id="ov-wk-title">Mean Wickets — Base vs Test by Bracket (Overall)</p><div class="legend" id="ov-wk-legend"></div><div class="chart-wrap"><canvas id="ov-wk"></canvas></div></div>
+        <div class="card"><p class="card-title" id="ov-sc-title">Mean Score — Base vs Test by Bracket (Overall)</p><div class="legend" id="ov-sc-legend"></div><div class="chart-wrap"><canvas id="ov-sc"></canvas></div></div>
       </div>
     </div>
     <div class="section">
@@ -161,11 +161,67 @@ var DIMS = {
   ],
 };
 
-function updateScoreboard(vals) {
+var VIEW_LABELS = { overall: 'Overall', bat1: 'Batting 1st', bowl1: 'Bowling 1st' };
+
+function bracketIndex(br) {
+  if (!br || br === 'all') return -1;
+  var idx = BR.indexOf(br);
+  return idx >= 0 ? idx : -1;
+}
+
+function pctRange(arr) {
+  var lo = Math.min.apply(null, arr);
+  var hi = Math.max.apply(null, arr);
+  return (lo > 0 ? '+' : '') + lo + ' to ' + (hi > 0 ? '+' : '') + hi + '%';
+}
+
+function maxAbsPp(mixPp) {
+  var keys = ['z', 'o', 't', 'f', 's'];
+  var max = 0;
+  keys.forEach(function (k) {
+    mixPp[k].forEach(function (v) { max = Math.max(max, Math.abs(v)); });
+  });
+  return max;
+}
+
+function updateOverviewChrome(vals) {
   var d = DD[vals.inn] || DD.overall;
-  var med = d.qtest.wk_q50[0];
+  var viewLabel = VIEW_LABELS[vals.inn] || 'Overall';
+  var brIdx = bracketIndex(vals.br);
+  var brNote = brIdx >= 0 ? BR[brIdx] : 'across ' + BR.length + ' brackets';
+  var wkSlice = brIdx >= 0 ? [d.wk_pct[brIdx]] : d.wk_pct;
+  var scSlice = brIdx >= 0 ? [d.sc_pct[brIdx]] : d.sc_pct;
+  var medBase = brIdx >= 0 ? d.qbase.wk_q50[brIdx] : d.qbase.wk_q50[0];
+  var medTest = brIdx >= 0 ? d.qtest.wk_q50[brIdx] : d.qtest.wk_q50[0];
+  var mixMax = maxAbsPp(d.mix_pp);
+  var brSuffix = brIdx >= 0 ? ' · ' + BR[brIdx] : '';
+
+  var wkTitle = document.getElementById('ov-wk-title');
+  var scTitle = document.getElementById('ov-sc-title');
+  if (wkTitle) wkTitle.textContent = 'Mean Wickets — Base vs Test by Bracket (' + viewLabel + ')' + brSuffix;
+  if (scTitle) scTitle.textContent = 'Mean Score — Base vs Test by Bracket (' + viewLabel + ')' + brSuffix;
+
+  var kpiWk = document.getElementById('ov-kpi-wk');
+  var kpiWkNote = document.getElementById('ov-kpi-wk-note');
+  var kpiMed = document.getElementById('ov-kpi-med');
+  var kpiSc = document.getElementById('ov-kpi-sc');
+  var kpiScNote = document.getElementById('ov-kpi-sc-note');
+  var kpiMix = document.getElementById('ov-kpi-mix');
+  if (kpiWk) {
+    kpiWk.textContent = pctRange(wkSlice);
+    kpiWk.className = 'kpi-value ' + (Math.min.apply(null, wkSlice) >= 0 ? 'up' : 'down');
+  }
+  if (kpiWkNote) kpiWkNote.textContent = brNote;
+  if (kpiMed) kpiMed.textContent = medBase + ' → ' + medTest;
+  if (kpiSc) {
+    kpiSc.textContent = pctRange(scSlice);
+    kpiSc.className = 'kpi-value ' + (Math.max.apply(null, scSlice) <= 0 ? 'down' : 'up');
+  }
+  if (kpiScNote) kpiScNote.textContent = brNote;
+  if (kpiMix) kpiMix.textContent = mixMax < 1 ? '< 1pp' : mixMax.toFixed(1) + 'pp max';
+
   var el = document.querySelector('#tab-overview .stat-scoreboard');
-  if (el) HWReport.countUp(el, med, { suffix: '', decimals: 0 });
+  if (el) HWReport.countUp(el, medTest, { suffix: '', decimals: 0 });
 }
 
 function renderOverviewChart(metric, vals) {
@@ -175,15 +231,19 @@ function renderOverviewChart(metric, vals) {
   var test = HWReport.filters.sliceBracket(d.test[metric], vals.br, BR);
   if (metric === 'wickets') HWReport.grouped('ov-wk', labels, base, test, HWReport.COLORS.BLUE, HWReport.COLORS.TEAL);
   else HWReport.grouped('ov-sc', labels, base, test, HWReport.COLORS.BLUE, HWReport.COLORS.TEAL);
-  updateScoreboard(vals);
+}
+
+function renderOverview(vals) {
+  renderOverviewChart('wickets', vals);
+  renderOverviewChart('total', vals);
+  updateOverviewChrome(vals);
+  HWReport.initCardChrome(document.getElementById('tab-overview'));
 }
 
 function renderActiveTab() {
   var vals = HWReport.filters.get();
   if (activeTab === 'overview') {
-    renderOverviewChart('wickets', vals);
-    renderOverviewChart('total', vals);
-    HWReport.initCardChrome(document.getElementById('tab-overview'));
+    renderOverview(vals);
   } else if (activeTab === 'innings') {
     switchSub('inn', vals.inn, null);
   } else if (activeTab === 'init2') {
