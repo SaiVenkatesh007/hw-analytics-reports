@@ -67,6 +67,7 @@
   --rank-accomplished-fg: var(--amber);
   --rank-remarkable-bg: var(--coral-light);
   --rank-remarkable-fg: var(--coral);
+  --header-height: 53px;
   --filter-top: 108px;
   --teal: #1E8F5E;
   --teal-light: #E1F5EE;
@@ -244,7 +245,7 @@ footer .footer-nav { margin-bottom: 0.75rem; }
   display: flex;
   gap: 0;
   position: sticky;
-  top: 53px;
+  top: var(--header-height);
   z-index: 99;
   flex-wrap: wrap;
 }
