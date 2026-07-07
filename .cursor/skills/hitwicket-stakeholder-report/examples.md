@@ -4,10 +4,12 @@
 
 | File | Role |
 |------|------|
-| `reports/handoffs/wicket_chance_ab_clean_fix.txt` | GChat handoff (narrative source) |
-| `reports/data/wicket_chance_ab_clean_fix.json` | Exported metrics |
-| `reports/wicket_chance_ab_clean_fix.html` | Stakeholder report |
-| `Wicket Chance AB [Rank Fix].ipynb` | Source notebook |
+| `handoffs/wicket_chance_ab_clean_fix.txt` | GChat handoff (narrative source) |
+| `data/wicket_chance_ab_clean_fix.json` | Exported metrics |
+| `wicket_chance_ab_clean_fix.html` | Stakeholder report |
+| `Wicket Chance AB [Rank Fix].ipynb` | Source notebook (private repo) |
+
+Private mirror: prefix paths with `reports/`.
 
 ## GChat handoff (verbatim — `[link]` replaced with Pages URL at archive)
 
@@ -54,10 +56,12 @@ Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/wicket_chance_
 ## Init snippet
 
 ```html
+<script src="kit/chart.umd.js"></script>
+<script src="kit/charts.js"></script>
 <script src="kit/report.js"></script>
 <script src="kit/ab-test.js"></script>
 <script>
-const DD = { /* from reports/data/wicket_chance_ab_clean_fix.json */ };
+const DD = { /* from data/wicket_chance_ab_clean_fix.json → dd */ };
 HWReport.initAbTest(DD, { brackets: ['0-50k','50k-75k','75k-100k','100k+'], renderMethodology: renderMethodology });
 </script>
 ```

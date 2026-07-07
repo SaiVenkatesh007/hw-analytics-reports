@@ -9,7 +9,7 @@ Paths below are for **hw-analytics-reports** (repo root). Private mirror: prefix
 <script>(function(){try{var t=localStorage.getItem('hw-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <script src="kit/theme.js"></script>
 <script src="kit/icons.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="kit/chart.umd.js"></script>
 <script src="kit/charts.js"></script>
 <script src="kit/report.js"></script>
 ```
@@ -21,15 +21,15 @@ Paths below are for **hw-analytics-reports** (repo root). Private mirror: prefix
 
 ## Creating a new report
 
-1. Slug: `{slug}.html` at repo root
+1. Slug: `snake_case` — `{slug}.html` at repo root (e.g. `wicket_chance_ab_clean_fix`)
 2. Copy structure from closest template
 3. Archive GChat at `handoffs/{slug}.txt` — `Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/{slug}.html`
 4. Agent writes `data/{slug}.json`
 5. Agent runs:
    ```bash
    python3 kit/build_catalog.py --sync
-   python3 kit/build_catalog.py
-   python3 kit/validate_report.py data/{slug}.json   # AB only
+   python3 kit/validate_report.py data/{slug}.json
+   python3 kit/check_html_data.py data/{slug}.json {slug}.html
    ```
 6. User says **"publish the report"** — agent runs publish skill
 
