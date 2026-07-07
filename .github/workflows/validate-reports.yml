@@ -1,0 +1,28 @@
+name: Validate Reports
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-reports:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate catalog
+        run: python3 kit/build_catalog.py
+
+      - name: Validate data JSON files
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          files=(data/*.json)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No data/*.json files to validate"
+            exit 0
+          fi
+          for f in "${files[@]}"; do
+            echo "Validating $f"
+            python3 kit/validate_report.py "$f"
+          done

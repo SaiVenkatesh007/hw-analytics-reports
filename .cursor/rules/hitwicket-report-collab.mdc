@@ -1,0 +1,10 @@
+---
+alwaysApply: false
+---
+# Report collaboration (hw-analytics-reports)
+
+- Canonical repo: **hw-analytics-reports** (repo root = site root; no `reports/` prefix)
+- Never commit or push directly to `main`
+- After data JSON writes: `python3 kit/build_catalog.py --sync`
+- When user says **publish** / **publish the report**: follow `.cursor/skills/hitwicket-report-publish/SKILL.md`
+- Agent runs all git/gh commands; user does not run git manually for publish

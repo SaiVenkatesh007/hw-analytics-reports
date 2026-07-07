@@ -2,15 +2,33 @@
 
 Interactive analysis reads for Hitwicket Superstars stakeholders.
 
-**Browse reports:** [index.html](https://saivenkatesh007.github.io/hw-analytics-reports/)
+**Browse live:** https://saivenkatesh007.github.io/hw-analytics-reports/
 
-Handoff archives in `handoffs/` include the live `Dashboard:` URL. Index is driven by [`catalog.json`](catalog.json), synced from `data/*.json` meta by the agent (`build_catalog.py --sync`). **You only push** — agent runs catalog sync/validate before handoff.
+## Canonical repo
 
-This repository is auto-published from the private [Hitwicket-Analytics](https://github.com/SaiVenkatesh007/Hitwicket-Analytics) `reports/` folder. Do not edit files here directly.
+**This repository (`hw-analytics-reports`) is the source of truth.**  
+All report work happens here via branch + PR. GitHub Pages deploys from `main`.
+
+The private [Hitwicket-Analytics](https://github.com/SaiVenkatesh007/Hitwicket-Analytics) repo holds notebooks only; `reports/` there is an optional mirror (may lag).
+
+## Quick start (analysts)
+
+1. Clone this repo → open in Cursor
+2. `gh auth login` once
+3. `bash kit/scripts/check_publish_env.sh`
+4. Read [docs/TEAM_WORKFLOW.md](docs/TEAM_WORKFLOW.md)
+
+**Cursor phrases:** *"Build stakeholder report for {slug}"* → *"Publish the report"*
 
 ## Design system
 
-Shared kit in `kit/`: cricket-grounded palette, dark mode (auto + toggle), scoreboard hero stat, theme-aware Chart.js helpers, accessibility tab roles.
+- [kit/styleguide.html](kit/styleguide.html) — living reference
+- Agent skills in `.cursor/skills/`
 
-- **Style guide:** [kit/styleguide.html](kit/styleguide.html)
-- **Agent skill:** `.cursor/skills/hitwicket-report-design-system/SKILL.md` (private repo only — not published)
+## Index
+
+Driven by [`catalog.json`](catalog.json), synced from `data/*.json` meta via `kit/build_catalog.py --sync`.
+
+## Owner migration
+
+First-time setup after workflow change: [docs/MIGRATION_OWNER.md](docs/MIGRATION_OWNER.md)
