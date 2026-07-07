@@ -37,10 +37,7 @@ HWReport.filters = HWReport.filters || {};
   }
 
   function measureFilterTop() {
-    var header = document.querySelector('header');
-    var tabBar = document.querySelector('.tab-bar');
-    var h = (header ? header.offsetHeight : 0) + (tabBar ? tabBar.offsetHeight : 0);
-    document.documentElement.style.setProperty('--filter-top', h + 'px');
+    if (HWReport.measureStickyStack) HWReport.measureStickyStack();
   }
 
   function renderBar() {
@@ -112,9 +109,7 @@ HWReport.filters = HWReport.filters || {};
     if (fromUrl) state.values = Object.assign(state.values, fromUrl);
     renderBar();
     measureFilterTop();
-    window.addEventListener('resize', measureFilterTop);
     document.addEventListener('hwreport:tabswitch', function () {
-      measureFilterTop();
       flushAll(true);
     });
     writeUrl();

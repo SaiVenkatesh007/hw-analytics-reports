@@ -281,6 +281,15 @@ HWReport._copyTextFallback = function (text, cb) {
   if (cb) cb();
 };
 
+HWReport.measureStickyStack = function () {
+  var header = document.querySelector('header');
+  var tabBar = document.querySelector('.tab-bar');
+  var headerH = header ? header.offsetHeight : 0;
+  var tabH = tabBar ? tabBar.offsetHeight : 0;
+  document.documentElement.style.setProperty('--header-height', headerH + 'px');
+  document.documentElement.style.setProperty('--filter-top', (headerH + tabH) + 'px');
+};
+
 document.addEventListener('DOMContentLoaded', function () {
   HWReport.initSkipLink();
   HWReport.initTabs();
@@ -288,4 +297,13 @@ document.addEventListener('DOMContentLoaded', function () {
   HWReport.initInsights();
   HWReport.initSectionAnchors();
   HWReport.initScoreboard();
+  HWReport.measureStickyStack();
+  window.addEventListener('resize', HWReport.measureStickyStack);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(HWReport.measureStickyStack);
+  }
+});
+
+document.addEventListener('hwreport:tabswitch', function () {
+  requestAnimationFrame(HWReport.measureStickyStack);
 });
