@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate AB test report data JSON before publishing to GitHub Pages."""
+"""Validate report data JSON before publishing to GitHub Pages."""
 
 import json
 import sys
@@ -11,12 +11,12 @@ REQUIRED_VIEWS = [
 REQUIRED_FIELDS = ["sample", "base", "test", "mix_base", "mix_test", "mix_pp", "qbase", "qtest", "wk_pct", "sc_pct"]
 METRIC_KEYS = ["total", "balls", "wickets", "misses"]
 SHOT_KEYS = ["z", "o", "t", "f", "s"]
-QUARTILE_KEYS = ["wk_q25", "wk_q50", "wk_q75", "wk_q90", "tot_q25", "tot_q50", "tot_q75", "tot_q90"]
+
+CATALOG_META_FIELDS = ("title", "slug", "owner", "date", "tags", "thesis")
 
 
-def check_ab_json(path: Path) -> list[str]:
+def check_ab_data(data: dict) -> list[str]:
     errors = []
-    data = json.loads(path.read_text())
     meta = data.get("meta", {})
     dd = data.get("dd", {})
 
@@ -71,6 +71,27 @@ def check_ab_json(path: Path) -> list[str]:
     return errors
 
 
+def check_dashboard_data(data: dict) -> list[str]:
+    errors = []
+    meta = data.get("meta", {})
+    for field in CATALOG_META_FIELDS:
+        if field not in meta:
+            errors.append(f"meta.{field} missing")
+    if "overall" not in data:
+        errors.append("overall missing")
+    elif not isinstance(data["overall"], dict):
+        errors.append("overall must be an object")
+    return errors
+
+
+def check_json(path: Path) -> tuple[list[str], str]:
+    data = json.loads(path.read_text())
+    tags = data.get("meta", {}).get("tags", [])
+    if "dd" in data or "ab-test" in tags:
+        return check_ab_data(data), "AB"
+    return check_dashboard_data(data), "dashboard"
+
+
 def main():
     paths = sys.argv[1:] or ["reports/data/wicket_chance_ab_clean_fix.json"]
     failed = False
@@ -80,14 +101,14 @@ def main():
             print(f"FAIL {path}: file not found")
             failed = True
             continue
-        errors = check_ab_json(path)
+        errors, kind = check_json(path)
         if errors:
-            print(f"FAIL {path}:")
+            print(f"FAIL {path} ({kind}):")
             for e in errors:
                 print(f"  - {e}")
             failed = True
         else:
-            print(f"OK {path}")
+            print(f"OK {path} ({kind})")
     sys.exit(1 if failed else 0)
 
 
