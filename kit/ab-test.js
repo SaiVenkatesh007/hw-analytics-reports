@@ -18,6 +18,10 @@ HWReport.initAbTest = function (DD, opts) {
   var inited = {};
   var subState = { inn: 'overall', i2: 'overall_i2', ss: 'overall', dist: 'overall' };
 
+  function chromeIn(scope) {
+    if (HWReport.initCardChrome) HWReport.initCardChrome(scope || document);
+  }
+
   function innBody(containerId, key, chartPrefix) {
     var d = DD[key];
     var c = document.getElementById(containerId);
@@ -35,9 +39,9 @@ HWReport.initAbTest = function (DD, opts) {
       '</div>';
     c.innerHTML =
       kpis +
-      '<div class="two-col"><div class="card"><p class="card-title">Mean Wickets — Base vs Test</p><div class="legend">' + HWReport.baseLegend() + '</div><div class="chart-wrap" style="height:230px"><canvas id="' + chartPrefix + '-wk"></canvas></div></div>' +
-      '<div class="card"><p class="card-title">Mean Score — Base vs Test</p><div class="legend">' + HWReport.baseLegend() + '</div><div class="chart-wrap" style="height:230px"><canvas id="' + chartPrefix + '-sc"></canvas></div></div></div>' +
-      '<div class="card" style="margin-top:1.25rem"><p class="card-title">Full comparison</p><table class="comp-table"><thead><tr><th>Bracket</th><th class="base">Base Score</th><th class="test">Test Score</th><th class="delta">Δ Score</th><th class="base">Base Wkts</th><th class="test">Test Wkts</th><th class="delta">Δ Wkts</th><th class="base">Base Balls</th><th class="test">Test Balls</th><th>Sample</th></tr></thead><tbody id="' + chartPrefix + '-tb"></tbody></table></div>';
+      '<div class="two-col"><div class="card"><p class="card-title">Mean Wickets — Base vs Test</p><div class="legend">' + HWReport.baseLegend() + '</div><div class="chart-wrap"><canvas id="' + chartPrefix + '-wk"></canvas></div></div>' +
+      '<div class="card"><p class="card-title">Mean Score — Base vs Test</p><div class="legend">' + HWReport.baseLegend() + '</div><div class="chart-wrap"><canvas id="' + chartPrefix + '-sc"></canvas></div></div></div>' +
+      '<div class="card section-gap"><p class="card-title">Full comparison</p><table class="comp-table"><thead><tr><th>Bracket</th><th class="base">Base Score</th><th class="test">Test Score</th><th class="delta">Δ Score</th><th class="base">Base Wkts</th><th class="test">Test Wkts</th><th class="delta">Δ Wkts</th><th class="base">Base Balls</th><th class="test">Test Balls</th><th>Sample</th></tr></thead><tbody id="' + chartPrefix + '-tb"></tbody></table></div>';
     HWReport.grouped(chartPrefix + '-wk', BR, d.base.wickets, d.test.wickets, BLUE, TEAL);
     HWReport.grouped(chartPrefix + '-sc', BR, d.base.total, d.test.total, BLUE, TEAL);
     var rows = '';
@@ -51,15 +55,16 @@ HWReport.initAbTest = function (DD, opts) {
         '<td>' + d.base.balls[i] + '</td><td>' + d.test.balls[i] + '</td><td class="val-muted">' + n + '</td></tr>';
     }
     document.getElementById(chartPrefix + '-tb').innerHTML = rows;
+    chromeIn(c);
   }
 
   function ssBody(key) {
     var d = DD[key];
     var c = document.getElementById('ss-body');
     c.innerHTML =
-      '<div class="two-col"><div class="card"><p class="card-title">Shot Mix — Base vs Test (' + BR[0] + ', share %)</p><div class="chart-wrap" style="height:240px"><canvas id="ss-mix"></canvas></div></div>' +
-      '<div class="card"><p class="card-title">Shot Mix Shift by Bracket (percentage points)</p><div class="chart-wrap" style="height:240px"><canvas id="ss-pp"></canvas></div></div></div>' +
-      '<div class="card" style="margin-top:1.25rem"><p class="card-title">Shot Mix % and pp shift — all brackets</p><table class="heatmap-table" id="ss-hm"></table></div>';
+      '<div class="two-col"><div class="card"><p class="card-title">Shot Mix — Base vs Test (' + BR[0] + ', share %)</p><div class="chart-wrap"><canvas id="ss-mix"></canvas></div></div>' +
+      '<div class="card"><p class="card-title">Shot Mix Shift by Bracket (percentage points)</p><div class="chart-wrap"><canvas id="ss-pp"></canvas></div></div></div>' +
+      '<div class="card section-gap"><p class="card-title">Shot Mix % and pp shift — all brackets</p><table class="heatmap-table" id="ss-hm"></table></div>';
     HWReport.stackedMix('ss-mix', d.mix_base, d.mix_test, HWReport.SHOT_NAMES, HWReport.SHOT_COLORS);
     HWReport.ppGrouped('ss-pp', BR, d.mix_pp, HWReport.SHOT_NAMES, HWReport.SHOT_COLORS);
     var keys = ['z', 'o', 't', 'f', 's'];
@@ -81,6 +86,7 @@ HWReport.initAbTest = function (DD, opts) {
     }
     h += '</tbody>';
     document.getElementById('ss-hm').innerHTML = h;
+    chromeIn(c);
   }
 
   function distBody(key) {
@@ -88,8 +94,8 @@ HWReport.initAbTest = function (DD, opts) {
     var c = document.getElementById('dist-body');
     c.innerHTML =
       '<div class="card"><p class="card-title">Wicket Quartiles — Base → Test (absolute)</p><table class="heatmap-table" id="dist-wk"></table></div>' +
-      '<div class="card" style="margin-top:1.25rem"><p class="card-title">Score Quartiles — Base → Test (absolute)</p><table class="heatmap-table" id="dist-sc"></table></div>' +
-      '<div style="margin-top:1rem" class="insights"><div class="insight warn"><strong>The median tells the real story:</strong> Across every bracket, the median (q50) wickets is unchanged base→test. Even q75 and q90 barely move. The mean ticks up because of a small shift in the right tail, but the typical match sees the same number of wickets as before.</div></div>';
+      '<div class="card section-gap"><p class="card-title">Score Quartiles — Base → Test (absolute)</p><table class="heatmap-table" id="dist-sc"></table></div>' +
+      '<div class="section-gap insights"><div class="insight warn"><strong>The median tells the real story:</strong> Across every bracket, the median (q50) wickets is unchanged base→test. Even q75 and q90 barely move. The mean ticks up because of a small shift in the right tail, but the typical match sees the same number of wickets as before.</div></div>';
     var wq = [['q25', 'wk_q25'], ['q50 (median)', 'wk_q50'], ['q75', 'wk_q75'], ['q90', 'wk_q90']];
     var hw = '<thead><tr><th>Bracket</th>';
     wq.forEach(function (q) { hw += '<th>' + q[0] + '</th>'; });
@@ -121,15 +127,24 @@ HWReport.initAbTest = function (DD, opts) {
     }
     hs += '</tbody>';
     document.getElementById('dist-sc').innerHTML = hs;
+    chromeIn(c);
   }
 
+  HWReport.abTest = HWReport.abTest || {};
+  HWReport.abTest.innBody = innBody;
+  HWReport.abTest.ssBody = ssBody;
+  HWReport.abTest.distBody = distBody;
+
   window.switchSub = function (group, key, btn) {
-    subState[group] = key;
-    HWReport.setSubActive(btn);
+    if (!opts.filterMode) {
+      subState[group] = key;
+      if (btn) HWReport.setSubActive(btn);
+    }
     if (group === 'inn') innBody('inn-body', key, 'inn');
     if (group === 'i2') innBody('i2-body', key, 'i2');
     if (group === 'ss') ssBody(key);
     if (group === 'dist') distBody(key);
+    if (opts.onSubSwitch) opts.onSubSwitch(group, key);
   };
 
   HWReport._tabSwitchHandler = function (name) {
@@ -137,20 +152,27 @@ HWReport.initAbTest = function (DD, opts) {
       inited.ov = 1;
       HWReport.grouped('ov-wk', BR, DD.overall.base.wickets, DD.overall.test.wickets, BLUE, TEAL);
       HWReport.grouped('ov-sc', BR, DD.overall.base.total, DD.overall.test.total, BLUE, TEAL);
+      chromeIn(document.getElementById('tab-overview'));
     }
-    if (name === 'innings' && !inited.inn) { inited.inn = 1; innBody('inn-body', 'overall', 'inn'); }
-    if (name === 'init2' && !inited.i2) { inited.i2 = 1; innBody('i2-body', 'overall_i2', 'i2'); }
-    if (name === 'shotsel' && !inited.ss) { inited.ss = 1; ssBody('overall'); }
-    if (name === 'dist' && !inited.dist) { inited.dist = 1; distBody('overall'); }
+    if (!opts.filterMode) {
+      if (name === 'innings' && !inited.inn) { inited.inn = 1; innBody('inn-body', 'overall', 'inn'); }
+      if (name === 'init2' && !inited.i2) { inited.i2 = 1; innBody('i2-body', 'overall_i2', 'i2'); }
+      if (name === 'shotsel' && !inited.ss) { inited.ss = 1; ssBody('overall'); }
+      if (name === 'dist' && !inited.dist) { inited.dist = 1; distBody('overall'); }
+    }
     if (name === 'method' && !inited.method && opts.renderMethodology) {
       inited.method = 1;
       opts.renderMethodology(DD, BR);
     }
+    if (opts.onTabSwitch) opts.onTabSwitch(name);
+    var panel = document.getElementById('tab-' + name);
+    if (panel) chromeIn(panel);
   };
 
   if (!opts.skipOverview) {
     HWReport.grouped('ov-wk', BR, DD.overall.base.wickets, DD.overall.test.wickets, BLUE, TEAL);
     HWReport.grouped('ov-sc', BR, DD.overall.base.total, DD.overall.test.total, BLUE, TEAL);
     inited.ov = 1;
+    chromeIn(document.getElementById('tab-overview'));
   }
 };

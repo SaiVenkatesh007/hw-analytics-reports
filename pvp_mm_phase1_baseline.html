@@ -47,8 +47,8 @@
         <div class="kpi-card"><p class="kpi-label">Median Power Ratio</p><p class="kpi-value up">1.00</p><p class="kpi-note">calibrated strength</p></div>
       </div>
       <div class="two-col">
-        <div class="card"><p class="card-title">Close vs One-Sided by Activity Tier</p><div class="chart-wrap" style="height:260px"><canvas id="chart-activity"></canvas></div></div>
-        <div class="card"><p class="card-title">Daily Close Match Rate (stable)</p><div class="chart-wrap" style="height:260px"><canvas id="chart-daily"></canvas></div></div>
+        <div class="card"><p class="card-title">Close vs One-Sided by Activity Tier</p><div class="chart-wrap"><canvas id="chart-activity"></canvas></div></div>
+        <div class="card"><p class="card-title">Daily Close Match Rate (stable)</p><div class="chart-wrap"><canvas id="chart-daily"></canvas></div></div>
       </div>
     </div>
     <div class="section">
@@ -56,14 +56,14 @@
       <div class="insights">
         <div class="insight good"><strong>Overall health is solid:</strong> Close matches (~55%) outnumber blowouts (~28%) ~2:1. Median power ratio at 1.00 and ~52% user WR at the 0.95–1.0 parity band suggest MM intent is fair on average.</div>
         <div class="insight bad"><strong>High-frequency players are the priority segment:</strong> 15+/day players see 46.7% close and 35.5% one-sided (vs 58.1% / 25.9% for casual). Only 1,325 users, but they play the most matches per user and are most sensitive to MM quality.</div>
-        <div class="insight warn"><strong>Mid-competitive ranks are the soft spot:</strong> Accomplished (52.1% close, 31.0% blowout) and Supreme+ (50.1%, 32.8%) underperform Rookie/Challenger. Masterful recovers at 58.4% close — tighter, higher-power pool.</div>
+        <div class="insight warn"><strong>Mid-competitive ranks are the soft spot:</strong> <span class="term" data-tip="rp_league 10–12">Accomplished</span> (52.1% close, 31.0% blowout) and <span class="term" data-tip="rp_league 19+">Supreme+</span> (50.1%, 32.8%) underperform Rookie/Challenger. <span class="term" data-tip="rp_league 16–18">Masterful</span> recovers at 58.4% close — tighter, higher-power pool.</div>
         <div class="insight warn"><strong>Power tails break above 75k:</strong> At parity band WR is ~50–53%, but when matched outside 0.95–1.0 at 75k–100k+, outcomes become extreme (87% WR as favourite, 13% as underdog).</div>
         <div class="insight"><strong>Recalibrate benchmarks:</strong> The original 30–40% close-match target does not match this margin definition. Use ~55% / ~28% as the Phase 1 baseline until a longer window confirms.</div>
       </div>
     </div>
     <div class="section">
       <div class="section-header"><p class="section-num">Priority segments</p><h3 class="section-title">Where to investigate first</h3></div>
-      <table class="comp-table" id="table-priority"></table>
+      <div id="table-priority"></div>
     </div>
   </main>
 </div>
@@ -72,16 +72,16 @@
   <main>
     <div class="section">
       <div class="section-header"><p class="section-num">Activity tier</p><h3 class="section-title">Match-level and per-user quality</h3></div>
-      <table class="comp-table" id="table-activity"></table>
-      <div class="card" style="margin-top:1.25rem"><p class="card-title">Close Match Rate by Rep Rank</p><div class="chart-wrap" style="height:280px"><canvas id="chart-rank"></canvas></div></div>
+      <div id="table-activity"></div>
+      <div class="card section-gap"><p class="card-title">Close Match Rate by Rep Rank</p><div class="chart-wrap chart-wrap--tall"><canvas id="chart-rank"></canvas></div></div>
     </div>
     <div class="section">
       <div class="section-header"><p class="section-num">Rep rank</p><h3 class="section-title">Coarse rank bands</h3></div>
-      <table class="comp-table" id="table-rank"></table>
+      <div id="table-rank"></div>
     </div>
     <div class="section">
       <div class="section-header"><p class="section-num">Power bracket</p><h3 class="section-title">Team power at match time</h3></div>
-      <table class="comp-table" id="table-power"></table>
+      <div id="table-power"></div>
     </div>
   </main>
 </div>
@@ -90,12 +90,12 @@
   <main>
     <div class="section">
       <div class="section-header"><p class="section-num">Power ratio win rate</p><h3 class="section-title">Per-user WR by opponent strength bucket (≥4 matches per user per bucket)</h3><p class="section-sub">Monotonic curve confirms weaker opponents → higher WR. Fair band (0.95–1.0) centres near 52%.</p></div>
-      <div class="card"><div class="chart-wrap" style="height:300px"><canvas id="chart-wr-ratio"></canvas></div></div>
-      <table class="comp-table" id="table-wr-ratio" style="margin-top:1.25rem"></table>
+      <div class="card"><div class="chart-wrap chart-wrap--tall"><canvas id="chart-wr-ratio"></canvas></div></div>
+      <div id="table-wr-ratio" class="section-gap"></div>
     </div>
     <div class="section">
       <div class="section-header"><p class="section-num">Parity vs tails</p><h3 class="section-title">WR at 0.95–1.0 vs extreme buckets</h3></div>
-      <table class="comp-table" id="table-wr-tails"></table>
+      <div id="table-wr-tails"></div>
       <div class="insights" style="margin-top:1.25rem">
         <div class="insight bad"><strong>0–50k bracket:</strong> Flat WR curve across power-ratio buckets (~48–53%) — MM parity holds end-to-end at low power.</div>
         <div class="insight bad"><strong>75k–100k and 100k+:</strong> Extreme tails — facing &lt;0.85 opponents yields 87–93% WR; facing 1.15+ yields 9–13% WR. Search-window widening or strength calibration issue at the top.</div>
@@ -149,65 +149,51 @@
 <script src="kit/icons.js"></script>
 <script src="kit/chart.umd.js"></script>
 <script src="kit/charts.js"></script>
+<script src="kit/tables.js"></script>
 <script src="kit/report.js"></script>
 <script>
 const DD = {"overall":{"matches":888497,"matches_per_day":177699,"users_gte4":107038,"close_match_pct":55.3,"one_sided_pct":28.0,"median_power_ratio":1.0,"user_close_pct":57.4,"user_one_sided_pct":26.3},"daily":{"labels":["Jun 21","Jun 22","Jun 23","Jun 24","Jun 25"],"matches":[191976,186445,182670,164553,162853],"close_pct":[55.5,55.4,55.5,55.2,55.2],"one_sided_pct":[27.7,28.0,27.8,28.1,28.4]},"activity_tier":{"labels":["Casual (1–5/day)","Regular (6–15/day)","High-freq (15+/day)"],"close_pct":[58.1,53.2,46.7],"one_sided_pct":[25.9,29.5,35.5],"user_close_pct":[58.5,54.2,48.9],"user_one_sided_pct":[25.4,28.5,33.3],"num_users":[80710,25003,1325]},"rep_rank":{"labels":["Rookie","Challenger","Proven","Accomplished","Remarkable","Masterful","Supreme+"],"close_pct":[60.3,57.5,54.7,52.1,52.5,58.4,50.1],"one_sided_pct":[23.6,25.9,28.1,31.0,30.7,26.3,32.8],"user_close_pct":[60.2,58.3,55.7,53.5,54.4,59.6,51.3],"user_one_sided_pct":[23.5,25.4,27.6,30.0,29.1,24.8,31.5]},"power_bracket":{"labels":["0–50k","50k–75k","75k–100k","100k+"],"close_pct":[57.9,53.1,50.5,51.0],"one_sided_pct":[25.2,30.4,33.0,33.3],"user_close_pct":[59.3,54.0,51.9,54.0],"user_one_sided_pct":[24.0,30.0,32.2,30.5]},"power_ratio_wr":{"labels":["<0.85","0.85–0.9","0.9–0.95","0.95–1.0","1.0–1.05","1.05–1.1","1.1–1.15","1.15+"],"avg_wr":[63.5,57.3,55.8,52.1,47.2,46.4,45.7,38.9],"num_users":[18805,6113,10528,36959,36617,8366,2924,21570]},"power_ratio_wr_at_parity":{"labels":["0–50k","50k–75k","75k–100k","100k+"],"wr_095_100":[52.2,52.3,50.9,52.8],"wr_underdog_115":[43.5,21.8,12.9,8.9],"wr_favorite_under_085":[52.4,82.0,87.3,92.7]},"priority_segments":[{"segment":"High-freq × 100k+","close_pct":41.4,"one_sided_pct":43.6},{"segment":"High-freq × Supreme+","close_pct":45.2,"one_sided_pct":38.1},{"segment":"High-freq overall","close_pct":46.7,"one_sided_pct":35.5},{"segment":"Supreme+ overall","close_pct":50.1,"one_sided_pct":32.8},{"segment":"75k–100k power","close_pct":50.5,"one_sided_pct":33.0}]};
 
-function buildTable(id, headers, rows) {
-  var html = '<thead><tr>' + headers.map(function(h) { return '<th>' + h + '</th>'; }).join('') + '</tr></thead><tbody>' + rows.map(function(r) {
-    return '<tr>' + r.map(function(c) { return '<td>' + c + '</td>'; }).join('') + '</tr>';
-  }).join('') + '</tbody>';
-  document.getElementById(id).innerHTML = html;
-}
+function dsBg(hex) { return HWReport.charts._datasetColors(hex, 0.2).bg; }
 
-function pct(v) { return v.toFixed(1) + '%'; }
-function num(v) { return v.toLocaleString(); }
-
-buildTable('table-priority',
-  ['Segment', 'Close %', 'One-sided %'],
-  DD.priority_segments.map(function(r) { return [r.segment, pct(r.close_pct), pct(r.one_sided_pct)]; })
-);
-
-buildTable('table-activity',
-  ['Activity tier', 'Close %', 'One-sided %', 'User close %', 'User one-sided %', 'Users'],
-  DD.activity_tier.labels.map(function(l, i) {
-    return [l, pct(DD.activity_tier.close_pct[i]), pct(DD.activity_tier.one_sided_pct[i]),
-      pct(DD.activity_tier.user_close_pct[i]), pct(DD.activity_tier.user_one_sided_pct[i]),
-      num(DD.activity_tier.num_users[i])];
-  })
-);
-
-buildTable('table-rank',
-  ['Rep rank', 'Close %', 'One-sided %', 'User close %', 'User one-sided %'],
-  DD.rep_rank.labels.map(function(l, i) {
-    return [l, pct(DD.rep_rank.close_pct[i]), pct(DD.rep_rank.one_sided_pct[i]),
-      pct(DD.rep_rank.user_close_pct[i]), pct(DD.rep_rank.user_one_sided_pct[i])];
-  })
-);
-
-buildTable('table-power',
-  ['Power bracket', 'Close %', 'One-sided %', 'User close %', 'User one-sided %'],
-  DD.power_bracket.labels.map(function(l, i) {
-    return [l, pct(DD.power_bracket.close_pct[i]), pct(DD.power_bracket.one_sided_pct[i]),
-      pct(DD.power_bracket.user_close_pct[i]), pct(DD.power_bracket.user_one_sided_pct[i])];
-  })
-);
-
-buildTable('table-wr-ratio',
-  ['Power ratio bucket', 'Avg user WR', 'Users'],
-  DD.power_ratio_wr.labels.map(function(l, i) {
-    return [l, pct(DD.power_ratio_wr.avg_wr[i]), num(DD.power_ratio_wr.num_users[i])];
-  })
-);
-
-buildTable('table-wr-tails',
-  ['Power bracket', 'WR at 0.95–1.0', 'WR when &lt;0.85 (favoured)', 'WR when 1.15+ (underdog)'],
-  DD.power_ratio_wr_at_parity.labels.map(function(l, i) {
-    return [l, pct(DD.power_ratio_wr_at_parity.wr_095_100[i]),
-      pct(DD.power_ratio_wr_at_parity.wr_favorite_under_085[i]),
-      pct(DD.power_ratio_wr_at_parity.wr_underdog_115[i])];
-  })
-);
+HWReport.table('table-priority', {
+  compTable: true, sortable: true,
+  columns: [{ label: 'Segment', rowHeader: true }, { label: 'Close %', fmt: 'pct' }, { label: 'One-sided %', fmt: 'pct' }],
+  rows: DD.priority_segments.map(function (r) { return [r.segment, r.close_pct, r.one_sided_pct]; }),
+});
+HWReport.table('table-activity', {
+  compTable: true, sortable: true,
+  columns: [{ label: 'Activity tier', rowHeader: true }, { label: 'Close %', fmt: 'pct' }, { label: 'One-sided %', fmt: 'pct' }, { label: 'User close %', fmt: 'pct' }, { label: 'User one-sided %', fmt: 'pct' }, { label: 'Users', fmt: 'count' }],
+  rows: DD.activity_tier.labels.map(function (l, i) {
+    return [l, DD.activity_tier.close_pct[i], DD.activity_tier.one_sided_pct[i], DD.activity_tier.user_close_pct[i], DD.activity_tier.user_one_sided_pct[i], DD.activity_tier.num_users[i]];
+  }),
+});
+HWReport.table('table-rank', {
+  compTable: true, sortable: true,
+  columns: [{ label: 'Rep rank', rowHeader: true }, { label: 'Close %', fmt: 'pct' }, { label: 'One-sided %', fmt: 'pct' }, { label: 'User close %', fmt: 'pct' }, { label: 'User one-sided %', fmt: 'pct' }],
+  rows: DD.rep_rank.labels.map(function (l, i) {
+    return [l, DD.rep_rank.close_pct[i], DD.rep_rank.one_sided_pct[i], DD.rep_rank.user_close_pct[i], DD.rep_rank.user_one_sided_pct[i]];
+  }),
+});
+HWReport.table('table-power', {
+  compTable: true, sortable: true,
+  columns: [{ label: 'Power bracket', rowHeader: true }, { label: 'Close %', fmt: 'pct' }, { label: 'One-sided %', fmt: 'pct' }, { label: 'User close %', fmt: 'pct' }, { label: 'User one-sided %', fmt: 'pct' }],
+  rows: DD.power_bracket.labels.map(function (l, i) {
+    return [l, DD.power_bracket.close_pct[i], DD.power_bracket.one_sided_pct[i], DD.power_bracket.user_close_pct[i], DD.power_bracket.user_one_sided_pct[i]];
+  }),
+});
+HWReport.table('table-wr-ratio', {
+  compTable: true, sortable: true,
+  columns: [{ label: 'Power ratio bucket', rowHeader: true }, { label: 'Avg user WR', fmt: 'pct' }, { label: 'Users', fmt: 'count' }],
+  rows: DD.power_ratio_wr.labels.map(function (l, i) { return [l, DD.power_ratio_wr.avg_wr[i], DD.power_ratio_wr.num_users[i]]; }),
+});
+HWReport.table('table-wr-tails', {
+  compTable: true, sortable: true,
+  columns: [{ label: 'Power bracket', rowHeader: true }, { label: 'WR at 0.95–1.0', fmt: 'pct' }, { label: 'WR when <0.85 (favoured)', fmt: 'pct' }, { label: 'WR when 1.15+ (underdog)', fmt: 'pct' }],
+  rows: DD.power_ratio_wr_at_parity.labels.map(function (l, i) {
+    return [l, DD.power_ratio_wr_at_parity.wr_095_100[i], DD.power_ratio_wr_at_parity.wr_favorite_under_085[i], DD.power_ratio_wr_at_parity.wr_underdog_115[i]];
+  }),
+});
 
 document.getElementById('method-scope').innerHTML =
   '<li><strong>Date range:</strong> Jun 21–25, 2026 (5 days)</li>' +
@@ -215,19 +201,21 @@ document.getElementById('method-scope').innerHTML =
   '<li><strong>Opponents:</strong> human vs human only (opp_is_bot = 0)</li>' +
   '<li><strong>Ranks:</strong> all rp_league 1–25 (Rookie through Titan)</li>' +
   '<li><strong>Power source:</strong> calibratedTotalInternalStrength from pvp_extra_data</li>' +
-  '<li><strong>Volume:</strong> ' + num(DD.overall.matches) + ' unique matches · ' + num(DD.overall.users_gte4) + ' users (≥4 matches)</li>';
+  '<li><strong>Volume:</strong> ' + DD.overall.matches.toLocaleString() + ' unique matches · ' + DD.overall.users_gte4.toLocaleString() + ' users (≥4 matches)</li>';
 
-HWReport.dualBar('chart-activity', ['Casual', 'Regular', 'High-freq'],
-  DD.activity_tier.close_pct, DD.activity_tier.one_sided_pct);
-
+HWReport.dualBar('chart-activity', ['Casual', 'Regular', 'High-freq'], DD.activity_tier.close_pct, DD.activity_tier.one_sided_pct);
 HWReport.lineChart('chart-daily', DD.daily.labels, [
-  { label: 'Close %', data: DD.daily.close_pct, borderColor: HWReport.COLORS.BLUE, backgroundColor: HWReport.COLORS.BLUE + '33', tension: 0.3, fill: false, pointRadius: 4 },
-  { label: 'One-sided %', data: DD.daily.one_sided_pct, borderColor: HWReport.COLORS.CORAL, backgroundColor: HWReport.COLORS.CORAL + '33', tension: 0.3, fill: false, pointRadius: 4 }
+  { label: 'Close %', data: DD.daily.close_pct, borderColor: HWReport.COLORS.BLUE, backgroundColor: dsBg(HWReport.COLORS.BLUE), tension: 0.3, fill: false, pointRadius: 4 },
+  { label: 'One-sided %', data: DD.daily.one_sided_pct, borderColor: HWReport.COLORS.CORAL, backgroundColor: dsBg(HWReport.COLORS.CORAL), tension: 0.3, fill: false, pointRadius: 4 },
 ], { min: 25, max: 60 });
-
 HWReport.dualBar('chart-rank', DD.rep_rank.labels, DD.rep_rank.close_pct, DD.rep_rank.one_sided_pct, { ymax: 70 });
-
 HWReport.singleBar('chart-wr-ratio', DD.power_ratio_wr.labels, DD.power_ratio_wr.avg_wr, HWReport.COLORS.BLUE);
+
+HWReport.initCardChrome();
+document.addEventListener('hwreport:tabswitch', function (e) {
+  var panel = document.getElementById('tab-' + e.detail.name);
+  if (panel) HWReport.initCardChrome(panel);
+});
 </script>
 </body>
 </html>

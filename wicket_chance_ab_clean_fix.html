@@ -28,8 +28,9 @@
   <button class="tab-btn" onclick="HWReport.switchTab('dist', this)">Distribution</button>
 </div>
 
+<div id="global-filter-bar" class="filter-bar"></div>
+
 <div id="tab-overview" class="tab-content active">
-  <div id="overview-filter-bar" class="filter-bar"></div>
   <div class="hero-section">
     <p class="hero-eyebrow">Game Analytics · PvP Experiment · Corrected Data</p>
     <h2 class="hero-title">The increase was too small to<br>change how players play.</h2>
@@ -49,8 +50,8 @@
         <div class="kpi-card"><p class="kpi-label">Shot Mix Shift</p><p class="kpi-value neutral">&lt; 1pp</p><p class="kpi-note">players barely adapted</p></div>
       </div>
       <div class="two-col">
-        <div class="card"><p class="card-title">Mean Wickets — Base vs Test by Bracket (Overall)</p><div class="legend" id="ov-wk-legend"></div><div class="chart-wrap" style="height:230px"><canvas id="ov-wk"></canvas></div></div>
-        <div class="card"><p class="card-title">Mean Score — Base vs Test by Bracket (Overall)</p><div class="legend" id="ov-sc-legend"></div><div class="chart-wrap" style="height:230px"><canvas id="ov-sc"></canvas></div></div>
+        <div class="card"><p class="card-title">Mean Wickets — Base vs Test by Bracket (Overall)</p><div class="legend" id="ov-wk-legend"></div><div class="chart-wrap"><canvas id="ov-wk"></canvas></div></div>
+        <div class="card"><p class="card-title">Mean Score — Base vs Test by Bracket (Overall)</p><div class="legend" id="ov-sc-legend"></div><div class="chart-wrap"><canvas id="ov-sc"></canvas></div></div>
       </div>
     </div>
     <div class="section">
@@ -70,11 +71,6 @@
   <main>
     <div class="section">
       <div class="section-header"><p class="section-num">Full innings</p><h3 class="section-title">Overall · Batting First · Bowling First</h3><p class="section-sub">Mean metrics shown with % change. Median behaviour is on the Distribution tab.</p></div>
-      <div class="sub-toggle">
-        <button class="sub-btn active" onclick="switchSub('inn','overall',this)">Overall</button>
-        <button class="sub-btn" onclick="switchSub('inn','bat1',this)">Batting First</button>
-        <button class="sub-btn" onclick="switchSub('inn','bowl1',this)">Bowling First</button>
-      </div>
       <div id="inn-body"></div>
     </div>
   </main>
@@ -84,11 +80,6 @@
   <main>
     <div class="section">
       <div class="section-header"><p class="section-num">First 2 overs</p><h3 class="section-title">Early innings — Overall · Batting First · Bowling First</h3><p class="section-sub">Isolates the mechanical effect before adaptation</p></div>
-      <div class="sub-toggle">
-        <button class="sub-btn active" onclick="switchSub('i2','overall_i2',this)">Overall</button>
-        <button class="sub-btn" onclick="switchSub('i2','bat1_i2',this)">Batting First</button>
-        <button class="sub-btn" onclick="switchSub('i2','bowl1_i2',this)">Bowling First</button>
-      </div>
       <div id="i2-body"></div>
     </div>
   </main>
@@ -98,14 +89,6 @@
   <main>
     <div class="section">
       <div class="section-header"><p class="section-num">Shot selection</p><h3 class="section-title">Did players change their shots?</h3><p class="section-sub">Shown in <strong>percentage points</strong> (test share − base share). Shot shares sum to 100%, so pp is the honest comparison.</p></div>
-      <div class="sub-toggle">
-        <button class="sub-btn active" onclick="switchSub('ss','overall',this)">Overall</button>
-        <button class="sub-btn" onclick="switchSub('ss','bat1',this)">Batting First</button>
-        <button class="sub-btn" onclick="switchSub('ss','bowl1',this)">Bowling First</button>
-        <button class="sub-btn" onclick="switchSub('ss','overall_i2',this)">Overs 1–2 Overall</button>
-        <button class="sub-btn" onclick="switchSub('ss','bat1_i2',this)">Overs 1–2 Bat First</button>
-        <button class="sub-btn" onclick="switchSub('ss','bowl1_i2',this)">Overs 1–2 Bowl First</button>
-      </div>
       <div id="ss-body"></div>
       <div class="section" style="margin-top:2rem">
         <div class="section-header"><p class="section-num">Shot selection insights</p></div>
@@ -124,12 +107,6 @@
   <main>
     <div class="section">
       <div class="section-header"><p class="section-num">Distribution</p><h3 class="section-title">Quartiles — where the median really sits</h3><p class="section-sub">Wicket quartiles shown as <strong>absolute values</strong> (base → test). This is where the "median didn't move" story is clearest.</p></div>
-      <div class="sub-toggle">
-        <button class="sub-btn active" onclick="switchSub('dist','overall',this)">Overall</button>
-        <button class="sub-btn" onclick="switchSub('dist','bat1',this)">Batting First</button>
-        <button class="sub-btn" onclick="switchSub('dist','bowl1',this)">Bowling First</button>
-        <button class="sub-btn" onclick="switchSub('dist','overall_i2',this)">Overs 1–2</button>
-      </div>
       <div id="dist-body"></div>
     </div>
   </main>
@@ -152,36 +129,101 @@ const BR = ['0-50k','50k-75k','75k-100k','100k+'];
 document.getElementById('ov-wk-legend').innerHTML = HWReport.baseLegend();
 document.getElementById('ov-sc-legend').innerHTML = HWReport.baseLegend();
 
-HWReport.initAbTest(DD, { brackets: BR, skipOverview: true });
-
+var activeTab = 'overview';
 var brOptions = [{ value: 'all', label: 'All brackets' }].concat(BR.map(function (b) { return { value: b, label: b }; }));
-HWReport.filters.init({
-  bar: '#overview-filter-bar',
-  url: true,
-  dims: [
+var DIMS = {
+  overview: [
     { id: 'inn', label: 'View', default: 'overall', options: [
-      { value: 'overall', label: 'Overall' },
-      { value: 'bat1', label: 'Batting 1st' },
-      { value: 'bowl1', label: 'Bowling 1st' },
+      { value: 'overall', label: 'Overall' }, { value: 'bat1', label: 'Batting 1st' }, { value: 'bowl1', label: 'Bowling 1st' },
     ]},
     { id: 'br', label: 'Bracket', default: 'all', options: brOptions },
   ],
-});
+  innings: [
+    { id: 'inn', label: 'View', default: 'overall', options: [
+      { value: 'overall', label: 'Overall' }, { value: 'bat1', label: 'Batting 1st' }, { value: 'bowl1', label: 'Bowling 1st' },
+    ]},
+  ],
+  init2: [
+    { id: 'inn', label: 'View', default: 'overall_i2', options: [
+      { value: 'overall_i2', label: 'Overall' }, { value: 'bat1_i2', label: 'Batting 1st' }, { value: 'bowl1_i2', label: 'Bowling 1st' },
+    ]},
+  ],
+  shotsel: [
+    { id: 'inn', label: 'View', default: 'overall', options: [
+      { value: 'overall', label: 'Overall' }, { value: 'bat1', label: 'Batting 1st' }, { value: 'bowl1', label: 'Bowling 1st' },
+      { value: 'overall_i2', label: 'Overs 1–2 Overall' }, { value: 'bat1_i2', label: 'Overs 1–2 Bat 1st' }, { value: 'bowl1_i2', label: 'Overs 1–2 Bowl 1st' },
+    ]},
+  ],
+  dist: [
+    { id: 'inn', label: 'View', default: 'overall', options: [
+      { value: 'overall', label: 'Overall' }, { value: 'bat1', label: 'Batting 1st' }, { value: 'bowl1', label: 'Bowling 1st' }, { value: 'overall_i2', label: 'Overs 1–2' },
+    ]},
+  ],
+};
+
+function updateScoreboard(vals) {
+  var d = DD[vals.inn] || DD.overall;
+  var med = d.qtest.wk_q50[0];
+  var el = document.querySelector('#tab-overview .stat-scoreboard');
+  if (el) HWReport.countUp(el, med, { suffix: '', decimals: 0 });
+}
 
 function renderOverviewChart(metric, vals) {
   var d = DD[vals.inn] || DD.overall;
   var labels = HWReport.filters.sliceLabels(BR, vals.br);
   var base = HWReport.filters.sliceBracket(d.base[metric], vals.br, BR);
   var test = HWReport.filters.sliceBracket(d.test[metric], vals.br, BR);
-  var BLUE = HWReport.COLORS.BLUE;
-  var TEAL = HWReport.COLORS.TEAL;
-  if (metric === 'wickets') HWReport.grouped('ov-wk', labels, base, test, BLUE, TEAL);
-  else HWReport.grouped('ov-sc', labels, base, test, BLUE, TEAL);
+  if (metric === 'wickets') HWReport.grouped('ov-wk', labels, base, test, HWReport.COLORS.BLUE, HWReport.COLORS.TEAL);
+  else HWReport.grouped('ov-sc', labels, base, test, HWReport.COLORS.BLUE, HWReport.COLORS.TEAL);
+  updateScoreboard(vals);
 }
 
-HWReport.filters.register('ov-wk', { deps: ['br', 'inn'], render: function (vals) { renderOverviewChart('wickets', vals); } });
-HWReport.filters.register('ov-sc', { deps: ['br', 'inn'], render: function (vals) { renderOverviewChart('total', vals); } });
-HWReport.initCardChrome(document.getElementById('tab-overview'));
+function renderActiveTab() {
+  var vals = HWReport.filters.get();
+  if (activeTab === 'overview') {
+    renderOverviewChart('wickets', vals);
+    renderOverviewChart('total', vals);
+    HWReport.initCardChrome(document.getElementById('tab-overview'));
+  } else if (activeTab === 'innings') {
+    switchSub('inn', vals.inn, null);
+  } else if (activeTab === 'init2') {
+    switchSub('i2', vals.inn, null);
+  } else if (activeTab === 'shotsel') {
+    switchSub('ss', vals.inn, null);
+  } else if (activeTab === 'dist') {
+    switchSub('dist', vals.inn, null);
+  }
+}
+
+HWReport.initAbTest(DD, {
+  brackets: BR,
+  skipOverview: true,
+  filterMode: true,
+  onTabSwitch: function (name) {
+    activeTab = name;
+    if (name === 'overview' || name === 'innings' || name === 'init2' || name === 'shotsel' || name === 'dist') {
+      HWReport.filters.setBarVisible(true);
+      HWReport.filters.setDims(DIMS[name], true);
+    } else {
+      HWReport.filters.setBarVisible(false);
+    }
+  },
+});
+
+HWReport.filters.init({ bar: '#global-filter-bar', url: true, dims: DIMS.overview });
+HWReport.filters.register('wc-render', {
+  deps: ['inn', 'br'],
+  render: function () { renderActiveTab(); },
+});
+
+document.addEventListener('hwreport:tabswitch', function (e) {
+  if (e.detail.name === 'overview' || e.detail.name === 'innings' || e.detail.name === 'init2' || e.detail.name === 'shotsel' || e.detail.name === 'dist') {
+    activeTab = e.detail.name;
+    HWReport.filters.setDims(DIMS[e.detail.name], true);
+  }
+});
+
+renderActiveTab();
 </script>
 </body>
 </html>

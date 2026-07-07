@@ -5,6 +5,21 @@ HWReport.initWhaleMm = function () {
   HWReport._whaleMmInit = true;
 
   const ranks = ['Rookie','Challenger','Proven','Accomplished','Remarkable'];
+  var C = HWReport.COLORS;
+  var rootStyle = getComputedStyle(document.documentElement);
+  var W = {
+    pre: C.CORAL,
+    post: C.TEAL,
+    base: rootStyle.getPropertyValue('--blue-bar').trim() || '#85B7EB',
+    baseDark: rootStyle.getPropertyValue('--blue').trim() || '#1C6FB0',
+    whale: C.AMBER,
+  };
+  var preFade = HWReport.charts._datasetColors(C.CORAL, 0.3).bg;
+  var postFade = HWReport.charts._datasetColors(C.TEAL, 0.3).bg;
+
+  function chromeIn(scope) {
+    if (HWReport.initCardChrome) HWReport.initCardChrome(scope || document);
+  }
 
   function chartBaseOpts() {
     var t = HWReport.theme.getChartTheme();
@@ -278,89 +293,89 @@ HWReport.initWhaleMm = function () {
     const baseOpts = chartBaseOpts();
     const tc = chartTickColor();
 
-    buildChart('c_base_post', { type:'bar', data:{ labels:ranks, datasets:[{ data:d.base_post, backgroundColor:['#85B7EB','#7AC8D9','#5CC7A4','#D4A017','#D07050'], borderRadius:4 }]}, options:{...baseOpts, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.parsed.y.toLocaleString()} whales`}}}} });
+    buildChart('c_base_post', { type:'bar', data:{ labels:ranks, datasets:[{ data:d.base_post, backgroundColor:[W.base, C.TEAL, W.post, W.whale, C.CORAL], borderRadius:4 }]}, options:{...baseOpts, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.parsed.y.toLocaleString()} whales`}}}} });
 
     buildChart('c_base_pct', { type:'bar', data:{ labels:ranks, datasets:[
-      {label:'Pre', data:d.base_pct_pre, backgroundColor:'#D85A30', borderRadius:4},
-      {label:'Post', data:d.base_pct_post, backgroundColor:'#1D9E75', borderRadius:4}
+      {label:'Pre', data:d.base_pct_pre, backgroundColor:W.pre, borderRadius:4},
+      {label:'Post', data:d.base_pct_post, backgroundColor:W.post, borderRadius:4}
     ]}, options:{...baseOpts, scales:{x:baseOpts.scales.x, y:{...baseOpts.scales.y, max:14, ticks:{...baseOpts.scales.y.ticks, callback:v=>v+'%'}}}, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`}}}} });
 
     buildChart('c_pratio_whale', { type:'bar', data:{ labels:ranks, datasets:[
-      {label:'Pre', data:d.pratio_whale_pre, backgroundColor:'#D85A30', borderRadius:4},
-      {label:'Post', data:d.pratio_whale_post, backgroundColor:'#1D9E75', borderRadius:4}
+      {label:'Pre', data:d.pratio_whale_pre, backgroundColor:W.pre, borderRadius:4},
+      {label:'Post', data:d.pratio_whale_post, backgroundColor:W.post, borderRadius:4}
     ]}, options:{...baseOpts, scales:{x:baseOpts.scales.x, y:{...baseOpts.scales.y, min:0.7, max:1.1, ticks:{...baseOpts.scales.y.ticks, callback:v=>v.toFixed(2)}}}, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}`}}}} });
 
     buildChart('c_pratio_nonwhale', { type:'bar', data:{ labels:ranks, datasets:[
-      {label:'Pre', data:d.pratio_nw_pre, backgroundColor:'#D85A30', borderRadius:4},
-      {label:'Post', data:d.pratio_nw_post, backgroundColor:'#85B7EB', borderRadius:4}
+      {label:'Pre', data:d.pratio_nw_pre, backgroundColor:W.pre, borderRadius:4},
+      {label:'Post', data:d.pratio_nw_post, backgroundColor:W.base, borderRadius:4}
     ]}, options:{...baseOpts, scales:{x:baseOpts.scales.x, y:{...baseOpts.scales.y, min:0.7, max:1.1, ticks:{...baseOpts.scales.y.ticks, callback:v=>v.toFixed(2)}}}, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}`}}}} });
 
     buildChart('c_wr_whale', { type:'bar', data:{ labels:ranks, datasets:[
-      {label:'Pre — All Matches', data:d.wr_all_pre, backgroundColor:'rgba(216,90,48,0.3)', borderRadius:4},
-      {label:'Pre — Real-User',   data:d.wr_ru_pre,  backgroundColor:'#D85A30', borderRadius:4},
-      {label:'Post — All Matches',data:d.wr_all_post, backgroundColor:'rgba(29,158,117,0.3)', borderRadius:4},
-      {label:'Post — Real-User',  data:d.wr_ru_post, backgroundColor:'#1D9E75', borderRadius:4}
+      {label:'Pre — All Matches', data:d.wr_all_pre, backgroundColor:preFade, borderRadius:4},
+      {label:'Pre — Real-User',   data:d.wr_ru_pre,  backgroundColor:W.pre, borderRadius:4},
+      {label:'Post — All Matches',data:d.wr_all_post, backgroundColor:postFade, borderRadius:4},
+      {label:'Post — Real-User',  data:d.wr_ru_post, backgroundColor:W.post, borderRadius:4}
     ]}, options:{...baseOpts, plugins:{legend:{display:true, position:'top', labels:{font:{size:11}, color:tc, boxWidth:12, padding:14}}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`}}}, scales:{x:baseOpts.scales.x, y:{...baseOpts.scales.y, min:30, max:85, ticks:{...baseOpts.scales.y.ticks, callback:v=>v+'%'}}}} });
 
     const quitYOpts = { ...baseOpts.scales.y, ticks: { ...baseOpts.scales.y.ticks, callback: v => v + '%' } };
 
     buildChart('c_quit_opp_whale', { type:'bar', data:{ labels:ranks, datasets:[
-      {label:'Pre', data:d.quit_opp_whale_pre, backgroundColor:'#D85A30', borderRadius:4},
-      {label:'Post', data:d.quit_opp_whale_post, backgroundColor:'#BA7517', borderRadius:4}
+      {label:'Pre', data:d.quit_opp_whale_pre, backgroundColor:W.pre, borderRadius:4},
+      {label:'Post', data:d.quit_opp_whale_post, backgroundColor:W.whale, borderRadius:4}
     ]}, options:{...baseOpts, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`}}}, scales:{x:baseOpts.scales.x, y:quitYOpts}} });
 
     buildChart('c_quit_opp_nw', { type:'bar', data:{ labels:ranks, datasets:[
-      {label:'Pre', data:d.quit_opp_nw_pre, backgroundColor:'#D85A30', borderRadius:4},
-      {label:'Post', data:d.quit_opp_nw_post, backgroundColor:'#85B7EB', borderRadius:4}
+      {label:'Pre', data:d.quit_opp_nw_pre, backgroundColor:W.pre, borderRadius:4},
+      {label:'Post', data:d.quit_opp_nw_post, backgroundColor:W.base, borderRadius:4}
     ]}, options:{...baseOpts, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`}}}, scales:{x:baseOpts.scales.x, y:quitYOpts}} });
 
     document.getElementById('selfquit_row').classList.toggle('hidden', !d.has_selfquit);
     if (d.has_selfquit) {
       buildChart('c_quit_self_whale', { type:'bar', data:{ labels:ranks, datasets:[
-        {label:'Pre', data:d.quit_self_whale_pre, backgroundColor:'#D85A30', borderRadius:4},
-        {label:'Post', data:d.quit_self_whale_post, backgroundColor:'#1D9E75', borderRadius:4}
+        {label:'Pre', data:d.quit_self_whale_pre, backgroundColor:W.pre, borderRadius:4},
+        {label:'Post', data:d.quit_self_whale_post, backgroundColor:W.post, borderRadius:4}
       ]}, options:{...baseOpts, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`}}}, scales:{x:baseOpts.scales.x, y:quitYOpts}} });
 
       buildChart('c_quit_self_nw', { type:'bar', data:{ labels:ranks, datasets:[
-        {label:'Pre', data:d.quit_self_nw_pre, backgroundColor:'#D85A30', borderRadius:4},
-        {label:'Post', data:d.quit_self_nw_post, backgroundColor:'#85B7EB', borderRadius:4}
+        {label:'Pre', data:d.quit_self_nw_pre, backgroundColor:W.pre, borderRadius:4},
+        {label:'Post', data:d.quit_self_nw_post, backgroundColor:W.base, borderRadius:4}
       ]}, options:{...baseOpts, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`}}}, scales:{x:baseOpts.scales.x, y:quitYOpts}} });
     }
 
     buildChart('c_league', { type:'bar', data:{ labels:ranks, datasets:[
-      {label:'Whale Pre',     data:d.league_whale_pre, backgroundColor:'#D4A017', borderRadius:4},
-      {label:'Whale Post',    data:d.league_whale_post, backgroundColor:'#BA7517', borderRadius:4},
-      {label:'Non-Whale Pre', data:d.league_nw_pre, backgroundColor:'#85B7EB', borderRadius:4},
-      {label:'Non-Whale Post',data:d.league_nw_post, backgroundColor:'#185FA5', borderRadius:4}
+      {label:'Whale Pre',     data:d.league_whale_pre, backgroundColor:W.whale, borderRadius:4},
+      {label:'Whale Post',    data:d.league_whale_post, backgroundColor:W.whale, borderRadius:4},
+      {label:'Non-Whale Pre', data:d.league_nw_pre, backgroundColor:W.base, borderRadius:4},
+      {label:'Non-Whale Post',data:d.league_nw_post, backgroundColor:W.baseDark, borderRadius:4}
     ]}, options:{...baseOpts, plugins:{legend:{display:true, position:'top', labels:{font:{size:11}, color:tc, boxWidth:12, padding:14}}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`}}}, scales:{x:baseOpts.scales.x, y:{...baseOpts.scales.y, min:30, max:80, ticks:{...baseOpts.scales.y.ticks, callback:v=>v+'%'}}}} });
 
     if (d.has_ndr) {
       buildChart('c_ndr_whale', { type:'bar', data:{ labels:ranks, datasets:[
-        {label:'Pre', data:d.ndr_whale_pre, backgroundColor:'#D85A30', borderRadius:4},
-        {label:'Post', data:d.ndr_whale_post, backgroundColor:'#1D9E75', borderRadius:4}
+        {label:'Pre', data:d.ndr_whale_pre, backgroundColor:W.pre, borderRadius:4},
+        {label:'Post', data:d.ndr_whale_post, backgroundColor:W.post, borderRadius:4}
       ]}, options:{...baseOpts, scales:{x:baseOpts.scales.x, y:{...baseOpts.scales.y, min:50, max:90, ticks:{...baseOpts.scales.y.ticks, callback:v=>v+'%'}}}, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`}}}} });
 
       buildChart('c_ndr_nonwhale', { type:'bar', data:{ labels:ranks, datasets:[
-        {label:'Pre', data:d.ndr_nw_pre, backgroundColor:'#D85A30', borderRadius:4},
-        {label:'Post', data:d.ndr_nw_post, backgroundColor:'#85B7EB', borderRadius:4}
+        {label:'Pre', data:d.ndr_nw_pre, backgroundColor:W.pre, borderRadius:4},
+        {label:'Post', data:d.ndr_nw_post, backgroundColor:W.base, borderRadius:4}
       ]}, options:{...baseOpts, scales:{x:baseOpts.scales.x, y:{...baseOpts.scales.y, min:50, max:90, ticks:{...baseOpts.scales.y.ticks, callback:v=>v+'%'}}}, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`}}}} });
     }
 
     buildChart('c_time_whale', { type:'bar', data:{ labels:ranks, datasets:[
-      {label:'Pre', data:d.time_whale_pre, backgroundColor:'#D85A30', borderRadius:4},
-      {label:'Post', data:d.time_whale_post, backgroundColor:'#1D9E75', borderRadius:4}
+      {label:'Pre', data:d.time_whale_pre, backgroundColor:W.pre, borderRadius:4},
+      {label:'Post', data:d.time_whale_post, backgroundColor:W.post, borderRadius:4}
     ]}, options:{...baseOpts, scales:{x:baseOpts.scales.x, y:{...baseOpts.scales.y, min:40, max:90, ticks:{...baseOpts.scales.y.ticks, callback:v=>v+' m'}}}, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)} mins`}}}} });
 
     buildChart('c_time_nonwhale', { type:'bar', data:{ labels:ranks, datasets:[
-      {label:'Pre', data:d.time_nw_pre, backgroundColor:'#D85A30', borderRadius:4},
-      {label:'Post', data:d.time_nw_post, backgroundColor:'#85B7EB', borderRadius:4}
+      {label:'Pre', data:d.time_nw_pre, backgroundColor:W.pre, borderRadius:4},
+      {label:'Post', data:d.time_nw_post, backgroundColor:W.base, borderRadius:4}
     ]}, options:{...baseOpts, scales:{x:baseOpts.scales.x, y:{...baseOpts.scales.y, min:40, max:90, ticks:{...baseOpts.scales.y.ticks, callback:v=>v+' m'}}}, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)} mins`}}}} });
 
     if (d.has_whalesfaced) {
       buildChart('c_whalesfaced', { type:'bar', data:{ labels:ranks, datasets:[
-        {label:'Mean', data:d.whalesfaced_mean, backgroundColor:'#85B7EB', borderRadius:4},
-        {label:'Q50',  data:d.whalesfaced_q50,  backgroundColor:'#185FA5', borderRadius:4},
-        {label:'Q90',  data:d.whalesfaced_q90,  backgroundColor:'#D85A30', borderRadius:4}
+        {label:'Mean', data:d.whalesfaced_mean, backgroundColor:W.base, borderRadius:4},
+        {label:'Q50',  data:d.whalesfaced_q50,  backgroundColor:W.baseDark, borderRadius:4},
+        {label:'Q90',  data:d.whalesfaced_q90,  backgroundColor:W.pre, borderRadius:4}
       ]}, options:{...baseOpts, plugins:{legend:{display:true, position:'top', labels:{font:{size:11}, color:tc, boxWidth:12, padding:12}}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}`}}}, scales:{x:baseOpts.scales.x, y:{...baseOpts.scales.y, max:5, ticks:{...baseOpts.scales.y.ticks, stepSize:1}}}} });
     }
 
@@ -442,8 +457,8 @@ HWReport.initWhaleMm = function () {
     // ── PAYER MIX CHART ──
     if (d.has_payermix) {
       buildChart('c_payer_mix', { type:'bar', data:{ labels:ranks, datasets:[
-        {label:'Any payer', data:d.payer_pct, backgroundColor:'#185FA5', borderRadius:4},
-        {label:'$1+ payer (LTV > $80)', data:d.payer_1plus_pct, backgroundColor:'#1D9E75', borderRadius:4}
+        {label:'Any payer', data:d.payer_pct, backgroundColor:W.baseDark, borderRadius:4},
+        {label:'$1+ payer (LTV > $80)', data:d.payer_1plus_pct, backgroundColor:W.post, borderRadius:4}
       ]}, options:{...baseOpts, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`}}}, scales:{x:baseOpts.scales.x, y:{...baseOpts.scales.y, max:60, ticks:{...baseOpts.scales.y.ticks, callback:v=>v+'%'}}}} });
 
       renderInsights('ins_payermix', [
@@ -475,6 +490,7 @@ HWReport.initWhaleMm = function () {
         <p class="opp-title">${q.title}</p>
         <p class="opp-desc">${q.desc}</p>
       </div>`).join('');
+    chromeIn(document.getElementById('ranksplit_page'));
   }
 
 
@@ -551,8 +567,8 @@ HWReport.initWhaleMm = function () {
   // OVERALL PAGE RENDERING
   // ══════════════════════════════════════════════
   // Rank colours — Pre uses muted versions, Post uses vivid versions
-  const rankColorsPre  = ['#8FAFD4', '#60A898', '#B8A040', '#C07850', '#A87898'];
-  const rankColorsPost = ['#2E7FCC', '#1D9E75', '#D4A017', '#D85A30', '#9B5E8A'];
+  const rankColorsPre  = [W.base, W.post, W.whale, C.CORAL, C.PURPLE];
+  const rankColorsPost = [W.baseDark, W.post, W.whale, W.pre, C.PURPLE];
 
   function buildOverallChart(id, preVals, postVals, opts = {}) {
     const el = document.getElementById(id);
@@ -647,6 +663,7 @@ HWReport.initWhaleMm = function () {
     document.getElementById('compLabel').textContent = 'Apr 30–May 9 vs May 31–Jun 9';
     document.getElementById('caveatBanner').style.display = 'none';
     if (!HWReport.charts['ov_matches_free']) renderOverall();
+    chromeIn(document.getElementById('overall_page'));
   }
 
   function hideOverall() {
@@ -662,6 +679,7 @@ HWReport.initWhaleMm = function () {
     document.getElementById('compLabel').textContent = 'May 15 – Jun 21';
     document.getElementById('caveatBanner').style.display = 'none';
     if (!HWReport.charts['ab_eng_overall']) renderAB();
+    chromeIn(document.getElementById('ab_page'));
   }
 
   function hideAB() {
@@ -683,6 +701,7 @@ HWReport.initWhaleMm = function () {
     }
     refreshJun29Dom();
     renderJun29KPIs();
+    chromeIn(document.getElementById('ab_jun29_page'));
   }
 
   function hideJun29() {
@@ -795,8 +814,8 @@ HWReport.initWhaleMm = function () {
       data: {
         labels: labels || abData.ranks,
         datasets: [
-          { label: 'Base', data: baseVals, backgroundColor: '#185FA5', borderRadius: 4 },
-          { label: 'Test', data: testVals, backgroundColor: '#1D9E75', borderRadius: 4 }
+          { label: 'Base', data: baseVals, backgroundColor: W.baseDark, borderRadius: 4 },
+          { label: 'Test', data: testVals, backgroundColor: W.post, borderRadius: 4 }
         ]
       },
       options: {
@@ -826,8 +845,8 @@ HWReport.initWhaleMm = function () {
       data: {
         labels,
         datasets: [
-          { label: 'Base', data: baseVals, backgroundColor: '#185FA5', borderRadius: 4 },
-          { label: 'Test', data: testVals, backgroundColor: '#1D9E75', borderRadius: 4 }
+          { label: 'Base', data: baseVals, backgroundColor: W.baseDark, borderRadius: 4 },
+          { label: 'Test', data: testVals, backgroundColor: W.post, borderRadius: 4 }
         ]
       },
       options: {
