@@ -72,28 +72,39 @@ function _ariaWrap(canvas, label) {
   canvas.setAttribute('aria-label', label);
 }
 
-function _chartStore(id, chart, meta) {
+function _initOrUpdateChart(id, ctx, config, meta) {
   meta = meta || {};
   var prev = HWReport._chartInstances[id];
   if (prev && prev.canvas && prev.canvas.isConnected && meta.type && prev.config.type === meta.type) {
-    var dsCount = chart.data.datasets.length;
+    var dsCount = config.data.datasets.length;
     if (prev.data.datasets.length === dsCount) {
-      prev.data.labels = chart.data.labels;
+      prev.data.labels = config.data.labels;
       for (var i = 0; i < dsCount; i++) {
-        prev.data.datasets[i].data = chart.data.datasets[i].data;
-        prev.data.datasets[i].label = chart.data.datasets[i].label;
-        if (chart.data.datasets[i].backgroundColor) prev.data.datasets[i].backgroundColor = chart.data.datasets[i].backgroundColor;
-        if (chart.data.datasets[i].borderColor) prev.data.datasets[i].borderColor = chart.data.datasets[i].borderColor;
+        prev.data.datasets[i].data = config.data.datasets[i].data;
+        prev.data.datasets[i].label = config.data.datasets[i].label;
+        if (config.data.datasets[i].backgroundColor != null) prev.data.datasets[i].backgroundColor = config.data.datasets[i].backgroundColor;
+        if (config.data.datasets[i].borderColor != null) prev.data.datasets[i].borderColor = config.data.datasets[i].borderColor;
+        if (config.data.datasets[i].borderWidth != null) prev.data.datasets[i].borderWidth = config.data.datasets[i].borderWidth;
+        if (config.data.datasets[i].borderRadius != null) prev.data.datasets[i].borderRadius = config.data.datasets[i].borderRadius;
+        if (config.data.datasets[i].type != null) prev.data.datasets[i].type = config.data.datasets[i].type;
+        if (config.data.datasets[i].pointRadius != null) prev.data.datasets[i].pointRadius = config.data.datasets[i].pointRadius;
+        if (config.data.datasets[i].fill != null) prev.data.datasets[i].fill = config.data.datasets[i].fill;
       }
-      if (chart.options.scales) prev.options.scales = chart.options.scales;
+      if (config.options) {
+        if (config.options.scales) prev.options.scales = config.options.scales;
+        if (config.options.indexAxis != null) prev.options.indexAxis = config.options.indexAxis;
+      }
       var mode = HWReport._prefersReducedMotion && HWReport._prefersReducedMotion() ? 'none' : undefined;
       prev.update(mode);
       _ariaWrap(prev.canvas, meta.ariaLabel);
       HWReport._chartMeta[id] = meta;
       return prev;
     }
+    prev.destroy();
+  } else if (prev) {
+    prev.destroy();
   }
-  if (prev) prev.destroy();
+  var chart = new Chart(ctx, config);
   HWReport._chartInstances[id] = chart;
   HWReport.charts[id] = chart;
   HWReport._chartMeta[id] = meta;
@@ -201,12 +212,11 @@ HWReport.grouped = function (id, labels, d1, d2, c1, c2, opts) {
     scales: _scaleOpts(opts.scales),
   });
   if (opts.yFmt) chartOpts.scales.y.ticks.callback = HWReport.fmt.tick(opts.yFmt);
-  var chart = new Chart(ctx, {
+  _initOrUpdateChart(id, ctx, {
     type: 'bar',
     data: { labels: labels, datasets: [_barDs('Base', d1, c1), _barDs('Test', d2, c2)] },
     options: chartOpts,
-  });
-  _chartStore(id, chart, { type: 'bar', ariaLabel: opts.ariaLabel || 'Grouped bar chart', colors: [c1, c2] });
+  }, { type: 'bar', ariaLabel: opts.ariaLabel || 'Grouped bar chart', colors: [c1, c2] });
 };
 
 HWReport.ppGrouped = function (id, labels, ppObj, shotNames, shotColors, opts) {
@@ -227,8 +237,7 @@ HWReport.ppGrouped = function (id, labels, ppObj, shotNames, shotColors, opts) {
     },
     scales: scales,
   });
-  var chart = new Chart(ctx, { type: 'bar', data: { labels: labels, datasets: datasets }, options: chartOpts });
-  _chartStore(id, chart, { type: 'bar', ariaLabel: opts.ariaLabel || 'Shot mix shift chart', colors: colors });
+  _initOrUpdateChart(id, ctx, { type: 'bar', data: { labels: labels, datasets: datasets }, options: chartOpts }, { type: 'bar', ariaLabel: opts.ariaLabel || 'Shot mix shift chart', colors: colors });
 };
 
 HWReport.stackedMix = function (id, mixBase, mixTest, shotNames, shotColors, opts) {
@@ -245,8 +254,7 @@ HWReport.stackedMix = function (id, mixBase, mixTest, shotNames, shotColors, opt
   scales.x.stacked = true;
   scales.y = { stacked: true, grid: { display: false }, ticks: { color: scales.y.ticks.color, font: scales.y.ticks.font, callback: HWReport.fmt.tick('pct') } };
   var chartOpts = _baseOpts('bar', { plugins: { legend: { display: true } }, scales: scales, indexAxis: 'y' });
-  var chart = new Chart(ctx, { type: 'bar', data: { labels: ['Base', 'Test'], datasets: datasets }, options: chartOpts });
-  _chartStore(id, chart, { type: 'bar', ariaLabel: opts.ariaLabel || 'Stacked shot mix', colors: colors, fillAlpha: 0.73 });
+  _initOrUpdateChart(id, ctx, { type: 'bar', data: { labels: ['Base', 'Test'], datasets: datasets }, options: chartOpts }, { type: 'bar', ariaLabel: opts.ariaLabel || 'Stacked shot mix', colors: colors, fillAlpha: 0.73 });
 };
 
 HWReport.dualBar = function (id, labels, closeData, oneSidedData, opts) {
@@ -260,12 +268,11 @@ HWReport.dualBar = function (id, labels, closeData, oneSidedData, opts) {
   scales.y.max = opts.ymax != null ? opts.ymax : 70;
   scales.y.ticks.callback = HWReport.fmt.tick('pct');
   var chartOpts = _baseOpts('bar', { plugins: { legend: { display: true } }, scales: scales });
-  var chart = new Chart(ctx, {
+  _initOrUpdateChart(id, ctx, {
     type: 'bar',
     data: { labels: labels, datasets: [_barDs(opts.label1 || 'Close %', closeData, c.BLUE), _barDs(opts.label2 || 'One-sided %', oneSidedData, c.CORAL)] },
     options: chartOpts,
-  });
-  _chartStore(id, chart, { type: 'bar', ariaLabel: opts.ariaLabel || 'Dual bar chart', colors: [c.BLUE, c.CORAL] });
+  }, { type: 'bar', ariaLabel: opts.ariaLabel || 'Dual bar chart', colors: [c.BLUE, c.CORAL] });
 };
 
 HWReport.lineChart = function (id, labels, datasets, yOpts) {
@@ -282,8 +289,7 @@ HWReport.lineChart = function (id, labels, datasets, yOpts) {
     chartOpts.plugins.annotation = { annotations: yOpts.annotations };
   }
   var colors = datasets.map(function (d) { return d.borderColor; });
-  var chart = new Chart(ctx, { type: 'line', data: { labels: labels, datasets: datasets }, options: chartOpts });
-  _chartStore(id, chart, { type: 'line', ariaLabel: yOpts.ariaLabel || 'Line chart', colors: colors, fillAlpha: 0.2 });
+  _initOrUpdateChart(id, ctx, { type: 'line', data: { labels: labels, datasets: datasets }, options: chartOpts }, { type: 'line', ariaLabel: yOpts.ariaLabel || 'Line chart', colors: colors, fillAlpha: 0.2 });
 };
 
 HWReport.lineChartSimple = function (id, labels, data, label, color, yOpts) {
@@ -303,12 +309,11 @@ HWReport.singleBar = function (id, labels, data, color, yOpts) {
   scales.y.max = yOpts.max != null ? yOpts.max : 100;
   scales.y.ticks.callback = yOpts.tickCallback || HWReport.fmt.tick(yOpts.yFmt || 'pct');
   var chartOpts = _baseOpts('bar', { plugins: { legend: { display: false } }, scales: scales });
-  var chart = new Chart(ctx, {
+  _initOrUpdateChart(id, ctx, {
     type: 'bar',
     data: { labels: labels, datasets: [_barDs(yOpts.label || 'Value', data, color)] },
     options: chartOpts,
-  });
-  _chartStore(id, chart, { type: 'bar', ariaLabel: yOpts.ariaLabel || 'Bar chart', colors: [color] });
+  }, { type: 'bar', ariaLabel: yOpts.ariaLabel || 'Bar chart', colors: [color] });
 };
 
 HWReport.donut = function (id, labels, data, colors, opts) {
@@ -316,8 +321,7 @@ HWReport.donut = function (id, labels, data, colors, opts) {
   var ctx = document.getElementById(id);
   if (!ctx) return;
   var chartOpts = _baseOpts('doughnut', { plugins: { legend: { display: true } }, cutout: '62%' });
-  var chart = new Chart(ctx, { type: 'doughnut', data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, borderWidth: 0 }] }, options: chartOpts });
-  _chartStore(id, chart, { type: 'doughnut', ariaLabel: opts.ariaLabel || 'Donut chart', colors: colors });
+  _initOrUpdateChart(id, ctx, { type: 'doughnut', data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, borderWidth: 0 }] }, options: chartOpts }, { type: 'doughnut', ariaLabel: opts.ariaLabel || 'Donut chart', colors: colors });
 };
 
 HWReport.horizontalRankedBar = function (id, labels, data, color, opts) {
@@ -328,12 +332,11 @@ HWReport.horizontalRankedBar = function (id, labels, data, color, opts) {
   scales.x.grid.display = true;
   scales.y.grid.display = false;
   var chartOpts = _baseOpts('bar', { plugins: { legend: { display: false } }, scales: scales, indexAxis: 'y' });
-  var chart = new Chart(ctx, {
+  _initOrUpdateChart(id, ctx, {
     type: 'bar',
     data: { labels: labels, datasets: [_barDs(opts.label || 'Value', data, color)] },
     options: chartOpts,
-  });
-  _chartStore(id, chart, { type: 'bar', ariaLabel: opts.ariaLabel || 'Horizontal bar chart', colors: [color] });
+  }, { type: 'bar', ariaLabel: opts.ariaLabel || 'Horizontal bar chart', colors: [color] });
 };
 
 HWReport.sparkline = function (id, data, color) {
@@ -343,15 +346,14 @@ HWReport.sparkline = function (id, data, color) {
   var scales = _scaleOpts();
   scales.x.display = false;
   scales.y.display = false;
-  var chart = new Chart(ctx, {
+  _initOrUpdateChart(id, ctx, {
     type: 'line',
     data: {
       labels: data.map(function (_, i) { return i; }),
       datasets: [{ data: data, borderColor: color, backgroundColor: dc.bg, borderWidth: 1.5, pointRadius: 0, tension: 0.35, fill: true }],
     },
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { enabled: false } }, scales: scales },
-  });
-  _chartStore(id, chart, { type: 'line', ariaLabel: 'Sparkline', colors: [color], fillAlpha: 0.13 });
+  }, { type: 'line', ariaLabel: 'Sparkline', colors: [color], fillAlpha: 0.13 });
 };
 
 HWReport.scatter = function (id, points, color, xLabel, yLabel, opts) {
@@ -362,12 +364,11 @@ HWReport.scatter = function (id, points, color, xLabel, yLabel, opts) {
   if (xLabel) scales.x.title = { display: true, text: xLabel, color: scales.x.ticks.color, font: { size: 11 } };
   if (yLabel) scales.y.title = { display: true, text: yLabel, color: scales.y.ticks.color, font: { size: 11 } };
   var chartOpts = _baseOpts('scatter', { plugins: { legend: { display: false } }, scales: scales });
-  var chart = new Chart(ctx, {
+  _initOrUpdateChart(id, ctx, {
     type: 'scatter',
     data: { datasets: [{ data: points, backgroundColor: _datasetColors(color, 0.6).bg, borderColor: color, pointRadius: 4 }] },
     options: chartOpts,
-  });
-  _chartStore(id, chart, { type: 'scatter', ariaLabel: opts.ariaLabel || 'Scatter chart', colors: [color] });
+  }, { type: 'scatter', ariaLabel: opts.ariaLabel || 'Scatter chart', colors: [color] });
 };
 
 HWReport.quantileBand = function (id, labels, qbase, qtest, opts) {
@@ -383,7 +384,7 @@ HWReport.quantileBand = function (id, labels, qbase, qtest, opts) {
   var bandData = bandLow.map(function (lo, i) { return [lo, bandHigh[i]]; });
   var c = HWReport.COLORS;
   var chartOpts = _baseOpts('bar', { plugins: { legend: { display: true } }, scales: _scaleOpts() });
-  var chart = new Chart(ctx, {
+  _initOrUpdateChart(id, ctx, {
     type: 'bar',
     data: {
       labels: labels,
@@ -393,8 +394,7 @@ HWReport.quantileBand = function (id, labels, qbase, qtest, opts) {
       ],
     },
     options: chartOpts,
-  });
-  _chartStore(id, chart, { type: 'bar', ariaLabel: opts.ariaLabel || 'Quantile band chart', colors: [c.BLUE, c.TEAL] });
+  }, { type: 'bar', ariaLabel: opts.ariaLabel || 'Quantile band chart', colors: [c.BLUE, c.TEAL] });
 };
 
 HWReport.waterfall = function (id, labels, values, opts) {
@@ -412,7 +412,7 @@ HWReport.waterfall = function (id, labels, values, opts) {
   var c = HWReport.COLORS;
   var colors = values.map(function (v) { return v >= 0 ? c.TEAL : c.CORAL; });
   var chartOpts = _baseOpts('bar', { plugins: { legend: { display: false } }, scales: _scaleOpts() });
-  var chart = new Chart(ctx, {
+  _initOrUpdateChart(id, ctx, {
     type: 'bar',
     data: {
       labels: labels,
@@ -422,8 +422,7 @@ HWReport.waterfall = function (id, labels, values, opts) {
       ],
     },
     options: Object.assign(chartOpts, { scales: Object.assign(chartOpts.scales || _scaleOpts(), { x: { stacked: true }, y: { stacked: true } }) }),
-  });
-  _chartStore(id, chart, { type: 'bar', ariaLabel: opts.ariaLabel || 'Waterfall chart', colors: colors });
+  }, { type: 'bar', ariaLabel: opts.ariaLabel || 'Waterfall chart', colors: colors });
 };
 
 HWReport.funnel = function (id, stages, values, opts) {
@@ -437,12 +436,11 @@ HWReport.funnel = function (id, stages, values, opts) {
   var labels = stages.map(function (s, i) { return s + ' (' + conv[i] + ')'; });
   var c = HWReport.COLORS.BLUE;
   var chartOpts = _baseOpts('bar', { plugins: { legend: { display: false } }, scales: _scaleOpts(), indexAxis: 'y' });
-  var chart = new Chart(ctx, {
+  _initOrUpdateChart(id, ctx, {
     type: 'bar',
     data: { labels: labels, datasets: [_barDs('Users', values, c)] },
     options: chartOpts,
-  });
-  _chartStore(id, chart, { type: 'bar', ariaLabel: opts.ariaLabel || 'Funnel chart', colors: [c] });
+  }, { type: 'bar', ariaLabel: opts.ariaLabel || 'Funnel chart', colors: [c] });
 };
 
 HWReport.heatmapTable = function (el, rows, cols, matrix, opts) {
