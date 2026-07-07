@@ -18,11 +18,7 @@ Do **not** ask the user to run git commands manually.
 
 ## Prerequisites
 
-```bash
-bash kit/scripts/check_publish_env.sh --publish
-```
-
-Fix any FAIL before continuing. User must have run `gh auth login` once.
+User must have run `gh auth login` once. `git_publish.sh` runs env checks automatically (branches from `main` first).
 
 ## Repo context
 
@@ -30,21 +26,17 @@ Fix any FAIL before continuing. User must have run `gh auth login` once.
 - Paths: `data/{slug}.json`, `{slug}.html`, `handoffs/{slug}.txt`, `catalog.json`
 - Never publish from private `Hitwicket-Analytics/reports/` mirror
 
-## Publish pipeline (run in order)
+## Publish pipeline
 
-1. `git fetch origin`
-2. If on `main`: `git pull --ff-only origin main` then `git checkout -b report/{slug}`
-3. If already on `report/{slug}`: continue
-4. `python3 kit/build_catalog.py --sync && python3 kit/build_catalog.py`
-5. `python3 kit/validate_report.py data/{slug}.json` if AB JSON exists
-6. Stage **only**: `data/{slug}.json`, `{slug}.html`, `handoffs/{slug}.txt`, `catalog.json`
-7. Commit with message `Add {slug} stakeholder report` or `Update {slug} stakeholder report`
-8. `git push -u origin HEAD`
-9. `gh pr create` (or use existing PR if branch already has one)
-10. `gh pr checks --watch` — wait for **validate-reports**
-11. Return PR URL to user
+**Shortcut (preferred):** `bash kit/scripts/git_publish.sh --slug {slug} --mode pr`
 
-**Shortcut:** `bash kit/scripts/git_publish.sh --slug {slug} --mode pr`
+Script order internally:
+1. `check_publish_env.sh` (no `--publish` on `main`)
+2. Branch `report/{slug}` from `main` if needed
+3. `check_publish_env.sh --publish`
+4. `build_catalog.py --sync`, `validate_report.py`, `check_html_data.py`
+5. Commit slug files + `catalog.json`, push, open PR
+6. Wait for CI — **abort on failure** (merge mode will not merge if CI red)
 
 ## Merge policy
 
@@ -65,7 +57,7 @@ Fix any FAIL before continuing. User must have run `gh auth login` once.
 
 - Push rejected → `git pull --rebase origin main`, fix conflicts, push again
 - CI failed → `gh pr checks`, `gh run view`, fix files, push to same branch
-- Wrong repo → user must open `hw-analytics-reports` clone in Cursor
+- Wrong repo → open `hw-analytics-reports` clone in Cursor
 
 ## Private mirror (owner only)
 

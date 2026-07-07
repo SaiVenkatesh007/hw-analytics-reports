@@ -13,7 +13,7 @@ jobs:
       - name: Validate catalog
         run: python3 kit/build_catalog.py
 
-      - name: Validate data JSON files
+      - name: Validate data JSON and HTML consistency
         run: |
           set -euo pipefail
           shopt -s nullglob
@@ -23,6 +23,10 @@ jobs:
             exit 0
           fi
           for f in "${files[@]}"; do
+            slug="$(basename "$f" .json)"
             echo "Validating $f"
             python3 kit/validate_report.py "$f"
+            if [ -f "${slug}.html" ]; then
+              python3 kit/check_html_data.py "$f" "${slug}.html"
+            fi
           done

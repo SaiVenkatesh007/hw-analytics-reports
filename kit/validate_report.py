@@ -5,29 +5,37 @@ import json
 import sys
 from pathlib import Path
 
-REQUIRED_VIEWS = [
+DEFAULT_VIEWS = [
     "overall", "bat1", "bowl1", "overall_i2", "bat1_i2", "bowl1_i2",
 ]
+DEFAULT_METRIC_KEYS = ["total", "balls", "wickets", "misses"]
+DEFAULT_SHOT_KEYS = ["z", "o", "t", "f", "s"]
+
 REQUIRED_FIELDS = ["sample", "base", "test", "mix_base", "mix_test", "mix_pp", "qbase", "qtest", "wk_pct", "sc_pct"]
-METRIC_KEYS = ["total", "balls", "wickets", "misses"]
-SHOT_KEYS = ["z", "o", "t", "f", "s"]
 
 CATALOG_META_FIELDS = ("title", "slug", "owner", "date", "tags", "thesis")
+
+
+def schema_from_meta(meta: dict) -> tuple[list[str], list[str], list[str], list[str]]:
+    brackets = meta.get("brackets", ["0-50k", "50k-75k", "75k-100k", "100k+"])
+    views = meta.get("views", DEFAULT_VIEWS)
+    metrics = meta.get("metrics", DEFAULT_METRIC_KEYS)
+    shots = meta.get("shots", DEFAULT_SHOT_KEYS)
+    return views, metrics, shots, brackets
 
 
 def check_ab_data(data: dict) -> list[str]:
     errors = []
     meta = data.get("meta", {})
     dd = data.get("dd", {})
+    views, metric_keys, shot_keys, brackets = schema_from_meta(meta)
+    n = len(brackets)
 
     for field in ("title", "slug"):
         if field not in meta:
             errors.append(f"meta.{field} missing")
 
-    brackets = meta.get("brackets", ["0-50k", "50k-75k", "75k-100k", "100k+"])
-    n = len(brackets)
-
-    for view in REQUIRED_VIEWS:
+    for view in views:
         if view not in dd:
             errors.append(f"dd.{view} missing")
             continue
@@ -40,7 +48,7 @@ def check_ab_data(data: dict) -> list[str]:
         for arm in ("base", "test"):
             if arm not in v:
                 continue
-            for mk in METRIC_KEYS:
+            for mk in metric_keys:
                 if mk not in v[arm]:
                     errors.append(f"dd.{view}.{arm}.{mk} missing")
                 elif len(v[arm][mk]) != n:
@@ -48,7 +56,7 @@ def check_ab_data(data: dict) -> list[str]:
         for mix_key in ("mix_base", "mix_test", "mix_pp"):
             if mix_key not in v:
                 continue
-            for sk in SHOT_KEYS:
+            for sk in shot_keys:
                 if sk not in v[mix_key]:
                     errors.append(f"dd.{view}.{mix_key}.{sk} missing")
                 elif len(v[mix_key][sk]) != n:
@@ -66,6 +74,16 @@ def check_ab_data(data: dict) -> list[str]:
                     if abs(expected - actual) > 0.15:
                         errors.append(
                             f"dd.{view}.wk_pct[{i}]={actual} != recomputed {expected}"
+                        )
+        if "base" in v and "test" in v and "sc_pct" in v and "total" in v.get("base", {}):
+            for i in range(n):
+                base_t = v["base"]["total"][i]
+                if base_t:
+                    expected = round((v["test"]["total"][i] - base_t) / base_t * 100, 1)
+                    actual = v["sc_pct"][i]
+                    if abs(expected - actual) > 0.15:
+                        errors.append(
+                            f"dd.{view}.sc_pct[{i}]={actual} != recomputed {expected}"
                         )
 
     return errors

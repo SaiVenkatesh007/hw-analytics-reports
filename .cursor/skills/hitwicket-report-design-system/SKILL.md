@@ -98,7 +98,7 @@ Plain uppercase labels — **not** `01 —` / `02 —` unless content is a genui
 ...
 <script src="kit/theme.js"></script>
 <script src="kit/icons.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="kit/chart.umd.js"></script>
 <script src="kit/charts.js"></script>
 <script src="kit/report.js"></script>
 <!-- report-specific: ab-test.js, whale-mm.js, inline -->

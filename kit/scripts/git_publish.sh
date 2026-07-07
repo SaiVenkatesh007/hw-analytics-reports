@@ -26,7 +26,7 @@ done
 
 [ -n "$SLUG" ] || usage
 
-bash kit/scripts/check_publish_env.sh --publish
+bash kit/scripts/check_publish_env.sh
 
 for f in "data/${SLUG}.json" "${SLUG}.html" "handoffs/${SLUG}.txt"; do
   if [ ! -f "$f" ]; then
@@ -49,10 +49,12 @@ else
   exit 1
 fi
 
+bash kit/scripts/check_publish_env.sh --publish
+
 python3 kit/build_catalog.py --sync
-python3 kit/build_catalog.py
 if [ -f "data/${SLUG}.json" ]; then
   python3 kit/validate_report.py "data/${SLUG}.json"
+  python3 kit/check_html_data.py "data/${SLUG}.json" "${SLUG}.html"
 fi
 
 git add "data/${SLUG}.json" "${SLUG}.html" "handoffs/${SLUG}.txt" catalog.json
@@ -83,7 +85,10 @@ if [ "$MODE" = "pr" ] || [ "$MODE" = "merge" ]; then
     echo "Created PR: $PR_URL"
   fi
   echo "Waiting for CI..."
-  gh pr checks --watch --fail-fast || true
+  if ! gh pr checks --watch --fail-fast; then
+    echo "CI failed — PR left open; merge aborted"
+    exit 1
+  fi
 fi
 
 if [ "$MODE" = "merge" ]; then

@@ -6,9 +6,11 @@
 https://saivenkatesh007.github.io/hw-analytics-reports/{slug}.html
 ```
 
-`{slug}` = filename stem for `reports/handoffs/{slug}.txt` and `reports/{slug}.html`.
+`{slug}` = filename stem for `handoffs/{slug}.txt`, `data/{slug}.json`, and `{slug}.html` at repo root.
 
-When saving the handoff, **always** write the full `Dashboard:` URL — do not leave `[link]`, `TBD`, or a separate script step. If the user pasted `Dashboard: [link]` in chat, substitute the URL above when writing `reports/handoffs/{slug}.txt`.
+Private mirror (`Hitwicket-Analytics`): prefix paths with `reports/`.
+
+When saving the handoff, **always** write the full `Dashboard:` URL — do not leave `[link]`, `TBD`, or a separate script step. If the user pasted `Dashboard: [link]` in chat, substitute the URL above when writing `handoffs/{slug}.txt`.
 
 ## Canonical GChat format
 
@@ -54,4 +56,4 @@ Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/{slug}.html
 
 ## Archive rule
 
-Save to `reports/handoffs/{slug}.txt` before building HTML. Copy GChat narrative verbatim for findings and numbers — only change the `Dashboard:` line from `[link]` to the full Pages URL for `{slug}`.
+Save to `handoffs/{slug}.txt` before building HTML. Copy GChat narrative verbatim for findings and numbers — only change the `Dashboard:` line from `[link]` to the full Pages URL for `{slug}`.
