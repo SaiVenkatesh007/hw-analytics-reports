@@ -11,7 +11,8 @@ HWReport.table = function (el, opts) {
   var sortDir = 1;
 
   function render() {
-    var h = '<div class="hw-table-wrap"><table class="hw-table' + (opts.stickyHeader ? ' sticky-head' : '') + '">';
+    var tblCls = 'hw-table' + (opts.compTable ? ' comp-table' : '') + (opts.stickyHeader ? ' sticky-head' : '');
+    var h = '<div class="hw-table-wrap"><table class="' + tblCls + '">';
     if (opts.caption) h += '<caption>' + opts.caption + '</caption>';
     h += '<thead><tr>';
     columns.forEach(function (col, i) {

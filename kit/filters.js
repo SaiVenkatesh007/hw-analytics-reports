@@ -131,6 +131,23 @@ HWReport.filters = HWReport.filters || {};
     return Object.assign({}, state.values);
   };
 
+  HWReport.filters.setDims = function (dims, preserve) {
+    state.dims = dims || [];
+    var prev = preserve ? Object.assign({}, state.values) : {};
+    state.values = Object.assign(defaultsFromDims(state.dims), prev);
+    state.dims.forEach(function (d) {
+      var valid = d.options.some(function (o) { return o.value === state.values[d.id]; });
+      if (!valid) state.values[d.id] = d.default != null ? d.default : d.options[0].value;
+    });
+    renderBar();
+    writeUrl();
+    flushAll(true);
+  };
+
+  HWReport.filters.setBarVisible = function (visible) {
+    if (state.barEl) state.barEl.style.display = visible ? '' : 'none';
+  };
+
   HWReport.filters.sliceBracket = function (arr, br, brackets) {
     if (!arr) return arr;
     if (!br || br === 'all') return arr.slice();

@@ -49,8 +49,8 @@
         <div class="kpi-card"><p class="kpi-label">Match-Level Close</p><p class="kpi-value neutral">55.5%</p><p class="kpi-note">2.8M unique matches</p></div>
       </div>
       <div class="two-col">
-        <div class="card"><p class="card-title">Blowout Cluster vs Median Rolling Close by Activity</p><div class="chart-wrap" style="height:260px"><canvas id="chart-activity"></canvas></div></div>
-        <div class="card"><p class="card-title">Rolling Close % Distribution (Deciles)</p><div class="chart-wrap" style="height:260px"><canvas id="chart-deciles"></canvas></div></div>
+        <div class="card"><p class="card-title">Blowout Cluster vs Median Rolling Close by Activity</p><div class="chart-wrap"><canvas id="chart-activity"></canvas></div></div>
+        <div class="card"><p class="card-title">Rolling Close % Distribution (Deciles)</p><div class="chart-wrap"><canvas id="chart-deciles"></canvas></div></div>
       </div>
     </div>
     <div class="section">
@@ -58,7 +58,7 @@
       <div class="insights">
         <div class="insight good"><strong>Center is healthy:</strong> Median rolling close ~56% matches Phase 1 per-user baseline. Most players with enough history see competitive games.</div>
         <div class="insight bad"><strong>Blowout tail = positive blowout streaks:</strong> Match-level 23.8% positive vs 4.1% negative blowout. Rolling-25: 9.2% pos cluster vs 0.06% neg cluster (40 users). Unsigned 13.8% is almost entirely wins-big, not stompings.</div>
-        <div class="insight warn"><strong>High-freq × Supreme+ still priority:</strong> 30.8% unsigned blowout cluster, 22.4% pos cluster, 48% median rolling close (n=312).</div>
+        <div class="insight warn"><strong>High-freq × <span class="term" data-tip="rp_league 19+">Supreme+</span> still priority:</strong> 30.8% unsigned blowout cluster, 22.4% pos cluster, 48% median rolling close (n=312).</div>
         <div class="insight"><strong>MM calibration (Extension A):</strong> Close % dips to 47% when much stronger (&lt;0.85 ratio); parity band 0.95–1.0 is ~56%. High-freq worse at same ratio band.</div>
         <div class="insight"><strong>Chronic mismatch is not the story:</strong> Only 0.5% below 20% close over 25 matches.</div>
         <div class="insight good"><strong>Sessions are not the problem:</strong> Zero-close marathons 0.9% of 8+ sessions. Retention extension parked — in-window next-match ≈100%.</div>
@@ -66,7 +66,7 @@
     </div>
     <div class="section">
       <div class="section-header"><p class="section-num">Priority segments</p><h3 class="section-title">Where to monitor before MM changes</h3></div>
-      <table class="comp-table" id="table-priority"></table>
+      <div id="table-priority"></div>
     </div>
   </main>
 </div>
@@ -75,16 +75,16 @@
   <main>
     <div class="section">
       <div class="section-header"><p class="section-num">Activity tier</p><h3 class="section-title">Rolling-25 blowout cluster by play frequency</h3></div>
-      <table class="comp-table" id="table-activity"></table>
-      <div class="card" style="margin-top:1.25rem"><p class="card-title">Blowout Cluster by Power Bracket</p><div class="chart-wrap" style="height:280px"><canvas id="chart-power"></canvas></div></div>
+      <div id="table-activity"></div>
+      <div class="card section-gap"><p class="card-title">Blowout Cluster by Power Bracket</p><div class="chart-wrap chart-wrap--tall"><canvas id="chart-power"></canvas></div></div>
     </div>
     <div class="section">
       <div class="section-header"><p class="section-num">Rep rank</p><h3 class="section-title">Rolling-25 users by coarse rank</h3></div>
-      <table class="comp-table" id="table-rank"></table>
+      <div id="table-rank"></div>
     </div>
     <div class="section">
       <div class="section-header"><p class="section-num">Power bracket</p><h3 class="section-title">Team power at match time</h3></div>
-      <table class="comp-table" id="table-power"></table>
+      <div id="table-power"></div>
     </div>
   </main>
 </div>
@@ -95,10 +95,10 @@
       <div class="section-header"><p class="section-num">Signed blowout</p><h3 class="section-title">Negative vs positive blowout (match + rolling-25)</h3></div>
       <div class="kpi-row" id="ext-kpi-row"></div>
       <div class="two-col">
-        <div class="card"><p class="card-title">Negative vs Positive Blowout Cluster by Activity</p><div class="chart-wrap" style="height:280px"><canvas id="chart-signed-activity"></canvas></div></div>
-        <div class="card"><p class="card-title">Close Match % by Power Ratio Bucket</p><div class="chart-wrap" style="height:280px"><canvas id="chart-close-ratio"></canvas></div></div>
+        <div class="card"><p class="card-title">Negative vs Positive Blowout Cluster by Activity</p><div class="chart-wrap"><canvas id="chart-signed-activity"></canvas></div></div>
+        <div class="card"><p class="card-title">Close Match % by Power Ratio Bucket</p><div class="chart-wrap"><canvas id="chart-close-ratio"></canvas></div></div>
       </div>
-      <table class="comp-table" id="table-signed-power" style="margin-top:1.25rem"></table>
+      <div id="table-signed-power" class="section-gap"></div>
     </div>
     <div class="section">
       <div class="section-header"><p class="section-num">Next-match retention</p><h3 class="section-title">Played another match after this one (window only)</h3></div>
@@ -106,12 +106,12 @@
         <div class="insight warn"><strong>Metric not actionable in this window.</strong> In-window next-match ≈100% for all match types (close, negative blowout, positive blowout). Active users almost always have another match within 16 days.</div>
         <div class="insight"><strong>Spearman (user-level, low signal):</strong> rolling close ρ=-0.15 · neg blowout ρ=-0.01 · pos blowout ρ=+0.13 vs mean_played_next — confounded by volume. Parked pending better return definition.</div>
       </div>
-      <table class="comp-table" id="table-retention-type" style="margin-top:1.25rem"></table>
-      <div class="two-col" style="margin-top:1.25rem">
-        <div class="card"><p class="card-title">Next-Match % by Rolling Close Decile (flat ~98%)</p><div class="chart-wrap" style="height:260px"><canvas id="chart-ret-decile-close"></canvas></div></div>
-        <div class="card"><p class="card-title">Spearman — Rolling Quality vs mean_played_next</p><div class="chart-wrap" style="height:260px"><canvas id="chart-ret-decile-neg"></canvas></div></div>
+      <div id="table-retention-type" class="section-gap"></div>
+      <div class="two-col section-gap">
+        <div class="card"><p class="card-title">Next-Match % by Rolling Close Decile (flat ~98%)</p><div class="chart-wrap"><canvas id="chart-ret-decile-close"></canvas></div></div>
+        <div class="card"><p class="card-title">Spearman — Rolling Quality vs mean_played_next</p><div class="chart-wrap"><canvas id="chart-ret-decile-neg"></canvas></div></div>
       </div>
-      <table class="comp-table" id="table-spearman" style="margin-top:1.25rem"></table>
+      <div id="table-spearman" class="section-gap"></div>
     </div>
   </main>
 </div>
@@ -134,7 +134,7 @@
     </div>
     <div class="section">
       <div class="section-header"><p class="section-num">Below-min in 8+ sessions</p><h3 class="section-title">By activity tier (supporting only)</h3></div>
-      <table class="comp-table" id="table-session"></table>
+      <div id="table-session"></div>
     </div>
   </main>
 </div>
@@ -197,59 +197,44 @@
 <script src="kit/icons.js"></script>
 <script src="kit/chart.umd.js"></script>
 <script src="kit/charts.js"></script>
+<script src="kit/tables.js"></script>
 <script src="kit/report.js"></script>
 <script>
 const DD = {"meta":{"title":"PvP Matchmaking \u2014 Phase 2 Player & Session","slug":"pvp_mm_phase2_player_session","meta_line":"Human vs human ARENAS \u00b7 Jun 15\u201330, 2026 \u00b7 rolling-25 + extensions","date_range":"2026-06-15 \u2013 2026-06-30","filters":"ARENAS, status=2, opp_is_bot=0, teams2 user mapping, all ranks","source_notebook":"PvP Matchmaking Analysis/Phase 2 - Player Session/Phase 2 - Player Session [Jun 15-30].ipynb","owner":"Venkatesh","date":"2026-06-30","date_label":"Jun 15\u201330, 2026","tags":["matchmaking","pvp","rolling","session","signed-blowout"],"thesis":"Median rolling close ~56% is healthy \u2014 blowout tail (~14%) is positive-blowout streaks in high-freq and 75k+ power, not stompings; session frustration rare.","description":"Phase 2 player rolling-25 + extensions \u2014 unsigned blowout cluster driven by positive blowout; negative blowout cluster vanishingly rare; retention parked.","handoff":"handoffs/pvp_mm_phase2_player_session.txt"},"overall":{"unique_matches":2803366,"team_match_rows":5606732,"pvp_users":220315,"users_rolling_25":71960,"pct_users_reaching_25":32.7,"match_close_pct":55.5,"match_one_sided_pct":27.8,"match_neg_blowout_pct":4.1,"match_pos_blowout_pct":23.8,"median_rolling_close_pct":56.0,"pct_blowout_cluster":13.8,"pct_neg_blowout_cluster":0.1,"pct_pos_blowout_cluster":9.2,"median_rolling_neg_blowout_pct":4.0,"median_rolling_pos_blowout_pct":20.0,"pct_chronic_mismatch":0.5,"n_sessions":2841111,"pct_session_frustration_all":0.0,"pct_session_below_min_all":0.5,"long_sessions_8plus":34334,"pct_below_min_8plus":5.4,"pct_zero_close_8plus":0.9},"activity_tier":{"labels":["Casual (1\u20135/day)","Regular (6\u201315/day)","High-freq (15+/day)"],"n_users_rolling_25":[46506,24335,1119],"pct_blowout_cluster":[12.3,16.0,26.0],"pct_neg_blowout_cluster":[0.0,0.1,0.2],"pct_pos_blowout_cluster":[8.2,10.7,18.1],"pct_chronic_mismatch":[0.3,0.6,3.2],"median_rolling_close_pct":[56.0,52.0,48.0],"pct_below_min_8plus":[3.7,4.6,8.3]},"rep_rank":{"labels":["Rookie","Challenger","Proven","Accomplished","Remarkable","Masterful","Supreme+"],"n_users_rolling_25":[5184,19918,13770,13525,9123,3346,7094],"pct_blowout_cluster":[5.1,10.0,13.2,20.1,17.2,7.3,18.2],"pct_pos_blowout_cluster":[2.5,5.1,9.5,15.4,12.4,4.0,12.0],"median_rolling_close_pct":[60.0,60.0,56.0,52.0,56.0,60.0,52.0]},"power_bracket":{"labels":["0\u201350k","50k\u201375k","75k\u2013100k","100k+"],"n_users_rolling_25":[40702,16240,8631,6387],"pct_blowout_cluster":[8.5,17.9,25.5,20.7],"pct_neg_blowout_cluster":[0.0,0.1,0.0,0.2],"pct_pos_blowout_cluster":[4.4,12.9,20.8,14.9],"median_rolling_close_pct":[56.0,56.0,52.0,52.0],"pct_below_min_8plus":[3.8,4.1,7.0,9.5]},"priority_segments":[{"segment":"High-freq \u00d7 Supreme+","pct_blowout_cluster":30.8,"pct_pos_blowout_cluster":22.4,"median_rolling_close_pct":48.0,"n_users":312},{"segment":"High-freq overall","pct_blowout_cluster":26.0,"pct_pos_blowout_cluster":18.1,"median_rolling_close_pct":48.0,"n_users":1119},{"segment":"75k\u2013100k power","pct_blowout_cluster":25.5,"pct_pos_blowout_cluster":20.8,"median_rolling_close_pct":52.0,"n_users":8631},{"segment":"High-freq \u00d7 Accomplished","pct_blowout_cluster":25.2,"pct_pos_blowout_cluster":20.3,"median_rolling_close_pct":52.0,"n_users":163},{"segment":"100k+ power","pct_blowout_cluster":20.7,"pct_pos_blowout_cluster":14.9,"median_rolling_close_pct":52.0,"n_users":6387}],"rolling_deciles":{"labels":["P10","P20","P30","P40","P50","P60","P70","P80","P90"],"rolling_close_pct":[36.0,44.0,48.0,52.0,56.0,60.0,64.0,68.0,72.0]},"close_rate_by_power_ratio":{"labels":["<0.85","0.85\u20130.9","0.9\u20130.95","0.95\u20131.0","1.0\u20131.05","1.05\u20131.1","1.1\u20131.15","1.15+"],"avg_close_pct":[47.0,52.9,53.6,56.3,59.3,59.7,59.5,63.8],"num_users":[44561,19663,32818,78700,76593,37111,18106,72564]},"signed_blowout_overall":{"negative_blowout_pct":4.1,"positive_blowout_pct":23.8,"one_sided_pct":27.8,"pct_neg_blowout_cluster":0.1,"pct_pos_blowout_cluster":9.2},"signed_blowout_by_activity":{"labels":["Casual (1\u20135/day)","Regular (6\u201315/day)","High-freq (15+/day)"],"pct_neg_cluster":[0.0,0.1,0.2],"pct_pos_cluster":[8.2,10.7,18.1],"match_neg_blowout_pct":[4.3,3.7,3.8],"match_pos_blowout_pct":[21.5,26.0,32.1]},"signed_blowout_by_power":{"labels":["0\u201350k","50k\u201375k","75k\u2013100k","100k+"],"pct_neg_cluster":[0.0,0.1,0.0,0.2],"pct_pos_cluster":[4.4,12.9,20.8,14.9]},"retention_note":"In-window next-match \u2248100% for all match types \u2014 not actionable. Parked pending better return metric.","spearman":{"rolling_close_pct_25":-0.15,"rolling_neg_blowout_pct_25":-0.01,"rolling_pos_blowout_pct_25":0.13},"retention_decile_close":{"decile":[1,2,3,4,5,6,7,8,9,10],"played_next_pct":[98.1,98.0,97.9,97.9,97.8,97.7,97.7,97.7,97.7,97.6]},"retention_decile_neg_blowout":{"decile":[1,2,3,4],"played_next_pct":[97.8,97.8,97.8,97.8]}};
 
-function buildTable(id, headers, rows) {
-  var html = '<thead><tr>' + headers.map(function(h) { return '<th>' + h + '</th>'; }).join('') + '</tr></thead><tbody>' +
-    rows.map(function(r) { return '<tr>' + r.map(function(c) { return '<td>' + c + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody>';
-  document.getElementById(id).innerHTML = html;
-}
-
-function pct(v) { return v.toFixed(1) + '%'; }
-function num(v) { return v.toLocaleString(); }
-
-buildTable('table-priority',
-  ['Segment', 'Unsigned cluster %', 'Pos cluster %', 'Median rolling close %', 'Users'],
-  DD.priority_segments.map(function(r) {
-    return [r.segment, pct(r.pct_blowout_cluster),
-      r.pct_pos_blowout_cluster != null ? pct(r.pct_pos_blowout_cluster) : '—',
-      pct(r.median_rolling_close_pct), num(r.n_users)];
-  })
-);
-
-buildTable('table-activity',
-  ['Activity tier', 'Blowout cluster %', 'Chronic mismatch %', 'Median rolling close %', 'Below-min (8+ sess.)', 'Users'],
-  DD.activity_tier.labels.map(function(l, i) {
-    return [l, pct(DD.activity_tier.pct_blowout_cluster[i]), pct(DD.activity_tier.pct_chronic_mismatch[i]),
-      pct(DD.activity_tier.median_rolling_close_pct[i]), pct(DD.activity_tier.pct_below_min_8plus[i]),
-      num(DD.activity_tier.n_users_rolling_25[i])];
-  })
-);
-
-buildTable('table-rank',
-  ['Rep rank', 'Blowout cluster %', 'Median rolling close %', 'Users'],
-  DD.rep_rank.labels.map(function(l, i) {
-    return [l, pct(DD.rep_rank.pct_blowout_cluster[i]), pct(DD.rep_rank.median_rolling_close_pct[i]),
-      num(DD.rep_rank.n_users_rolling_25[i])];
-  })
-);
-
-buildTable('table-power',
-  ['Power bracket', 'Blowout cluster %', 'Median rolling close %', 'Below-min (8+ sess.)', 'Users'],
-  DD.power_bracket.labels.map(function(l, i) {
-    return [l, pct(DD.power_bracket.pct_blowout_cluster[i]), pct(DD.power_bracket.median_rolling_close_pct[i]),
-      pct(DD.power_bracket.pct_below_min_8plus[i]), num(DD.power_bracket.n_users_rolling_25[i])];
-  })
-);
-
-buildTable('table-session',
-  ['Activity tier', 'Below-min % (8+ sessions only)'],
-  DD.activity_tier.labels.map(function(l, i) {
-    return [l, pct(DD.activity_tier.pct_below_min_8plus[i])];
-  })
-);
+HWReport.table('table-priority', {
+  compTable: true, sortable: true,
+  columns: [{ label: 'Segment', rowHeader: true }, { label: 'Unsigned cluster %', fmt: 'pct' }, { label: 'Pos cluster %', fmt: 'pct' }, { label: 'Median rolling close %', fmt: 'pct' }, { label: 'Users', fmt: 'count' }],
+  rows: DD.priority_segments.map(function (r) {
+    return [r.segment, r.pct_blowout_cluster, r.pct_pos_blowout_cluster != null ? r.pct_pos_blowout_cluster : null, r.median_rolling_close_pct, r.n_users];
+  }),
+});
+HWReport.table('table-activity', {
+  compTable: true, sortable: true,
+  columns: [{ label: 'Activity tier', rowHeader: true }, { label: 'Blowout cluster %', fmt: 'pct' }, { label: 'Chronic mismatch %', fmt: 'pct' }, { label: 'Median rolling close %', fmt: 'pct' }, { label: 'Below-min (8+ sess.)', fmt: 'pct' }, { label: 'Users', fmt: 'count' }],
+  rows: DD.activity_tier.labels.map(function (l, i) {
+    return [l, DD.activity_tier.pct_blowout_cluster[i], DD.activity_tier.pct_chronic_mismatch[i], DD.activity_tier.median_rolling_close_pct[i], DD.activity_tier.pct_below_min_8plus[i], DD.activity_tier.n_users_rolling_25[i]];
+  }),
+});
+HWReport.table('table-rank', {
+  compTable: true, sortable: true,
+  columns: [{ label: 'Rep rank', rowHeader: true }, { label: 'Blowout cluster %', fmt: 'pct' }, { label: 'Median rolling close %', fmt: 'pct' }, { label: 'Users', fmt: 'count' }],
+  rows: DD.rep_rank.labels.map(function (l, i) {
+    return [l, DD.rep_rank.pct_blowout_cluster[i], DD.rep_rank.median_rolling_close_pct[i], DD.rep_rank.n_users_rolling_25[i]];
+  }),
+});
+HWReport.table('table-power', {
+  compTable: true, sortable: true,
+  columns: [{ label: 'Power bracket', rowHeader: true }, { label: 'Blowout cluster %', fmt: 'pct' }, { label: 'Median rolling close %', fmt: 'pct' }, { label: 'Below-min (8+ sess.)', fmt: 'pct' }, { label: 'Users', fmt: 'count' }],
+  rows: DD.power_bracket.labels.map(function (l, i) {
+    return [l, DD.power_bracket.pct_blowout_cluster[i], DD.power_bracket.median_rolling_close_pct[i], DD.power_bracket.pct_below_min_8plus[i], DD.power_bracket.n_users_rolling_25[i]];
+  }),
+});
+HWReport.table('table-session', {
+  compTable: true, sortable: true,
+  columns: [{ label: 'Activity tier', rowHeader: true }, { label: 'Below-min % (8+ sessions only)', fmt: 'pct' }],
+  rows: DD.activity_tier.labels.map(function (l, i) { return [l, DD.activity_tier.pct_below_min_8plus[i]]; }),
+});
 
 document.getElementById('method-scope').innerHTML =
   '<li><strong>Date range:</strong> Jun 15–30, 2026 (16 days)</li>' +
@@ -257,88 +242,60 @@ document.getElementById('method-scope').innerHTML =
   '<li><strong>Opponents:</strong> human vs human only (opp_is_bot = 0)</li>' +
   '<li><strong>Users:</strong> teams2.feather inner join (real user teams)</li>' +
   '<li><strong>Power source:</strong> calibratedTotalInternalStrength from pvp_extra_data (from Jun 15)</li>' +
-  '<li><strong>Volume:</strong> ' + num(DD.overall.unique_matches) + ' unique matches · ' + num(DD.overall.users_rolling_25) + ' users with rolling-25</li>';
+  '<li><strong>Volume:</strong> ' + DD.overall.unique_matches.toLocaleString() + ' unique matches · ' + DD.overall.users_rolling_25.toLocaleString() + ' users with rolling-25</li>';
 
-HWReport.dualBar('chart-activity', ['Casual', 'Regular', 'High-freq'],
-  DD.activity_tier.pct_blowout_cluster, DD.activity_tier.median_rolling_close_pct,
-  'Blowout cluster %', 'Median rolling close %', 70);
-
+HWReport.dualBar('chart-activity', ['Casual', 'Regular', 'High-freq'], DD.activity_tier.pct_blowout_cluster, DD.activity_tier.median_rolling_close_pct, 'Blowout cluster %', 'Median rolling close %', 70);
 HWReport.lineChartSimple('chart-deciles', DD.rolling_deciles.labels, DD.rolling_deciles.rolling_close_pct, 'Rolling close %', HWReport.COLORS.BLUE);
-
 HWReport.singleBar('chart-power', DD.power_bracket.labels, DD.power_bracket.pct_blowout_cluster, HWReport.COLORS.CORAL, { max: 35 });
 
-// --- Extensions tab (populated after notebook re-run + JSON export) ---
 var ext = DD.signed_blowout_overall || {};
 var hasExt = DD.close_rate_by_power_ratio && DD.close_rate_by_power_ratio.labels;
-
 if (document.getElementById('ext-kpi-row')) {
   var negCluster = DD.overall.pct_neg_blowout_cluster;
   var posCluster = DD.overall.pct_pos_blowout_cluster;
   var negMatch = DD.overall.match_neg_blowout_pct || ext.negative_blowout_pct;
   var posMatch = DD.overall.match_pos_blowout_pct || ext.positive_blowout_pct;
   document.getElementById('ext-kpi-row').innerHTML =
-    '<div class="kpi-card"><p class="kpi-label">Match Neg Blowout</p><p class="kpi-value warn">' + (negMatch != null ? pct(negMatch) : '—') + '</p><p class="kpi-note">one-sided loss</p></div>' +
-    '<div class="kpi-card"><p class="kpi-label">Match Pos Blowout</p><p class="kpi-value neutral">' + (posMatch != null ? pct(posMatch) : '—') + '</p><p class="kpi-note">one-sided win</p></div>' +
-    '<div class="kpi-card"><p class="kpi-label">Neg Blowout Cluster</p><p class="kpi-value warn">' + (negCluster != null ? pct(negCluster) : '—') + '</p><p class="kpi-note">rolling-25 users</p></div>' +
-    '<div class="kpi-card"><p class="kpi-label">Pos Blowout Cluster</p><p class="kpi-value neutral">' + (posCluster != null ? pct(posCluster) : '—') + '</p><p class="kpi-note">rolling-25 users</p></div>';
+    '<div class="kpi-card"><p class="kpi-label">Match Neg Blowout</p><p class="kpi-value warn">' + (negMatch != null ? negMatch.toFixed(1) + '%' : '—') + '</p><p class="kpi-note">one-sided loss</p></div>' +
+    '<div class="kpi-card"><p class="kpi-label">Match Pos Blowout</p><p class="kpi-value neutral">' + (posMatch != null ? posMatch.toFixed(1) + '%' : '—') + '</p><p class="kpi-note">one-sided win</p></div>' +
+    '<div class="kpi-card"><p class="kpi-label">Neg Blowout Cluster</p><p class="kpi-value warn">' + (negCluster != null ? negCluster.toFixed(1) + '%' : '—') + '</p><p class="kpi-note">rolling-25 users</p></div>' +
+    '<div class="kpi-card"><p class="kpi-label">Pos Blowout Cluster</p><p class="kpi-value neutral">' + (posCluster != null ? posCluster.toFixed(1) + '%' : '—') + '</p><p class="kpi-note">rolling-25 users</p></div>';
 }
-
-if (hasExt) {
-  HWReport.lineChartSimple('chart-close-ratio', DD.close_rate_by_power_ratio.labels, DD.close_rate_by_power_ratio.avg_close_pct, 'Avg close %', HWReport.COLORS.BLUE);
-}
-
+if (hasExt) HWReport.lineChartSimple('chart-close-ratio', DD.close_rate_by_power_ratio.labels, DD.close_rate_by_power_ratio.avg_close_pct, 'Avg close %', HWReport.COLORS.BLUE);
 if (DD.signed_blowout_by_activity) {
-  HWReport.dualBar('chart-signed-activity',
-    DD.signed_blowout_by_activity.labels.map(function(l) { return l.replace(' (', '\n('); }),
-    DD.signed_blowout_by_activity.pct_neg_cluster,
-    DD.signed_blowout_by_activity.pct_pos_cluster,
-    'Neg cluster %', 'Pos cluster %', 35);
+  HWReport.dualBar('chart-signed-activity', DD.signed_blowout_by_activity.labels.map(function (l) { return l.replace(' (', '\n('); }), DD.signed_blowout_by_activity.pct_neg_cluster, DD.signed_blowout_by_activity.pct_pos_cluster, 'Neg cluster %', 'Pos cluster %', 35);
 }
-
 if (DD.signed_blowout_by_power) {
-  buildTable('table-signed-power',
-    ['Power bracket', 'Neg cluster %', 'Pos cluster %'],
-    DD.signed_blowout_by_power.labels.map(function(l, i) {
-      return [l, pct(DD.signed_blowout_by_power.pct_neg_cluster[i]), pct(DD.signed_blowout_by_power.pct_pos_cluster[i])];
-    })
-  );
+  HWReport.table('table-signed-power', {
+    compTable: true, sortable: true,
+    columns: [{ label: 'Power bracket', rowHeader: true }, { label: 'Neg cluster %', fmt: 'pct' }, { label: 'Pos cluster %', fmt: 'pct' }],
+    rows: DD.signed_blowout_by_power.labels.map(function (l, i) { return [l, DD.signed_blowout_by_power.pct_neg_cluster[i], DD.signed_blowout_by_power.pct_pos_cluster[i]]; }),
+  });
 } else {
-  buildTable('table-signed-power', ['Power bracket', 'Neg cluster %', 'Pos cluster %'], [['VM run pending', '—', '—']]);
+  HWReport.table('table-signed-power', { compTable: true, columns: [{ label: 'Power bracket', rowHeader: true }, { label: 'Neg cluster %' }, { label: 'Pos cluster %' }], rows: [['VM run pending', '—', '—']] });
 }
-
 if (DD.retention_note) {
-  buildTable('table-retention-type',
-    ['Status', 'Note'],
-    [['Parked', DD.retention_note]]);
-} else if (DD.retention_by_match_type) {
-  buildTable('table-retention-type',
-    ['Match type', 'Next-match %'],
-    DD.retention_by_match_type.labels.map(function(l, i) {
-      return [l, pct(DD.retention_by_match_type.played_next_pct[i])];
-    })
-  );
+  HWReport.table('table-retention-type', { compTable: true, columns: [{ label: 'Status', rowHeader: true }, { label: 'Note' }], rows: [['Parked', DD.retention_note]] });
 }
-
 if (DD.retention_decile_close) {
-  HWReport.lineChartSimple('chart-ret-decile-close',
-    DD.retention_decile_close.decile.map(function(d) { return 'D' + d; }),
-    DD.retention_decile_close.played_next_pct, 'Next-match %', HWReport.COLORS.BLUE);
+  HWReport.lineChartSimple('chart-ret-decile-close', DD.retention_decile_close.decile.map(function (d) { return 'D' + d; }), DD.retention_decile_close.played_next_pct, 'Next-match %', HWReport.COLORS.BLUE);
 }
 if (DD.spearman) {
-  var spLabels = Object.keys(DD.spearman).map(function(k) {
-    return k.replace('rolling_', '').replace('_pct_25', '').replace('close', 'close %').replace('neg_blowout', 'neg blowout').replace('pos_blowout', 'pos blowout');
+  var spLabels = Object.keys(DD.spearman).map(function (k) { return k.replace('rolling_', '').replace('_pct_25', '').replace('close', 'close %').replace('neg_blowout', 'neg blowout').replace('pos_blowout', 'pos blowout'); });
+  var spVals = Object.keys(DD.spearman).map(function (k) { return DD.spearman[k]; });
+  HWReport.singleBar('chart-ret-decile-neg', spLabels, spVals, HWReport.COLORS.CORAL, { min: -0.2, max: 0.2, tickCallback: function (v) { return v.toFixed(2); }, label: 'Spearman ρ' });
+  HWReport.table('table-spearman', {
+    compTable: true, sortable: true,
+    columns: [{ label: 'Rolling metric', rowHeader: true }, { label: 'Spearman ρ' }, { label: 'vs' }],
+    rows: Object.keys(DD.spearman).map(function (k) { return [k.replace('rolling_', '').replace('_pct_25', ''), DD.spearman[k].toFixed(3), 'mean_played_next']; }),
   });
-  var spVals = Object.keys(DD.spearman).map(function(k) { return DD.spearman[k]; });
-  HWReport.singleBar('chart-ret-decile-neg', spLabels, spVals, HWReport.COLORS.CORAL, {
-    min: -0.2, max: 0.2,
-    tickCallback: function(v) { return v.toFixed(2); },
-    label: 'Spearman ρ'
-  });
-  var spRows = Object.keys(DD.spearman).map(function(k) {
-    return [k.replace('rolling_', '').replace('_pct_25', ''), DD.spearman[k].toFixed(3), 'mean_played_next'];
-  });
-  buildTable('table-spearman', ['Rolling metric', 'Spearman ρ', 'vs'], spRows);
 }
+
+HWReport.initCardChrome();
+document.addEventListener('hwreport:tabswitch', function (e) {
+  var panel = document.getElementById('tab-' + e.detail.name);
+  if (panel) HWReport.initCardChrome(panel);
+});
 </script>
 </body>
 </html>
