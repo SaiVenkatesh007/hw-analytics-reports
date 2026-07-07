@@ -39,9 +39,20 @@
   </div>
 
   <h2>Typography</h2>
-  <p style="font-size:26px;font-weight:600;letter-spacing:-0.03em;margin-bottom:0.5rem;">Hero title — DM Sans 26px</p>
-  <p style="font-size:14px;color:var(--text-secondary);margin-bottom:1rem;">Body secondary — DM Sans 14px</p>
-  <p style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-tertiary);">Data mono — DM Mono 12px tabular-nums: 55.3% · 1,234,567</p>
+  <p style="font-size:var(--text-hero);font-weight:600;letter-spacing:-0.03em;margin-bottom:0.5rem;">Hero title — DM Sans <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-tertiary)">--text-hero</span></p>
+  <p style="font-size:var(--text-base);color:var(--text-secondary);margin-bottom:1rem;">Body secondary — DM Sans 14px</p>
+  <p style="font-family:'DM Mono',monospace;font-size:var(--text-sm);color:var(--text-tertiary);">Data mono — DM Mono 12px tabular-nums: 55.3% · 1,234,567</p>
+  <p id="font-proof" style="font-size:11px;color:var(--text-tertiary);margin-top:8px;">Font load: checking…</p>
+
+  <h2>Rank badges</h2>
+  <p style="margin-bottom:8px;">
+    <span class="rank-badge rank-Rookie">Rookie</span>
+    <span class="rank-badge rank-Challenger">Challenger</span>
+    <span class="rank-badge rank-Proven">Proven</span>
+    <span class="rank-badge rank-Accomplished">Accomplished</span>
+    <span class="rank-badge rank-Remarkable">Remarkable</span>
+  </p>
+  <p style="font-size:12px;color:var(--text-secondary);margin-bottom:1rem;">Glossary: <span class="term" data-tip="Rep rank tier 7–9 (post-Dec 2025)">Proven</span> uses tokenized badge colors.</p>
 
   <h2>Scoreboard stat (signature)</h2>
   <div class="hero-stat-wrap">
@@ -66,6 +77,7 @@
   </div>
 
   <h2>Controls</h2>
+  <div id="sg-filter-bar" class="filter-bar" style="position:relative;top:0;margin-bottom:1rem;padding-left:0;padding-right:0;"></div>
   <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem;">
     <button type="button" class="chrome-btn">Chrome button</button>
     <button type="button" class="filter-chip active">Active chip</button>
@@ -79,28 +91,86 @@
   <div class="icon-grid" id="icon-grid"></div>
 
   <h2>Chart gallery</h2>
+  <p class="chart-footnote">Charts use shared <code style="font-family:'DM Mono',monospace;font-size:11px">_baseOpts</code> + <code style="font-family:'DM Mono',monospace;font-size:11px">HWReport.fmt</code> registry. Theme toggle re-tints dataset colors.</p>
   <div class="two-col">
-    <div class="card"><p class="card-title">Grouped bar (base vs test)</p><div class="chart-wrap" style="height:200px"><canvas id="sg-grouped"></canvas></div></div>
-    <div class="card"><p class="card-title">Line trend</p><div class="chart-wrap" style="height:200px"><canvas id="sg-line"></canvas></div></div>
-    <div class="card"><p class="card-title">Donut composition</p><div class="chart-wrap" style="height:200px"><canvas id="sg-donut"></canvas></div></div>
-    <div class="card"><p class="card-title">Horizontal ranked bar</p><div class="chart-wrap" style="height:200px"><canvas id="sg-hbar"></canvas></div></div>
+    <div class="card"><p class="card-title">Grouped bar (base vs test)</p><div class="chart-wrap"><canvas id="sg-grouped"></canvas></div></div>
+    <div class="card"><p class="card-title">Line trend</p><div class="chart-wrap"><canvas id="sg-line"></canvas></div></div>
+    <div class="card"><p class="card-title">Donut composition</p><div class="chart-wrap"><canvas id="sg-donut"></canvas></div></div>
+    <div class="card"><p class="card-title">Horizontal ranked bar</p><div class="chart-wrap"><canvas id="sg-hbar"></canvas></div></div>
+    <div class="card"><p class="card-title">Quantile band</p><div class="chart-wrap"><canvas id="sg-qband"></canvas></div></div>
+    <div class="card"><p class="card-title">Waterfall</p><div class="chart-wrap"><canvas id="sg-waterfall"></canvas></div></div>
+    <div class="card"><p class="card-title">Funnel</p><div class="chart-wrap chart-wrap--tall"><canvas id="sg-funnel"></canvas></div></div>
+    <div class="card"><p class="card-title">Heatmap table</p><div id="sg-heatmap"></div></div>
   </div>
+
+  <h2>Data table</h2>
+  <div class="card"><div id="sg-table"></div></div>
 </main>
 <footer>Design system reference · <a href="../index.html">← Reports index</a></footer>
 <script src="theme.js"></script>
 <script src="icons.js"></script>
 <script src="chart.umd.js"></script>
+<script src="chartjs-plugin-annotation.min.js"></script>
 <script src="charts.js"></script>
+<script src="filters.js"></script>
+<script src="tables.js"></script>
 <script src="report.js"></script>
 <script>
+if (typeof Chart !== 'undefined' && window['chartjs-plugin-annotation']) {
+  Chart.register(window['chartjs-plugin-annotation']);
+}
 var names = ['trend-up','trend-down','alert','users','calendar','trophy','whale','link','copy'];
 document.getElementById('icon-grid').innerHTML = names.map(function(n) {
   return '<span class="icon-cell">' + HWReport.icon(n) + ' ' + n + '</span>';
 }).join('');
+(function () {
+  var sans = document.fonts && document.fonts.check('16px "DM Sans"');
+  var mono = document.fonts && document.fonts.check('12px "DM Mono"');
+  document.getElementById('font-proof').textContent = 'Font load: DM Sans ' + (sans ? '✓' : '…') + ' · DM Mono ' + (mono ? '✓' : '…') + ' (self-hosted woff2)';
+})();
+HWReport.filters.init({
+  bar: '#sg-filter-bar',
+  dims: [
+    { id: 'seg', label: 'Segment', default: 'all', options: [
+      { value: 'all', label: 'All' },
+      { value: 'proven', label: 'Proven+' },
+      { value: 'masterful', label: 'Masterful+' },
+    ]},
+  ],
+});
 HWReport.grouped('sg-grouped', ['0-50k','50k-75k','75k-100k','100k+'], [2.1,2.0,1.8,1.9], [2.3,2.2,2.1,2.1], HWReport.COLORS.BLUE, HWReport.COLORS.TEAL);
 HWReport.lineChartSimple('sg-line', ['W1','W2','W3','W4','W5'], [52,54,53,55,54], 'Close %', HWReport.COLORS.BLUE, { min: 45, max: 60 });
 HWReport.donut('sg-donut', ['0s','1s','2s','4s','6s'], [18,24,16,22,20], [HWReport.COLORS.GRAY, HWReport.COLORS.BLUE, HWReport.COLORS.TEAL, HWReport.COLORS.AMBER, HWReport.COLORS.PURPLE]);
 HWReport.horizontalRankedBar('sg-hbar', ['Rookie','Proven','Masterful'], [60,55,58], HWReport.COLORS.BLUE);
+HWReport.quantileBand('sg-qband', BRmock(), qbaseMock(), qtestMock(), { metric: 'wk' });
+HWReport.waterfall('sg-waterfall', ['Start','Wickets','Score','Mix'], [55, 3, -1, -0.5], { start: 55 });
+HWReport.funnel('sg-funnel', ['Matched','Started','Completed'], [10000, 8200, 7100]);
+HWReport.heatmapTable('sg-heatmap', ['0-50k','50k-75k'], ['Base','Test'], [[2.1,2.3],[2.0,2.2]]);
+function BRmock() { return ['0-50k','50k-75k','75k-100k','100k+']; }
+function qbaseMock() {
+  return { wk_q25: [1,1,1,1], wk_q75: [3,3,3,3], wk_q50: [2,2,2,2] };
+}
+function qtestMock() {
+  return { wk_q25: [1,1,1,1], wk_q75: [3,3,3,3], wk_q50: [2,2,2,2] };
+}
+HWReport.table('sg-table', {
+  caption: 'Sortable table with fmt registry',
+  sortable: true,
+  stickyHeader: true,
+  columns: [
+    { label: 'Bracket', rowHeader: true },
+    { label: 'Base wkts' },
+    { label: 'Test wkts' },
+    { label: 'Δ wkts', fmt: 'pp' },
+  ],
+  rows: [
+    ['0-50k', 2.31, 2.55, 0.24],
+    ['50k-75k', 2.09, 2.28, 0.19],
+    ['75k-100k', 1.82, 2.06, 0.24],
+    ['100k+', 1.9, 2.13, 0.23],
+  ],
+});
+HWReport.initCardChrome();
 </script>
 </body>
 </html>

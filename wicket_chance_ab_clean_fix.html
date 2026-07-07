@@ -29,6 +29,7 @@
 </div>
 
 <div id="tab-overview" class="tab-content active">
+  <div id="overview-filter-bar" class="filter-bar"></div>
   <div class="hero-section">
     <p class="hero-eyebrow">Game Analytics · PvP Experiment · Corrected Data</p>
     <h2 class="hero-title">The increase was too small to<br>change how players play.</h2>
@@ -140,6 +141,8 @@
 <script src="kit/icons.js"></script>
 <script src="kit/chart.umd.js"></script>
 <script src="kit/charts.js"></script>
+<script src="kit/filters.js"></script>
+<script src="kit/tables.js"></script>
 <script src="kit/report.js"></script>
 <script src="kit/ab-test.js"></script>
 <script>
@@ -149,7 +152,36 @@ const BR = ['0-50k','50k-75k','75k-100k','100k+'];
 document.getElementById('ov-wk-legend').innerHTML = HWReport.baseLegend();
 document.getElementById('ov-sc-legend').innerHTML = HWReport.baseLegend();
 
-HWReport.initAbTest(DD, { brackets: BR });
+HWReport.initAbTest(DD, { brackets: BR, skipOverview: true });
+
+var brOptions = [{ value: 'all', label: 'All brackets' }].concat(BR.map(function (b) { return { value: b, label: b }; }));
+HWReport.filters.init({
+  bar: '#overview-filter-bar',
+  url: true,
+  dims: [
+    { id: 'inn', label: 'View', default: 'overall', options: [
+      { value: 'overall', label: 'Overall' },
+      { value: 'bat1', label: 'Batting 1st' },
+      { value: 'bowl1', label: 'Bowling 1st' },
+    ]},
+    { id: 'br', label: 'Bracket', default: 'all', options: brOptions },
+  ],
+});
+
+function renderOverviewChart(metric, vals) {
+  var d = DD[vals.inn] || DD.overall;
+  var labels = HWReport.filters.sliceLabels(BR, vals.br);
+  var base = HWReport.filters.sliceBracket(d.base[metric], vals.br, BR);
+  var test = HWReport.filters.sliceBracket(d.test[metric], vals.br, BR);
+  var BLUE = HWReport.COLORS.BLUE;
+  var TEAL = HWReport.COLORS.TEAL;
+  if (metric === 'wickets') HWReport.grouped('ov-wk', labels, base, test, BLUE, TEAL);
+  else HWReport.grouped('ov-sc', labels, base, test, BLUE, TEAL);
+}
+
+HWReport.filters.register('ov-wk', { deps: ['br', 'inn'], render: function (vals) { renderOverviewChart('wickets', vals); } });
+HWReport.filters.register('ov-sc', { deps: ['br', 'inn'], render: function (vals) { renderOverviewChart('total', vals); } });
+HWReport.initCardChrome(document.getElementById('tab-overview'));
 </script>
 </body>
 </html>

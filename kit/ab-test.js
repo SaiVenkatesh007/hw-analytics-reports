@@ -133,7 +133,7 @@ HWReport.initAbTest = function (DD, opts) {
   };
 
   HWReport._tabSwitchHandler = function (name) {
-    if (name === 'overview' && !inited.ov) {
+    if (name === 'overview' && !inited.ov && !opts.skipOverview) {
       inited.ov = 1;
       HWReport.grouped('ov-wk', BR, DD.overall.base.wickets, DD.overall.test.wickets, BLUE, TEAL);
       HWReport.grouped('ov-sc', BR, DD.overall.base.total, DD.overall.test.total, BLUE, TEAL);
@@ -148,7 +148,9 @@ HWReport.initAbTest = function (DD, opts) {
     }
   };
 
-  HWReport.grouped('ov-wk', BR, DD.overall.base.wickets, DD.overall.test.wickets, BLUE, TEAL);
-  HWReport.grouped('ov-sc', BR, DD.overall.base.total, DD.overall.test.total, BLUE, TEAL);
-  inited.ov = 1;
+  if (!opts.skipOverview) {
+    HWReport.grouped('ov-wk', BR, DD.overall.base.wickets, DD.overall.test.wickets, BLUE, TEAL);
+    HWReport.grouped('ov-sc', BR, DD.overall.base.total, DD.overall.test.total, BLUE, TEAL);
+    inited.ov = 1;
+  }
 };
