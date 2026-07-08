@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){try{var t=localStorage.getItem('hw-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<title>Increased Wicket Chance — Jul 7 Redeploy Read</title>
+<meta name="description" content="Jul 7 post-redeploy Wicket Chance AB read — large mechanical wicket lift, scores down 3–8%, innings flat.">
+<meta property="og:title" content="Increased Wicket Chance — Jul 7 Redeploy Read">
+<meta property="og:description" content="Jul 7 post-redeploy Wicket Chance AB read — large mechanical wicket lift, scores down 3–8%, innings flat.">
+<meta property="og:url" content="https://saivenkatesh007.github.io/hw-analytics-reports/wicket_chance_ab_jul7_redeploy.html">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" href="kit/favicon.png">
+<link rel="stylesheet" href="kit/report.css">
+</head>
+<body data-report-slug="wicket_chance_ab_jul7_redeploy" data-report-owner="Venkatesh">
+<header>
+  <div class="brand"><div class="dot"></div><h1>Increased Wicket Chance — Jul 7 Redeploy Read</h1></div>
+  <span class="meta">Human vs human · Matched Base = Exp per bracket · Jul 7 2026 · Base=0 / Exp=2</span>
+</header>
+<div class="caveat-banner">✓ Jul 7 redeploy read: human vs human only, matched Base=Exp per bracket, Base=0 / Exp=2. Supersedes bot-contaminated pass. Distribution quartiles approximated from means (notebook has means only).</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="HWReport.switchTab('overview', this)">Overview</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('innings', this)">Full Innings</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('init2', this)">First 2 Overs</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('shotsel', this)">Shot Selection</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('dist', this)">Distribution</button>
+</div>
+
+<div id="global-filter-bar" class="filter-bar"></div>
+
+<div id="tab-overview" class="tab-content active">
+  <div class="hero-section">
+    <p class="hero-eyebrow">Game Analytics · PvP Experiment · Jul 7 Redeploy</p>
+    <h2 class="hero-title">The redeploy lifts wickets materially —<br>scores fall, behaviour barely shifts.</h2>
+    <p class="hero-desc">On Jul 7 human-vs-human matches, the redeployed Exp=2 arm delivers a <strong>large mechanical wicket lift (+22–32% mean wickets)</strong> with scores down 3–8% and innings length flat (~26 balls). Players show <strong>mild shot adaptation</strong> (fours/sixes → zeros/ones, ~±1pp) — stronger below 75k — but not a full behavioural overhaul.</p>
+    <div class="hero-stat-wrap">
+      <p class="stat-scoreboard-label">Mean wickets (0–50k)</p>
+      <p class="stat-scoreboard up" data-value="30" data-suffix="%" data-decimals="0">+30%</p>
+    </div>
+  </div>
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Headline</p><h3 class="section-title">What changed at the match level</h3></div>
+      <div class="kpi-row" id="ov-kpi-row">
+        <div class="kpi-card"><p class="kpi-label">Mean Wickets (Overall)</p><p class="kpi-value up" id="ov-kpi-wk">+22 to +32%</p><p class="kpi-note" id="ov-kpi-wk-note">large mechanical lift</p></div>
+        <div class="kpi-card"><p class="kpi-label">Median Wickets (q50)</p><p class="kpi-value up" id="ov-kpi-med">2.6 → 3.1</p><p class="kpi-note">mean wickets overall</p></div>
+        <div class="kpi-card"><p class="kpi-label">Mean Score (Overall)</p><p class="kpi-value down" id="ov-kpi-sc">−3.4 to −7.8%</p><p class="kpi-note" id="ov-kpi-sc-note">scores fall modestly</p></div>
+        <div class="kpi-card"><p class="kpi-label">Shot Mix Shift</p><p class="kpi-value warn" id="ov-kpi-mix">~1pp</p><p class="kpi-note">mild risk reallocation</p></div>
+      </div>
+      <div class="two-col">
+        <div class="card"><p class="card-title" id="ov-wk-title">Mean Wickets — Base vs Test by Bracket (Overall)</p><div class="legend" id="ov-wk-legend"></div><div class="chart-wrap"><canvas id="ov-wk"></canvas></div></div>
+        <div class="card"><p class="card-title" id="ov-sc-title">Mean Score — Base vs Test by Bracket (Overall)</p><div class="legend" id="ov-sc-legend"></div><div class="chart-wrap"><canvas id="ov-sc"></canvas></div></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Key findings</p><h3 class="section-title">Narrative summary</h3></div>
+      <div class="insights">
+        <div class="insight good"><strong>Mean wickets up +22–32%:</strong> Redeployed Exp=2 delivers a large mechanical lift — e.g. 0–50k 2.59→3.37 (+30%). Effect holds batting first (+22–33%) and bowling first (+21–32%); not a chase-only artefact.</div>
+        <div class="insight warn"><strong>Scores fall 3–8%; innings length flat:</strong> Mean scores −7.8% (0–50k) to −3.4% (100k+). Balls faced ~26 in both arms; RPB down 2–8%. WR dips modestly (0–50k 48.5→43.3, −5.2pp) — not the fake bot read.</div>
+        <div class="insight"><strong>Mild shot adaptation:</strong> Zeros/ones up ~+1pp; fours/sixes down ~−1pp; twos flat. Fours wicket rates up +5–7pp. Strongest below 75k — risk reallocation, not full behaviour change.</div>
+        <div class="insight good"><strong>First 2 overs: +12–20% early wickets:</strong> Mechanical lift visible before adaptation. Runs in first 2 overs down −1 to −4%.</div>
+        <div class="insight warn"><strong>vs Jun clean read:</strong> Earlier +9–13% wicket bump with flat scores was under-powered. Jul 7 redeploy at Exp=2 moves outcomes meaningfully while keeping innings length stable.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-innings" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Full innings</p><h3 class="section-title">Overall · Batting First · Bowling First</h3><p class="section-sub">Mean metrics shown with % change. Median behaviour is on the Distribution tab.</p></div>
+      <div id="inn-body"></div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-init2" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">First 2 overs</p><h3 class="section-title">Early innings — Overall · Batting First · Bowling First</h3><p class="section-sub">Isolates the mechanical effect before adaptation</p></div>
+      <div id="i2-body"></div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-shotsel" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Shot selection</p><h3 class="section-title">Did players change their shots?</h3><p class="section-sub">Shown in <strong>percentage points</strong> (test share − base share). Shot shares sum to 100%, so pp is the honest comparison.</p></div>
+      <div id="ss-body"></div>
+      <div class="section" style="margin-top:2rem">
+        <div class="section-header"><p class="section-num">Shot selection insights</p></div>
+        <div class="insights">
+          <div class="insight bad"><strong>Almost no behavioural change:</strong> Across every bracket and view, the shot mix shifts less than 1pp. Players faced a higher wicket risk but kept playing essentially the same shots.</div>
+          <div class="insight warn"><strong>Fours are the only consistent mover:</strong> Down −0.4 to −0.9pp, with a small offsetting rise in ones (+0.4 to +0.5pp). A slight pull-back from the riskiest scoring shot toward safe singles — but tiny.</div>
+          <div class="insight"><strong>First 2 overs are virtually identical:</strong> Players open the same way regardless of arm. The minor fours→ones drift only appears later in the innings, and mostly at higher brackets.</div>
+          <div class="insight good"><strong>Implication:</strong> The wicket-chance increase was too small to trigger the intended squad-diversification behaviour. A larger increase would be needed to change how players actually play.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-dist" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Distribution</p><h3 class="section-title">Quartiles — where the median really sits</h3><p class="section-sub">Wicket quartiles shown as <strong>absolute values</strong> (base → test). This is where the "median didn't move" story is clearest.</p></div>
+      <div id="dist-body"></div>
+    </div>
+  </main>
+</div>
+
+<footer>Increased Wicket Chance A/B Test · Jul 7 redeploy read (human vs human, matched samples) · Hitwicket Analytics · Jul 2026</footer>
+
+<script src="kit/theme.js"></script>
+<script src="kit/icons.js"></script>
+<script src="kit/chart.umd.js"></script>
+<script src="kit/charts.js"></script>
+<script src="kit/filters.js"></script>
+<script src="kit/tables.js"></script>
+<script src="kit/report.js"></script>
+<script src="kit/ab-test.js"></script>
+<script>
+const DD = {"overall":{"sample":[6774,11796,7999,7241],"base":{"total":[46.77,46.03,47.48,49.22],"balls":[26.43,26.14,25.94,26.04],"wickets":[2.59,2.4,2.15,2.46],"misses":[8.46,7.97,7.3,7.32]},"test":{"total":[43.11,43.31,45.18,47.54],"balls":[26.52,26.04,25.94,25.77],"wickets":[3.37,3.1,2.83,2.99],"misses":[8.72,8.16,7.42,7.29]},"mix_base":{"z":[14.0,16.45,16.69,17.28],"o":[25.05,25.17,26.72,25.23],"t":[15.13,14.5,13.11,13.86],"f":[21.11,18.59,17.04,14.29],"s":[24.67,25.29,26.45,29.3]},"mix_test":{"z":[15.99,17.74,17.62,17.81],"o":[25.9,26.19,27.99,26.0],"t":[15.42,14.44,13.03,13.89],"f":[19.38,17.51,16.27,13.7],"s":[23.27,24.12,25.1,28.6]},"mix_pp":{"z":[1.99,1.29,0.93,0.53],"o":[0.85,1.02,1.27,0.77],"t":[0.29,-0.06,-0.08,0.03],"f":[-1.73,-1.08,-0.77,-0.59],"s":[-1.4,-1.17,-1.35,-0.7]},"qbase":{"wk_q25":[2,1,1,1],"wk_q50":[3,2,2,2],"wk_q75":[4,3,3,3],"wk_q90":[5,4,4,4],"tot_q25":[36,36,37,38],"tot_q50":[47,46,47,49],"tot_q75":[57,56,58,60],"tot_q90":[61,60,62,64]},"qtest":{"wk_q25":[2,2,2,2],"wk_q50":[3,3,3,3],"wk_q75":[4,4,4,4],"wk_q90":[5,5,5,5],"tot_q25":[34,34,35,37],"tot_q50":[43,43,45,48],"tot_q75":[53,53,55,58],"tot_q90":[56,56,59,62]},"wk_pct":[30.1,29.2,31.6,21.5],"sc_pct":[-7.8,-5.9,-4.8,-3.4]},"bat1":{"sample":[6774,11796,7999,7241],"base":{"total":[49.8,49.02,51.22,52.75],"balls":[27.79,27.42,27.43,27.37],"wickets":[2.73,2.5,2.26,2.61],"misses":[8.87,8.3,7.65,7.68]},"test":{"total":[45.73,45.8,48.28,50.92],"balls":[27.77,27.28,27.25,27.02],"wickets":[3.51,3.28,3.0,3.16],"misses":[9.04,8.58,7.79,7.61]},"mix_base":{"z":[13.64,16.19,16.3,17.21],"o":[24.97,25.09,26.47,24.59],"t":[15.29,14.7,13.34,13.96],"f":[21.48,18.82,17.17,14.14],"s":[24.61,25.2,26.72,30.11]},"mix_test":{"z":[15.88,17.23,17.21,17.51],"o":[26.0,26.25,27.78,25.54],"t":[15.48,14.77,13.14,13.99],"f":[19.7,17.63,16.33,13.58],"s":[22.97,24.12,25.54,29.39]},"mix_pp":{"z":[2.24,1.04,0.91,0.3],"o":[1.03,1.16,1.31,0.95],"t":[0.19,0.07,-0.2,0.03],"f":[-1.78,-1.19,-0.84,-0.56],"s":[-1.64,-1.08,-1.18,-0.72]},"qbase":{"wk_q25":[2,2,1,2],"wk_q50":[3,2,2,3],"wk_q75":[4,4,3,4],"wk_q90":[5,4,4,5],"tot_q25":[39,38,40,41],"tot_q50":[50,49,51,53],"tot_q75":[61,60,62,64],"tot_q90":[65,64,67,69]},"qtest":{"wk_q25":[3,2,2,2],"wk_q50":[4,3,3,3],"wk_q75":[5,4,4,4],"wk_q90":[6,5,5,5],"tot_q25":[36,36,38,40],"tot_q50":[46,46,48,51],"tot_q75":[56,56,59,62],"tot_q90":[59,60,63,66]},"wk_pct":[28.6,31.2,32.7,21.1],"sc_pct":[-8.2,-6.6,-5.7,-3.5]},"bowl1":{"sample":[6774,11796,7999,7241],"base":{"total":[43.13,42.47,43.18,44.8],"balls":[24.8,24.61,24.24,24.37],"wickets":[2.42,2.28,2.04,2.28],"misses":[7.97,7.57,6.89,6.88]},"test":{"total":[40.0,40.28,41.17,43.11],"balls":[25.03,24.54,24.26,24.13],"wickets":[3.19,2.87,2.61,2.77],"misses":[8.34,7.66,6.93,6.88]},"mix_base":{"z":[14.48,16.78,17.16,17.4],"o":[25.12,25.31,27.02,26.06],"t":[14.96,14.26,12.83,13.79],"f":[20.65,18.24,16.91,14.53],"s":[24.8,25.44,26.11,28.23]},"mix_test":{"z":[16.18,18.42,18.22,18.19],"o":[25.73,26.12,28.28,26.69],"t":[15.38,14.02,12.86,13.76],"f":[18.98,17.36,16.24,13.92],"s":[23.69,24.08,24.4,27.43]},"mix_pp":{"z":[1.7,1.64,1.06,0.79],"o":[0.61,0.81,1.26,0.63],"t":[0.42,-0.24,0.03,-0.03],"f":[-1.67,-0.88,-0.67,-0.61],"s":[-1.11,-1.36,-1.71,-0.8]},"qbase":{"wk_q25":[1,1,1,1],"wk_q50":[2,2,2,2],"wk_q75":[3,3,3,3],"wk_q90":[4,4,4,4],"tot_q25":[34,33,34,35],"tot_q50":[43,42,43,45],"tot_q75":[53,52,53,55],"tot_q90":[56,55,56,58]},"qtest":{"wk_q25":[2,2,2,2],"wk_q50":[3,3,3,3],"wk_q75":[4,4,4,4],"wk_q90":[5,5,5,5],"tot_q25":[31,31,32,34],"tot_q50":[40,40,41,43],"tot_q75":[49,49,50,53],"tot_q90":[52,52,54,56]},"wk_pct":[31.8,25.9,27.9,21.5],"sc_pct":[-7.3,-5.2,-4.7,-3.8]},"overall_i2":{"sample":[6774,11796,7999,7241],"base":{"total":[20.89,21.28,21.8,21.62],"balls":[11.59,11.57,11.56,11.52],"wickets":[0.98,0.91,0.76,0.89],"misses":[3.49,3.28,2.98,3.07]},"test":{"total":[20.1,20.84,21.3,21.35],"balls":[11.67,11.59,11.56,11.52],"wickets":[1.18,1.08,0.92,1.0],"misses":[3.54,3.31,2.98,3.04]},"mix_base":{"z":[12.94,14.95,15.66,17.88],"o":[27.18,26.36,28.89,27.52],"t":[19.24,19.36,17.04,16.75],"f":[19.76,17.55,16.26,14.93],"s":[20.88,21.78,22.06,22.92]},"mix_test":{"z":[14.57,15.62,16.18,18.23],"o":[26.99,26.92,29.67,27.78],"t":[19.62,19.33,16.96,16.75],"f":[18.68,17.17,15.74,14.5],"s":[20.14,20.97,21.45,22.74]},"mix_pp":{"z":[1.63,0.67,0.52,0.35],"o":[-0.19,0.56,0.78,0.26],"t":[0.38,-0.03,-0.08,0.0],"f":[-1.08,-0.38,-0.52,-0.43],"s":[-0.74,-0.81,-0.61,-0.18]},"qbase":{"wk_q25":[0,0,0,0],"wk_q50":[1,1,1,1],"wk_q75":[2,2,2,2],"wk_q90":[3,3,3,3],"tot_q25":[16,17,17,17],"tot_q50":[21,21,22,22],"tot_q75":[25,26,27,26],"tot_q90":[27,28,28,28]},"qtest":{"wk_q25":[0,0,0,0],"wk_q50":[1,1,1,1],"wk_q75":[2,2,2,2],"wk_q90":[3,3,3,3],"tot_q25":[16,16,17,17],"tot_q50":[20,21,21,21],"tot_q75":[25,25,26,26],"tot_q90":[26,27,28,28]},"wk_pct":[20.4,18.7,21.1,12.4],"sc_pct":[-3.8,-2.1,-2.3,-1.2]},"bat1_i2":{"sample":[6774,11796,7999,7241],"base":{"total":[21.02,21.42,22.01,21.84],"balls":[11.57,11.53,11.54,11.53],"wickets":[1.01,0.92,0.79,0.91],"misses":[3.5,3.3,3.01,3.11]},"test":{"total":[20.28,20.93,21.51,21.5],"balls":[11.65,11.56,11.52,11.5],"wickets":[1.18,1.1,0.92,1.01],"misses":[3.54,3.36,3.0,3.08]},"mix_base":{"z":[12.19,13.96,14.64,17.43],"o":[27.14,26.28,28.86,26.89],"t":[19.53,19.95,17.76,17.26],"f":[20.22,17.95,16.38,14.83],"s":[21.0,21.94,22.44,23.59]},"mix_test":{"z":[13.73,14.36,15.19,17.39],"o":[27.12,27.08,29.6,27.48],"t":[19.91,20.07,17.62,17.22],"f":[18.97,17.39,15.89,14.61],"s":[20.26,21.19,21.7,23.22]},"mix_pp":{"z":[1.54,0.4,0.55,-0.04],"o":[-0.02,0.8,0.74,0.59],"t":[0.38,0.12,-0.14,-0.04],"f":[-1.25,-0.56,-0.49,-0.22],"s":[-0.74,-0.75,-0.74,-0.37]},"qbase":{"wk_q25":[0,0,0,0],"wk_q50":[1,1,1,1],"wk_q75":[2,2,2,2],"wk_q90":[3,3,3,3],"tot_q25":[16,17,17,17],"tot_q50":[21,21,22,22],"tot_q75":[26,26,27,27],"tot_q90":[27,28,29,28]},"qtest":{"wk_q25":[0,0,0,0],"wk_q50":[1,1,1,1],"wk_q75":[2,2,2,2],"wk_q90":[3,3,3,3],"tot_q25":[16,16,17,17],"tot_q50":[20,21,22,22],"tot_q75":[25,26,26,26],"tot_q90":[26,27,28,28]},"wk_pct":[16.8,19.6,16.5,11.0],"sc_pct":[-3.5,-2.3,-2.3,-1.6]},"bowl1_i2":{"sample":[6774,11796,7999,7241],"base":{"total":[20.73,21.12,21.56,21.36],"balls":[11.62,11.62,11.58,11.52],"wickets":[0.95,0.89,0.74,0.86],"misses":[3.47,3.26,2.94,3.02]},"test":{"total":[19.89,20.72,21.02,21.16],"balls":[11.69,11.62,11.62,11.54],"wickets":[1.18,1.04,0.92,0.97],"misses":[3.55,3.24,2.96,2.99]},"mix_base":{"z":[13.77,16.09,16.84,18.49],"o":[27.19,26.51,28.93,28.3],"t":[18.85,18.67,16.32,15.97],"f":[19.28,17.13,16.23,15.02],"s":[20.83,21.69,21.59,22.22]},"mix_test":{"z":[15.48,17.13,17.38,19.32],"o":[26.95,26.85,29.78,28.25],"t":[19.33,18.5,16.09,16.12],"f":[18.22,16.87,15.58,14.3],"s":[20.02,20.65,21.34,22.27]},"mix_pp":{"z":[1.71,1.04,0.54,0.83],"o":[-0.24,0.34,0.85,-0.05],"t":[0.48,-0.17,-0.23,0.15],"f":[-1.06,-0.26,-0.65,-0.72],"s":[-0.81,-1.04,-0.25,0.05]},"qbase":{"wk_q25":[0,0,0,0],"wk_q50":[1,1,1,1],"wk_q75":[2,2,2,2],"wk_q90":[3,3,3,3],"tot_q25":[16,16,17,17],"tot_q50":[21,21,22,21],"tot_q75":[25,26,26,26],"tot_q90":[27,27,28,28]},"qtest":{"wk_q25":[0,0,0,0],"wk_q50":[1,1,1,1],"wk_q75":[2,2,2,2],"wk_q90":[3,3,3,3],"tot_q25":[16,16,16,17],"tot_q50":[20,21,21,21],"tot_q75":[24,25,26,26],"tot_q90":[26,27,27,28]},"wk_pct":[24.2,16.9,24.3,12.8],"sc_pct":[-4.1,-1.9,-2.5,-0.9]}};
+const BR = ['0-50k','50k-75k','75k-100k','100k+'];
+
+document.getElementById('ov-wk-legend').innerHTML = HWReport.baseLegend();
+document.getElementById('ov-sc-legend').innerHTML = HWReport.baseLegend();
+
+var activeTab = 'overview';
+var brOptions = [{ value: 'all', label: 'All brackets' }].concat(BR.map(function (b) { return { value: b, label: b }; }));
+var DIMS = {
+  overview: [
+    { id: 'inn', label: 'View', default: 'overall', options: [
+      { value: 'overall', label: 'Overall' }, { value: 'bat1', label: 'Batting 1st' }, { value: 'bowl1', label: 'Bowling 1st' },
+    ]},
+    { id: 'br', label: 'Bracket', default: 'all', options: brOptions },
+  ],
+  innings: [
+    { id: 'inn', label: 'View', default: 'overall', options: [
+      { value: 'overall', label: 'Overall' }, { value: 'bat1', label: 'Batting 1st' }, { value: 'bowl1', label: 'Bowling 1st' },
+    ]},
+  ],
+  init2: [
+    { id: 'inn', label: 'View', default: 'overall_i2', options: [
+      { value: 'overall_i2', label: 'Overall' }, { value: 'bat1_i2', label: 'Batting 1st' }, { value: 'bowl1_i2', label: 'Bowling 1st' },
+    ]},
+  ],
+  shotsel: [
+    { id: 'inn', label: 'View', default: 'overall', options: [
+      { value: 'overall', label: 'Overall' }, { value: 'bat1', label: 'Batting 1st' }, { value: 'bowl1', label: 'Bowling 1st' },
+      { value: 'overall_i2', label: 'Overs 1–2 Overall' }, { value: 'bat1_i2', label: 'Overs 1–2 Bat 1st' }, { value: 'bowl1_i2', label: 'Overs 1–2 Bowl 1st' },
+    ]},
+  ],
+  dist: [
+    { id: 'inn', label: 'View', default: 'overall', options: [
+      { value: 'overall', label: 'Overall' }, { value: 'bat1', label: 'Batting 1st' }, { value: 'bowl1', label: 'Bowling 1st' }, { value: 'overall_i2', label: 'Overs 1–2' },
+    ]},
+  ],
+};
+
+var VIEW_LABELS = { overall: 'Overall', bat1: 'Batting 1st', bowl1: 'Bowling 1st' };
+
+function bracketIndex(br) {
+  if (!br || br === 'all') return -1;
+  var idx = BR.indexOf(br);
+  return idx >= 0 ? idx : -1;
+}
+
+function pctRange(arr) {
+  var lo = Math.min.apply(null, arr);
+  var hi = Math.max.apply(null, arr);
+  return (lo > 0 ? '+' : '') + lo + ' to ' + (hi > 0 ? '+' : '') + hi + '%';
+}
+
+function maxAbsPp(mixPp) {
+  var keys = ['z', 'o', 't', 'f', 's'];
+  var max = 0;
+  keys.forEach(function (k) {
+    mixPp[k].forEach(function (v) { max = Math.max(max, Math.abs(v)); });
+  });
+  return max;
+}
+
+function updateOverviewChrome(vals) {
+  var d = DD[vals.inn] || DD.overall;
+  var viewLabel = VIEW_LABELS[vals.inn] || 'Overall';
+  var brIdx = bracketIndex(vals.br);
+  var brNote = brIdx >= 0 ? BR[brIdx] : 'across ' + BR.length + ' brackets';
+  var wkSlice = brIdx >= 0 ? [d.wk_pct[brIdx]] : d.wk_pct;
+  var scSlice = brIdx >= 0 ? [d.sc_pct[brIdx]] : d.sc_pct;
+  var medBase = brIdx >= 0 ? d.qbase.wk_q50[brIdx] : d.qbase.wk_q50[0];
+  var medTest = brIdx >= 0 ? d.qtest.wk_q50[brIdx] : d.qtest.wk_q50[0];
+  var mixMax = maxAbsPp(d.mix_pp);
+  var brSuffix = brIdx >= 0 ? ' · ' + BR[brIdx] : '';
+
+  var wkTitle = document.getElementById('ov-wk-title');
+  var scTitle = document.getElementById('ov-sc-title');
+  if (wkTitle) wkTitle.textContent = 'Mean Wickets — Base vs Test by Bracket (' + viewLabel + ')' + brSuffix;
+  if (scTitle) scTitle.textContent = 'Mean Score — Base vs Test by Bracket (' + viewLabel + ')' + brSuffix;
+
+  var kpiWk = document.getElementById('ov-kpi-wk');
+  var kpiWkNote = document.getElementById('ov-kpi-wk-note');
+  var kpiMed = document.getElementById('ov-kpi-med');
+  var kpiSc = document.getElementById('ov-kpi-sc');
+  var kpiScNote = document.getElementById('ov-kpi-sc-note');
+  var kpiMix = document.getElementById('ov-kpi-mix');
+  if (kpiWk) {
+    kpiWk.textContent = pctRange(wkSlice);
+    kpiWk.className = 'kpi-value ' + (Math.min.apply(null, wkSlice) >= 0 ? 'up' : 'down');
+  }
+  if (kpiWkNote) kpiWkNote.textContent = brNote;
+  if (kpiMed) kpiMed.textContent = medBase + ' → ' + medTest;
+  if (kpiSc) {
+    kpiSc.textContent = pctRange(scSlice);
+    kpiSc.className = 'kpi-value ' + (Math.max.apply(null, scSlice) <= 0 ? 'down' : 'up');
+  }
+  if (kpiScNote) kpiScNote.textContent = brNote;
+  if (kpiMix) kpiMix.textContent = mixMax < 1 ? '< 1pp' : mixMax.toFixed(1) + 'pp max';
+
+  var el = document.querySelector('#tab-overview .stat-scoreboard');
+  if (el) HWReport.countUp(el, medTest, { suffix: '', decimals: 0 });
+}
+
+function renderOverviewChart(metric, vals) {
+  var d = DD[vals.inn] || DD.overall;
+  var labels = HWReport.filters.sliceLabels(BR, vals.br);
+  var base = HWReport.filters.sliceBracket(d.base[metric], vals.br, BR);
+  var test = HWReport.filters.sliceBracket(d.test[metric], vals.br, BR);
+  if (metric === 'wickets') HWReport.grouped('ov-wk', labels, base, test, HWReport.COLORS.BLUE, HWReport.COLORS.TEAL);
+  else HWReport.grouped('ov-sc', labels, base, test, HWReport.COLORS.BLUE, HWReport.COLORS.TEAL);
+}
+
+function renderOverview(vals) {
+  renderOverviewChart('wickets', vals);
+  renderOverviewChart('total', vals);
+  updateOverviewChrome(vals);
+  HWReport.initCardChrome(document.getElementById('tab-overview'));
+}
+
+function renderActiveTab() {
+  var vals = HWReport.filters.get();
+  if (activeTab === 'overview') {
+    renderOverview(vals);
+  } else if (activeTab === 'innings') {
+    switchSub('inn', vals.inn, null);
+  } else if (activeTab === 'init2') {
+    switchSub('i2', vals.inn, null);
+  } else if (activeTab === 'shotsel') {
+    switchSub('ss', vals.inn, null);
+  } else if (activeTab === 'dist') {
+    switchSub('dist', vals.inn, null);
+  }
+}
+
+HWReport.initAbTest(DD, {
+  brackets: BR,
+  skipOverview: true,
+  filterMode: true,
+  onTabSwitch: function (name) {
+    activeTab = name;
+    if (name === 'overview' || name === 'innings' || name === 'init2' || name === 'shotsel' || name === 'dist') {
+      HWReport.filters.setBarVisible(true);
+      HWReport.filters.setDims(DIMS[name], true);
+    } else {
+      HWReport.filters.setBarVisible(false);
+    }
+  },
+});
+
+HWReport.filters.init({ bar: '#global-filter-bar', url: true, dims: DIMS.overview });
+HWReport.filters.register('wc-render', {
+  deps: ['inn', 'br'],
+  render: function () { renderActiveTab(); },
+});
+
+document.addEventListener('hwreport:tabswitch', function (e) {
+  if (e.detail.name === 'overview' || e.detail.name === 'innings' || e.detail.name === 'init2' || e.detail.name === 'shotsel' || e.detail.name === 'dist') {
+    activeTab = e.detail.name;
+    HWReport.filters.setDims(DIMS[e.detail.name], true);
+  }
+});
+
+renderActiveTab();
+</script>
+</body>
+</html>

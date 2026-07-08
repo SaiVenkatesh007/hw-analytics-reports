@@ -1,0 +1,29 @@
+Increased Wicket Chance — Jul 7 Redeploy Read
+Human vs human · Matched Base = Exp per bracket · 4 power brackets (0–50k to 100k+) · Jul 7 2026 · Base=0 / Exp=2
+Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/wicket_chance_ab_jul7_redeploy.html
+
+*Context: Jul 7 post-redeploy read — supersedes bot-contaminated earlier pass*
+   - Bot opponents removed (opp_is_bot=0); experiment not applicable vs bots
+   - Base and Exp matched per power bracket (6.7k–11.8k per arm)
+   - Earlier dramatic WR cliff and chase-score-up artefact were bot/sample skew — not real
+
+*1. Mean wickets up materially (+22–32%)*
+   - Overall: 2.59→3.37 (+30%) at 0–50k; +29% at 50–75k; +32% at 75–100k; +22% at 100k+
+   - Effect holds batting first (+22–33%) and bowling first (+21–32%) — not a chase-only artefact
+   - First 2 overs: +12–20% early wickets before adaptation
+
+*2. Scores fall 3–8%; innings length flat*
+   - Mean scores −7.8% (0–50k) to −3.4% (100k+) overall; same direction batting and bowling first
+   - Balls faced ~flat (~26); RPB down 2–8% — wickets doing the work, not shorter innings
+   - WR dips modestly (e.g. 0–50k 48.5→43.3, −5.2pp) — not the fake 65→43 bot read
+
+*3. Mild shot adaptation — strongest below 75k*
+   - Zeros/ones up ~+1pp; fours/sixes down ~−1pp; twos flat — risk reallocation, not a full behaviour shift
+   - Fours/twos/ones wicket rates up most (+5–7pp on fours); sixes +3–4pp (~+20% rel)
+   - Adaptation strongest at 0–50k; higher brackets show smaller mix shifts
+
+*4. Mechanical lift is real at redeploy magnitude*
+   - Contrasts Jun clean read (+9–13% wickets, flat scores, <1pp shot mix)
+   - Jul 7 Exp=2 redeploy moves match outcomes meaningfully while keeping innings length stable
+
+*Takeaway:* The redeployed wicket-chance % is working at intended magnitude — large mechanical wicket lift with modest score impact and mild shot adaptation. Strongest effects below 75k; recommend holding Exp=2 and monitoring squad-diversification signals over a longer window.
