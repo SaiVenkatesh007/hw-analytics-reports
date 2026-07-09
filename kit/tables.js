@@ -94,17 +94,22 @@ HWReport.initCardChrome = function (scope) {
     if (canvas) {
       var pngBtn = document.createElement('button');
       pngBtn.type = 'button';
-      pngBtn.className = 'chrome-btn';
+      pngBtn.className = 'chrome-btn chart-download-btn';
       pngBtn.textContent = 'PNG';
+      pngBtn.setAttribute('aria-label', 'Download chart as PNG');
       pngBtn.addEventListener('click', function () {
-        var url = HWReport.downloadChart(canvas.id);
-        if (!url) return;
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = canvas.id + '.png';
-        a.click();
+        HWReport.downloadChart(canvas.id).catch(function () { /* ignore */ });
       });
       actions.appendChild(pngBtn);
+      var copyBtn = document.createElement('button');
+      copyBtn.type = 'button';
+      copyBtn.className = 'chrome-btn chart-copy-btn';
+      copyBtn.textContent = 'Copy';
+      copyBtn.setAttribute('aria-label', 'Copy chart image to clipboard');
+      copyBtn.addEventListener('click', function () {
+        HWReport.copyChart(canvas.id, copyBtn).catch(function () { /* ignore */ });
+      });
+      actions.appendChild(copyBtn);
     }
     if (tableWrap) {
       var csvBtn = document.createElement('button');

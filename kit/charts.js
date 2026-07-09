@@ -479,38 +479,128 @@ HWReport.baseLegend = function () {
   );
 };
 
+function _slugChartFilename(title, fallback) {
+  var s = (title || '').trim().replace(/[^\w\s-]+/g, '').replace(/\s+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+  return s || fallback || 'chart';
+}
+
+function _parseCardLegend(card) {
+  if (!card) return [];
+  var legend = card.querySelector('.legend');
+  if (!legend) return [];
+  var items = [];
+  legend.querySelectorAll('.leg').forEach(function (leg) {
+    var sq = leg.querySelector('.leg-sq');
+    var color = '#888888';
+    if (sq) {
+      color = sq.style.background || sq.style.backgroundColor || getComputedStyle(sq).backgroundColor || color;
+    }
+    items.push({ color: color, label: leg.textContent.trim() });
+  });
+  return items;
+}
+
+HWReport.exportChartImage = function (canvasId) {
+  var fontReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+  return fontReady.then(function () {
+    var chart = HWReport._chartInstances[canvasId];
+    if (!chart || !chart.canvas) return Promise.reject(new Error('Chart not found'));
+    var src = chart.canvas;
+    var card = src.closest('.card');
+    var titleEl = card && card.querySelector('.card-title');
+    var title = titleEl ? titleEl.textContent.trim() : '';
+    var legendItems = _parseCardLegend(card);
+    var root = getComputedStyle(document.documentElement);
+    var bg = root.getPropertyValue('--surface').trim() || '#ffffff';
+    var titleColor = root.getPropertyValue('--text-secondary').trim() || '#6B6A5E';
+    var legendColor = root.getPropertyValue('--text-tertiary').trim() || '#767676';
+    var scale = Math.max(window.devicePixelRatio || 1, 2);
+    var pad = Math.round(16 * scale);
+    var gap = Math.round(10 * scale);
+    var titleSize = Math.round(13 * scale);
+    var legendSize = Math.round(11 * scale);
+    var sqSize = Math.round(10 * scale);
+    var chartW = src.width;
+    var chartH = src.height;
+    var off = document.createElement('canvas');
+    var ctx = off.getContext('2d');
+    ctx.font = '500 ' + titleSize + 'px "DM Sans", sans-serif';
+    var titleH = title ? Math.round(titleSize * 1.35) : 0;
+    var legendH = legendItems.length ? Math.round(legendSize * 1.5) : 0;
+    var contentW = chartW;
+    if (title) contentW = Math.max(contentW, ctx.measureText(title).width);
+    if (legendItems.length) {
+      ctx.font = legendSize + 'px "DM Mono", monospace';
+      var legendW = pad;
+      legendItems.forEach(function (item, i) {
+        legendW += sqSize + Math.round(5 * scale) + ctx.measureText(item.label).width;
+        if (i < legendItems.length - 1) legendW += Math.round(10 * scale);
+      });
+      contentW = Math.max(contentW, legendW - pad);
+    }
+    off.width = Math.ceil(contentW + 2 * pad);
+    off.height = pad + titleH + (legendH ? gap + legendH : 0) + gap + chartH + pad;
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, off.width, off.height);
+    var y = pad;
+    if (title) {
+      ctx.fillStyle = titleColor;
+      ctx.font = '500 ' + titleSize + 'px "DM Sans", sans-serif';
+      ctx.textBaseline = 'top';
+      ctx.fillText(title, pad, y);
+      y += titleH + gap;
+    }
+    if (legendItems.length) {
+      ctx.font = legendSize + 'px "DM Mono", monospace';
+      ctx.textBaseline = 'middle';
+      var x = pad;
+      var legendMid = y + legendH / 2;
+      legendItems.forEach(function (item, i) {
+        ctx.fillStyle = item.color;
+        ctx.fillRect(x, legendMid - sqSize / 2, sqSize, sqSize);
+        x += sqSize + Math.round(5 * scale);
+        ctx.fillStyle = legendColor;
+        ctx.fillText(item.label, x, legendMid);
+        x += ctx.measureText(item.label).width + Math.round(10 * scale);
+      });
+      y += legendH + gap;
+    }
+    ctx.drawImage(src, pad, y, chartW, chartH);
+    return new Promise(function (resolve, reject) {
+      off.toBlob(function (blob) {
+        if (blob) resolve(blob);
+        else reject(new Error('PNG export failed'));
+      }, 'image/png');
+    });
+  });
+};
+
 HWReport.downloadChart = function (id) {
-  var chart = HWReport._chartInstances[id];
-  if (!chart) return null;
-  return chart.canvas.toDataURL('image/png');
+  var canvas = document.getElementById(id);
+  var card = canvas && canvas.closest('.card');
+  var titleEl = card && card.querySelector('.card-title');
+  var filename = _slugChartFilename(titleEl ? titleEl.textContent : '', id) + '.png';
+  return HWReport.exportChartImage(id).then(function (blob) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+};
+
+HWReport.copyChart = function (id, btn) {
+  return HWReport.exportChartImage(id).then(function (blob) {
+    if (HWReport._copyImage) return HWReport._copyImage(blob, btn);
+    return Promise.reject(new Error('Clipboard unavailable'));
+  });
 };
 
 HWReport.wrapChartCard = function (canvasId) {
   var canvas = document.getElementById(canvasId);
-  if (!canvas) return;
+  if (!canvas || !HWReport.initCardChrome) return;
   var card = canvas.closest('.card');
-  if (!card || card.querySelector('.chart-download-btn')) return;
-  var btn = document.createElement('button');
-  btn.type = 'button';
-  btn.className = 'chrome-btn chart-download-btn';
-  btn.textContent = 'PNG';
-  btn.setAttribute('aria-label', 'Download chart as PNG');
-  btn.addEventListener('click', function () {
-    var url = HWReport.downloadChart(canvasId);
-    if (!url) return;
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = canvasId + '.png';
-    a.click();
-  });
-  var titleEl = card.querySelector('.card-title');
-  if (titleEl) {
-    var row = document.createElement('div');
-    row.className = 'card-title-row';
-    titleEl.parentNode.insertBefore(row, titleEl);
-    row.appendChild(titleEl);
-    row.appendChild(btn);
-  }
+  if (card) HWReport.initCardChrome(card);
 };
 
 if (document.readyState === 'loading') {
