@@ -745,6 +745,7 @@ header a.data-link.green:hover { background: var(--teal-light); }
 }
 .chrome-btn:hover { background: var(--bg); border-color: var(--blue-mid); color: var(--blue); }
 .chrome-btn.copied { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
+.chrome-btn.chrome-btn-fail { border-color: var(--coral); color: var(--coral); background: var(--coral-light); }
 .footer-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 0.75rem; }
 .footer-meta { font-size: 11px; color: var(--text-tertiary); margin-bottom: 0.5rem; }
 
@@ -768,7 +769,7 @@ header a.data-link.green:hover { background: var(--teal-light); }
 }
 
 @media print {
-  header, .tab-bar, .caveat-banner, .footer-nav, .theme-toggle, .chart-download-btn { display: none !important; }
+  header, .tab-bar, .caveat-banner, .footer-nav, .theme-toggle, .chart-download-btn, .chart-copy-btn { display: none !important; }
   .tab-content { display: block !important; opacity: 1 !important; animation: none !important; }
   .tab-content + .tab-content { page-break-before: always; }
   main { max-width: none; padding: 0; }

@@ -96,11 +96,16 @@ HWReport.filters.register('chart-id', { deps: ['br','inn'], render: function (va
 
 ```js
 HWReport.table(el, { columns, rows, sortable, stickyHeader, caption });
-HWReport.initCardChrome(); // PNG on canvas cards, CSV on tables, section link
+HWReport.initCardChrome(); // PNG + Copy on canvas cards (title+legend composite), CSV on tables, section link
 HWReport.initSectionAnchors(); // auto `sec-{slug}` ids (report.js on load)
 ```
 
 Card actions: `.card-title-row` + `.chrome-btn` in `.card-actions`
+
+Chart export (via `HWReport.exportChartImage`):
+- Composite PNG: card title + legend chips + chart canvas (theme-aware background)
+- **PNG** — download with slugified title filename
+- **Copy** — `navigator.clipboard.write` with image blob; shows Copied! / Unavailable feedback
 
 ## Chart decision guide
 
