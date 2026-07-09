@@ -8,18 +8,18 @@
   "reports": [
     {
       "slug": "wicket_chance_ab_jul7_redeploy",
-      "title": "Increased Wicket Chance \u2014 Jul 7 Redeploy Read",
+      "title": "Increased Wicket Chance \u2014 Jul 7\u20138 Redeploy Read",
       "owner": "Venkatesh",
-      "date": "2026-07-08",
-      "date_label": "Jul 7 2026",
+      "date": "2026-07-09",
+      "date_label": "Jul 7\u20138 2026",
       "tags": [
         "pvp",
         "ab-test",
         "experiment",
         "wicket-chance"
       ],
-      "thesis": "The redeployed wicket-chance % delivers a large mechanical lift (+22\u201332% mean wickets) with modest shot adaptation; scores fall 3\u20138% while innings length stays flat.",
-      "description": "Jul 7 post-redeploy Wicket Chance AB read \u2014 human vs human, matched samples, Base=0 vs Exp=2.",
+      "thesis": "Redeployed Exp=2 lifts median wickets 2\u21923 with +22\u201331% mean wicket gain; scores fall 3\u20138% while same-day next-match retention stays flat.",
+      "description": "Jul 7\u20138 post-redeploy Wicket Chance AB read \u2014 median wickets 2\u21923, retention neutral, Base=0 vs Exp=2.",
       "handoff": "handoffs/wicket_chance_ab_jul7_redeploy.txt"
     },
     {
