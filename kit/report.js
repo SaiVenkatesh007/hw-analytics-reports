@@ -281,6 +281,32 @@ HWReport._copyTextFallback = function (text, cb) {
   if (cb) cb();
 };
 
+HWReport._copyImage = function (blob, btn) {
+  var flash = function (ok, failLabel) {
+    if (!btn) return;
+    var prev = btn.textContent;
+    btn.textContent = ok ? 'Copied!' : (failLabel || 'Unavailable');
+    btn.classList.toggle('copied', ok);
+    btn.classList.toggle('chrome-btn-fail', !ok);
+    setTimeout(function () {
+      btn.textContent = prev;
+      btn.classList.remove('copied', 'chrome-btn-fail');
+    }, 2000);
+  };
+  if (navigator.clipboard && navigator.clipboard.write && window.ClipboardItem) {
+    return navigator.clipboard.write([
+      new ClipboardItem({ 'image/png': blob }),
+    ]).then(function () {
+      flash(true);
+    }).catch(function () {
+      flash(false);
+      return Promise.reject(new Error('Clipboard write failed'));
+    });
+  }
+  flash(false);
+  return Promise.reject(new Error('Clipboard API unavailable'));
+};
+
 HWReport.measureStickyStack = function () {
   var header = document.querySelector('header');
   var tabBar = document.querySelector('.tab-bar');
