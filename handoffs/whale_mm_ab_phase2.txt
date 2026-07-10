@@ -1,0 +1,39 @@
+Whale MM Win Streak Reversion A/B — Phase 2 Initial Read (Jul 7 – Jul 9)
+_Base: 1 in 4 wins reverts to normal MM (3-win streak) | Test: 1 in 3 wins (2-win streak)_
+Initial 3-day read only — too early to take a call. D3 whale LTV deferred until sample grows.
+
+Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/whale_mm_ab_phase2.html
+
+*Context*
+- Phase 2 shipped Jul 7: 3-win streak is now Base; Test shortens further to 2-win streak
+- Eligible MM whales · ARENAS · ~12.2k whale teams · arms balanced (~51k / ~51k match-rows)
+- All metrics below are directional only — do not ship or roll back on this window
+
+*Engagement & Retention (initial)*
+
+1. Mechanic working as intended
+Test triggers normal MM more often: 1.68 vs 1.23 matches/day. Whale MM matches/day 2.13 vs 2.72.
+
+2. Real-user WR — expected drop in Test
+61% vs 52%. Larger than Phase 1 (65→60) — fits a shorter streak threshold. Rookie takes the biggest hit (53%→40%).
+
+3. MDAU — small dip, same shape as Phase 1
+Base 3.95 vs Test 3.81 (−0.14). Remarkable essentially flat (5.56 vs 5.54).
+
+4. NDR — flat across arms
+Base 56.7% vs Test 56.3%. Absolute level lower than Phase 1 (~77%) — 3-day window artifact (Jul 9 has no next day in-window), not a cross-arm churn signal.
+
+*MM Whale Monetisation (eligible whales · Jul 7–9 · initial)*
+
+5. Slightly Base-favored even after highroller cuts
+Raw ARPU Base ₹94 vs Test ₹89; Conv% 6.58 vs 6.20.
+Excl. >₹5k: ARPU ₹60 vs ₹56 · Excl. >₹10k: ₹71 vs ₹62 · Excl. >₹15k: ₹73 vs ₹65.
+Unlike Phase 1 (flat/Test-ahead after cuts), Test stays a bit behind — gaps are small on 3 days.
+
+6. Remarkable raw is highroller noise
+Raw Remarkable ARPU ₹289 vs ₹176. After >₹5k cut: ₹98 vs ₹97 (flat). Rookie Conv/ARPU softer in Test — watch as window grows.
+
+*Deferred*
+D3 revenue whale ARPU3/ARPU7 — later, once the analysis window / sample grows.
+
+*Takeaway:* Initial read only — cannot take a call yet. Keep the experiment running and extend the window (~2 weeks) before deciding. No engagement red flag; monetisation slightly soft in Test but too noisy to act on.

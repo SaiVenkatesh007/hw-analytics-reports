@@ -7,6 +7,21 @@
   },
   "reports": [
     {
+      "slug": "whale_mm_ab_phase2",
+      "title": "Whale MM \u2014 Win Streak Reversion A/B Phase 2 (Initial)",
+      "owner": "Venkatesh",
+      "date": "2026-07-10",
+      "date_label": "Jul 7\u20139, 2026",
+      "tags": [
+        "matchmaking",
+        "whale",
+        "experiment"
+      ],
+      "thesis": "Initial Jul 7\u20139 read only \u2014 too early to call. Mechanic works; engagement flat; monetisation slightly soft in Test. Extend window before deciding.",
+      "description": "Whale MM Phase 2 initial AB read (3-win Base vs 2-win Test). Directional only \u2014 no ship/rollback call on a 3-day window.",
+      "handoff": "handoffs/whale_mm_ab_phase2.txt"
+    },
+    {
       "slug": "wicket_chance_ab_jul7_redeploy",
       "title": "Increased Wicket Chance \u2014 Jul 7\u20138 Redeploy Read",
       "owner": "Venkatesh",
