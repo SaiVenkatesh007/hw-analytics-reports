@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){try{var t=localStorage.getItem('hw-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<title>Whale MM — Win Streak Reversion A/B Phase 2 (Initial)</title>
+<meta name="description" content="Whale MM Phase 2 initial AB read (3-win Base vs 2-win Test). Directional only — no ship/rollback call on a 3-day window.">
+<meta property="og:title" content="Whale MM — Win Streak Reversion A/B Phase 2 (Initial)">
+<meta property="og:description" content="Whale MM Phase 2 initial AB read (3-win Base vs 2-win Test). Directional only — no ship/rollback call on a 3-day window.">
+<meta property="og:url" content="https://saivenkatesh007.github.io/hw-analytics-reports/whale_mm_ab_phase2.html">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" href="kit/favicon.png">
+<link rel="stylesheet" href="kit/report.css">
+</head>
+<body data-report-slug="whale_mm_ab_phase2" data-report-owner="Venkatesh">
+<header>
+  <div class="brand"><div class="dot"></div><h1>Whale MM — Win Streak Reversion A/B Phase 2</h1></div>
+  <span class="meta">Eligible MM whales · Jul 7–9 2026 · Base 3-win vs Test 2-win · Initial read only</span>
+</header>
+<div class="caveat-banner warn">Initial 3-day read only — all metrics are directional. Do not ship or roll back on this window. D3 whale LTV deferred until sample grows.</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="HWReport.switchTab('overview', this)">Overview</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('engagement', this)">Engagement</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('monetisation', this)">Monetisation</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('method', this)">Methodology</button>
+</div>
+
+<div id="tab-overview" class="tab-content active">
+  <div class="hero-section">
+    <p class="hero-eyebrow">Game Analytics · Whale Matchmaking · Phase 2 Initial</p>
+    <h2 class="hero-title">Initial read only —<br>too early to take a call.</h2>
+    <p class="hero-desc">Jul 7–9 first look at <strong>3-win Base vs 2-win Test</strong>. The mechanic is working (Test sees more normal MM). Engagement is essentially flat. Monetisation is slightly Base-favored even after highroller cuts — but a <strong>3-day window is too noisy to act on</strong>. Keep running and extend before deciding.</p>
+    <div class="hero-stat-wrap">
+      <p class="stat-scoreboard-label">Window length</p>
+      <p class="stat-scoreboard neutral" data-value="3" data-suffix=" days" data-decimals="0">3 days</p>
+    </div>
+  </div>
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Headline KPIs</p><h3 class="section-title">Directional only · Jul 7–9</h3></div>
+      <div class="kpi-row">
+        <div class="kpi-card"><p class="kpi-label">MDAU</p><p class="kpi-value neutral">3.95 → 3.81</p><p class="kpi-note">Base → Test · small dip</p></div>
+        <div class="kpi-card"><p class="kpi-label">NDR</p><p class="kpi-value neutral">56.7% → 56.3%</p><p class="kpi-note">flat across arms</p></div>
+        <div class="kpi-card"><p class="kpi-label">Real-user WR</p><p class="kpi-value warn">61% → 52%</p><p class="kpi-note">expected with more normal MM</p></div>
+        <div class="kpi-card"><p class="kpi-label">ARPU (raw)</p><p class="kpi-value warn">₹94 → ₹89</p><p class="kpi-note">slightly Base-favored</p></div>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title-row"><p class="card-title">Normal MM matches / day</p><div class="card-actions"></div></div>
+          <div class="legend" id="leg-normal"></div>
+          <div class="chart-wrap"><canvas id="chart-normal-mm"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title-row"><p class="card-title">ARPU by highroller cut</p><div class="card-actions"></div></div>
+          <div class="legend" id="leg-arpu"></div>
+          <div class="chart-wrap"><canvas id="chart-arpu-cuts"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Key findings</p><h3 class="section-title">What this initial window shows</h3></div>
+      <div class="insights">
+        <div class="insight warn"><strong>No call yet:</strong> All numbers below are an initial Jul 7–9 read. Do not ship or roll back until the window lengthens (~2 weeks) and D3 whale LTV is available.</div>
+        <div class="insight good"><strong>Mechanic working:</strong> Test triggers normal MM more often (1.68 vs 1.23 matches/day). Real-user WR drops 61%→52% by design — larger than Phase 1’s 65→60, which fits a shorter streak.</div>
+        <div class="insight"><strong>Engagement holds:</strong> MDAU 3.95 vs 3.81 (−0.14). NDR flat (56.7% vs 56.3%). Absolute NDR is lower than Phase 1 (~77%) because Jul 9 has no next day in-window — not a cross-arm churn signal.</div>
+        <div class="insight warn"><strong>Monetisation slightly soft in Test:</strong> Even after excl. &gt;₹5k / ₹10k / ₹15k, ARPU and Conv% stay a bit Base-favored. Gaps are small on 3 days. Remarkable raw (₹289 vs ₹176) collapses to flat after &gt;₹5k cut (₹98 vs ₹97).</div>
+        <div class="insight"><strong>Deferred:</strong> D3 revenue whale ARPU3/ARPU7 later — sample too thin on a 3-day window.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-engagement" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Engagement</p><h3 class="section-title">MDAU · WR · MM mix · NDR</h3><p class="section-sub">Initial Jul 7–9 · ~12.2k whale teams · arms balanced</p></div>
+      <div class="kpi-row">
+        <div class="kpi-card"><p class="kpi-label">Whale teams</p><p class="kpi-value neutral">12,221</p><p class="kpi-note">unique in window</p></div>
+        <div class="kpi-card"><p class="kpi-label">Match-rows Base</p><p class="kpi-value neutral">51,074</p><p class="kpi-note">1 in 4 wins</p></div>
+        <div class="kpi-card"><p class="kpi-label">Match-rows Test</p><p class="kpi-value neutral">50,818</p><p class="kpi-note">1 in 3 wins</p></div>
+        <div class="kpi-card"><p class="kpi-label">Whale MM / day</p><p class="kpi-value warn">2.72 → 2.13</p><p class="kpi-note">fewer soft matches in Test</p></div>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title-row"><p class="card-title">MDAU by first PvP rank</p><div class="card-actions"></div></div>
+          <div class="legend" id="leg-mdau-rank"></div>
+          <div class="chart-wrap chart-wrap--tall"><canvas id="chart-mdau-rank"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title-row"><p class="card-title">Real-user WR by first PvP rank</p><div class="card-actions"></div></div>
+          <div class="legend" id="leg-wr-rank"></div>
+          <div class="chart-wrap chart-wrap--tall"><canvas id="chart-wr-rank"></canvas></div>
+        </div>
+      </div>
+      <div id="table-eng-rank" class="section-gap"></div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-monetisation" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Monetisation</p><h3 class="section-title">Eligible MM whales · raw + highroller cuts</h3><p class="section-sub">Initial Jul 7–9 · directional only</p></div>
+      <div id="table-mono-cuts"></div>
+      <div class="two-col section-gap">
+        <div class="card">
+          <div class="card-title-row"><p class="card-title">ARPU by rank (raw)</p><div class="card-actions"></div></div>
+          <div class="legend" id="leg-arpu-rank"></div>
+          <div class="chart-wrap chart-wrap--tall"><canvas id="chart-arpu-rank"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title-row"><p class="card-title">ARPU by rank (excl. &gt;₹5k)</p><div class="card-actions"></div></div>
+          <div class="legend" id="leg-arpu-rank5"></div>
+          <div class="chart-wrap chart-wrap--tall"><canvas id="chart-arpu-rank5"></canvas></div>
+        </div>
+      </div>
+      <div class="insights section-gap">
+        <div class="insight warn"><strong>Rookie softer in Test:</strong> Conv% and ARPU lag across cuts — watch as the window grows; not a call on 3 days.</div>
+        <div class="insight"><strong>Remarkable raw ≠ structural:</strong> Highroller noise. After &gt;₹5k exclusion, Remarkable ARPU is ₹98 vs ₹97.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-method" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Methodology</p><h3 class="section-title">Scope and definitions</h3></div>
+      <ul class="method-list" id="method-scope"></ul>
+      <div class="insights section-gap">
+        <div class="insight"><strong>Phase 1 context:</strong> Prior experiment was 4-win Base vs 3-win Test (Jun 15–29). Phase 2 shipped 3-win as Base and tests 2-win.</div>
+        <div class="insight warn"><strong>NDR absolute level:</strong> Pseudo-DAU next-day return among MM whales. Mean over Jul 7–9 is pulled down because Jul 9 has no Jul 10 in the query window — compare arms, not vs Phase 1 absolute.</div>
+        <div class="insight"><strong>D3 whales deferred:</strong> New-user D3 revenue whale ARPU3/ARPU7 will be added once the window/sample grows.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer>Whale MM Win Streak A/B Phase 2 · Initial Jul 7–9 read · Hitwicket Analytics · Jul 2026</footer>
+
+<script src="kit/theme.js"></script>
+<script src="kit/icons.js"></script>
+<script src="kit/chart.umd.js"></script>
+<script src="kit/charts.js"></script>
+<script src="kit/tables.js"></script>
+<script src="kit/report.js"></script>
+<script>
+const DD = {"overall":{"window_days":3,"whale_teams":12221,"match_rows_base":51074,"match_rows_test":50818,"mdau_base":3.95,"mdau_test":3.81,"ndr_base":56.7,"ndr_test":56.3,"ru_wr_base":61,"ru_wr_test":52,"normal_mm_base":1.23,"normal_mm_test":1.68,"whale_mm_base":2.72,"whale_mm_test":2.13,"arpu_raw_base":94,"arpu_raw_test":89,"conv_raw_base":6.58,"conv_raw_test":6.2,"arppu_raw_base":1425,"arppu_raw_test":1442},"engagement":{"labels":["MDAU","Real-user WR %","Normal MM / day","Whale MM / day","NDR %"],"base":[3.95,61,1.23,2.72,56.7],"test":[3.81,52,1.68,2.13,56.3]},"engagement_by_rank":{"labels":["Rookie","Challenger","Proven","Accomplished","Remarkable"],"users_base":[2090,942,1055,1301,628],"users_test":[2156,1018,1070,1322,639],"mdau_base":[3.1,3.46,4.02,4.84,5.56],"mdau_test":[2.96,3.33,3.88,4.68,5.54],"ru_wr_base":[53,61,63,68,66],"ru_wr_test":[40,57,57,57,61],"normal_mm_base":[0.79,0.91,1.18,1.53,2.64],"normal_mm_test":[1.24,1.35,1.63,1.97,3.16]},"monetisation":{"cuts":["Raw","Excl. >₹5k","Excl. >₹10k","Excl. >₹15k"],"arpu_base":[94,60,71,73],"arpu_test":[89,56,62,65],"conv_base":[6.58,6.36,6.5,6.52],"conv_test":[6.2,5.99,6.07,6.1],"arppu_base":[1425,946,1085,1114],"arppu_test":[1442,931,1013,1070],"excl_payers":[0,28,14,11],"excl_revenue":[0,412951,314257,278157]},"monetisation_by_rank_raw":{"labels":["Rookie","Challenger","Proven","Accomplished","Remarkable"],"teams_base":[2090,942,1055,1301,628],"teams_test":[2156,1018,1070,1322,639],"arpu_base":[74,49,72,82,289],"arpu_test":[47,106,100,96,176],"conv_base":[5.74,6.48,6.35,6.76,9.55],"conv_test":[4.64,7.86,7.01,5.82,8.29]},"monetisation_by_rank_excl5k":{"labels":["Rookie","Challenger","Proven","Accomplished","Remarkable"],"arpu_base":[53,49,62,61,98],"arpu_test":[34,68,66,53,97],"conv_base":[5.65,6.48,6.26,6.48,8.53],"conv_test":[4.55,7.5,6.84,5.61,7.86]}};
+
+HWReport.grouped('chart-normal-mm', ['Normal MM / day', 'Whale MM / day'],
+  [DD.overall.normal_mm_base, DD.overall.whale_mm_base],
+  [DD.overall.normal_mm_test, DD.overall.whale_mm_test],
+  HWReport.COLORS.BLUE, HWReport.COLORS.TEAL);
+document.getElementById('leg-normal').innerHTML =
+  '<span class="leg"><i style="background:' + HWReport.COLORS.BLUE + '"></i>Base (3-win)</span>' +
+  '<span class="leg"><i style="background:' + HWReport.COLORS.TEAL + '"></i>Test (2-win)</span>';
+
+HWReport.grouped('chart-arpu-cuts', DD.monetisation.cuts,
+  DD.monetisation.arpu_base, DD.monetisation.arpu_test,
+  HWReport.COLORS.BLUE, HWReport.COLORS.TEAL);
+document.getElementById('leg-arpu').innerHTML =
+  '<span class="leg"><i style="background:' + HWReport.COLORS.BLUE + '"></i>Base ARPU</span>' +
+  '<span class="leg"><i style="background:' + HWReport.COLORS.TEAL + '"></i>Test ARPU</span>';
+
+HWReport.grouped('chart-mdau-rank', DD.engagement_by_rank.labels,
+  DD.engagement_by_rank.mdau_base, DD.engagement_by_rank.mdau_test,
+  HWReport.COLORS.BLUE, HWReport.COLORS.TEAL);
+document.getElementById('leg-mdau-rank').innerHTML =
+  '<span class="leg"><i style="background:' + HWReport.COLORS.BLUE + '"></i>Base</span>' +
+  '<span class="leg"><i style="background:' + HWReport.COLORS.TEAL + '"></i>Test</span>';
+
+HWReport.grouped('chart-wr-rank', DD.engagement_by_rank.labels,
+  DD.engagement_by_rank.ru_wr_base, DD.engagement_by_rank.ru_wr_test,
+  HWReport.COLORS.BLUE, HWReport.COLORS.TEAL, { ymax: 80 });
+document.getElementById('leg-wr-rank').innerHTML =
+  '<span class="leg"><i style="background:' + HWReport.COLORS.BLUE + '"></i>Base</span>' +
+  '<span class="leg"><i style="background:' + HWReport.COLORS.TEAL + '"></i>Test</span>';
+
+HWReport.grouped('chart-arpu-rank', DD.monetisation_by_rank_raw.labels,
+  DD.monetisation_by_rank_raw.arpu_base, DD.monetisation_by_rank_raw.arpu_test,
+  HWReport.COLORS.BLUE, HWReport.COLORS.TEAL);
+document.getElementById('leg-arpu-rank').innerHTML =
+  '<span class="leg"><i style="background:' + HWReport.COLORS.BLUE + '"></i>Base</span>' +
+  '<span class="leg"><i style="background:' + HWReport.COLORS.TEAL + '"></i>Test</span>';
+
+HWReport.grouped('chart-arpu-rank5', DD.monetisation_by_rank_excl5k.labels,
+  DD.monetisation_by_rank_excl5k.arpu_base, DD.monetisation_by_rank_excl5k.arpu_test,
+  HWReport.COLORS.BLUE, HWReport.COLORS.TEAL);
+document.getElementById('leg-arpu-rank5').innerHTML =
+  '<span class="leg"><i style="background:' + HWReport.COLORS.BLUE + '"></i>Base</span>' +
+  '<span class="leg"><i style="background:' + HWReport.COLORS.TEAL + '"></i>Test</span>';
+
+HWReport.table('table-eng-rank', {
+  compTable: true, sortable: true,
+  columns: [
+    { label: 'First PvP rank', rowHeader: true },
+    { label: 'Users Base', fmt: 'count' },
+    { label: 'Users Test', fmt: 'count' },
+    { label: 'MDAU Base', fmt: 'raw' },
+    { label: 'MDAU Test', fmt: 'raw' },
+    { label: 'RU WR Base', fmt: 'pct' },
+    { label: 'RU WR Test', fmt: 'pct' },
+    { label: 'Normal MM Base', fmt: 'raw' },
+    { label: 'Normal MM Test', fmt: 'raw' }
+  ],
+  rows: DD.engagement_by_rank.labels.map(function (l, i) {
+    return [
+      l,
+      DD.engagement_by_rank.users_base[i],
+      DD.engagement_by_rank.users_test[i],
+      DD.engagement_by_rank.mdau_base[i],
+      DD.engagement_by_rank.mdau_test[i],
+      DD.engagement_by_rank.ru_wr_base[i],
+      DD.engagement_by_rank.ru_wr_test[i],
+      DD.engagement_by_rank.normal_mm_base[i],
+      DD.engagement_by_rank.normal_mm_test[i]
+    ];
+  })
+});
+
+HWReport.table('table-mono-cuts', {
+  compTable: true, sortable: true,
+  columns: [
+    { label: 'Cut', rowHeader: true },
+    { label: 'ARPU Base', fmt: 'inr' },
+    { label: 'ARPU Test', fmt: 'inr' },
+    { label: 'Conv% Base', fmt: 'pct' },
+    { label: 'Conv% Test', fmt: 'pct' },
+    { label: 'ARPPU Base', fmt: 'inr' },
+    { label: 'ARPPU Test', fmt: 'inr' },
+    { label: 'Excluded payers', fmt: 'count' }
+  ],
+  rows: DD.monetisation.cuts.map(function (l, i) {
+    return [
+      l,
+      DD.monetisation.arpu_base[i],
+      DD.monetisation.arpu_test[i],
+      DD.monetisation.conv_base[i],
+      DD.monetisation.conv_test[i],
+      DD.monetisation.arppu_base[i],
+      DD.monetisation.arppu_test[i],
+      DD.monetisation.excl_payers[i]
+    ];
+  })
+});
+
+document.getElementById('method-scope').innerHTML =
+  '<li><strong>Window:</strong> Jul 7–9, 2026 (3 days) — initial read only</li>' +
+  '<li><strong>Arms:</strong> Base = 1 in 4 wins (3-win streak) · Test = 1 in 3 wins (2-win streak)</li>' +
+  '<li><strong>Assignment:</strong> epoch = team_created_at_unix % 100; &lt;50 Base, ≥50 Test</li>' +
+  '<li><strong>Population:</strong> Whale-eligible ARENAS (power-band filter by coarse rank), status = 2</li>' +
+  '<li><strong>MDAU:</strong> mean PvP matches per whale-team per active day, then mean by AB</li>' +
+  '<li><strong>NDR:</strong> pseudo-DAU next-day return among MM whales</li>' +
+  '<li><strong>Real-user WR:</strong> win rate on opp_is_bot = 0 matches</li>' +
+  '<li><strong>Monetisation:</strong> payments in window mapped to eligible whale teams; highroller cuts at ₹5k / ₹10k / ₹15k</li>' +
+  '<li><strong>Source:</strong> Whale MM win streak AB Phase 2.ipynb</li>';
+
+HWReport.initCardChrome();
+document.addEventListener('hwreport:tabswitch', function (e) {
+  var panel = document.getElementById('tab-' + e.detail.name);
+  if (panel) HWReport.initCardChrome(panel);
+});
+</script>
+</body>
+</html>
