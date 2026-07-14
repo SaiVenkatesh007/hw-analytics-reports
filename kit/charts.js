@@ -263,11 +263,19 @@ HWReport.dualBar = function (id, labels, closeData, oneSidedData, opts) {
   var ctx = document.getElementById(id);
   if (!ctx) return;
   var c = HWReport.COLORS;
+  var yFmt = opts.yFmt || 'pct';
   var scales = _scaleOpts();
   scales.y.min = opts.ymin != null ? opts.ymin : 0;
-  scales.y.max = opts.ymax != null ? opts.ymax : 70;
-  scales.y.ticks.callback = HWReport.fmt.tick('pct');
-  var chartOpts = _baseOpts('bar', { plugins: { legend: { display: true } }, scales: scales });
+  if (opts.ymax != null) scales.y.max = opts.ymax;
+  else if (yFmt === 'pct') scales.y.max = 70;
+  scales.y.ticks.callback = opts.tickCallback || HWReport.fmt.tick(yFmt);
+  var chartOpts = _baseOpts('bar', {
+    plugins: {
+      legend: { display: true },
+      tooltip: { callbacks: { label: HWReport.fmt.tooltip(yFmt) } },
+    },
+    scales: scales,
+  });
   _initOrUpdateChart(id, ctx, {
     type: 'bar',
     data: { labels: labels, datasets: [_barDs(opts.label1 || 'Close %', closeData, c.BLUE), _barDs(opts.label2 || 'One-sided %', oneSidedData, c.CORAL)] },
@@ -303,12 +311,20 @@ HWReport.singleBar = function (id, labels, data, color, yOpts) {
   yOpts = yOpts || {};
   var ctx = document.getElementById(id);
   if (!ctx) return;
+  var yFmt = yOpts.yFmt || 'pct';
   var scales = _scaleOpts();
   scales.x.ticks.maxRotation = 45;
   scales.y.min = yOpts.min != null ? yOpts.min : 0;
-  scales.y.max = yOpts.max != null ? yOpts.max : 100;
-  scales.y.ticks.callback = yOpts.tickCallback || HWReport.fmt.tick(yOpts.yFmt || 'pct');
-  var chartOpts = _baseOpts('bar', { plugins: { legend: { display: false } }, scales: scales });
+  if (yOpts.max != null) scales.y.max = yOpts.max;
+  else if (yFmt === 'pct') scales.y.max = 100;
+  scales.y.ticks.callback = yOpts.tickCallback || HWReport.fmt.tick(yFmt);
+  var chartOpts = _baseOpts('bar', {
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: HWReport.fmt.tooltip(yFmt) } },
+    },
+    scales: scales,
+  });
   _initOrUpdateChart(id, ctx, {
     type: 'bar',
     data: { labels: labels, datasets: [_barDs(yOpts.label || 'Value', data, color)] },
