@@ -1,29 +1,27 @@
-Increased Wicket Chance — Jul 7–8 Redeploy Read
-Human vs human · Matched Base = Exp per bracket · 4 power brackets (0–50k to 100k+) · Jul 7–8 2026 · Base=0 / Exp=2
+Increased Wicket Chance — Jul 7–13 Redeploy Read
+Human vs human · Matched Base = Exp per bracket · 4 power brackets · Jul 7–13 2026 · Base=0 / Exp=2
 Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/wicket_chance_ab_jul7_redeploy.html
 
-*Context: Jul 7–8 post-redeploy read — supersedes Jul 7-only and bot-contaminated passes*
-   - Bot opponents removed on anchor matches; next-match follow-up pool includes bot matches
-   - Base and Exp matched per power bracket (~13–23k per arm post ball-merge)
-   - Two-day window for stability vs single-day noise
+*Context: week-long post-redeploy read — confirms Jul 7–8 direction at larger N*
+   - Human-vs-human anchors, matched Base=Exp per bracket
+   - Same-day next-match follow-up includes bot matches
+   - Next-day (5+ match days) Exp N still too thin at ~20% traffic
 
-*1. Median wickets move 2→3 — goal partially met*
-   - Median wickets 2→3 in every bracket (0–50k through 100k+)
-   - Mean wickets +22–31% (e.g. 0–50k 2.60→3.34, +28%)
-   - Partial progress toward stated 1→3 median goal (Jun under-powered read had median stuck at 2)
+*1. Median wickets 2→3 holds over the full week*
+   - Median 2→3 in every bracket; mean wickets +22–30% (e.g. 0–50k 2.57→3.33)
+   - Scores −2.8% to −7.7%; balls faced flat (~26)
+   - Effect holds batting first and bowling first
 
-*2. Scores fall 3–8%; innings length flat*
-   - Mean scores −7.7% (0–50k) to −3.4% (100k+); median scores −2 to −4 runs
-   - Balls faced ~flat (~26); effect holds batting first and bowling first
-   - WR dips modestly (0–50k 48.5→43.6, −4.9pp)
+*2. Mild shot adaptation; mechanical lift on boundaries*
+   - Zeros/ones up ~+0.5–1.9pp; fours/sixes down ~−0.5–1.6pp
+   - Strongest below 75k; fours wicket counts up sharply
 
-*3. Mild shot adaptation — strongest below 75k*
-   - Zeros/ones up ~+1–2pp; fours/sixes down ~−1–2pp; twos flat
-   - Fours wicket rates up +37–55% relative; risk reallocation not full behaviour change
+*3. Same-day continuation is neutral*
+   - Match-level same-day next-match retention: Base 83.68% vs Exp 83.74% (+0.06pp)
 
-*4. Same-day next-match retention is flat*
-   - Match-level retention: Base 83.51% vs Exp 83.60% (+0.09pp)
-   - By bracket: both arms 82–87%; no meaningful AB gap
-   - Exp=2 does not appear to hurt session continuation
+*4. Next-day retention — not enough Exp base yet*
+   - Among team-days with ≥5 matches: Exp only ~2.7k team-days vs ~95k Base
+   - Too thin for a proper next-day read at current ~20% Exp share
+   - Suggest scale Exp to 50% so this cut can be read with confidence
 
-*Takeaway:* Hold Exp=2 — redeploy delivers the intended mechanical wicket lift (median 2→3) with modest score impact, mild shot adaptation, and neutral retention. Monitor squad-diversification signals over a longer window.
+*Takeaway:* Hold Exp=2 — mechanical and median lift confirmed over Jul 7–13. Scale treatment to 50% to properly read next-day retention among heavy players.
