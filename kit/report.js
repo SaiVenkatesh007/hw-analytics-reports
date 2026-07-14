@@ -120,6 +120,14 @@ HWReport.initTabs = function () {
 
 HWReport.initInsights = function () {
   document.querySelectorAll('.insight').forEach(function (el) {
+    // Wrap prose in .insight-body so display:flex does not treat each
+    // <strong>/text node as its own flex item (breaks mid-sentence on 5s, 60s, etc.).
+    if (!el.querySelector('.insight-body')) {
+      var body = document.createElement('div');
+      body.className = 'insight-body';
+      while (el.firstChild) body.appendChild(el.firstChild);
+      el.appendChild(body);
+    }
     if (el.querySelector('.insight-icon')) return;
     var iconName = 'alert';
     if (el.classList.contains('good')) iconName = 'trend-up';
