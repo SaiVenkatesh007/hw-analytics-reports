@@ -80,7 +80,7 @@ HWReport.initCardChrome = function (scope) {
   root.querySelectorAll('.card').forEach(function (card) {
     if (card.getAttribute('data-chrome') === '1') return;
     var canvas = card.querySelector('canvas[id]');
-    var tableWrap = card.querySelector('.hw-table-wrap');
+    var tableWrap = card.querySelector('.hw-table-wrap, .table-wrap');
     if (!canvas && !tableWrap) return;
     card.setAttribute('data-chrome', '1');
     var titleEl = card.querySelector('.card-title');
