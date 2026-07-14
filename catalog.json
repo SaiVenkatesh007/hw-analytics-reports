@@ -7,6 +7,22 @@
   },
   "reports": [
     {
+      "slug": "rank_mm_masterful_plus_sim",
+      "title": "Rank-Based MM \u2014 Masterful+ Simulation",
+      "owner": "Venkatesh",
+      "date": "2026-07-14",
+      "date_label": "Jul 12, 2026",
+      "tags": [
+        "matchmaking",
+        "rank-based-mm",
+        "masterful",
+        "simulation"
+      ],
+      "thesis": "Ship Masterful+ rank MM with whale timer; add cold-start/top-10 assists \u2014 biggest lift for non-whales and off-peak hours.",
+      "description": "Extensive sim of proposed Masterful+ matchmaking: evening deep-dive + full-day hourly concentration, v1 vs v2.",
+      "handoff": "handoffs/rank_mm_masterful_plus_sim.txt"
+    },
+    {
       "slug": "wicket_chance_ab_jul7_redeploy",
       "title": "Increased Wicket Chance \u2014 Jul 7\u201313 Redeploy Read",
       "owner": "Venkatesh",

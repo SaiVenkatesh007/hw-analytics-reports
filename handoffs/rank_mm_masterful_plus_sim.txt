@@ -1,0 +1,25 @@
+Rank-Based MM — Masterful+ Simulation
+Synthetic create→5s runs · 60s TTL · 2026-07-12 evening + full day · v1 vs v2 assists
+
+Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/rank_mm_masterful_plus_sim.html
+
+*Context: Proposed Masterful+ rank MM pool simulation (not live MM outcomes). Pool includes Remarkable 3 for M1 cold-start; metrics are Masterful+ only.*
+   - Tickets from albatross_production.create; synthetic 5s runs; expire at 60s
+   - v1 = same-rank + 0.9–1.1 + whale timer; v2 = + cold-start / top-10 assists
+   - Bounds are aspirational (~55% whale today)
+
+*1. Whale timer clears whales*
+   - Evening whales: 100% match under v1; ~38% in 0–10s, ~20% need rank+2, ~1% need 30s+
+   - Full-day Masterful+: 83.9K tickets, 55% whale
+
+*2. v2 assists rescue non-whales*
+   - Evening overall match 94.7% → 98.3%; expire 5.3% → 1.7%
+   - Legendary 2 non-whale match 77%→95%; L1 81%→92%; M1 80%→88%
+   - Cold-start = 34% of evening matched assists; top-10 only ~1%
+
+*3. Off-peak hours are the stress test*
+   - Peak (~4.9K/hr): v1 already ~95% match
+   - Hours 04–06: v1 match 84–86% / expire 14–16% → v2 92–93% / 7–8%
+   - Largest v2 match lifts at hours 6 (+9pp), 7 (+8), 2–3 (+7)
+
+*Takeaway:* Ship same-rank + power band + whale timed expansion with cold-start/top-10 assists. Sign off on morning off-peak pool depth, not evening peak alone.

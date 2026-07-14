@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){try{var t=localStorage.getItem('hw-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<title>Rank-Based MM — Masterful+ Simulation</title>
+<meta name="description" content="Synthetic sim of proposed Masterful+ rank matchmaking — evening deep-dive + full-day hourly concentration, v1 vs v2 assists.">
+<meta property="og:title" content="Rank-Based MM — Masterful+ Simulation">
+<meta property="og:description" content="Whale timer clears most whales; cold-start assists rescue non-whales and off-peak hours.">
+<meta property="og:url" content="https://saivenkatesh007.github.io/hw-analytics-reports/rank_mm_masterful_plus_sim.html">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" href="kit/favicon.png">
+<link rel="stylesheet" href="kit/report.css">
+</head>
+<body data-report-slug="rank_mm_masterful_plus_sim" data-report-owner="Venkatesh">
+<header>
+  <div class="brand"><div class="dot"></div><h1>Rank-Based MM — Masterful+ Simulation</h1></div>
+  <span class="meta">Synthetic create→5s runs · 60s TTL · 2026-07-12 evening + full day · v1 vs v2</span>
+</header>
+<div class="caveat-banner">Sim on live ticket arrivals with <strong>proposed</strong> rules — not live MM outcomes. Bounds are aspirational (~55% whale today). Greedy pairing ≠ live scorer. Rank Boost / loss-streak not included.</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="HWReport.switchTab('overview', this)">Overview</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('method', this)">Method</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('evening', this)">Evening</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('fullday', this)">Full day</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('ranks', this)">Rank detail</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('assists', this)">Assists &amp; phases</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('future', this)">Future</button>
+</div>
+
+<div id="tab-overview" class="tab-content active">
+  <div class="hero-section">
+    <p class="hero-eyebrow">Game Analytics · PvP Matchmaking · Masterful+</p>
+    <h2 class="hero-title">Proposed Masterful+ MM clears the queue —<br>whale timer works; cold-start rescues thin hours.</h2>
+    <p class="hero-desc">Full-day Masterful+ tickets (<strong>83.9K</strong>): v1 match <strong>93%</strong> → v2 <strong>98%</strong>. Whales already clear under the timed rank expansion. Non-whales and off-peak hours (04–06 IST) see the largest assist lift. Stress-test sign-off on thin hours, not evening peak alone.</p>
+    <div class="hero-stat-wrap">
+      <p class="stat-scoreboard-label">Full-day match rate (v2)</p>
+      <p class="stat-scoreboard up" data-value="98" data-suffix="%" data-decimals="0">98%</p>
+    </div>
+  </div>
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Headline KPIs</p><h3 class="section-title">Full day vs evening window</h3></div>
+      <div class="kpi-row">
+        <div class="kpi-card"><p class="kpi-label">Full-day tickets</p><p class="kpi-value neutral">83.9K</p><p class="kpi-note">Masterful+ · 55% whale</p></div>
+        <div class="kpi-card"><p class="kpi-label">Match v1 → v2</p><p class="kpi-value up">93% → 98%</p><p class="kpi-note">Full day</p></div>
+        <div class="kpi-card"><p class="kpi-label">Expire v1 → v2</p><p class="kpi-value up">7% → 2%</p><p class="kpi-note">Full day</p></div>
+        <div class="kpi-card"><p class="kpi-label">Evening match v2</p><p class="kpi-value up">98.3%</p><p class="kpi-note">15.5K tickets · 20:00–23:30</p></div>
+        <div class="kpi-card"><p class="kpi-label">Mean TTM</p><p class="kpi-value neutral">~9–10s</p><p class="kpi-note">Well under 60s TTL</p></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Key findings</p><h3 class="section-title">What the sim shows</h3></div>
+      <div class="insights">
+        <div class="insight good"><strong>Whale timer is the workhorse:</strong> Evening whales match at 100% under v1. ~38% of matches land in whale 0–10s; ~20% need rank…rank+2; only ~1% need 30s+ unlock.</div>
+        <div class="insight good"><strong>v2 assists lift non-whales:</strong> Legendary 2 non-whale match 77%→95%; Legendary 1 81%→92%; M1 80%→88%. Expires concentrate in non-whales under v1.</div>
+        <div class="insight warn"><strong>Off-peak is the stress test:</strong> Hours 04–06 IST: v1 match 84–86% / expire 14–16%. v2 brings match to 92–93%. Peak hours already ~95% on v1.</div>
+        <div class="insight"><strong>Top-10 aversion is tiny today:</strong> ~1% of evening matches / ~215 tickets — bounds sit far below live power, so almost nobody is “top of band.”</div>
+        <div class="insight warn"><strong>Aspirational bounds:</strong> ~55% of Masterful+ flag as whale vs proposed uppers. Expect heavy whale-condition for 1–2 seasons post-launch until power redistributes.</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Recommendation</p><h3 class="section-title">One call</h3></div>
+      <div class="insights">
+        <div class="insight good"><strong>Ship same-rank + 0.9–1.1 + whale timed expansion, with cold-start / top-10 (v2).</strong> Use morning off-peak as the go/no-go lens for pool depth — not the evening deep-dive alone.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-method" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Simulation</p><h3 class="section-title">How pools are built</h3></div>
+      <div class="insights">
+        <div class="insight"><strong>Source:</strong> <code>albatross_production.create</code> · ARENAS · IS_USER</div>
+        <div class="insight"><strong>Engine:</strong> Tickets enter at create time. Every <strong>5s</strong>, still-searching tickets with age &lt; <strong>60s</strong> form a concurrent pool. Greedy 1:1 (oldest first, power ratio closest to 1.0). Unmatched at 60s → expired.</div>
+        <div class="insight"><strong>Why not live <code>run</code>:</strong> Live runs are shaped by current MM leavers. Proposed rules may keep a ticket until run 3–4 — so we simulate our own runs from create.</div>
+        <div class="insight"><strong>Pool:</strong> pvpLeague ≥ 15 (Remarkable 3 filler for M1 cold-start). All outcome tables are Masterful+ (16–25).</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Rules</p><h3 class="section-title">v1 vs v2</h3></div>
+      <div class="two-col">
+        <div class="card">
+          <p class="card-title">v1 — same-rank + whale timer</p>
+          <div class="insights" id="method-v1"></div>
+        </div>
+        <div class="card">
+          <p class="card-title">v2 — adds cold-start / top-10</p>
+          <div class="insights" id="method-v2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Windows</p><h3 class="section-title">What each tab uses</h3></div>
+      <div id="table-windows"></div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-evening" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Evening 20:00–23:30</p><h3 class="section-title">Overall v1 vs v2</h3></div>
+      <div id="table-eve-overall"></div>
+      <div class="two-col section-gap">
+        <div class="card"><p class="card-title">Non-whale match % by rank (v1 vs v2)</p><div class="chart-wrap chart-wrap--tall"><canvas id="chart-eve-nw-match"></canvas></div></div>
+        <div class="card"><p class="card-title">Whale phase share of matches (v1)</p><div class="chart-wrap chart-wrap--tall"><canvas id="chart-eve-phases"></canvas></div></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Deltas</p><h3 class="section-title">v2 − v1 by rank × whale</h3></div>
+      <div id="table-eve-deltas"></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">v1 detail</p><h3 class="section-title">Match / expire / TTM by rank × whale</h3></div>
+      <div id="table-eve-v1"></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">v2 detail</p><h3 class="section-title">Match / expire / TTM by rank × whale</h3></div>
+      <div id="table-eve-v2"></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">TTM matched</p><h3 class="section-title">Mean / median / p90 (evening)</h3></div>
+      <div class="two-col">
+        <div><p class="card-title">v1</p><div id="table-eve-ttm-v1"></div></div>
+        <div><p class="card-title">v2</p><div id="table-eve-ttm-v2"></div></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Expires (v1)</p><h3 class="section-title">All expired tickets were non-whales</h3></div>
+      <div id="table-eve-expires"></div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-fullday" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Full day</p><h3 class="section-title">Day totals</h3></div>
+      <div id="table-day-overall"></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Concentration</p><h3 class="section-title">Tickets created by IST hour</h3></div>
+      <div class="card"><div class="chart-wrap chart-wrap--tall"><canvas id="chart-hourly-tickets"></canvas></div></div>
+      <div class="kpi-row section-gap">
+        <div class="kpi-card"><p class="kpi-label">Peak hours</p><p class="kpi-value neutral">12 / 22 / 0 / 23</p><p class="kpi-note">~4.8–4.9K tickets/hr · v1 match ~95%</p></div>
+        <div class="kpi-card"><p class="kpi-label">Off-peak</p><p class="kpi-value warn">04–06 IST</p><p class="kpi-note">~1.2–1.5K/hr · v1 match 84–86%</p></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Outcomes by hour</p><h3 class="section-title">Match % and expire % (v1 vs v2)</h3></div>
+      <div class="two-col">
+        <div class="card"><p class="card-title">Match % by hour</p><div class="chart-wrap chart-wrap--tall"><canvas id="chart-hourly-match"></canvas></div></div>
+        <div class="card"><p class="card-title">Expire % by hour</p><div class="chart-wrap chart-wrap--tall"><canvas id="chart-hourly-expire"></canvas></div></div>
+      </div>
+      <div class="card section-gap"><p class="card-title">Mean TTM by hour</p><div class="chart-wrap"><canvas id="chart-hourly-ttm"></canvas></div></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Compare</p><h3 class="section-title">Full hourly v1 vs v2</h3></div>
+      <div id="table-hourly-compare"></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Biggest v2 lifts</p><h3 class="section-title">Hours where assists help most</h3></div>
+      <div id="table-best-deltas"></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Assists by hour</p><h3 class="section-title">v2 matched tickets by assist mode</h3></div>
+      <div class="card"><div class="chart-wrap chart-wrap--tall"><canvas id="chart-assist-hour"></canvas></div></div>
+      <div id="table-assist-hour" class="section-gap"></div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-ranks" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Non-whale pain</p><h3 class="section-title">Evening expire rate — where v1 struggles</h3></div>
+      <div class="card"><div class="chart-wrap chart-wrap--tall"><canvas id="chart-nw-expire"></canvas></div></div>
+      <div class="insights section-gap">
+        <div class="insight bad"><strong>v1 non-whale expires pile up at Legendary:</strong> L2 23%, L1 19%, L3 15%, M1 20%. Whales: 0% expire.</div>
+        <div class="insight good"><strong>v2 cuts those expires sharply:</strong> L2 23→5, L1 19→8, L3 15→4, M1 20→12 (pp).</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Full rank tables</p><h3 class="section-title">Evening v1 / v2 side by side</h3></div>
+      <div id="table-rank-full"></div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-assists" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Whale phases</p><h3 class="section-title">When whales match (evening v1)</h3></div>
+      <div id="table-phases"></div>
+      <div id="table-phase-rank" class="section-gap"></div>
+      <div id="table-cross-rank" class="section-gap"></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Assist mix</p><h3 class="section-title">How v2 matches resolve (evening)</h3></div>
+      <div class="card"><div class="chart-wrap"><canvas id="chart-assist-mix"></canvas></div></div>
+      <div id="table-assist-mix" class="section-gap"></div>
+      <div id="table-assist-rank" class="section-gap"></div>
+      <div id="table-assist-cross" class="section-gap"></div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-future" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Living report</p><h3 class="section-title">Next appends</h3></div>
+      <div class="insights">
+        <div class="insight"><strong>This report is designed to grow.</strong> New analyses land as new tabs + JSON blocks under the same slug — no rewrite of Overview.</div>
+      </div>
+      <div id="table-roadmap" class="section-gap"></div>
+    </div>
+  </main>
+</div>
+
+<footer></footer>
+<script src="kit/theme.js"></script>
+<script src="kit/icons.js"></script>
+<script src="kit/chart.umd.js"></script>
+<script src="kit/charts.js"></script>
+<script src="kit/tables.js"></script>
+<script src="kit/report.js"></script>
+<script>
+const DD = {"meta":{"title":"Rank-Based MM \u2014 Masterful+ Simulation","slug":"rank_mm_masterful_plus_sim","meta_line":"Synthetic create\u21925s runs \u00b7 60s TTL \u00b7 2026-07-12 evening + full day \u00b7 v1 vs v2 assists","date_range":"2026-07-12","filters":"ARENAS, IS_USER, pool pvpLeague\u226515, focal Masterful+ (16\u201325)","source_notebook":"Rank Based MM Synthetic Runs.ipynb; Rank Based MM Synthetic Runs [Full Day Hourly].ipynb","owner":"Venkatesh","date":"2026-07-14","date_label":"Jul 12, 2026","tags":["matchmaking","rank-based-mm","masterful","simulation"],"thesis":"Ship Masterful+ rank MM with whale timer; add cold-start/top-10 assists \u2014 biggest lift for non-whales and off-peak hours.","description":"Extensive sim of proposed Masterful+ matchmaking: evening deep-dive + full-day hourly concentration, v1 vs v2.","handoff":"handoffs/rank_mm_masterful_plus_sim.txt"},"overall":{"evening_tickets":15464,"evening_match_v1":94.7,"evening_match_v2":98.3,"evening_expire_v1":5.3,"evening_expire_v2":1.7,"evening_ttm_v1":10,"evening_ttm_v2":9,"fullday_tickets":83854,"fullday_pct_whale":55,"fullday_match_v1":93,"fullday_match_v2":98,"fullday_expire_v1":7,"fullday_expire_v2":2,"fullday_ttm_v1":10,"fullday_ttm_v2":9,"ttl_s":60,"run_every_s":5},"thesis":{"headline":"Proposed Masterful+ MM clears the queue \u2014 whale timer is the workhorse; cold-start rescues non-whales and thin hours.","recommendation":"Proceed with same-rank + 0.9\u20131.1 + whale timed expansion; include cold-start / top-10 assists (v2). Stress-test sign-off on off-peak hours (04\u201306 IST), not evening peak alone.","caveats":["Power bounds are aspirational end-state anchors \u2014 ~55% of today's Masterful+ tickets flag as whale.","Cold-start / top-10 marks use those same bounds, not live empirical quantiles.","Synthetic greedy pairing \u2260 live MM scorer; Rank Boost / Dynamic Rep / loss-streak not in this sim."]},"method":{"source":"albatross_production.create","pool":"pvpLeague \u2265 15 (Remarkable 3 filler for M1 cold-start); stats on Masterful+ only","engine":"Every 5s, active unmatched tickets with age < 60s form a pool; greedy 1:1 oldest-first, closest power ratio to 1.0","v1":["Same-rank opponents","Power band opp/self \u2208 [0.9, 1.1]","Whale: 0\u201310s same-rank; 10\u201330s rank\u2026rank+2; 30s+ any Masterful+","Titan: never whale"],"v2":["Everything in v1","Cold-start (<10% mark): 60% one-rank-below / 40% same-rank","Top-10: 60% one-rank-above / 40% same-rank (not Titan)","Priority: whale \u2192 cold-start \u2192 top10 \u2192 same-rank"],"windows":{"evening":"2026-07-12 20:00\u201323:30 IST","fullday":"2026-07-12 00:00\u201323:59 IST"}},"evening":{"overall":[{"mode":"v1","tickets":15464,"pct_matched":95,"pct_expired":5,"mean_ttm_s":10,"median_ttm_s":5},{"mode":"v2","tickets":15464,"pct_matched":98,"pct_expired":2,"mean_ttm_s":9,"median_ttm_s":5}],"by_rank_whale_v1":[{"rank":"Masterful 1","is_whale":false,"tickets":510,"pct_matched":80,"pct_expired":20,"mean_ttm_s":13,"median_ttm_s":4,"mean_proposals":1},{"rank":"Masterful 1","is_whale":true,"tickets":2822,"pct_matched":100,"pct_expired":0,"mean_ttm_s":7,"median_ttm_s":5,"mean_proposals":2},{"rank":"Masterful 2","is_whale":false,"tickets":385,"pct_matched":94,"pct_expired":6,"mean_ttm_s":12,"median_ttm_s":5,"mean_proposals":1},{"rank":"Masterful 2","is_whale":true,"tickets":2338,"pct_matched":100,"pct_expired":0,"mean_ttm_s":7,"median_ttm_s":4,"mean_proposals":1},{"rank":"Masterful 3","is_whale":false,"tickets":441,"pct_matched":93,"pct_expired":7,"mean_ttm_s":12,"median_ttm_s":6,"mean_proposals":1},{"rank":"Masterful 3","is_whale":true,"tickets":1537,"pct_matched":100,"pct_expired":0,"mean_ttm_s":7,"median_ttm_s":5,"mean_proposals":1},{"rank":"Supreme 1","is_whale":false,"tickets":640,"pct_matched":93,"pct_expired":7,"mean_ttm_s":11,"median_ttm_s":4,"mean_proposals":1},{"rank":"Supreme 1","is_whale":true,"tickets":962,"pct_matched":100,"pct_expired":0,"mean_ttm_s":8,"median_ttm_s":6,"mean_proposals":1},{"rank":"Supreme 2","is_whale":false,"tickets":715,"pct_matched":94,"pct_expired":6,"mean_ttm_s":12,"median_ttm_s":4,"mean_proposals":1},{"rank":"Supreme 2","is_whale":true,"tickets":555,"pct_matched":100,"pct_expired":0,"mean_ttm_s":10,"median_ttm_s":10,"mean_proposals":1},{"rank":"Supreme 3","is_whale":false,"tickets":690,"pct_matched":89,"pct_expired":11,"mean_ttm_s":12,"median_ttm_s":4,"mean_proposals":1},{"rank":"Supreme 3","is_whale":true,"tickets":297,"pct_matched":100,"pct_expired":0,"mean_ttm_s":10,"median_ttm_s":9,"mean_proposals":1},{"rank":"Legendary 1","is_whale":false,"tickets":662,"pct_matched":81,"pct_expired":19,"mean_ttm_s":14,"median_ttm_s":4,"mean_proposals":1},{"rank":"Legendary 1","is_whale":true,"tickets":82,"pct_matched":100,"pct_expired":0,"mean_ttm_s":10,"median_ttm_s":10,"mean_proposals":1},{"rank":"Legendary 2","is_whale":false,"tickets":555,"pct_matched":77,"pct_expired":23,"mean_ttm_s":15,"median_ttm_s":4,"mean_proposals":1},{"rank":"Legendary 2","is_whale":true,"tickets":26,"pct_matched":100,"pct_expired":0,"mean_ttm_s":17,"median_ttm_s":12,"mean_proposals":1},{"rank":"Legendary 3","is_whale":false,"tickets":1039,"pct_matched":85,"pct_expired":15,"mean_ttm_s":14,"median_ttm_s":4,"mean_proposals":1},{"rank":"Titan","is_whale":false,"tickets":1208,"pct_matched":93,"pct_expired":7,"mean_ttm_s":12,"median_ttm_s":4,"mean_proposals":1}],"by_rank_whale_v2":[{"rank":"Masterful 1","is_whale":false,"tickets":510,"pct_matched":88,"pct_expired":12,"mean_ttm_s":10,"median_ttm_s":5,"mean_proposals":1},{"rank":"Masterful 1","is_whale":true,"tickets":2822,"pct_matched":100,"pct_expired":0,"mean_ttm_s":7,"median_ttm_s":4,"mean_proposals":2},{"rank":"Masterful 2","is_whale":false,"tickets":385,"pct_matched":98,"pct_expired":2,"mean_ttm_s":10,"median_ttm_s":5,"mean_proposals":1},{"rank":"Masterful 2","is_whale":true,"tickets":2338,"pct_matched":100,"pct_expired":0,"mean_ttm_s":7,"median_ttm_s":4,"mean_proposals":1},{"rank":"Masterful 3","is_whale":false,"tickets":441,"pct_matched":99,"pct_expired":1,"mean_ttm_s":10,"median_ttm_s":5,"mean_proposals":1},{"rank":"Masterful 3","is_whale":true,"tickets":1537,"pct_matched":100,"pct_expired":0,"mean_ttm_s":7,"median_ttm_s":5,"mean_proposals":1},{"rank":"Supreme 1","is_whale":false,"tickets":640,"pct_matched":99,"pct_expired":1,"mean_ttm_s":9,"median_ttm_s":5,"mean_proposals":1},{"rank":"Supreme 1","is_whale":true,"tickets":962,"pct_matched":100,"pct_expired":0,"mean_ttm_s":8,"median_ttm_s":6,"mean_proposals":1},{"rank":"Supreme 2","is_whale":false,"tickets":715,"pct_matched":99,"pct_expired":1,"mean_ttm_s":9,"median_ttm_s":5,"mean_proposals":1},{"rank":"Supreme 2","is_whale":true,"tickets":555,"pct_matched":100,"pct_expired":0,"mean_ttm_s":10,"median_ttm_s":9,"mean_proposals":1},{"rank":"Supreme 3","is_whale":false,"tickets":690,"pct_matched":98,"pct_expired":2,"mean_ttm_s":9,"median_ttm_s":5,"mean_proposals":1},{"rank":"Supreme 3","is_whale":true,"tickets":297,"pct_matched":100,"pct_expired":0,"mean_ttm_s":11,"median_ttm_s":9,"mean_proposals":1},{"rank":"Legendary 1","is_whale":false,"tickets":662,"pct_matched":92,"pct_expired":8,"mean_ttm_s":11,"median_ttm_s":7,"mean_proposals":1},{"rank":"Legendary 1","is_whale":true,"tickets":82,"pct_matched":100,"pct_expired":0,"mean_ttm_s":11,"median_ttm_s":11,"mean_proposals":1},{"rank":"Legendary 2","is_whale":false,"tickets":555,"pct_matched":95,"pct_expired":5,"mean_ttm_s":11,"median_ttm_s":5,"mean_proposals":1},{"rank":"Legendary 2","is_whale":true,"tickets":26,"pct_matched":100,"pct_expired":0,"mean_ttm_s":15,"median_ttm_s":12,"mean_proposals":1},{"rank":"Legendary 3","is_whale":false,"tickets":1039,"pct_matched":96,"pct_expired":4,"mean_ttm_s":10,"median_ttm_s":6,"mean_proposals":1},{"rank":"Titan","is_whale":false,"tickets":1208,"pct_matched":97,"pct_expired":3,"mean_ttm_s":12,"median_ttm_s":7,"mean_proposals":1}],"ttm_matched_v1":[{"rank":"Masterful 1","is_whale":false,"matched":407,"mean_ttm_s":13,"median_ttm_s":4,"p90_ttm_s":36},{"rank":"Masterful 1","is_whale":true,"matched":2822,"mean_ttm_s":7,"median_ttm_s":5,"p90_ttm_s":14},{"rank":"Masterful 2","is_whale":false,"matched":360,"mean_ttm_s":12,"median_ttm_s":5,"p90_ttm_s":35},{"rank":"Masterful 2","is_whale":true,"matched":2338,"mean_ttm_s":7,"median_ttm_s":4,"p90_ttm_s":14},{"rank":"Masterful 3","is_whale":false,"matched":411,"mean_ttm_s":12,"median_ttm_s":6,"p90_ttm_s":33},{"rank":"Masterful 3","is_whale":true,"matched":1537,"mean_ttm_s":7,"median_ttm_s":5,"p90_ttm_s":14},{"rank":"Supreme 1","is_whale":false,"matched":597,"mean_ttm_s":11,"median_ttm_s":4,"p90_ttm_s":32},{"rank":"Supreme 1","is_whale":true,"matched":962,"mean_ttm_s":8,"median_ttm_s":6,"p90_ttm_s":15},{"rank":"Supreme 2","is_whale":false,"matched":671,"mean_ttm_s":12,"median_ttm_s":4,"p90_ttm_s":36},{"rank":"Supreme 2","is_whale":true,"matched":555,"mean_ttm_s":10,"median_ttm_s":10,"p90_ttm_s":23},{"rank":"Supreme 3","is_whale":false,"matched":612,"mean_ttm_s":12,"median_ttm_s":4,"p90_ttm_s":36},{"rank":"Supreme 3","is_whale":true,"matched":297,"mean_ttm_s":10,"median_ttm_s":9,"p90_ttm_s":25},{"rank":"Legendary 1","is_whale":false,"matched":536,"mean_ttm_s":14,"median_ttm_s":4,"p90_ttm_s":43},{"rank":"Legendary 1","is_whale":true,"matched":82,"mean_ttm_s":10,"median_ttm_s":10,"p90_ttm_s":22},{"rank":"Legendary 2","is_whale":false,"matched":427,"mean_ttm_s":15,"median_ttm_s":4,"p90_ttm_s":46},{"rank":"Legendary 2","is_whale":true,"matched":26,"mean_ttm_s":17,"median_ttm_s":12,"p90_ttm_s":32},{"rank":"Legendary 3","is_whale":false,"matched":884,"mean_ttm_s":14,"median_ttm_s":4,"p90_ttm_s":41},{"rank":"Titan","is_whale":false,"matched":1124,"mean_ttm_s":12,"median_ttm_s":4,"p90_ttm_s":35}],"ttm_matched_v2":[{"rank":"Masterful 1","is_whale":false,"matched":448,"mean_ttm_s":10,"median_ttm_s":5,"p90_ttm_s":27},{"rank":"Masterful 1","is_whale":true,"matched":2822,"mean_ttm_s":7,"median_ttm_s":4,"p90_ttm_s":14},{"rank":"Masterful 2","is_whale":false,"matched":377,"mean_ttm_s":10,"median_ttm_s":5,"p90_ttm_s":28},{"rank":"Masterful 2","is_whale":true,"matched":2338,"mean_ttm_s":7,"median_ttm_s":4,"p90_ttm_s":14},{"rank":"Masterful 3","is_whale":false,"matched":435,"mean_ttm_s":10,"median_ttm_s":5,"p90_ttm_s":25},{"rank":"Masterful 3","is_whale":true,"matched":1536,"mean_ttm_s":7,"median_ttm_s":5,"p90_ttm_s":14},{"rank":"Supreme 1","is_whale":false,"matched":634,"mean_ttm_s":9,"median_ttm_s":5,"p90_ttm_s":23},{"rank":"Supreme 1","is_whale":true,"matched":962,"mean_ttm_s":8,"median_ttm_s":6,"p90_ttm_s":16},{"rank":"Supreme 2","is_whale":false,"matched":707,"mean_ttm_s":9,"median_ttm_s":5,"p90_ttm_s":23},{"rank":"Supreme 2","is_whale":true,"matched":555,"mean_ttm_s":10,"median_ttm_s":9,"p90_ttm_s":24},{"rank":"Supreme 3","is_whale":false,"matched":673,"mean_ttm_s":9,"median_ttm_s":5,"p90_ttm_s":24},{"rank":"Supreme 3","is_whale":true,"matched":297,"mean_ttm_s":11,"median_ttm_s":9,"p90_ttm_s":28},{"rank":"Legendary 1","is_whale":false,"matched":612,"mean_ttm_s":11,"median_ttm_s":7,"p90_ttm_s":30},{"rank":"Legendary 1","is_whale":true,"matched":82,"mean_ttm_s":11,"median_ttm_s":11,"p90_ttm_s":21},{"rank":"Legendary 2","is_whale":false,"matched":529,"mean_ttm_s":11,"median_ttm_s":5,"p90_ttm_s":31},{"rank":"Legendary 2","is_whale":true,"matched":26,"mean_ttm_s":15,"median_ttm_s":12,"p90_ttm_s":28},{"rank":"Legendary 3","is_whale":false,"matched":998,"mean_ttm_s":10,"median_ttm_s":6,"p90_ttm_s":28},{"rank":"Titan","is_whale":false,"matched":1169,"mean_ttm_s":12,"median_ttm_s":7,"p90_ttm_s":32}],"deltas":[{"rank":"Masterful 1","is_whale":false,"pct_matched_v1":80,"pct_matched_v2":88,"pct_matched_delta":8,"pct_expired_v1":20,"pct_expired_v2":12,"pct_expired_delta":-8,"mean_ttm_v1":13,"mean_ttm_v2":10,"mean_ttm_delta":-3},{"rank":"Masterful 1","is_whale":true,"pct_matched_v1":100,"pct_matched_v2":100,"pct_matched_delta":0,"pct_expired_v1":0,"pct_expired_v2":0,"pct_expired_delta":0,"mean_ttm_v1":7,"mean_ttm_v2":7,"mean_ttm_delta":0},{"rank":"Masterful 2","is_whale":false,"pct_matched_v1":94,"pct_matched_v2":98,"pct_matched_delta":4,"pct_expired_v1":6,"pct_expired_v2":2,"pct_expired_delta":-4,"mean_ttm_v1":12,"mean_ttm_v2":10,"mean_ttm_delta":-2},{"rank":"Masterful 2","is_whale":true,"pct_matched_v1":100,"pct_matched_v2":100,"pct_matched_delta":0,"pct_expired_v1":0,"pct_expired_v2":0,"pct_expired_delta":0,"mean_ttm_v1":7,"mean_ttm_v2":7,"mean_ttm_delta":0},{"rank":"Masterful 3","is_whale":false,"pct_matched_v1":93,"pct_matched_v2":99,"pct_matched_delta":5,"pct_expired_v1":7,"pct_expired_v2":1,"pct_expired_delta":-5,"mean_ttm_v1":12,"mean_ttm_v2":10,"mean_ttm_delta":-2},{"rank":"Masterful 3","is_whale":true,"pct_matched_v1":100,"pct_matched_v2":100,"pct_matched_delta":0,"pct_expired_v1":0,"pct_expired_v2":0,"pct_expired_delta":0,"mean_ttm_v1":7,"mean_ttm_v2":7,"mean_ttm_delta":0},{"rank":"Supreme 1","is_whale":false,"pct_matched_v1":93,"pct_matched_v2":99,"pct_matched_delta":6,"pct_expired_v1":7,"pct_expired_v2":1,"pct_expired_delta":-6,"mean_ttm_v1":11,"mean_ttm_v2":9,"mean_ttm_delta":-2},{"rank":"Supreme 1","is_whale":true,"pct_matched_v1":100,"pct_matched_v2":100,"pct_matched_delta":0,"pct_expired_v1":0,"pct_expired_v2":0,"pct_expired_delta":0,"mean_ttm_v1":8,"mean_ttm_v2":8,"mean_ttm_delta":0},{"rank":"Supreme 2","is_whale":false,"pct_matched_v1":94,"pct_matched_v2":99,"pct_matched_delta":5,"pct_expired_v1":6,"pct_expired_v2":1,"pct_expired_delta":-5,"mean_ttm_v1":12,"mean_ttm_v2":9,"mean_ttm_delta":-3},{"rank":"Supreme 2","is_whale":true,"pct_matched_v1":100,"pct_matched_v2":100,"pct_matched_delta":0,"pct_expired_v1":0,"pct_expired_v2":0,"pct_expired_delta":0,"mean_ttm_v1":10,"mean_ttm_v2":10,"mean_ttm_delta":0},{"rank":"Supreme 3","is_whale":false,"pct_matched_v1":89,"pct_matched_v2":98,"pct_matched_delta":9,"pct_expired_v1":11,"pct_expired_v2":2,"pct_expired_delta":-9,"mean_ttm_v1":12,"mean_ttm_v2":9,"mean_ttm_delta":-3},{"rank":"Supreme 3","is_whale":true,"pct_matched_v1":100,"pct_matched_v2":100,"pct_matched_delta":0,"pct_expired_v1":0,"pct_expired_v2":0,"pct_expired_delta":0,"mean_ttm_v1":10,"mean_ttm_v2":11,"mean_ttm_delta":1},{"rank":"Legendary 1","is_whale":false,"pct_matched_v1":81,"pct_matched_v2":92,"pct_matched_delta":11,"pct_expired_v1":19,"pct_expired_v2":8,"pct_expired_delta":-11,"mean_ttm_v1":14,"mean_ttm_v2":11,"mean_ttm_delta":-2},{"rank":"Legendary 1","is_whale":true,"pct_matched_v1":100,"pct_matched_v2":100,"pct_matched_delta":0,"pct_expired_v1":0,"pct_expired_v2":0,"pct_expired_delta":0,"mean_ttm_v1":10,"mean_ttm_v2":11,"mean_ttm_delta":0},{"rank":"Legendary 2","is_whale":false,"pct_matched_v1":77,"pct_matched_v2":95,"pct_matched_delta":18,"pct_expired_v1":23,"pct_expired_v2":5,"pct_expired_delta":-18,"mean_ttm_v1":15,"mean_ttm_v2":11,"mean_ttm_delta":-4},{"rank":"Legendary 2","is_whale":true,"pct_matched_v1":100,"pct_matched_v2":100,"pct_matched_delta":0,"pct_expired_v1":0,"pct_expired_v2":0,"pct_expired_delta":0,"mean_ttm_v1":17,"mean_ttm_v2":15,"mean_ttm_delta":-2},{"rank":"Legendary 3","is_whale":false,"pct_matched_v1":85,"pct_matched_v2":96,"pct_matched_delta":11,"pct_expired_v1":15,"pct_expired_v2":4,"pct_expired_delta":-11,"mean_ttm_v1":14,"mean_ttm_v2":10,"mean_ttm_delta":-3},{"rank":"Titan","is_whale":false,"pct_matched_v1":93,"pct_matched_v2":97,"pct_matched_delta":4,"pct_expired_v1":7,"pct_expired_v2":3,"pct_expired_delta":-4,"mean_ttm_v1":12,"mean_ttm_v2":12,"mean_ttm_delta":0}],"whale_phases":[{"phase":"non_whale","tickets":6029,"mean_ttm_s":13,"median_ttm_s":4,"mean_proposals":1,"pct_whale":0,"share_of_matches":41},{"phase":"whale_0_10","tickets":5546,"mean_ttm_s":3,"median_ttm_s":3,"mean_proposals":1,"pct_whale":100,"share_of_matches":38},{"phase":"whale_10_30","tickets":2937,"mean_ttm_s":14,"median_ttm_s":13,"mean_proposals":2,"pct_whale":100,"share_of_matches":20},{"phase":"whale_30_plus","tickets":136,"mean_ttm_s":33,"median_ttm_s":32,"mean_proposals":3,"pct_whale":100,"share_of_matches":1}],"phase_by_rank":[{"rank":"Masterful 1","phase":"non_whale","tickets":407,"mean_ttm_s":13},{"rank":"Masterful 1","phase":"whale_0_10","tickets":1889,"mean_ttm_s":3},{"rank":"Masterful 1","phase":"whale_10_30","tickets":918,"mean_ttm_s":14},{"rank":"Masterful 1","phase":"whale_30_plus","tickets":15,"mean_ttm_s":32},{"rank":"Masterful 2","phase":"non_whale","tickets":360,"mean_ttm_s":12},{"rank":"Masterful 2","phase":"whale_0_10","tickets":1607,"mean_ttm_s":3},{"rank":"Masterful 2","phase":"whale_10_30","tickets":707,"mean_ttm_s":14},{"rank":"Masterful 2","phase":"whale_30_plus","tickets":24,"mean_ttm_s":32},{"rank":"Masterful 3","phase":"non_whale","tickets":411,"mean_ttm_s":12},{"rank":"Masterful 3","phase":"whale_0_10","tickets":997,"mean_ttm_s":3},{"rank":"Masterful 3","phase":"whale_10_30","tickets":525,"mean_ttm_s":14},{"rank":"Masterful 3","phase":"whale_30_plus","tickets":15,"mean_ttm_s":33},{"rank":"Supreme 1","phase":"non_whale","tickets":597,"mean_ttm_s":11},{"rank":"Supreme 1","phase":"whale_0_10","tickets":578,"mean_ttm_s":3},{"rank":"Supreme 1","phase":"whale_10_30","tickets":371,"mean_ttm_s":14},{"rank":"Supreme 1","phase":"whale_30_plus","tickets":13,"mean_ttm_s":33},{"rank":"Supreme 2","phase":"non_whale","tickets":671,"mean_ttm_s":12},{"rank":"Supreme 2","phase":"whale_0_10","tickets":274,"mean_ttm_s":3},{"rank":"Supreme 2","phase":"whale_10_30","tickets":243,"mean_ttm_s":15},{"rank":"Supreme 2","phase":"whale_30_plus","tickets":38,"mean_ttm_s":32},{"rank":"Supreme 3","phase":"non_whale","tickets":612,"mean_ttm_s":12},{"rank":"Supreme 3","phase":"whale_0_10","tickets":157,"mean_ttm_s":3},{"rank":"Supreme 3","phase":"whale_10_30","tickets":120,"mean_ttm_s":16},{"rank":"Supreme 3","phase":"whale_30_plus","tickets":20,"mean_ttm_s":32},{"rank":"Legendary 1","phase":"non_whale","tickets":536,"mean_ttm_s":14},{"rank":"Legendary 1","phase":"whale_0_10","tickets":38,"mean_ttm_s":4},{"rank":"Legendary 1","phase":"whale_10_30","tickets":39,"mean_ttm_s":14},{"rank":"Legendary 1","phase":"whale_30_plus","tickets":5,"mean_ttm_s":32},{"rank":"Legendary 2","phase":"non_whale","tickets":427,"mean_ttm_s":15},{"rank":"Legendary 2","phase":"whale_0_10","tickets":6,"mean_ttm_s":4},{"rank":"Legendary 2","phase":"whale_10_30","tickets":14,"mean_ttm_s":14},{"rank":"Legendary 2","phase":"whale_30_plus","tickets":6,"mean_ttm_s":36},{"rank":"Legendary 3","phase":"non_whale","tickets":884,"mean_ttm_s":14},{"rank":"Titan","phase":"non_whale","tickets":1124,"mean_ttm_s":12}],"expires_v1":[{"rank":"Masterful 1","is_whale":false,"expired":103},{"rank":"Masterful 2","is_whale":false,"expired":25},{"rank":"Masterful 3","is_whale":false,"expired":30},{"rank":"Supreme 1","is_whale":false,"expired":43},{"rank":"Supreme 2","is_whale":false,"expired":44},{"rank":"Supreme 3","is_whale":false,"expired":78},{"rank":"Legendary 1","is_whale":false,"expired":126},{"rank":"Legendary 2","is_whale":false,"expired":128},{"rank":"Legendary 3","is_whale":false,"expired":155},{"rank":"Titan","is_whale":false,"expired":84}],"cross_rank_v1":[{"phase":"non_whale","same_rank":true,"pairs":2667},{"phase":"whale_0_10","same_rank":true,"pairs":1871},{"phase":"whale_10_30","same_rank":false,"pairs":1927},{"phase":"whale_10_30","same_rank":true,"pairs":725},{"phase":"whale_30_plus","same_rank":false,"pairs":127},{"phase":"whale_30_plus","same_rank":true,"pairs":7}],"assist_mix":[{"assist":"none","tickets":1176,"mean_ttm_s":10,"median_ttm_s":5,"mean_proposals":1,"share_of_matches":8},{"assist":"cold_start","tickets":5192,"mean_ttm_s":11,"median_ttm_s":6,"mean_proposals":1,"share_of_matches":34},{"assist":"top10","tickets":214,"mean_ttm_s":9,"median_ttm_s":4,"mean_proposals":1,"share_of_matches":1},{"assist":"whale","tickets":8618,"mean_ttm_s":7,"median_ttm_s":5,"mean_proposals":1,"share_of_matches":57}],"assist_by_rank":[{"rank":"Masterful 1","assist":"none","tickets":169,"mean_ttm_s":12},{"rank":"Masterful 1","assist":"cold_start","tickets":239,"mean_ttm_s":9},{"rank":"Masterful 1","assist":"top10","tickets":40,"mean_ttm_s":7},{"rank":"Masterful 1","assist":"whale","tickets":2822,"mean_ttm_s":7},{"rank":"Masterful 2","assist":"none","tickets":162,"mean_ttm_s":11},{"rank":"Masterful 2","assist":"cold_start","tickets":201,"mean_ttm_s":10},{"rank":"Masterful 2","assist":"top10","tickets":14,"mean_ttm_s":8},{"rank":"Masterful 2","assist":"whale","tickets":2338,"mean_ttm_s":7},{"rank":"Masterful 3","assist":"none","tickets":179,"mean_ttm_s":9},{"rank":"Masterful 3","assist":"cold_start","tickets":229,"mean_ttm_s":10},{"rank":"Masterful 3","assist":"top10","tickets":27,"mean_ttm_s":9},{"rank":"Masterful 3","assist":"whale","tickets":1536,"mean_ttm_s":7},{"rank":"Supreme 1","assist":"none","tickets":208,"mean_ttm_s":7},{"rank":"Supreme 1","assist":"cold_start","tickets":396,"mean_ttm_s":10},{"rank":"Supreme 1","assist":"top10","tickets":30,"mean_ttm_s":9},{"rank":"Supreme 1","assist":"whale","tickets":962,"mean_ttm_s":8},{"rank":"Supreme 2","assist":"none","tickets":156,"mean_ttm_s":9},{"rank":"Supreme 2","assist":"cold_start","tickets":515,"mean_ttm_s":9},{"rank":"Supreme 2","assist":"top10","tickets":36,"mean_ttm_s":8},{"rank":"Supreme 2","assist":"whale","tickets":555,"mean_ttm_s":10},{"rank":"Supreme 3","assist":"none","tickets":115,"mean_ttm_s":10},{"rank":"Supreme 3","assist":"cold_start","tickets":540,"mean_ttm_s":9},{"rank":"Supreme 3","assist":"top10","tickets":18,"mean_ttm_s":11},{"rank":"Supreme 3","assist":"whale","tickets":297,"mean_ttm_s":11},{"rank":"Legendary 1","assist":"none","tickets":55,"mean_ttm_s":11},{"rank":"Legendary 1","assist":"cold_start","tickets":516,"mean_ttm_s":12},{"rank":"Legendary 1","assist":"top10","tickets":41,"mean_ttm_s":9},{"rank":"Legendary 1","assist":"whale","tickets":82,"mean_ttm_s":11},{"rank":"Legendary 2","assist":"none","tickets":57,"mean_ttm_s":13},{"rank":"Legendary 2","assist":"cold_start","tickets":464,"mean_ttm_s":11},{"rank":"Legendary 2","assist":"top10","tickets":8,"mean_ttm_s":13},{"rank":"Legendary 2","assist":"whale","tickets":26,"mean_ttm_s":15},{"rank":"Legendary 3","assist":"none","tickets":75,"mean_ttm_s":10},{"rank":"Legendary 3","assist":"cold_start","tickets":923,"mean_ttm_s":10},{"rank":"Titan","assist":"cold_start","tickets":1169,"mean_ttm_s":12}],"assist_cross_rank":[{"assist":"cold_start","same_rank":false,"pairs":1640},{"assist":"cold_start","same_rank":true,"pairs":1021},{"assist":"none","same_rank":true,"pairs":361},{"assist":"top10","same_rank":false,"pairs":49},{"assist":"top10","same_rank":true,"pairs":21},{"assist":"whale","same_rank":false,"pairs":1972},{"assist":"whale","same_rank":true,"pairs":2609}],"pool_flags":{"pool_tickets":18208,"masterful_plus":15464,"is_whale_true":8619,"is_cold_start_true":5435,"is_top10_true":215}},"fullday":{"overall":[{"mode":"v1","tickets":83854,"pct_matched":93,"pct_expired":7,"mean_ttm_s":10,"median_ttm_s":5,"pct_whale":55},{"mode":"v2","tickets":83854,"pct_matched":98,"pct_expired":2,"mean_ttm_s":9,"median_ttm_s":6,"pct_whale":55}],"hourly_v1":[{"ist_hour":0,"tickets":4900,"tickets_whale":2630,"pct_whale":54,"pct_matched":95,"pct_expired":5,"mean_ttm_s":9,"median_ttm_s":4,"mean_proposals_matched":1},{"ist_hour":1,"tickets":3228,"tickets_whale":1844,"pct_whale":57,"pct_matched":93,"pct_expired":7,"mean_ttm_s":10,"median_ttm_s":6,"mean_proposals_matched":1},{"ist_hour":2,"tickets":2230,"tickets_whale":1268,"pct_whale":57,"pct_matched":89,"pct_expired":11,"mean_ttm_s":11,"median_ttm_s":8,"mean_proposals_matched":1},{"ist_hour":3,"tickets":1811,"tickets_whale":1023,"pct_whale":56,"pct_matched":88,"pct_expired":12,"mean_ttm_s":12,"median_ttm_s":9,"mean_proposals_matched":1},{"ist_hour":4,"tickets":1183,"tickets_whale":645,"pct_whale":54,"pct_matched":86,"pct_expired":14,"mean_ttm_s":14,"median_ttm_s":11,"mean_proposals_matched":1},{"ist_hour":5,"tickets":1264,"tickets_whale":710,"pct_whale":56,"pct_matched":86,"pct_expired":14,"mean_ttm_s":14,"median_ttm_s":10,"mean_proposals_matched":1},{"ist_hour":6,"tickets":1497,"tickets_whale":783,"pct_whale":52,"pct_matched":84,"pct_expired":16,"mean_ttm_s":13,"median_ttm_s":10,"mean_proposals_matched":1},{"ist_hour":7,"tickets":2057,"tickets_whale":1128,"pct_whale":55,"pct_matched":88,"pct_expired":12,"mean_ttm_s":12,"median_ttm_s":10,"mean_proposals_matched":1},{"ist_hour":8,"tickets":2516,"tickets_whale":1378,"pct_whale":55,"pct_matched":90,"pct_expired":10,"mean_ttm_s":11,"median_ttm_s":7,"mean_proposals_matched":1},{"ist_hour":9,"tickets":3084,"tickets_whale":1775,"pct_whale":58,"pct_matched":92,"pct_expired":8,"mean_ttm_s":10,"median_ttm_s":6,"mean_proposals_matched":1},{"ist_hour":10,"tickets":3638,"tickets_whale":2039,"pct_whale":56,"pct_matched":93,"pct_expired":7,"mean_ttm_s":10,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":11,"tickets":3894,"tickets_whale":2156,"pct_whale":55,"pct_matched":93,"pct_expired":7,"mean_ttm_s":10,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":12,"tickets":4925,"tickets_whale":2594,"pct_whale":53,"pct_matched":95,"pct_expired":5,"mean_ttm_s":9,"median_ttm_s":4,"mean_proposals_matched":1},{"ist_hour":13,"tickets":4487,"tickets_whale":2315,"pct_whale":52,"pct_matched":96,"pct_expired":4,"mean_ttm_s":10,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":14,"tickets":4477,"tickets_whale":2386,"pct_whale":53,"pct_matched":95,"pct_expired":5,"mean_ttm_s":9,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":15,"tickets":4240,"tickets_whale":2360,"pct_whale":56,"pct_matched":95,"pct_expired":5,"mean_ttm_s":9,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":16,"tickets":4346,"tickets_whale":2432,"pct_whale":56,"pct_matched":94,"pct_expired":6,"mean_ttm_s":10,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":17,"tickets":4296,"tickets_whale":2296,"pct_whale":53,"pct_matched":94,"pct_expired":6,"mean_ttm_s":10,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":18,"tickets":4055,"tickets_whale":2259,"pct_whale":56,"pct_matched":94,"pct_expired":6,"mean_ttm_s":10,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":19,"tickets":3920,"tickets_whale":1965,"pct_whale":50,"pct_matched":94,"pct_expired":6,"mean_ttm_s":10,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":20,"tickets":4045,"tickets_whale":2259,"pct_whale":56,"pct_matched":95,"pct_expired":5,"mean_ttm_s":10,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":21,"tickets":4024,"tickets_whale":2251,"pct_whale":56,"pct_matched":94,"pct_expired":6,"mean_ttm_s":10,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":22,"tickets":4924,"tickets_whale":2760,"pct_whale":56,"pct_matched":95,"pct_expired":5,"mean_ttm_s":9,"median_ttm_s":4,"mean_proposals_matched":1},{"ist_hour":23,"tickets":4813,"tickets_whale":2667,"pct_whale":55,"pct_matched":95,"pct_expired":5,"mean_ttm_s":9,"median_ttm_s":5,"mean_proposals_matched":1}],"hourly_v2":[{"ist_hour":0,"tickets":4900,"tickets_whale":2630,"pct_whale":54,"pct_matched":99,"pct_expired":1,"mean_ttm_s":8,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":1,"tickets":3228,"tickets_whale":1844,"pct_whale":57,"pct_matched":98,"pct_expired":2,"mean_ttm_s":10,"median_ttm_s":7,"mean_proposals_matched":1},{"ist_hour":2,"tickets":2230,"tickets_whale":1268,"pct_whale":57,"pct_matched":96,"pct_expired":4,"mean_ttm_s":11,"median_ttm_s":8,"mean_proposals_matched":1},{"ist_hour":3,"tickets":1811,"tickets_whale":1023,"pct_whale":56,"pct_matched":95,"pct_expired":5,"mean_ttm_s":12,"median_ttm_s":9,"mean_proposals_matched":1},{"ist_hour":4,"tickets":1183,"tickets_whale":645,"pct_whale":54,"pct_matched":93,"pct_expired":7,"mean_ttm_s":14,"median_ttm_s":10,"mean_proposals_matched":1},{"ist_hour":5,"tickets":1264,"tickets_whale":710,"pct_whale":56,"pct_matched":92,"pct_expired":8,"mean_ttm_s":14,"median_ttm_s":10,"mean_proposals_matched":1},{"ist_hour":6,"tickets":1497,"tickets_whale":783,"pct_whale":52,"pct_matched":93,"pct_expired":7,"mean_ttm_s":13,"median_ttm_s":10,"mean_proposals_matched":1},{"ist_hour":7,"tickets":2057,"tickets_whale":1128,"pct_whale":55,"pct_matched":95,"pct_expired":5,"mean_ttm_s":12,"median_ttm_s":9,"mean_proposals_matched":1},{"ist_hour":8,"tickets":2516,"tickets_whale":1378,"pct_whale":55,"pct_matched":96,"pct_expired":4,"mean_ttm_s":11,"median_ttm_s":8,"mean_proposals_matched":1},{"ist_hour":9,"tickets":3084,"tickets_whale":1775,"pct_whale":58,"pct_matched":97,"pct_expired":3,"mean_ttm_s":10,"median_ttm_s":6,"mean_proposals_matched":1},{"ist_hour":10,"tickets":3638,"tickets_whale":2039,"pct_whale":56,"pct_matched":98,"pct_expired":2,"mean_ttm_s":9,"median_ttm_s":6,"mean_proposals_matched":1},{"ist_hour":11,"tickets":3894,"tickets_whale":2156,"pct_whale":55,"pct_matched":97,"pct_expired":3,"mean_ttm_s":9,"median_ttm_s":6,"mean_proposals_matched":1},{"ist_hour":12,"tickets":4925,"tickets_whale":2594,"pct_whale":53,"pct_matched":99,"pct_expired":1,"mean_ttm_s":8,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":13,"tickets":4487,"tickets_whale":2315,"pct_whale":52,"pct_matched":99,"pct_expired":1,"mean_ttm_s":9,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":14,"tickets":4477,"tickets_whale":2386,"pct_whale":53,"pct_matched":98,"pct_expired":2,"mean_ttm_s":9,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":15,"tickets":4240,"tickets_whale":2360,"pct_whale":56,"pct_matched":98,"pct_expired":2,"mean_ttm_s":9,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":16,"tickets":4346,"tickets_whale":2432,"pct_whale":56,"pct_matched":98,"pct_expired":2,"mean_ttm_s":9,"median_ttm_s":6,"mean_proposals_matched":1},{"ist_hour":17,"tickets":4296,"tickets_whale":2296,"pct_whale":53,"pct_matched":98,"pct_expired":2,"mean_ttm_s":9,"median_ttm_s":6,"mean_proposals_matched":1},{"ist_hour":18,"tickets":4055,"tickets_whale":2259,"pct_whale":56,"pct_matched":98,"pct_expired":2,"mean_ttm_s":9,"median_ttm_s":6,"mean_proposals_matched":1},{"ist_hour":19,"tickets":3920,"tickets_whale":1965,"pct_whale":50,"pct_matched":98,"pct_expired":2,"mean_ttm_s":9,"median_ttm_s":6,"mean_proposals_matched":1},{"ist_hour":20,"tickets":4045,"tickets_whale":2259,"pct_whale":56,"pct_matched":98,"pct_expired":2,"mean_ttm_s":9,"median_ttm_s":6,"mean_proposals_matched":1},{"ist_hour":21,"tickets":4024,"tickets_whale":2251,"pct_whale":56,"pct_matched":98,"pct_expired":2,"mean_ttm_s":9,"median_ttm_s":6,"mean_proposals_matched":1},{"ist_hour":22,"tickets":4924,"tickets_whale":2760,"pct_whale":56,"pct_matched":99,"pct_expired":1,"mean_ttm_s":8,"median_ttm_s":5,"mean_proposals_matched":1},{"ist_hour":23,"tickets":4813,"tickets_whale":2667,"pct_whale":55,"pct_matched":99,"pct_expired":1,"mean_ttm_s":8,"median_ttm_s":5,"mean_proposals_matched":1}],"peak_hours":[12,22,0,23,13],"offpeak_hours":[4,5,6,3,7],"assist_by_hour":[{"ist_hour":0,"none":336,"cold_start":1827,"top10":50,"whale":2630},{"ist_hour":1,"none":237,"cold_start":1020,"top10":49,"whale":1844},{"ist_hour":2,"none":146,"cold_start":692,"top10":31,"whale":1268},{"ist_hour":3,"none":99,"cold_start":569,"top10":25,"whale":1023},{"ist_hour":4,"none":50,"cold_start":396,"top10":6,"whale":644},{"ist_hour":5,"none":108,"cold_start":331,"top10":13,"whale":708},{"ist_hour":6,"none":112,"cold_start":462,"top10":33,"whale":782},{"ist_hour":7,"none":133,"cold_start":676,"top10":26,"whale":1128},{"ist_hour":8,"none":201,"cold_start":824,"top10":19,"whale":1378},{"ist_hour":9,"none":212,"cold_start":957,"top10":42,"whale":1775},{"ist_hour":10,"none":220,"cold_start":1251,"top10":46,"whale":2039},{"ist_hour":11,"none":293,"cold_start":1295,"top10":49,"whale":2156},{"ist_hour":12,"none":365,"cold_start":1843,"top10":63,"whale":2594},{"ist_hour":13,"none":338,"cold_start":1746,"top10":32,"whale":2315},{"ist_hour":14,"none":380,"cold_start":1614,"top10":32,"whale":2386},{"ist_hour":15,"none":342,"cold_start":1432,"top10":44,"whale":2360},{"ist_hour":16,"none":314,"cold_start":1488,"top10":41,"whale":2432},{"ist_hour":17,"none":406,"cold_start":1456,"top10":50,"whale":2296},{"ist_hour":18,"none":308,"cold_start":1381,"top10":37,"whale":2259},{"ist_hour":19,"none":321,"cold_start":1523,"top10":44,"whale":1965},{"ist_hour":20,"none":317,"cold_start":1335,"top10":60,"whale":2259},{"ist_hour":21,"none":286,"cold_start":1331,"top10":65,"whale":2251},{"ist_hour":22,"none":390,"cold_start":1652,"top10":55,"whale":2760},{"ist_hour":23,"none":378,"cold_start":1642,"top10":61,"whale":2666}],"best_v2_deltas":[{"ist_hour":6,"tickets":1497,"pct_matched_delta":9,"pct_expired_delta":-9},{"ist_hour":7,"tickets":2057,"pct_matched_delta":8,"pct_expired_delta":-8},{"ist_hour":3,"tickets":1811,"pct_matched_delta":7,"pct_expired_delta":-7},{"ist_hour":2,"tickets":2230,"pct_matched_delta":7,"pct_expired_delta":-7},{"ist_hour":8,"tickets":2516,"pct_matched_delta":6,"pct_expired_delta":-6},{"ist_hour":4,"tickets":1183,"pct_matched_delta":6,"pct_expired_delta":-6},{"ist_hour":5,"tickets":1264,"pct_matched_delta":6,"pct_expired_delta":-6},{"ist_hour":9,"tickets":3084,"pct_matched_delta":5,"pct_expired_delta":-5}],"hourly_compare":[{"ist_hour":0,"tickets":4900,"pct_whale":54,"pct_matched_v1":95,"pct_matched_v2":99,"pct_matched_delta":4,"pct_expired_v1":5,"pct_expired_v2":1,"pct_expired_delta":-4,"mean_ttm_v1":9,"mean_ttm_v2":8,"mean_ttm_delta":-1},{"ist_hour":1,"tickets":3228,"pct_whale":57,"pct_matched_v1":93,"pct_matched_v2":98,"pct_matched_delta":5,"pct_expired_v1":7,"pct_expired_v2":2,"pct_expired_delta":-5,"mean_ttm_v1":10,"mean_ttm_v2":10,"mean_ttm_delta":0},{"ist_hour":2,"tickets":2230,"pct_whale":57,"pct_matched_v1":89,"pct_matched_v2":96,"pct_matched_delta":7,"pct_expired_v1":11,"pct_expired_v2":4,"pct_expired_delta":-7,"mean_ttm_v1":11,"mean_ttm_v2":11,"mean_ttm_delta":0},{"ist_hour":3,"tickets":1811,"pct_whale":56,"pct_matched_v1":88,"pct_matched_v2":95,"pct_matched_delta":7,"pct_expired_v1":12,"pct_expired_v2":5,"pct_expired_delta":-7,"mean_ttm_v1":12,"mean_ttm_v2":12,"mean_ttm_delta":0},{"ist_hour":4,"tickets":1183,"pct_whale":54,"pct_matched_v1":86,"pct_matched_v2":93,"pct_matched_delta":7,"pct_expired_v1":14,"pct_expired_v2":7,"pct_expired_delta":-7,"mean_ttm_v1":14,"mean_ttm_v2":14,"mean_ttm_delta":0},{"ist_hour":5,"tickets":1264,"pct_whale":56,"pct_matched_v1":86,"pct_matched_v2":92,"pct_matched_delta":6,"pct_expired_v1":14,"pct_expired_v2":8,"pct_expired_delta":-6,"mean_ttm_v1":14,"mean_ttm_v2":14,"mean_ttm_delta":0},{"ist_hour":6,"tickets":1497,"pct_whale":52,"pct_matched_v1":84,"pct_matched_v2":93,"pct_matched_delta":9,"pct_expired_v1":16,"pct_expired_v2":7,"pct_expired_delta":-9,"mean_ttm_v1":13,"mean_ttm_v2":13,"mean_ttm_delta":0},{"ist_hour":7,"tickets":2057,"pct_whale":55,"pct_matched_v1":88,"pct_matched_v2":95,"pct_matched_delta":7,"pct_expired_v1":12,"pct_expired_v2":5,"pct_expired_delta":-7,"mean_ttm_v1":12,"mean_ttm_v2":12,"mean_ttm_delta":0},{"ist_hour":8,"tickets":2516,"pct_whale":55,"pct_matched_v1":90,"pct_matched_v2":96,"pct_matched_delta":6,"pct_expired_v1":10,"pct_expired_v2":4,"pct_expired_delta":-6,"mean_ttm_v1":11,"mean_ttm_v2":11,"mean_ttm_delta":0},{"ist_hour":9,"tickets":3084,"pct_whale":58,"pct_matched_v1":92,"pct_matched_v2":97,"pct_matched_delta":5,"pct_expired_v1":8,"pct_expired_v2":3,"pct_expired_delta":-5,"mean_ttm_v1":10,"mean_ttm_v2":10,"mean_ttm_delta":0},{"ist_hour":10,"tickets":3638,"pct_whale":56,"pct_matched_v1":93,"pct_matched_v2":98,"pct_matched_delta":5,"pct_expired_v1":7,"pct_expired_v2":2,"pct_expired_delta":-5,"mean_ttm_v1":10,"mean_ttm_v2":9,"mean_ttm_delta":-1},{"ist_hour":11,"tickets":3894,"pct_whale":55,"pct_matched_v1":93,"pct_matched_v2":97,"pct_matched_delta":4,"pct_expired_v1":7,"pct_expired_v2":3,"pct_expired_delta":-4,"mean_ttm_v1":10,"mean_ttm_v2":9,"mean_ttm_delta":-1},{"ist_hour":12,"tickets":4925,"pct_whale":53,"pct_matched_v1":95,"pct_matched_v2":99,"pct_matched_delta":4,"pct_expired_v1":5,"pct_expired_v2":1,"pct_expired_delta":-4,"mean_ttm_v1":9,"mean_ttm_v2":8,"mean_ttm_delta":-1},{"ist_hour":13,"tickets":4487,"pct_whale":52,"pct_matched_v1":96,"pct_matched_v2":99,"pct_matched_delta":3,"pct_expired_v1":4,"pct_expired_v2":1,"pct_expired_delta":-3,"mean_ttm_v1":10,"mean_ttm_v2":9,"mean_ttm_delta":-1},{"ist_hour":14,"tickets":4477,"pct_whale":53,"pct_matched_v1":95,"pct_matched_v2":98,"pct_matched_delta":3,"pct_expired_v1":5,"pct_expired_v2":2,"pct_expired_delta":-3,"mean_ttm_v1":9,"mean_ttm_v2":9,"mean_ttm_delta":0},{"ist_hour":15,"tickets":4240,"pct_whale":56,"pct_matched_v1":95,"pct_matched_v2":98,"pct_matched_delta":3,"pct_expired_v1":5,"pct_expired_v2":2,"pct_expired_delta":-3,"mean_ttm_v1":9,"mean_ttm_v2":9,"mean_ttm_delta":0},{"ist_hour":16,"tickets":4346,"pct_whale":56,"pct_matched_v1":94,"pct_matched_v2":98,"pct_matched_delta":4,"pct_expired_v1":6,"pct_expired_v2":2,"pct_expired_delta":-4,"mean_ttm_v1":10,"mean_ttm_v2":9,"mean_ttm_delta":-1},{"ist_hour":17,"tickets":4296,"pct_whale":53,"pct_matched_v1":94,"pct_matched_v2":98,"pct_matched_delta":4,"pct_expired_v1":6,"pct_expired_v2":2,"pct_expired_delta":-4,"mean_ttm_v1":10,"mean_ttm_v2":9,"mean_ttm_delta":-1},{"ist_hour":18,"tickets":4055,"pct_whale":56,"pct_matched_v1":94,"pct_matched_v2":98,"pct_matched_delta":4,"pct_expired_v1":6,"pct_expired_v2":2,"pct_expired_delta":-4,"mean_ttm_v1":10,"mean_ttm_v2":9,"mean_ttm_delta":-1},{"ist_hour":19,"tickets":3920,"pct_whale":50,"pct_matched_v1":94,"pct_matched_v2":98,"pct_matched_delta":4,"pct_expired_v1":6,"pct_expired_v2":2,"pct_expired_delta":-4,"mean_ttm_v1":10,"mean_ttm_v2":9,"mean_ttm_delta":-1},{"ist_hour":20,"tickets":4045,"pct_whale":56,"pct_matched_v1":95,"pct_matched_v2":98,"pct_matched_delta":3,"pct_expired_v1":5,"pct_expired_v2":2,"pct_expired_delta":-3,"mean_ttm_v1":10,"mean_ttm_v2":9,"mean_ttm_delta":-1},{"ist_hour":21,"tickets":4024,"pct_whale":56,"pct_matched_v1":94,"pct_matched_v2":98,"pct_matched_delta":4,"pct_expired_v1":6,"pct_expired_v2":2,"pct_expired_delta":-4,"mean_ttm_v1":10,"mean_ttm_v2":9,"mean_ttm_delta":-1},{"ist_hour":22,"tickets":4924,"pct_whale":56,"pct_matched_v1":95,"pct_matched_v2":99,"pct_matched_delta":4,"pct_expired_v1":5,"pct_expired_v2":1,"pct_expired_delta":-4,"mean_ttm_v1":9,"mean_ttm_v2":8,"mean_ttm_delta":-1},{"ist_hour":23,"tickets":4813,"pct_whale":55,"pct_matched_v1":95,"pct_matched_v2":99,"pct_matched_delta":4,"pct_expired_v1":5,"pct_expired_v2":1,"pct_expired_delta":-4,"mean_ttm_v1":9,"mean_ttm_v2":8,"mean_ttm_delta":-1}]},"future":{"roadmap":[{"id":"expired_deep_dive","title":"Expired tickets deep-dive","status":"planned","note":"Who expires: rank, power vs bounds, hour, cold-start eligibility, search age at expiry"},{"id":"loss_streak","title":"Loss-streak easing + loss-aversion bot","status":"planned","note":"2-loss \u2192 0.9\u20131.0 real; fail \u2192 bot"},{"id":"rank_boost","title":"Rank Boost / Dynamic Rep","status":"planned","note":"Progression layer \u2014 does not change MM pool"},{"id":"rebaseline","title":"Post-launch bound re-baseline","status":"planned","note":"Recompute 10% marks after population redistributes into target bounds"}]}};
+
+function whaleLabel(w) { return w ? 'Whale' : 'Non-whale'; }
+
+document.getElementById('method-v1').innerHTML = DD.method.v1.map(function (x) {
+  return '<div class="insight">' + x + '</div>';
+}).join('');
+document.getElementById('method-v2').innerHTML = DD.method.v2.map(function (x) {
+  return '<div class="insight">' + x + '</div>';
+}).join('');
+
+HWReport.table('table-windows', {
+  compTable: true,
+  columns: [{ label: 'Window', rowHeader: true }, { label: 'Range' }, { label: 'Primary use' }],
+  rows: [
+    ['Evening', DD.method.windows.evening, 'Rank × whale deep-dive, phases, assists'],
+    ['Full day', DD.method.windows.fullday, 'Hourly concentration vs outcomes'],
+  ]
+});
+
+HWReport.table('table-eve-overall', {
+  compTable: true,
+  columns: [{ label: 'Mode', rowHeader: true }, { label: 'Tickets', fmt: 'count' }, { label: 'Match %', fmt: 'pct' }, { label: 'Expire %', fmt: 'pct' }, { label: 'Mean TTM s' }, { label: 'Median TTM s' }],
+  rows: DD.evening.overall.map(function (r) { return [r.mode, r.tickets, r.pct_matched, r.pct_expired, r.mean_ttm_s, r.median_ttm_s]; })
+});
+
+HWReport.table('table-eve-deltas', {
+  compTable: true, sortable: true,
+  columns: [
+    { label: 'Rank', rowHeader: true }, { label: 'Segment' },
+    { label: 'Match v1', fmt: 'pct' }, { label: 'Match v2', fmt: 'pct' }, { label: 'Δ match', fmt: 'pp' },
+    { label: 'Expire v1', fmt: 'pct' }, { label: 'Expire v2', fmt: 'pct' }, { label: 'Δ expire', fmt: 'pp' },
+    { label: 'TTM v1' }, { label: 'TTM v2' }, { label: 'Δ TTM' }
+  ],
+  rows: DD.evening.deltas.map(function (r) {
+    return [r.rank, whaleLabel(r.is_whale), r.pct_matched_v1, r.pct_matched_v2, r.pct_matched_delta, r.pct_expired_v1, r.pct_expired_v2, r.pct_expired_delta, r.mean_ttm_v1, r.mean_ttm_v2, r.mean_ttm_delta];
+  })
+});
+
+function rankTable(id, rows) {
+  HWReport.table(id, {
+    compTable: true, sortable: true,
+    columns: [
+      { label: 'Rank', rowHeader: true }, { label: 'Segment' }, { label: 'Tickets', fmt: 'count' },
+      { label: 'Match %', fmt: 'pct' }, { label: 'Expire %', fmt: 'pct' },
+      { label: 'Mean TTM' }, { label: 'Median TTM' }, { label: 'Mean proposals' }
+    ],
+    rows: rows.map(function (r) { return [r.rank, whaleLabel(r.is_whale), r.tickets, r.pct_matched, r.pct_expired, r.mean_ttm_s, r.median_ttm_s, r.mean_proposals]; })
+  });
+}
+rankTable('table-eve-v1', DD.evening.by_rank_whale_v1);
+rankTable('table-eve-v2', DD.evening.by_rank_whale_v2);
+
+function ttmTable(id, rows) {
+  HWReport.table(id, {
+    compTable: true, sortable: true,
+    columns: [{ label: 'Rank', rowHeader: true }, { label: 'Segment' }, { label: 'Matched', fmt: 'count' }, { label: 'Mean' }, { label: 'Median' }, { label: 'P90' }],
+    rows: rows.map(function (r) { return [r.rank, whaleLabel(r.is_whale), r.matched, r.mean_ttm_s, r.median_ttm_s, r.p90_ttm_s]; })
+  });
+}
+ttmTable('table-eve-ttm-v1', DD.evening.ttm_matched_v1);
+ttmTable('table-eve-ttm-v2', DD.evening.ttm_matched_v2);
+
+HWReport.table('table-eve-expires', {
+  compTable: true, sortable: true,
+  columns: [{ label: 'Rank', rowHeader: true }, { label: 'Expired (v1)', fmt: 'count' }],
+  rows: DD.evening.expires_v1.map(function (r) { return [r.rank, r.expired]; })
+});
+
+HWReport.table('table-day-overall', {
+  compTable: true,
+  columns: [{ label: 'Mode', rowHeader: true }, { label: 'Tickets', fmt: 'count' }, { label: 'Match %', fmt: 'pct' }, { label: 'Expire %', fmt: 'pct' }, { label: 'Mean TTM' }, { label: 'Median TTM' }, { label: '% Whale', fmt: 'pct' }],
+  rows: DD.fullday.overall.map(function (r) { return [r.mode, r.tickets, r.pct_matched, r.pct_expired, r.mean_ttm_s, r.median_ttm_s, r.pct_whale]; })
+});
+
+HWReport.table('table-hourly-compare', {
+  compTable: true, sortable: true, stickyHeader: true,
+  columns: [
+    { label: 'Hour', rowHeader: true }, { label: 'Tickets', fmt: 'count' }, { label: '% Whale', fmt: 'pct' },
+    { label: 'Match v1', fmt: 'pct' }, { label: 'Match v2', fmt: 'pct' }, { label: 'Δ match', fmt: 'pp' },
+    { label: 'Expire v1', fmt: 'pct' }, { label: 'Expire v2', fmt: 'pct' }, { label: 'Δ expire', fmt: 'pp' },
+    { label: 'TTM v1' }, { label: 'TTM v2' }
+  ],
+  rows: DD.fullday.hourly_compare.map(function (r) {
+    return [r.ist_hour, r.tickets, r.pct_whale, r.pct_matched_v1, r.pct_matched_v2, r.pct_matched_delta, r.pct_expired_v1, r.pct_expired_v2, r.pct_expired_delta, r.mean_ttm_v1, r.mean_ttm_v2];
+  })
+});
+
+HWReport.table('table-best-deltas', {
+  compTable: true,
+  columns: [{ label: 'Hour', rowHeader: true }, { label: 'Tickets', fmt: 'count' }, { label: 'Δ match', fmt: 'pp' }, { label: 'Δ expire', fmt: 'pp' }],
+  rows: DD.fullday.best_v2_deltas.map(function (r) { return [r.ist_hour, r.tickets, r.pct_matched_delta, r.pct_expired_delta]; })
+});
+
+HWReport.table('table-assist-hour', {
+  compTable: true, stickyHeader: true,
+  columns: [{ label: 'Hour', rowHeader: true }, { label: 'None', fmt: 'count' }, { label: 'Cold-start', fmt: 'count' }, { label: 'Top-10', fmt: 'count' }, { label: 'Whale', fmt: 'count' }],
+  rows: DD.fullday.assist_by_hour.map(function (r) { return [r.ist_hour, r.none, r.cold_start, r.top10, r.whale]; })
+});
+
+HWReport.table('table-rank-full', {
+  compTable: true, sortable: true,
+  columns: [
+    { label: 'Rank', rowHeader: true }, { label: 'Segment' }, { label: 'Tickets', fmt: 'count' },
+    { label: 'Match v1', fmt: 'pct' }, { label: 'Match v2', fmt: 'pct' }, { label: 'Δ', fmt: 'pp' },
+    { label: 'Expire v1', fmt: 'pct' }, { label: 'Expire v2', fmt: 'pct' }
+  ],
+  rows: DD.evening.deltas.map(function (r) {
+    return [r.rank, whaleLabel(r.is_whale), DD.evening.by_rank_whale_v1.find(function (x) { return x.rank === r.rank && x.is_whale === r.is_whale; }).tickets,
+      r.pct_matched_v1, r.pct_matched_v2, r.pct_matched_delta, r.pct_expired_v1, r.pct_expired_v2];
+  })
+});
+
+HWReport.table('table-phases', {
+  compTable: true,
+  columns: [{ label: 'Phase', rowHeader: true }, { label: 'Tickets', fmt: 'count' }, { label: 'Share %', fmt: 'pct' }, { label: 'Mean TTM' }, { label: 'Median TTM' }],
+  rows: DD.evening.whale_phases.map(function (r) { return [r.phase, r.tickets, r.share_of_matches, r.mean_ttm_s, r.median_ttm_s]; })
+});
+
+HWReport.table('table-phase-rank', {
+  compTable: true, sortable: true, stickyHeader: true,
+  columns: [{ label: 'Rank', rowHeader: true }, { label: 'Phase' }, { label: 'Tickets', fmt: 'count' }, { label: 'Mean TTM' }],
+  rows: DD.evening.phase_by_rank.map(function (r) { return [r.rank, r.phase, r.tickets, r.mean_ttm_s]; })
+});
+
+HWReport.table('table-cross-rank', {
+  compTable: true,
+  columns: [{ label: 'Phase', rowHeader: true }, { label: 'Same rank?' }, { label: 'Pairs', fmt: 'count' }],
+  rows: DD.evening.cross_rank_v1.map(function (r) { return [r.phase, r.same_rank ? 'Same' : 'Cross', r.pairs]; })
+});
+
+HWReport.table('table-assist-mix', {
+  compTable: true,
+  columns: [{ label: 'Assist', rowHeader: true }, { label: 'Tickets', fmt: 'count' }, { label: 'Share %', fmt: 'pct' }, { label: 'Mean TTM' }, { label: 'Median TTM' }],
+  rows: DD.evening.assist_mix.map(function (r) { return [r.assist, r.tickets, r.share_of_matches, r.mean_ttm_s, r.median_ttm_s]; })
+});
+
+HWReport.table('table-assist-rank', {
+  compTable: true, sortable: true, stickyHeader: true,
+  columns: [{ label: 'Rank', rowHeader: true }, { label: 'Assist' }, { label: 'Tickets', fmt: 'count' }, { label: 'Mean TTM' }],
+  rows: DD.evening.assist_by_rank.map(function (r) { return [r.rank, r.assist, r.tickets, r.mean_ttm_s]; })
+});
+
+HWReport.table('table-assist-cross', {
+  compTable: true,
+  columns: [{ label: 'Assist', rowHeader: true }, { label: 'Same rank?' }, { label: 'Pairs', fmt: 'count' }],
+  rows: DD.evening.assist_cross_rank.map(function (r) { return [r.assist, r.same_rank ? 'Same' : 'Cross', r.pairs]; })
+});
+
+HWReport.table('table-roadmap', {
+  compTable: true,
+  columns: [{ label: 'Item', rowHeader: true }, { label: 'Status' }, { label: 'Note' }],
+  rows: DD.future.roadmap.map(function (r) { return [r.title, r.status, r.note]; })
+});
+
+// Charts
+var nw = DD.evening.deltas.filter(function (r) { return !r.is_whale; });
+HWReport.dualBar('chart-eve-nw-match', nw.map(function (r) { return r.rank.replace(' ', '\n'); }), nw.map(function (r) { return r.pct_matched_v1; }), nw.map(function (r) { return r.pct_matched_v2; }), 'v1 match %', 'v2 match %', 100);
+
+HWReport.singleBar('chart-eve-phases', DD.evening.whale_phases.map(function (r) { return r.phase; }), DD.evening.whale_phases.map(function (r) { return r.share_of_matches; }), HWReport.COLORS.BLUE, { max: 50 });
+
+var hours = DD.fullday.hourly_v1.map(function (r) { return String(r.ist_hour); });
+HWReport.singleBar('chart-hourly-tickets', hours, DD.fullday.hourly_v1.map(function (r) { return r.tickets; }), HWReport.COLORS.BLUE, {
+  yFmt: 'count',
+  max: 5500,
+  label: 'Tickets',
+  ariaLabel: 'Masterful+ tickets created by IST hour'
+});
+HWReport.dualBar('chart-hourly-match', hours, DD.fullday.hourly_v1.map(function (r) { return r.pct_matched; }), DD.fullday.hourly_v2.map(function (r) { return r.pct_matched; }), 'v1', 'v2', 100);
+HWReport.dualBar('chart-hourly-expire', hours, DD.fullday.hourly_v1.map(function (r) { return r.pct_expired; }), DD.fullday.hourly_v2.map(function (r) { return r.pct_expired; }), 'v1', 'v2', 20);
+HWReport.dualBar('chart-hourly-ttm', hours, DD.fullday.hourly_v1.map(function (r) { return r.mean_ttm_s; }), DD.fullday.hourly_v2.map(function (r) { return r.mean_ttm_s; }), {
+  label1: 'v1 TTM', label2: 'v2 TTM', yFmt: 'raw', ymax: 20, ariaLabel: 'Mean time-to-match seconds by hour'
+});
+
+HWReport.singleBar('chart-nw-expire', nw.map(function (r) { return r.rank.replace(' ', '\n'); }), nw.map(function (r) { return r.pct_expired_v1; }), HWReport.COLORS.CORAL, { max: 30 });
+
+HWReport.singleBar('chart-assist-mix', DD.evening.assist_mix.map(function (r) { return r.assist; }), DD.evening.assist_mix.map(function (r) { return r.share_of_matches; }), HWReport.COLORS.TEAL, { max: 70 });
+
+// stacked-ish assist by hour via dual/multi — use whale vs cold_start as dual for readability
+HWReport.dualBar('chart-assist-hour', hours, DD.fullday.assist_by_hour.map(function (r) { return r.whale; }), DD.fullday.assist_by_hour.map(function (r) { return r.cold_start; }), {
+  label1: 'Whale', label2: 'Cold-start', yFmt: 'count', ymax: 3000, ariaLabel: 'v2 matched tickets by assist mode and hour'
+});
+
+HWReport.initCardChrome();
+</script>
+</body>
+</html>
