@@ -580,17 +580,26 @@ header a.data-link.green:hover { background: var(--teal-light); }
 .card-title-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 0.5rem; }
 .card-title-row .card-title { margin-bottom: 0; }
 .card-actions { display: flex; gap: 6px; flex-shrink: 0; }
-.hw-table-wrap { overflow-x: auto; }
+.hw-table-wrap,
 .table-wrap { overflow-x: auto; }
-.hw-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.hw-table caption { text-align: left; font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
-.hw-table th, .hw-table td { padding: 8px 10px; border-bottom: 0.5px solid var(--border); text-align: right; }
-.hw-table th:first-child, .hw-table td:first-child { text-align: left; }
-.hw-table th { font-weight: 500; color: var(--text-secondary); font-size: 11px; font-family: 'DM Mono', monospace; background: var(--bg); }
-.hw-table th[aria-sort] { cursor: pointer; user-select: none; }
-.hw-table th[aria-sort="ascending"]::after { content: ' ↑'; }
-.hw-table th[aria-sort="descending"]::after { content: ' ↓'; }
-.hw-table.sticky-head thead th { position: sticky; top: 0; z-index: 2; }
+.hw-table,
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.hw-table caption,
+.data-table caption { text-align: left; font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
+.hw-table th, .hw-table td,
+.data-table th, .data-table td { padding: 8px 10px; border-bottom: 0.5px solid var(--border); text-align: right; }
+.hw-table th:first-child, .hw-table td:first-child,
+.data-table th:first-child, .data-table td:first-child { text-align: left; }
+.hw-table th,
+.data-table th { font-weight: 500; color: var(--text-secondary); font-size: 11px; font-family: 'DM Mono', monospace; background: var(--bg); }
+.hw-table th[aria-sort],
+.data-table th[aria-sort] { cursor: pointer; user-select: none; }
+.hw-table th[aria-sort="ascending"]::after,
+.data-table th[aria-sort="ascending"]::after { content: ' ↑'; }
+.hw-table th[aria-sort="descending"]::after,
+.data-table th[aria-sort="descending"]::after { content: ' ↓'; }
+.hw-table.sticky-head thead th,
+.data-table.sticky-head thead th { position: sticky; top: 0; z-index: 2; }
 .hw-table.comp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .hw-table.comp-table th {
   text-align: right;
