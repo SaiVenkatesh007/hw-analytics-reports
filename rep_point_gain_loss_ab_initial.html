@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){try{var t=localStorage.getItem('hw-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<title>Rep Point Gain &amp; Loss — A/B Initial Read</title>
+<meta name="description" content="Initial Jul 10–14 read of Rep Point Gain &amp; Loss AB (Control Base vs Experiment). Treatment hygiene clean; overall ARPU slightly down; Remarkable monetisation up with more engagement soft.">
+<meta property="og:title" content="Rep Point Gain &amp; Loss — A/B Initial Read">
+<meta property="og:description" content="Initial Jul 10–14 read of Rep Point Gain &amp; Loss AB (Control Base vs Experiment). Hold at 10% Experiment — too early to expand.">
+<meta property="og:url" content="https://saivenkatesh007.github.io/hw-analytics-reports/rep_point_gain_loss_ab_initial.html">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" href="kit/favicon.png">
+<link rel="stylesheet" href="kit/report.css">
+</head>
+<body data-report-slug="rep_point_gain_loss_ab_initial" data-report-owner="Venkatesh">
+<header>
+  <div class="brand"><div class="dot"></div><h1>Rep Point Gain &amp; Loss — A/B Initial Read</h1></div>
+  <span class="meta">Proven–Remarkable (7–15) · Jul 10–14 2026 · 80/10/10 Base / Control Base / Experiment · Initial read</span>
+</header>
+<div class="caveat-banner warn">Initial 5-day interim only — primary compare is <strong>Control Base vs Experiment</strong>. Base (80%) is holdout on old economy. Do not expand on this window alone.</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="HWReport.switchTab('overview', this)">Overview</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('engagement', this)">Engagement</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('monetisation', this)">Monetisation</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('method', this)">Methodology</button>
+</div>
+
+<div id="tab-overview" class="tab-content active">
+  <div class="hero-section">
+    <p class="hero-eyebrow">Game Analytics · PvP Progression · Initial AB</p>
+    <h2 class="hero-title">Hold at 10% Experiment —<br>too early to expand.</h2>
+    <p class="hero-desc">Jul 10–14 first look after the +15 win-rep pinch. <strong>Treatment is live</strong> (Experiment wins cluster on +15). Engagement is slightly soft. Overall monetisation is slightly Control Base–favored (~−6% ARPU) — opposite of the thesis so far — while <strong>Remarkable</strong> shows ARPU up with a clearer engagement soft. Keep running; re-read in 1–2 weeks.</p>
+    <div class="hero-stat-wrap">
+      <p class="stat-scoreboard-label">Overall ARPU · CB → Exp</p>
+      <p class="stat-scoreboard warn" data-value="-1.87" data-prefix="₹" data-decimals="2">₹−1.87</p>
+    </div>
+  </div>
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Headline KPIs</p><h3 class="section-title">Control Base → Experiment · Jul 10–14</h3></div>
+      <div class="kpi-row">
+        <div class="kpi-card"><p class="kpi-label">ARPU</p><p class="kpi-value warn">₹30.2 → ₹28.3</p><p class="kpi-note">−₹1.87 · Conv flat</p></div>
+        <div class="kpi-card"><p class="kpi-label">Adoption</p><p class="kpi-value warn">83.5% → 82.2%</p><p class="kpi-note">−1.3pp</p></div>
+        <div class="kpi-card"><p class="kpi-label">MDAU</p><p class="kpi-value warn">4.85 → 4.68</p><p class="kpi-note">−0.16 matches / DAU</p></div>
+        <div class="kpi-card"><p class="kpi-label">NDR return</p><p class="kpi-value neutral">80.3% → 80.0%</p><p class="kpi-note">roughly holds</p></div>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title-row"><p class="card-title">Engagement · CB vs Exp</p><div class="card-actions"></div></div>
+          <div class="legend" id="leg-eng-ov"></div>
+          <div class="chart-wrap"><canvas id="chart-eng-ov"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title-row"><p class="card-title">Daywise MPAU</p><div class="card-actions"></div></div>
+          <div class="legend" id="leg-mpau-day"></div>
+          <div class="chart-wrap"><canvas id="chart-mpau-day"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Key findings</p><h3 class="section-title">What this initial window shows</h3></div>
+      <div class="insights">
+        <div class="insight good"><strong>Treatment live:</strong> Experiment win <code>rp_delta</code> mode is +15 (~26.8k matches); +20 wins are negligible (~180). Control Base / Base still mode +20. Eligible arm mix ~80 / 10 / 10.</div>
+        <div class="insight warn"><strong>Overall monetisation soft:</strong> ARPU ₹30.17 → ₹28.30 (−6%). ARPPU also down; Conv% flat. Hypothesis (pinch → more spend) not supported yet on 5 days.</div>
+        <div class="insight"><strong>Remarkable split:</strong> Same-day ARPU/user up on Experiment (₹63.7 → ₹78.8) but payer n is thin (~40–49). Same band shows the softest feat retention (−2.7pp) and NDR return (−2.0pp).</div>
+        <div class="insight warn"><strong>Engagement slightly soft:</strong> Adoption −1.3pp, MDAU −0.16, Win 3% −1.5pp, PvP feature retention −0.8pp. Soft every day on adoption; Accomplished MDAU/MPAU lag most among mid ranks.</div>
+        <div class="insight"><strong>WR flat:</strong> 62.2% → 62.6%. Rank-up matches/wins pacing deferred until more days land.</div>
+        <div class="insight warn"><strong>No expand yet:</strong> Hold Experiment at 10%. Re-read in 1–2 weeks before any scale decision.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-engagement" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Engagement</p><h3 class="section-title">Adoption · MDAU · MPAU · Win 3% · retention</h3><p class="section-sub">Eligible DAU · first pvp_rank of day · CB vs Exp</p></div>
+      <div class="kpi-row">
+        <div class="kpi-card"><p class="kpi-label">Eligible users CB</p><p class="kpi-value neutral">5,324</p><p class="kpi-note">18.2k user-days</p></div>
+        <div class="kpi-card"><p class="kpi-label">Eligible users Exp</p><p class="kpi-value neutral">5,199</p><p class="kpi-note">17.7k user-days</p></div>
+        <div class="kpi-card"><p class="kpi-label">Win 3%</p><p class="kpi-value warn">54.2% → 52.7%</p><p class="kpi-note">−1.5pp</p></div>
+        <div class="kpi-card"><p class="kpi-label">PvP feat retention</p><p class="kpi-value warn">76.0% → 75.2%</p><p class="kpi-note">−0.8pp</p></div>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title-row"><p class="card-title">MDAU by coarse rank</p><div class="card-actions"></div></div>
+          <div class="legend" id="leg-mdau-rank"></div>
+          <div class="chart-wrap chart-wrap--tall"><canvas id="chart-mdau-rank"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title-row"><p class="card-title">Adoption by coarse rank</p><div class="card-actions"></div></div>
+          <div class="legend" id="leg-ado-rank"></div>
+          <div class="chart-wrap chart-wrap--tall"><canvas id="chart-ado-rank"></canvas></div>
+        </div>
+      </div>
+      <div class="two-col section-gap">
+        <div class="card">
+          <div class="card-title-row"><p class="card-title">PvP feature retention by rank</p><div class="card-actions"></div></div>
+          <div class="legend" id="leg-feat-rank"></div>
+          <div class="chart-wrap chart-wrap--tall"><canvas id="chart-feat-rank"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title-row"><p class="card-title">Daywise adoption %</p><div class="card-actions"></div></div>
+          <div class="legend" id="leg-ado-day"></div>
+          <div class="chart-wrap chart-wrap--tall"><canvas id="chart-ado-day"></canvas></div>
+        </div>
+      </div>
+      <div id="table-eng-rank" class="section-gap"></div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-monetisation" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Monetisation</p><h3 class="section-title">Eligible population · overall + by rank</h3><p class="section-sub">Overall = unique eligible users · by rank = same-day revenue × that day’s first pvp_rank</p></div>
+      <div class="kpi-row">
+        <div class="kpi-card"><p class="kpi-label">ARPU</p><p class="kpi-value warn">₹30.17 → ₹28.30</p><p class="kpi-note">−₹1.87</p></div>
+        <div class="kpi-card"><p class="kpi-label">ARPPU</p><p class="kpi-value warn">₹1,004 → ₹949</p><p class="kpi-note">−₹55</p></div>
+        <div class="kpi-card"><p class="kpi-label">Conv%</p><p class="kpi-value neutral">3.01% → 2.98%</p><p class="kpi-note">flat</p></div>
+        <div class="kpi-card"><p class="kpi-label">Remarkable ARPU/user</p><p class="kpi-value up">₹63.7 → ₹78.8</p><p class="kpi-note">thin payer n</p></div>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title-row"><p class="card-title">ARPU / user by rank (same-day)</p><div class="card-actions"></div></div>
+          <div class="legend" id="leg-arpu-rank"></div>
+          <div class="chart-wrap chart-wrap--tall"><canvas id="chart-arpu-rank"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title-row"><p class="card-title">Conv% by rank</p><div class="card-actions"></div></div>
+          <div class="legend" id="leg-conv-rank"></div>
+          <div class="chart-wrap chart-wrap--tall"><canvas id="chart-conv-rank"></canvas></div>
+        </div>
+      </div>
+      <div id="table-mono-rank" class="section-gap"></div>
+      <div class="insights section-gap">
+        <div class="insight warn"><strong>Proven / Accomplished soft:</strong> Same-day ARPU/user down on Experiment (−₹1.9 / −₹1.2). Main drag on overall ARPU.</div>
+        <div class="insight"><strong>Remarkable upside is noisy:</strong> +₹15 ARPU/user with ~40 Exp payers vs ~49 CB — treat as directional until the window grows.</div>
+        <div class="insight"><strong>Holdout Base ARPU higher than CB</strong> (₹36.5 vs ₹30.2) — do not use Base as the AB control.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-method" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Methodology</p><h3 class="section-title">Scope and definitions</h3></div>
+      <ul class="method-list" id="method-scope"></ul>
+      <div class="insights section-gap">
+        <div class="insight"><strong>Primary compare:</strong> Control Base (10%) vs Experiment (10%). Base (80%) stays on +20/−10 as holdout.</div>
+        <div class="insight warn"><strong>Rep hygiene:</strong> Consecutive <code>team_rp</code> diffs are noisy on losses; win-side mode (+15 vs +20) is the reliable delivery check.</div>
+        <div class="insight"><strong>Deferred:</strong> Matches/wins to rank-up pacing; Reward Giveout; new-user ARPU3/7/14.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer>Rep Point Gain &amp; Loss A/B · Initial Jul 10–14 read · Hitwicket Analytics · Jul 2026</footer>
+
+<script src="kit/theme.js"></script>
+<script src="kit/icons.js"></script>
+<script src="kit/chart.umd.js"></script>
+<script src="kit/charts.js"></script>
+<script src="kit/tables.js"></script>
+<script src="kit/report.js"></script>
+<script>
+const DD = {"overall":{"window_days":5,"eligible_users_cb":5324,"eligible_users_exp":5199,"eligible_users_base":42135,"user_days_cb":18189,"user_days_exp":17660,"pvp_rows_cb":101002,"pvp_rows_exp":94174,"adoption_cb":83.5,"adoption_exp":82.2,"mdau_cb":4.85,"mdau_exp":4.68,"mpau_cb":5.8,"mpau_exp":5.69,"win3_cb":54.2,"win3_exp":52.7,"ndr_return_cb":80.3,"ndr_return_exp":80.0,"feat_ret_cb":76.0,"feat_ret_exp":75.2,"wr_cb":62.2,"wr_exp":62.6,"arpu_cb":30.17,"arpu_exp":28.3,"arppu_cb":1003.88,"arppu_exp":949.37,"conv_cb":3.01,"conv_exp":2.98,"d_arpu":-1.87,"d_adoption_pp":-1.3,"d_mdau":-0.16,"hygiene_exp_win_plus15":26787,"hygiene_exp_win_plus20":180},"engagement_overall":{"labels":["Adoption %","MDAU","MPAU","Win 3%","NDR return %","PvP feat ret %"],"control":[83.5,4.85,5.8,54.2,80.3,76.0],"experiment":[82.2,4.68,5.69,52.7,80.0,75.2]},"engagement_by_rank":{"labels":["Proven","Accomplished","Remarkable"],"avg_dau_cb":[1351,1362,925],"avg_dau_exp":[1372,1336,824],"adoption_cb":[82.5,84.5,83.5],"adoption_exp":[80.8,84.0,81.7],"mdau_cb":[4.35,5.0,5.34],"mdau_exp":[4.3,4.76,5.18],"mpau_cb":[5.27,5.92,6.39],"mpau_exp":[5.32,5.67,6.34],"win3_cb":[52.0,57.5,52.4],"win3_exp":[50.5,55.5,51.8],"feat_ret_cb":[74.2,76.0,78.7],"feat_ret_exp":[73.7,76.2,76.0],"ndr_return_cb":[78.7,79.4,83.9],"ndr_return_exp":[78.4,80.5,81.8]},"monetisation_overall":{"labels":["ARPU ₹","ARPPU ₹","Conv %"],"control":[30.17,1003.88,3.01],"experiment":[28.3,949.37,2.98]},"monetisation_by_rank":{"labels":["Proven","Accomplished","Remarkable"],"users_cb":[2142,2085,1287],"users_exp":[2178,1971,1170],"payers_cb":[47,57,49],"payers_exp":[53,57,40],"arpu_user_cb":[9.31,16.75,63.68],"arpu_user_exp":[7.4,15.58,78.77],"arpu_user_day_cb":[2.95,5.13,17.72],"arpu_user_day_exp":[2.35,4.6,22.36],"arppu_cb":[424.13,612.81,1672.69],"arppu_exp":[303.92,538.58,2304.15],"conv_cb":[2.19,2.73,3.81],"conv_exp":[2.43,2.89,3.42]},"daywise_mpau":{"labels":["Jul 10","Jul 11","Jul 12","Jul 13","Jul 14"],"control":[5.55,5.73,5.87,5.8,6.06],"experiment":[5.48,5.74,5.73,5.7,5.81]},"daywise_adoption":{"labels":["Jul 10","Jul 11","Jul 12","Jul 13","Jul 14"],"control":[82.1,82.2,85.1,83.8,84.3],"experiment":[81.5,81.0,83.6,82.1,82.9]}};
+
+function leg(el, a, b) {
+  document.getElementById(el).innerHTML =
+    '<span class="leg"><i style="background:' + HWReport.COLORS.BLUE + '"></i>' + a + '</span>' +
+    '<span class="leg"><i style="background:' + HWReport.COLORS.TEAL + '"></i>' + b + '</span>';
+}
+
+HWReport.grouped('chart-eng-ov', ['Adoption', 'MDAU×10', 'MPAU×10', 'Win3', 'NDR ret', 'Feat ret'],
+  [DD.overall.adoption_cb, DD.overall.mdau_cb * 10, DD.overall.mpau_cb * 10, DD.overall.win3_cb, DD.overall.ndr_return_cb, DD.overall.feat_ret_cb],
+  [DD.overall.adoption_exp, DD.overall.mdau_exp * 10, DD.overall.mpau_exp * 10, DD.overall.win3_exp, DD.overall.ndr_return_exp, DD.overall.feat_ret_exp],
+  HWReport.COLORS.BLUE, HWReport.COLORS.TEAL, { yFmt: 'raw' });
+leg('leg-eng-ov', 'Control Base', 'Experiment');
+
+HWReport.grouped('chart-mpau-day', DD.daywise_mpau.labels,
+  DD.daywise_mpau.control, DD.daywise_mpau.experiment,
+  HWReport.COLORS.BLUE, HWReport.COLORS.TEAL, { yFmt: 'raw' });
+leg('leg-mpau-day', 'Control Base', 'Experiment');
+
+HWReport.grouped('chart-mdau-rank', DD.engagement_by_rank.labels,
+  DD.engagement_by_rank.mdau_cb, DD.engagement_by_rank.mdau_exp,
+  HWReport.COLORS.BLUE, HWReport.COLORS.TEAL, { yFmt: 'raw' });
+leg('leg-mdau-rank', 'Control Base', 'Experiment');
+
+HWReport.grouped('chart-ado-rank', DD.engagement_by_rank.labels,
+  DD.engagement_by_rank.adoption_cb, DD.engagement_by_rank.adoption_exp,
+  HWReport.COLORS.BLUE, HWReport.COLORS.TEAL, { yFmt: 'raw', ymax: 100 });
+leg('leg-ado-rank', 'Control Base', 'Experiment');
+
+HWReport.grouped('chart-feat-rank', DD.engagement_by_rank.labels,
+  DD.engagement_by_rank.feat_ret_cb, DD.engagement_by_rank.feat_ret_exp,
+  HWReport.COLORS.BLUE, HWReport.COLORS.TEAL, { yFmt: 'raw', ymax: 100 });
+leg('leg-feat-rank', 'Control Base', 'Experiment');
+
+HWReport.grouped('chart-ado-day', DD.daywise_adoption.labels,
+  DD.daywise_adoption.control, DD.daywise_adoption.experiment,
+  HWReport.COLORS.BLUE, HWReport.COLORS.TEAL, { yFmt: 'raw', ymax: 100 });
+leg('leg-ado-day', 'Control Base', 'Experiment');
+
+HWReport.grouped('chart-arpu-rank', DD.monetisation_by_rank.labels,
+  DD.monetisation_by_rank.arpu_user_cb, DD.monetisation_by_rank.arpu_user_exp,
+  HWReport.COLORS.BLUE, HWReport.COLORS.TEAL, { yFmt: 'raw' });
+leg('leg-arpu-rank', 'Control Base', 'Experiment');
+
+HWReport.grouped('chart-conv-rank', DD.monetisation_by_rank.labels,
+  DD.monetisation_by_rank.conv_cb, DD.monetisation_by_rank.conv_exp,
+  HWReport.COLORS.BLUE, HWReport.COLORS.TEAL, { yFmt: 'raw', ymax: 6 });
+leg('leg-conv-rank', 'Control Base', 'Experiment');
+
+HWReport.table('table-eng-rank', {
+  compTable: true, sortable: true,
+  columns: [
+    { label: 'Rank', rowHeader: true },
+    { label: 'Adoption CB', fmt: 'pct' },
+    { label: 'Adoption Exp', fmt: 'pct' },
+    { label: 'MDAU CB', fmt: 'raw' },
+    { label: 'MDAU Exp', fmt: 'raw' },
+    { label: 'MPAU CB', fmt: 'raw' },
+    { label: 'MPAU Exp', fmt: 'raw' },
+    { label: 'Win3 CB', fmt: 'pct' },
+    { label: 'Win3 Exp', fmt: 'pct' },
+    { label: 'Feat ret CB', fmt: 'pct' },
+    { label: 'Feat ret Exp', fmt: 'pct' }
+  ],
+  rows: DD.engagement_by_rank.labels.map(function (l, i) {
+    return [
+      l,
+      DD.engagement_by_rank.adoption_cb[i],
+      DD.engagement_by_rank.adoption_exp[i],
+      DD.engagement_by_rank.mdau_cb[i],
+      DD.engagement_by_rank.mdau_exp[i],
+      DD.engagement_by_rank.mpau_cb[i],
+      DD.engagement_by_rank.mpau_exp[i],
+      DD.engagement_by_rank.win3_cb[i],
+      DD.engagement_by_rank.win3_exp[i],
+      DD.engagement_by_rank.feat_ret_cb[i],
+      DD.engagement_by_rank.feat_ret_exp[i]
+    ];
+  })
+});
+
+HWReport.table('table-mono-rank', {
+  compTable: true, sortable: true,
+  columns: [
+    { label: 'Rank', rowHeader: true },
+    { label: 'Users CB', fmt: 'count' },
+    { label: 'Users Exp', fmt: 'count' },
+    { label: 'ARPU/user CB', fmt: 'inr' },
+    { label: 'ARPU/user Exp', fmt: 'inr' },
+    { label: 'ARPU/day CB', fmt: 'inr' },
+    { label: 'ARPU/day Exp', fmt: 'inr' },
+    { label: 'ARPPU CB', fmt: 'inr' },
+    { label: 'ARPPU Exp', fmt: 'inr' },
+    { label: 'Conv CB', fmt: 'pct' },
+    { label: 'Conv Exp', fmt: 'pct' },
+    { label: 'Payers CB', fmt: 'count' },
+    { label: 'Payers Exp', fmt: 'count' }
+  ],
+  rows: DD.monetisation_by_rank.labels.map(function (l, i) {
+    return [
+      l,
+      DD.monetisation_by_rank.users_cb[i],
+      DD.monetisation_by_rank.users_exp[i],
+      DD.monetisation_by_rank.arpu_user_cb[i],
+      DD.monetisation_by_rank.arpu_user_exp[i],
+      DD.monetisation_by_rank.arpu_user_day_cb[i],
+      DD.monetisation_by_rank.arpu_user_day_exp[i],
+      DD.monetisation_by_rank.arppu_cb[i],
+      DD.monetisation_by_rank.arppu_exp[i],
+      DD.monetisation_by_rank.conv_cb[i],
+      DD.monetisation_by_rank.conv_exp[i],
+      DD.monetisation_by_rank.payers_cb[i],
+      DD.monetisation_by_rank.payers_exp[i]
+    ];
+  })
+});
+
+document.getElementById('method-scope').innerHTML =
+  '<li><strong>Window:</strong> Jul 10–14, 2026 (5 days) — initial interim</li>' +
+  '<li><strong>Arms:</strong> Base 80% · Control Base 10% · Experiment 10% via <code>determine_user_case(epoch_ms, splits=[80,10,10])</code></li>' +
+  '<li><strong>Epoch:</strong> UTC <code>ObjectId(team_id).generation_time</code> → ms (no seed)</li>' +
+  '<li><strong>Eligible:</strong> first Firebase <code>dashboard</code> <code>pvp_rank</code> of day in 7–15 (Proven–Remarkable)</li>' +
+  '<li><strong>Economy:</strong> Experiment +15/−10 · Control Base &amp; Base +20/−10 (whale overrides not shipped)</li>' +
+  '<li><strong>Adoption:</strong> eligible users with ≥1 PvP match / eligible DAU</li>' +
+  '<li><strong>MDAU / MPAU:</strong> matches / eligible DAU · matches / users with ≥1 match</li>' +
+  '<li><strong>Win 3%:</strong> among players with ≥1 match, % with ≥3 wins</li>' +
+  '<li><strong>NDR return:</strong> eligible on D present in pseudo_dau on D+1</li>' +
+  '<li><strong>PvP feature retention:</strong> played PvP on D and D+1 / played PvP on D</li>' +
+  '<li><strong>Overall ARPU:</strong> window revenue / unique eligible users by arm</li>' +
+  '<li><strong>Rank monetisation:</strong> same-day payments joined to that day’s first pvp_rank</li>' +
+  '<li><strong>Source:</strong> Rep Point Gain Loss [AB Initial Read].ipynb</li>';
+
+HWReport.initCardChrome();
+document.addEventListener('hwreport:tabswitch', function (e) {
+  var panel = document.getElementById('tab-' + e.detail.name);
+  if (panel) HWReport.initCardChrome(panel);
+});
+</script>
+</body>
+</html>
