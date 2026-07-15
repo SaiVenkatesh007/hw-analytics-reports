@@ -7,6 +7,22 @@
   },
   "reports": [
     {
+      "slug": "rep_point_gain_loss_ab_initial",
+      "title": "Rep Point Gain & Loss \u2014 A/B Initial Read",
+      "owner": "Venkatesh",
+      "date": "2026-07-15",
+      "date_label": "Jul 10\u201314, 2026",
+      "tags": [
+        "pvp",
+        "experiment",
+        "rep-points",
+        "monetisation"
+      ],
+      "thesis": "Hold at 10% Experiment \u2014 pinch is live, but overall monetisation is slightly soft and engagement dips a bit. Too early to expand; re-read in 1\u20132 weeks.",
+      "description": "Initial Jul 10\u201314 read of Rep Point Gain & Loss AB (Control Base vs Experiment). Treatment hygiene clean; overall ARPU slightly down; Remarkable monetisation up with more engagement soft.",
+      "handoff": "handoffs/rep_point_gain_loss_ab_initial.txt"
+    },
+    {
       "slug": "rank_mm_masterful_plus_sim",
       "title": "Rank-Based MM \u2014 Masterful+ Simulation",
       "owner": "Venkatesh",
