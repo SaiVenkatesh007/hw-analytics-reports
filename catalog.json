@@ -7,6 +7,22 @@
   },
   "reports": [
     {
+      "slug": "hc_revenue_drop_jul_vs_jun",
+      "title": "HC Revenue Drop \u2014 Jul vs Jun 2026",
+      "owner": "Venkatesh",
+      "date": "2026-07-16",
+      "date_label": "Jun 1\u201315 vs Jul 1\u201315, 2026",
+      "tags": [
+        "monetisation",
+        "hard-currency",
+        "player-gacha",
+        "investigation"
+      ],
+      "thesis": "HC pack revenue fell \u20b99.5L (\u221215%) on flat payers \u2014 driven by lower rev/order (SKU 5/6) and M12+. Player Gacha attributed revenue explains most of the sink story; June gacha IAPs account for ~\u2153 of that attributed drop among exposed buyers.",
+      "description": "Matched-window diagnosis of Jul HC pack softness vs Jun, with sink attribution and June Player Gacha IAP cannibalization read.",
+      "handoff": "handoffs/hc_revenue_drop_jul_vs_jun.txt"
+    },
+    {
       "slug": "rep_point_gain_loss_ab_initial",
       "title": "Rep Point Gain & Loss \u2014 A/B Initial Read",
       "owner": "Venkatesh",

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){try{var t=localStorage.getItem('hw-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<title>HC Revenue Drop — Jul vs Jun 2026</title>
+<meta name="description" content="Matched Jun 1–15 vs Jul 1–15 HC pack drop diagnosis with Player Gacha attributed revenue and June gacha IAP cannibalization.">
+<meta property="og:title" content="HC Revenue Drop — Jul vs Jun 2026">
+<meta property="og:description" content="HC packs −15% on flat payers; Player Gacha attributed −40%; June gacha IAPs ~⅓ of that attributed drop.">
+<meta property="og:url" content="https://saivenkatesh007.github.io/hw-analytics-reports/hc_revenue_drop_jul_vs_jun.html">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" href="kit/favicon.png">
+<link rel="stylesheet" href="kit/report.css">
+</head>
+<body data-report-slug="hc_revenue_drop_jul_vs_jun" data-report-owner="Venkatesh">
+<header>
+  <div class="brand"><div class="dot"></div><h1>HC Revenue Drop — Jul vs Jun 2026</h1></div>
+  <span class="meta">Matched Jun 1–15 vs Jul 1–15 · HC packs + sinks · Player Gacha IAP cannibalization</span>
+</header>
+<div class="caveat-banner">Matched <strong>1–15</strong> windows (Jul 16 incomplete). Attributed revenue = <code>min(pack_rev, gacha_HC / HC_bought × pack_rev)</code> for users who both buy HC and sink. June offer buyers tagged on <strong>full June 1–30</strong>; metrics stay 1–15. Control = non-offer buyers active in all three May/Jun/Jul 1–15 windows.</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="HWReport.switchTab('overview', this)">Overview</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('packs', this)">Packs &amp; mix</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('sinks', this)">Sinks &amp; attribution</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('gacha-iap', this)">Gacha IAP</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('method', this)">Method</button>
+</div>
+
+<div id="tab-overview" class="tab-content active">
+  <div class="hero-section">
+    <p class="hero-eyebrow">Game Analytics · Hard Currency · Jul vs Jun</p>
+    <h2 class="hero-title">HC packs fell ₹9.5L (−15%) on flat payers —<br>Player Gacha attributed revenue owns the sink story.</h2>
+    <p class="hero-desc">Rev/order (−₹187) drives ~80% of the pack drop; SKU 5/6 and M12+ concentrate it. Player Gacha attributed revenue −₹10.6L (−40%) is ~73% of all attributed softness. June Player Gacha IAPs (120/121/133/134) explain ~⅓ of that attributed drop among exposed buyers — secondary, not the whole market.</p>
+    <div class="hero-stat-wrap">
+      <p class="stat-scoreboard-label">HC pack revenue Δ (Jul − Jun)</p>
+      <p class="stat-scoreboard down" data-value="-15.5" data-suffix="%" data-decimals="1">−15.5%</p>
+    </div>
+  </div>
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Headline KPIs</p><h3 class="section-title">Matched Jun 1–15 vs Jul 1–15</h3></div>
+      <div class="kpi-row">
+        <div class="kpi-card"><p class="kpi-label">HC pack revenue</p><p class="kpi-value down">₹61.2L → ₹51.7L</p><p class="kpi-note">−₹9.5L (−15.5%)</p></div>
+        <div class="kpi-card"><p class="kpi-label">HC payers</p><p class="kpi-value neutral">2,089 → 2,090</p><p class="kpi-note">Flat headcount</p></div>
+        <div class="kpi-card"><p class="kpi-label">Rev / order</p><p class="kpi-value down">₹1,456 → ₹1,269</p><p class="kpi-note">~80% of pack drop</p></div>
+        <div class="kpi-card"><p class="kpi-label">HC sunk</p><p class="kpi-value down">−42%</p><p class="kpi-note">28.7M → 16.6M HC</p></div>
+        <div class="kpi-card"><p class="kpi-label">Player Gacha attributed</p><p class="kpi-value down">−₹10.6L</p><p class="kpi-note">−40% · 73% of attr drop</p></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Key findings</p><h3 class="section-title">What moved</h3></div>
+      <div class="insights">
+        <div class="insight bad"><strong>Pack softness is mix + ticket size, not fewer payers:</strong> payers flat; orders/payer −3%; rev/order −13% (~₹7.6L of the −₹9.5L).</div>
+        <div class="insight bad"><strong>SKU 5 &amp; 6 dominate:</strong> −₹4.2L and −₹10.1L respectively; new SKUs 7/11/12 partially offset.</div>
+        <div class="insight bad"><strong>M12+ ≈ entire pack delta:</strong> M12+ pack −₹9.4L; younger cohorts mixed (M4/M2/M6 up).</div>
+        <div class="insight warn"><strong>Player Gacha is the attributed sink:</strong> −₹10.6L attributed (−40%) vs Currency Conv −₹1.6L. Raw HC sink also led by Player Gacha (−50%).</div>
+        <div class="insight warn"><strong>June gacha IAPs amplify the Player Gacha attributed hole:</strong> offer union (~276 buyers) = <strong>37%</strong> of PG attributed-revenue decline vs only ~14% of raw gacha HC — high-ARPPU pocket. Jun-only hangover −64% attributed; Jul-only milder (−22%).</div>
+        <div class="insight"><strong>Broad geo, India largest absolute:</strong> India −₹5.2L (55% of pack drop); Tier 1/2 also soft in %.</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Recommendation</p><h3 class="section-title">One call</h3></div>
+      <div class="insights">
+        <div class="insight warn"><strong>Treat July HC softness as mix + Player Gacha demand, with June character IAPs as a meaningful secondary cannibalization channel for M12+ whales — not the sole driver.</strong> Avoid stacking heavy Player Gacha character IAPs immediately before expecting HC/gacha pack recovery; re-check SKU 5/6 depth and M12+ offer cadence into H2.</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Daily context</p><h3 class="section-title">Pack revenue (matched 1–15 days)</h3></div>
+      <div class="card"><div class="chart-wrap"><canvas id="chart-daily-rev"></canvas></div></div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-packs" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Decomposition</p><h3 class="section-title">What drove the −₹9.5L</h3></div>
+      <div class="card"><div class="chart-wrap chart-wrap--tall"><canvas id="chart-decomp"></canvas></div></div>
+      <div id="table-decomp" class="section-gap"></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">SKU mix</p><h3 class="section-title">Pack revenue by SKU</h3></div>
+      <div class="card"><div class="chart-wrap chart-wrap--tall"><canvas id="chart-sku"></canvas></div></div>
+      <div id="table-sku" class="section-gap"></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Tenure</p><h3 class="section-title">Pack revenue by install cohort</h3></div>
+      <div class="card"><div class="chart-wrap chart-wrap--tall"><canvas id="chart-cohort"></canvas></div></div>
+      <div id="table-cohort" class="section-gap"></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Geo</p><h3 class="section-title">Pack revenue by geo tier</h3></div>
+      <div class="card"><div class="chart-wrap"><canvas id="chart-geo"></canvas></div></div>
+      <div id="table-geo" class="section-gap"></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Repeat buyers</p><h3 class="section-title">Revenue by order bucket</h3></div>
+      <div class="card"><div class="chart-wrap"><canvas id="chart-repeat"></canvas></div></div>
+      <p class="kpi-note" style="margin-top:0.75rem">4+ order revenue ₹31.7L → ₹19.5L; repeat (2+) share of pack rev 83% → 73%.</p>
+    </div>
+  </main>
+</div>
+
+<div id="tab-sinks" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Attributed revenue</p><h3 class="section-title">By sink feature (Jul − Jun)</h3></div>
+      <div class="insights">
+        <div class="insight bad"><strong>Player Gacha attributed:</strong> ₹26.2L → ₹15.7L (−₹10.6L, −40%) — <strong>73%</strong> of total attributed-revenue decline.</div>
+        <div class="insight"><strong>Currency Conv / Super Chest</strong> follow at −₹1.6L / −₹0.8L attributed; Skip Timer almost flat in ₹ despite −29% raw HC.</div>
+      </div>
+      <div class="card section-gap"><p class="card-title">Attributed ₹ delta by feature</p><div class="chart-wrap chart-wrap--tall"><canvas id="chart-attr-delta"></canvas></div></div>
+      <div id="table-attr" class="section-gap"></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Raw HC sunk</p><h3 class="section-title">Feature volumes (context)</h3></div>
+      <div class="card"><div class="chart-wrap chart-wrap--tall"><canvas id="chart-sink-hc"></canvas></div></div>
+    </div>
+  </main>
+</div>
+
+<div id="tab-gacha-iap" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Hypothesis</p><h3 class="section-title">Did June Player Gacha IAPs front-load characters and hurt July HC/gacha?</h3></div>
+      <div class="insights">
+        <div class="insight"><strong>Offers:</strong> 120 / 121 / 133 / 134 · June full-month buyers <strong>214</strong> (₹21.6L IAP) · Jul 1–15 buyers <strong>91</strong> (₹9.5L).</div>
+        <div class="insight warn"><strong>In attributed ₹, yes for exposed buyers:</strong> offer union (−₹3.6L) is <strong>37%</strong> of Player Gacha attributed decline; Jun-exposed <strong>34%</strong>. Raw gacha HC share was only ~13–14% — same buyers, higher ₹ weight.</div>
+        <div class="insight bad"><strong>Jun-only hangover:</strong> PG attributed −64% (₹4.3L → ₹1.6L); zero-gacha rate 55% → 82%; HC ARPPU −₹3.1k vs control −₹0.1k.</div>
+        <div class="insight good"><strong>Jul-only contrast:</strong> PG attributed only −22% in their offer window — supports purchase-month spend, next-month pullback.</div>
+        <div class="insight"><strong>Not the whole market:</strong> control panel also −54% on PG attributed; ~56% of Jun-exposed offer buyers are M12+.</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Attributed share</p><h3 class="section-title">Who owns the Player Gacha attributed drop</h3></div>
+      <div class="kpi-row">
+        <div class="kpi-card"><p class="kpi-label">Offer union share</p><p class="kpi-value down">37%</p><p class="kpi-note">−₹3.6L of PG attr drop</p></div>
+        <div class="kpi-card"><p class="kpi-label">Jun-exposed share</p><p class="kpi-value down">34%</p><p class="kpi-note">214 June buyers</p></div>
+        <div class="kpi-card"><p class="kpi-label">Jun-only Δ</p><p class="kpi-value down">−64%</p><p class="kpi-note">₹4.3L → ₹1.6L</p></div>
+        <div class="kpi-card"><p class="kpi-label">Raw sink share (union)</p><p class="kpi-value neutral">14%</p><p class="kpi-note">Attributed punches harder</p></div>
+      </div>
+      <div class="card section-gap"><p class="card-title">PG attributed ₹ Δ by cohort</p><div class="chart-wrap chart-wrap--tall"><canvas id="chart-cannib-delta"></canvas></div></div>
+      <div id="table-cannib" class="section-gap"></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Monetisation rates</p><h3 class="section-title">Game &amp; HC ARPU / ARPPU — May / Jun / Jul (1–15)</h3></div>
+      <div class="insights">
+        <div class="insight bad"><strong>Jun-only hangover in rates:</strong> Game ARPU ₹14.7k → ₹7.4k; HC ARPPU ₹10.0k → ₹6.9k; HC conv 51% → 38%.</div>
+        <div class="insight good"><strong>Jul-only lifts in offer month:</strong> Game ARPU ₹10.3k → ₹29.2k; HC ARPU ₹4.7k → ₹8.0k; HC conv 47% → 68%.</div>
+        <div class="insight"><strong>Control stays cold:</strong> HC ARPPU ~₹2.6–2.7k flat; HC ARPU softens June→July (₹381 → ₹225).</div>
+      </div>
+      <div class="two-col section-gap">
+        <div class="card"><p class="card-title">HC ARPPU — Jun-only</p><div class="chart-wrap chart-wrap--tall"><canvas id="chart-hc-arppu"></canvas></div></div>
+        <div class="card"><p class="card-title">HC ARPU — Jun-only</p><div class="chart-wrap chart-wrap--tall"><canvas id="chart-hc-arpu"></canvas></div></div>
+      </div>
+      <div class="two-col section-gap">
+        <div class="card"><p class="card-title">Game ARPPU — Jun-only</p><div class="chart-wrap chart-wrap--tall"><canvas id="chart-game-arppu"></canvas></div></div>
+        <div class="card"><p class="card-title">Game ARPU — Jun-only</p><div class="chart-wrap chart-wrap--tall"><canvas id="chart-game-arpu"></canvas></div></div>
+      </div>
+      <div id="table-cohort-rates" class="section-gap"></div>
+      <p class="kpi-note">ARPU = revenue / active users in window. ARPPU = revenue / payers (game) or HC pack payers (HC). Active = ladder + PvP in that 1–15 window ∩ cohort.</p>
+    </div>
+  </main>
+</div>
+
+<div id="tab-method" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Scope</p><h3 class="section-title">Windows &amp; definitions</h3></div>
+      <div class="insights">
+        <div class="insight"><strong>Primary compare:</strong> Jun 1–15 vs Jul 1–15 IST (matched).</div>
+        <div class="insight"><strong>HC packs:</strong> <code>HARD_CURRENCY_PACKAGE</code> + <code>STORE_PACKAGE</code> id=6; test users excluded via payments exclude list.</div>
+        <div class="insight"><strong>Attributed revenue:</strong> per user×window, for users with both HC pack buy and feature sink: <code>min(revenue, quantity/hc_bought × revenue)</code>.</div>
+        <div class="insight"><strong>Gacha IAP tagging:</strong> offers 120/121/133/134; June buyers = full June 1–30; July = Jul 1–15. Activity = ladder + PvP (all-matches).</div>
+        <div class="insight"><strong>Control:</strong> paid in Jun∪Jul windows somewhere, never bought these offers May 1–Jul 15, active in May+Jun+Jul 1–15 (n=7,772).</div>
+        <div class="insight"><strong>Sources:</strong> <code>HC Revenue Drop [Jul vs Jun].ipynb</code>; <code>HC Revenue Drop [Gacha IAP Cannibalization].ipynb</code>.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="kit/theme.js"></script>
+<script src="kit/icons.js"></script>
+<script src="kit/chart.umd.js"></script>
+<script src="kit/charts.js"></script>
+<script src="kit/tables.js"></script>
+<script src="kit/report.js"></script>
+<script>
+const DD = {"meta":{"title":"HC Revenue Drop \u2014 Jul vs Jun 2026","slug":"hc_revenue_drop_jul_vs_jun","meta_line":"Matched Jun 1\u201315 vs Jul 1\u201315 \u00b7 HC packs + sinks \u00b7 Player Gacha IAP cannibalization add-on","date_range":"2026-06-01 \u2013 2026-07-15","filters":"HC packs (HARD_CURRENCY_PACKAGE + STORE_PACKAGE id=6); test accounts excluded; geo fillna India; attributed = min(rev, gacha_HC/HC_bought \u00d7 rev)","source_notebook":"HC Revenue Drop [Jul vs Jun].ipynb; HC Revenue Drop [Gacha IAP Cannibalization].ipynb","owner":"Venkatesh","date":"2026-07-16","date_label":"Jun 1\u201315 vs Jul 1\u201315, 2026","tags":["monetisation","hard-currency","player-gacha","investigation"],"thesis":"HC pack revenue fell \u20b99.5L (\u221215%) on flat payers \u2014 driven by lower rev/order (SKU 5/6) and M12+. Player Gacha attributed revenue explains most of the sink story; June gacha IAPs account for ~\u2153 of that attributed drop among exposed buyers.","description":"Matched-window diagnosis of Jul HC pack softness vs Jun, with sink attribution and June Player Gacha IAP cannibalization read.","handoff":"handoffs/hc_revenue_drop_jul_vs_jun.txt"},"overall":{"hc_pack_jun":6117746,"hc_pack_jul":5170550,"hc_pack_delta":-947196,"hc_pack_pct":-15.48,"payers_jun":2089,"payers_jul":2090,"orders_jun":4203,"orders_jul":4076,"rev_per_order_jun":1455.57,"rev_per_order_jul":1268.54,"orders_per_payer_jun":2.01,"orders_per_payer_jul":1.95,"hc_sunk_jun":28683841,"hc_sunk_jul":16633523,"hc_sunk_pct":-42.01,"attr_rev_jun":6396348.66,"attr_rev_jul":4945136.34,"attr_rev_delta":-1451212.32,"attr_rev_pct":-22.69,"pg_attr_jun_main":2620955.66,"pg_attr_jul_main":1565274.43,"pg_attr_delta_main":-1055681.24,"pg_attr_pct_main":-40.28,"pg_attr_share_of_attr_drop_pct":72.74},"decomposition":{"labels":["payers","orders_per_payer","revenue_per_order"],"attrib_rev_delta":[2928.55,-187785.5,-762339.05],"contrib_pct":[-0.31,19.83,80.48]},"sku":{"labels":["1","2","3","4","5","6","7","11","12"],"june":[112340,197690,682532,1435994,1389843,2299347,0,0,0],"july":[76681,245053,713468,1402559,966631,1284911,328000,133249,19998],"delta":[-35659,47363,30936,-33435,-423212,-1014436,328000,133249,19998]},"geo":{"labels":["India","Tier 1","Tier 2"],"june":[3487196,1708148,922402],"july":[2966760,1461816,741974],"delta":[-520436,-246332,-180428],"contrib_pct":[54.94,26.01,19.05]},"cohort":{"labels":["M0","M1","M2","M3","M4","M5","M6","M7-M12","M12+"],"pack_june":[328627,861422,344803,477564,201980,348924,222286,536682,2795458],"pack_july":[338489,751918,456026,395252,434496,129572,327741,482849,1854207],"pack_delta":[9862,-109504,111223,-82312,232516,-219352,105455,-53833,-941251]},"sink_feature":{"labels":["Player Gacha","Currency Conv","Super Chest","Others","Skip Timer","Energy","Props Buy","Offer via HC","Elite Deals","Equipment","YC Attempt","Enhancer"],"hc_june":[8787850,5623990,3313850,2665487,3390951,1030993,687150,831350,464270,677980,135770,1074200],"hc_july":[4345890,3297959,1561150,1638402,2407952,542200,275400,465150,326930,579380,87610,1105500],"attr_june":[2620955.66,1092031.22,439034.79,400348.92,820131.56,15662.37,25298.02,65283.71,241002.63,233670.78,2829.56,440099.45],"attr_july":[1565274.43,931366.38,358965.53,253283.6,812897.86,16057.82,15533.5,52817.2,218573.98,251217.56,2491.61,466656.87],"attr_delta":[-1055681.24,-160664.84,-80069.26,-147065.32,-7233.7,395.45,-9764.51,-12466.51,-22428.65,17546.78,-337.94,26557.41],"attr_contrib_pct":[72.74,11.07,5.52,10.13,0.5,-0.03,0.67,0.86,1.55,-1.21,0.02,-1.83]},"repeat":{"order_buckets":["1","2","3","4+"],"rev_june":[1057751,1016821,875612,3167562],"rev_july":[1377164,985792,855574,1952020],"repeat_rev_share_jun":82.71,"repeat_rev_share_jul":73.37},"daily":{"dates":["2026-06-01","2026-06-02","2026-06-03","2026-06-04","2026-06-05","2026-06-06","2026-06-07","2026-06-08","2026-06-09","2026-06-10","2026-06-11","2026-06-12","2026-06-13","2026-06-14","2026-06-15","2026-07-01","2026-07-02","2026-07-03","2026-07-04","2026-07-05","2026-07-06","2026-07-07","2026-07-08","2026-07-09","2026-07-10","2026-07-11","2026-07-12","2026-07-13","2026-07-14","2026-07-15"],"revenue":[589080,347571,326975,345575,309445,382770,524214,393161,375455,342072,298019,310614,427200,698718,446877,416866,263645,314360,343732,472220,388454,272445,295498,277323,286562,342614,425284,356251,355039,360257],"hc_sunk":[2582577,2131819,1899714,1717177,1698496,1700630,2342186,1743550,1747948,1606693,1515520,1629579,1796275,2604583,1967094,1258021,1052412,990475,1103649,1626640,1146714,931699,974864,928373,939001,1129858,1276534,1085200,1080602,1109481]},"cannibalization":{"offers":[120,121,133,134],"jun_full_buyers":214,"jun_full_iap_rev":2157879,"jul_buyers":91,"jul_iap_rev":946652,"union_n":276,"jun_only_n":185,"jul_only_n":62,"both_n":29,"control_n":7772,"pg_attr_all_jun":2620955.66,"pg_attr_all_jul":1661027.81,"pg_attr_all_delta":-959927.85,"pg_attr_all_pct":-36.6,"offer_union_attr_jun":809176.3,"offer_union_attr_jul":450991.11,"offer_union_attr_delta":-358185.18,"offer_union_attr_pct":-44.3,"offer_union_share_pct":37.3,"jun_exposed_attr_jun":674387.97,"jun_exposed_attr_jul":345951.74,"jun_exposed_attr_delta":-328436.23,"jun_exposed_attr_pct":-48.7,"jun_exposed_share_pct":34.2,"jun_only_attr_jun":431059.8,"jun_only_attr_jul":157389.95,"jun_only_attr_delta":-273669.85,"jun_only_attr_pct":-63.5,"jun_only_share_pct":28.5,"control_attr_jun":1335910.01,"control_attr_jul":617278.8,"control_attr_delta":-718631.21,"control_attr_pct":-53.8,"raw_sink_offer_share_pct":14.22,"raw_sink_jun_exposed_share_pct":13.15,"jun_only_hc_arppu_delta":-3095.85,"control_hc_arppu_delta":-122.47,"jun_only_zero_gacha_jun_pct":55.14,"jun_only_zero_gacha_jul_pct":81.62,"m12_plus_among_jun_exposed_pct":55.6,"cohort_labels":["Offer union","Jun-only","Jul-only","Both","Jun-exposed","Control"],"attr_delta":[-358185.18,-273669.85,-29748.96,-54766.38,-328436.23,-718631.21],"attr_pct":[-44.3,-63.5,-22.1,-22.5,-48.7,-53.8],"cohort_metrics":{"windows":["May","June","July"],"rows":[{"cohort":"Offer union","n":276,"active":[230,260,271],"game_arpu":[12886.9,19598.79,17917.12],"game_arppu":[14181.76,20883.96,19658.05],"hc_arpu":[4901.99,7648.34,5405.9],"hc_arppu":[12812.02,14306.24,11098.48],"hc_conv_pct":[38.26,53.46,48.71]},{"cohort":"Jun-only","n":185,"active":[165,183,180],"game_arpu":[10973.98,14685.54,7390.87],"game_arppu":[12071.37,15624.73,8527.93],"hc_arpu":[3811.79,5148.27,2616.81],"hc_arppu":[10310.59,10022.69,6926.84],"hc_conv_pct":[36.97,51.37,37.78]},{"cohort":"Jul-only","n":62,"active":[40,49,62],"game_arpu":[15575.6,10280.82,29209.66],"game_arppu":[16838.49,11449.09,29209.66],"hc_arpu":[6019.43,4714.04,8020.35],"hc_arppu":[16051.8,10042.96,11839.57],"hc_conv_pct":[37.5,46.94,67.74]},{"cohort":"Both","n":29,"active":[25,28,29],"game_arpu":[21210.28,68016.89,59109.76],"game_arppu":[24102.59,68016.89,59109.76],"hc_arpu":[10309.4,29123.11,17128.03],"hc_arppu":[21477.92,37065.77,22577.86],"hc_conv_pct":[48.0,78.57,75.86]},{"cohort":"Pre-May offer buyers","n":239,"active":[220,230,234],"game_arpu":[13200.55,17882.04,16846.74],"game_arppu":[14520.6,19129.62,18507.69],"hc_arpu":[4990.12,7019.69,5057.97],"hc_arppu":[12915.6,13918.34,11061.36],"hc_conv_pct":[38.64,50.43,45.73]},{"cohort":"Control","n":7772,"active":[7772,7772,7772],"game_arpu":[1165.77,1410.95,1001.25],"game_arppu":[2125.85,1410.95,2226.54],"hc_arpu":[253.6,381.16,224.81],"hc_arppu":[2645.58,2730.31,2607.84],"hc_conv_pct":[9.59,13.96,8.62]}]}}};
+function inrL(v) {
+  var x = Number(v);
+  if (Math.abs(x) >= 100000) return '₹' + (x/100000).toFixed(1) + 'L';
+  return HWReport.fmt.inr(Math.round(x));
+}
+function pct1(v) { return (Number(v) > 0 ? '+' : '') + Number(v).toFixed(1) + '%'; }
+
+document.addEventListener('DOMContentLoaded', function () {
+  var o = DD.overall, d = DD.decomposition, s = DD.sku, g = DD.geo, c = DD.cohort;
+  var sf = DD.sink_feature, r = DD.repeat, daily = DD.daily, can = DD.cannibalization;
+  var C = HWReport.COLORS;
+
+  var dayLabels = daily.dates.map(function (x) { return x.slice(5); });
+  HWReport.lineChart('chart-daily-rev', dayLabels, [{
+    label: 'HC pack revenue', data: daily.revenue, borderColor: C.BLUE, backgroundColor: 'rgba(58,143,212,0.15)',
+    tension: 0.25, fill: true, pointRadius: 2
+  }], { yFmt: 'inr', min: 0, ariaLabel: 'Daily HC pack revenue' });
+
+  HWReport.singleBar('chart-decomp', d.labels, d.attrib_rev_delta, C.CORAL, { yFmt: 'inr', ariaLabel: 'Decomposition attributed revenue delta' });
+  HWReport.table('table-decomp', {
+    columns: [
+      { label: 'Driver', rowHeader: true },
+      { label: 'Attrib ₹ Δ', fmt: 'inr' },
+      { label: 'Share of pack drop' }
+    ],
+    rows: d.labels.map(function (lab, i) { return [lab, d.attrib_rev_delta[i], pct1(d.contrib_pct[i])]; })
+  });
+
+  HWReport.dualBar('chart-sku', s.labels.map(function (x) { return 'SKU ' + x; }), s.june, s.july, {
+    label1: 'June', label2: 'July', yFmt: 'inr', ariaLabel: 'SKU pack revenue'
+  });
+  HWReport.table('table-sku', {
+    columns: [
+      { label: 'SKU', rowHeader: true },
+      { label: 'June', fmt: 'inr' },
+      { label: 'July', fmt: 'inr' },
+      { label: 'Δ', fmt: 'inr' }
+    ],
+    rows: s.labels.map(function (lab, i) { return [lab, s.june[i], s.july[i], s.delta[i]]; })
+  });
+
+  HWReport.dualBar('chart-cohort', c.labels, c.pack_june, c.pack_july, {
+    label1: 'June', label2: 'July', yFmt: 'inr', ariaLabel: 'Cohort pack revenue'
+  });
+  HWReport.table('table-cohort', {
+    columns: [
+      { label: 'Cohort', rowHeader: true },
+      { label: 'June', fmt: 'inr' },
+      { label: 'July', fmt: 'inr' },
+      { label: 'Δ', fmt: 'inr' }
+    ],
+    rows: c.labels.map(function (lab, i) { return [lab, c.pack_june[i], c.pack_july[i], c.pack_delta[i]]; })
+  });
+
+  HWReport.dualBar('chart-geo', g.labels, g.june, g.july, {
+    label1: 'June', label2: 'July', yFmt: 'inr', ariaLabel: 'Geo pack revenue'
+  });
+  HWReport.table('table-geo', {
+    columns: [
+      { label: 'Geo', rowHeader: true },
+      { label: 'June', fmt: 'inr' },
+      { label: 'July', fmt: 'inr' },
+      { label: 'Δ', fmt: 'inr' },
+      { label: 'Share of drop' }
+    ],
+    rows: g.labels.map(function (lab, i) { return [lab, g.june[i], g.july[i], g.delta[i], pct1(g.contrib_pct[i])]; })
+  });
+
+  HWReport.dualBar('chart-repeat', r.order_buckets.map(function (x) { return x + ' orders'; }), r.rev_june, r.rev_july, {
+    label1: 'June', label2: 'July', yFmt: 'inr', ariaLabel: 'Repeat order bucket revenue'
+  });
+
+  // Sort features by attr delta ascending for chart
+  var idx = sf.labels.map(function (_, i) { return i; }).sort(function (a, b) { return sf.attr_delta[a] - sf.attr_delta[b]; });
+  var flab = idx.map(function (i) { return sf.labels[i]; });
+  var fdel = idx.map(function (i) { return sf.attr_delta[i]; });
+  HWReport.singleBar('chart-attr-delta', flab, fdel, C.CORAL, { yFmt: 'inr', ariaLabel: 'Attributed revenue delta by feature' });
+  HWReport.table('table-attr', {
+    columns: [
+      { label: 'Feature', rowHeader: true },
+      { label: 'June attr', fmt: 'inr' },
+      { label: 'July attr', fmt: 'inr' },
+      { label: 'Δ', fmt: 'inr' },
+      { label: 'Share of attr drop' }
+    ],
+    rows: idx.map(function (i) {
+      return [sf.labels[i], sf.attr_june[i], sf.attr_july[i], sf.attr_delta[i], pct1(sf.attr_contrib_pct[i])];
+    })
+  });
+
+  HWReport.dualBar('chart-sink-hc', sf.labels.slice(0, 8), sf.hc_june.slice(0, 8), sf.hc_july.slice(0, 8), {
+    label1: 'June HC', label2: 'July HC', yFmt: 'count', ariaLabel: 'Raw HC sunk by feature'
+  });
+
+  HWReport.singleBar('chart-cannib-delta', can.cohort_labels.slice(0, -1), can.attr_delta.slice(0, -1), C.CORAL, {
+    yFmt: 'inr', ariaLabel: 'Player Gacha attributed delta by cohort'
+  });
+  HWReport.table('table-cannib', {
+    columns: [
+      { label: 'Cohort', rowHeader: true },
+      { label: 'PG attr Δ', fmt: 'inr' },
+      { label: 'Δ %' },
+      { label: 'Notes' }
+    ],
+    rows: [
+      ['Offer union (n=' + can.union_n + ')', can.offer_union_attr_delta, pct1(can.offer_union_attr_pct), can.offer_union_share_pct + '% of PG attr drop'],
+      ['Jun-exposed (n=' + (can.jun_only_n + can.both_n) + ')', can.jun_exposed_attr_delta, pct1(can.jun_exposed_attr_pct), can.jun_exposed_share_pct + '% of PG attr drop'],
+      ['Jun-only (n=' + can.jun_only_n + ')', can.jun_only_attr_delta, pct1(can.jun_only_attr_pct), 'Zero-gacha 55%→82%'],
+      ['Jul-only (n=' + can.jul_only_n + ')', can.attr_delta[2], pct1(can.attr_pct[2]), 'Milder in offer month'],
+      ['Control (n=' + can.control_n + ')', can.control_attr_delta, pct1(can.control_attr_pct), 'Market-wide soft too'],
+      ['All (matched PG attr)', can.pg_attr_all_delta, pct1(can.pg_attr_all_pct), 'Cannib. pass total']
+    ]
+  });
+
+
+  var cm = can.cohort_metrics;
+  var wins = cm.windows;
+  function findCohort(name) {
+    for (var i = 0; i < cm.rows.length; i++) if (cm.rows[i].cohort === name) return cm.rows[i];
+    return null;
+  }
+  var junOnly = findCohort('Jun-only');
+  HWReport.singleBar('chart-hc-arppu', wins, junOnly.hc_arppu, C.BLUE, {
+    label: 'Jun-only', yFmt: 'inr', ariaLabel: 'HC ARPPU for Jun-only buyers'
+  });
+  HWReport.singleBar('chart-hc-arpu', wins, junOnly.hc_arpu, C.BLUE, {
+    label: 'Jun-only', yFmt: 'inr', ariaLabel: 'HC ARPU for Jun-only buyers'
+  });
+  HWReport.singleBar('chart-game-arppu', wins, junOnly.game_arppu, C.BLUE, {
+    label: 'Jun-only', yFmt: 'inr', ariaLabel: 'Game ARPPU for Jun-only buyers'
+  });
+  HWReport.singleBar('chart-game-arpu', wins, junOnly.game_arpu, C.BLUE, {
+    label: 'Jun-only', yFmt: 'inr', ariaLabel: 'Game ARPU for Jun-only buyers'
+  });
+
+  var rateRows = [];
+  cm.rows.forEach(function (row) {
+    wins.forEach(function (w, wi) {
+      rateRows.push([
+        row.cohort + ' (n=' + row.n + ')',
+        w,
+        row.active[wi],
+        row.game_arpu[wi],
+        row.game_arppu[wi],
+        row.hc_arpu[wi],
+        row.hc_arppu[wi]
+      ]);
+    });
+  });
+  HWReport.table('table-cohort-rates', {
+    columns: [
+      { label: 'Cohort', rowHeader: true },
+      { label: 'Window' },
+      { label: 'Active' },
+      { label: 'Game ARPU', fmt: 'inr' },
+      { label: 'Game ARPPU', fmt: 'inr' },
+      { label: 'HC ARPU', fmt: 'inr' },
+      { label: 'HC ARPPU', fmt: 'inr' }
+    ],
+    rows: rateRows,
+    stickyHeader: true
+  });
+
+  if (HWReport.initScoreboard) HWReport.initScoreboard();
+  if (HWReport.initCardChrome) HWReport.initCardChrome();
+});
+</script>
+</body>
+</html>
