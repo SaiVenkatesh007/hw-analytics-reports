@@ -18,7 +18,11 @@ HWReport.fmt = {
   pct: function (v) { return v + '%'; },
   pp: function (v) { return (v > 0 ? '+' : '') + v + 'pp'; },
   count: function (v) { return Number(v).toLocaleString(); },
-  inr: function (v) { return '₹' + Number(v).toLocaleString(); },
+  inr: function (v) {
+    var n = Number(v);
+    var abs = Math.abs(n).toLocaleString();
+    return (n < 0 ? '−₹' : '₹') + abs;
+  },
   raw: function (v) { return String(v); },
   tick: function (kind) {
     var fn = HWReport.fmt[kind] || HWReport.fmt.raw;
@@ -187,6 +191,15 @@ HWReport.charts.refreshTheme = function () {
     var meta = HWReport._chartMeta[id];
     if (meta && meta.colors && chart.data.datasets) {
       chart.data.datasets.forEach(function (ds, i) {
+        if (meta.signed && Array.isArray(ds.data)) {
+          var negC = meta.colors[0];
+          var posC = meta.colors[1] || meta.colors[0];
+          var negDc = _datasetColors(negC, meta.fillAlpha || 0.6);
+          var posDc = _datasetColors(posC, meta.fillAlpha || 0.6);
+          ds.backgroundColor = ds.data.map(function (v) { return Number(v) < 0 ? negDc.bg : posDc.bg; });
+          ds.borderColor = ds.data.map(function (v) { return Number(v) < 0 ? negDc.border : posDc.border; });
+          return;
+        }
         var c = meta.colors[i];
         if (!c) return;
         var dc = _datasetColors(c, meta.fillAlpha || 0.6);
@@ -314,10 +327,46 @@ HWReport.singleBar = function (id, labels, data, color, yOpts) {
   var yFmt = yOpts.yFmt || 'pct';
   var scales = _scaleOpts();
   scales.x.ticks.maxRotation = 45;
-  scales.y.min = yOpts.min != null ? yOpts.min : 0;
+
+  var nums = (data || []).map(Number).filter(function (v) { return !isNaN(v); });
+  var dataMin = nums.length ? Math.min.apply(null, nums) : 0;
+  var dataMax = nums.length ? Math.max.apply(null, nums) : 0;
+  var hasNeg = dataMin < 0;
+  var pad = Math.max(Math.abs(dataMin), Math.abs(dataMax), 1) * 0.08;
+
+  if (yOpts.min != null) scales.y.min = yOpts.min;
+  else if (hasNeg) scales.y.min = dataMin - pad;
+  else scales.y.min = 0;
+
   if (yOpts.max != null) scales.y.max = yOpts.max;
+  else if (hasNeg) scales.y.max = Math.max(dataMax + pad, 0);
   else if (yFmt === 'pct') scales.y.max = 100;
+
   scales.y.ticks.callback = yOpts.tickCallback || HWReport.fmt.tick(yFmt);
+
+  var c = HWReport.COLORS;
+  var useSigned = yOpts.signedColors != null ? yOpts.signedColors : hasNeg;
+  var posColor = yOpts.posColor || c.TEAL;
+  var negColor = yOpts.negColor || color || c.CORAL;
+  var ds;
+  var metaColors;
+  if (useSigned) {
+    var posDc = _datasetColors(posColor, 0.6);
+    var negDc = _datasetColors(negColor, 0.6);
+    ds = {
+      label: yOpts.label || 'Value',
+      data: data,
+      backgroundColor: (data || []).map(function (v) { return Number(v) < 0 ? negDc.bg : posDc.bg; }),
+      borderColor: (data || []).map(function (v) { return Number(v) < 0 ? negDc.border : posDc.border; }),
+      borderWidth: 1,
+      borderRadius: 3,
+    };
+    metaColors = [negColor, posColor];
+  } else {
+    ds = _barDs(yOpts.label || 'Value', data, color);
+    metaColors = [color];
+  }
+
   var chartOpts = _baseOpts('bar', {
     plugins: {
       legend: { display: false },
@@ -327,9 +376,9 @@ HWReport.singleBar = function (id, labels, data, color, yOpts) {
   });
   _initOrUpdateChart(id, ctx, {
     type: 'bar',
-    data: { labels: labels, datasets: [_barDs(yOpts.label || 'Value', data, color)] },
+    data: { labels: labels, datasets: [ds] },
     options: chartOpts,
-  }, { type: 'bar', ariaLabel: yOpts.ariaLabel || 'Bar chart', colors: [color] });
+  }, { type: 'bar', ariaLabel: yOpts.ariaLabel || 'Bar chart', colors: metaColors, signed: useSigned });
 };
 
 HWReport.donut = function (id, labels, data, colors, opts) {
