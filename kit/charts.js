@@ -23,7 +23,14 @@ HWReport.fmt = {
     var abs = Math.abs(n).toLocaleString();
     return (n < 0 ? '−₹' : '₹') + abs;
   },
-  raw: function (v) { return String(v); },
+  raw: function (v) {
+    var n = Number(v);
+    if (!isFinite(n)) return String(v);
+    // Chart.js auto ticks often leave float noise (5.550000000000001)
+    var cleaned = Math.round(n * 1e6) / 1e6;
+    if (Math.abs(cleaned) >= 100) return Math.round(cleaned).toLocaleString();
+    return parseFloat(cleaned.toFixed(2)).toString();
+  },
   tick: function (kind) {
     var fn = HWReport.fmt[kind] || HWReport.fmt.raw;
     return function (v) { return fn(v); };

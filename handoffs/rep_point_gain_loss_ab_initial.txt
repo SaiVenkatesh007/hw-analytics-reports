@@ -1,31 +1,31 @@
-Rep Point Gain & Loss — A/B Initial Read
-Proven–Remarkable (7–15) · Jul 10–14 2026 · 80/10/10 Base / Control Base / Experiment
+Rep Point Gain & Loss — A/B Initial Read (updated)
+Proven–Remarkable (7–15) · Jul 10–16 2026 · 80/10/10 Base / Control Base / Experiment
 
 Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/rep_point_gain_loss_ab_initial.html
 
-*Context: Initial 5-day interim — Exp at 10%. Primary compare = Control Base vs Experiment (Base 80% is holdout on old economy).*
+*Context: Updated 7-day interim (was Jul 10–14). Primary compare = Control Base vs Experiment. Base 80% holdout on old economy.*
    - Team-level assignment: determine_user_case(UTC ObjectId(team_id) epoch, splits=[80,10,10])
    - Eligible: first Firebase dashboard pvp_rank of day in 7–15
-   - Experiment economy: +15 win / −10 loss · Control Base & Base: +20 / −10 (whale overrides not shipped)
-   - Rank-up pacing deferred (thin on 5 days)
+   - Experiment +15/−10 · Control Base & Base +20/−10 (whale overrides not shipped)
+   - Rank-up pacing still deferred
 
-*1. Treatment is live (hygiene clean)*
-   - Eligible mix ~80.0 / 10.1 / 9.9
-   - Experiment win rp_delta mode = +15 (~26.8k); +20 wins only ~180
-   - Control Base / Base win mode = +20
+*1. Treatment still live*
+   - Eligible mix ~80.0 / 10.1 / 9.9 (~56.5k users)
+   - Experiment win rp_delta mode = +15 (~37.8k); +20 wins ~251
 
-*2. Engagement slightly soft on Experiment*
-   - Adoption 83.5% → 82.2% (−1.3pp) · MDAU 4.85 → 4.68 (−0.16) · MPAU 5.80 → 5.69 (−0.11)
-   - Win 3% 54.2% → 52.7% (−1.5pp) · PvP feature retention 76.0% → 75.2% (−0.8pp)
-   - NDR return 80.3% → 80.0% (−0.3pp) — roughly holds
-   - Softest on Remarkable: feat ret −2.7pp, NDR return −2.0pp; Accomplished MDAU/MPAU −0.24/−0.25
+*2. Engagement slightly soft — Accomplished is the intensity weak spot*
+   - Adoption 83.7% → 82.6% (−1.0pp) · MDAU 4.82 → 4.66 (−0.15) · MPAU 5.76 → 5.64 (−0.11)
+   - Win 3% 54.6% → 53.2% (−1.4pp) · PvP feature retention 76.4% → 75.7% (−0.7pp)
+   - NDR return flat (80.3% both)
+   - Accomplished MDAU/MPAU −0.28/−0.29; daywise MPAU below CB every day
+   - Proven MPAU slightly up (+0.12); Remarkable feat ret −1.5pp
 
-*3. Overall monetisation slightly down — opposite of thesis (so far)*
-   - ARPU ₹30.17 → ₹28.30 (−₹1.87 / ~−6%) · ARPPU ₹1,004 → ₹949 · Conv flat (~3.0%)
-   - Proven / Accomplished ARPU soft down; Remarkable ARPU up (₹63.7 → ₹78.8) on thin payer n (~40–49)
-   - Prefer Exp vs CB only — Base holdout ARPU sits higher than CB (₹36.5 vs ₹30.2)
+*3. Overall monetisation still soft (~−6% ARPU) — Accomplished drags; Remarkable still up*
+   - ARPU ₹49.05 → ₹46.32 (−₹2.73) · ARPPU −₹86 · Conv flat (+0.07pp)
+   - Proven ARPU/user +₹1.8 · Accomplished −₹8.3 · Remarkable +₹4.3 (thin payers ~61 vs 76)
+   - Base vs CB ARPU now aligned (~₹48.5 vs ₹49.0)
 
 *4. WR flat*
-   - 62.2% → 62.6% (+0.4pp)
+   - 62.4% → 62.6% (+0.3pp)
 
-*Takeaway:* Hold Experiment at 10% — do not expand yet. Pinch is live; monetisation overall slightly soft with Remarkable as the only upside and also the softest engagement. Re-read in 1–2 weeks with rank-up pacing.
+*Takeaway:* Hold Experiment at 10% — do not expand. Pinch is live; overall ARPU still soft. Dig into Accomplished (intensity + spend) on next pass; re-read after more days / rank-up pacing.

@@ -7,6 +7,22 @@
   },
   "reports": [
     {
+      "slug": "rep_point_gain_loss_ab_initial",
+      "title": "Rep Point Gain & Loss \u2014 A/B Initial Read",
+      "owner": "Venkatesh",
+      "date": "2026-07-17",
+      "date_label": "Jul 10\u201316, 2026",
+      "tags": [
+        "pvp",
+        "experiment",
+        "rep-points",
+        "monetisation"
+      ],
+      "thesis": "Hold at 10% Experiment \u2014 pinch is live; overall ARPU still ~\u22126%. Accomplished is the weak spot on intensity and spend; too early to expand.",
+      "description": "Updated Jul 10\u201316 interim of Rep Point Gain & Loss AB (Control Base vs Experiment). Treatment hygiene clean; overall ARPU soft; Accomplished MPAU/ARPU lag; Remarkable ARPU still up with mild retention soft.",
+      "handoff": "handoffs/rep_point_gain_loss_ab_initial.txt"
+    },
+    {
       "slug": "wicket_chance_ab_jul7_redeploy",
       "title": "Increased Wicket Chance \u2014 Jul 7\u201316 Redeploy Read",
       "owner": "Venkatesh",
@@ -37,22 +53,6 @@
       "thesis": "HC pack revenue fell \u20b99.5L (\u221215%) on flat payers \u2014 driven by lower rev/order (SKU 5/6) and M12+. Player Gacha attributed revenue explains most of the sink story; June gacha IAPs account for ~\u2153 of that attributed drop among exposed buyers.",
       "description": "Matched-window diagnosis of Jul HC pack softness vs Jun, with sink attribution and June Player Gacha IAP cannibalization read.",
       "handoff": "handoffs/hc_revenue_drop_jul_vs_jun.txt"
-    },
-    {
-      "slug": "rep_point_gain_loss_ab_initial",
-      "title": "Rep Point Gain & Loss \u2014 A/B Initial Read",
-      "owner": "Venkatesh",
-      "date": "2026-07-15",
-      "date_label": "Jul 10\u201314, 2026",
-      "tags": [
-        "pvp",
-        "experiment",
-        "rep-points",
-        "monetisation"
-      ],
-      "thesis": "Hold at 10% Experiment \u2014 pinch is live, but overall monetisation is slightly soft and engagement dips a bit. Too early to expand; re-read in 1\u20132 weeks.",
-      "description": "Initial Jul 10\u201314 read of Rep Point Gain & Loss AB (Control Base vs Experiment). Treatment hygiene clean; overall ARPU slightly down; Remarkable monetisation up with more engagement soft.",
-      "handoff": "handoffs/rep_point_gain_loss_ab_initial.txt"
     },
     {
       "slug": "rank_mm_masterful_plus_sim",
