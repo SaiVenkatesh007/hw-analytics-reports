@@ -1,0 +1,29 @@
+HC Revenue Drop — Jul vs Jun 2026
+Matched Jun 1–15 vs Jul 1–15 · HC packs + sinks · Player Gacha IAP cannibalization
+
+Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/hc_revenue_drop_jul_vs_jun.html
+
+*Context: Matched 1–15 windows (Jul 16 incomplete). Attributed = min(pack_rev, gacha_HC/HC_bought × pack_rev). June gacha IAP buyers tagged on full June 1–30; metrics stay 1–15. Offers 120/121/133/134.*
+   - Sources: HC Revenue Drop [Jul vs Jun].ipynb; HC Revenue Drop [Gacha IAP Cannibalization].ipynb
+   - Test accounts excluded; geo fillna India
+
+*1. Pack revenue −15.5% on flat payers*
+   - ₹61.2L → ₹51.7L (−₹9.5L); payers 2,089 → 2,090
+   - Rev/order −₹187 explains ~80% of the drop; orders/payer ~20%
+
+*2. SKU 5/6 + M12+ concentrate the pack hole*
+   - SKU 6 −₹10.1L; SKU 5 −₹4.2L; new SKUs 7/11/12 partial offset
+   - M12+ pack −₹9.4L (≈100% of pack delta); India −₹5.2L (55% of drop)
+
+*3. Player Gacha owns attributed sink softness*
+   - PG attributed ₹26.2L → ₹15.7L (−₹10.6L, −40%) = 73% of total attributed-revenue decline
+   - Raw HC sunk overall −42%; Player Gacha HC −51%
+
+*4. June gacha IAPs are a real secondary cannibalization channel (attributed ₹)*
+   - Offer union (276) = 37% of PG attributed drop (−₹3.6L); Jun-exposed 34%
+   - Jun-only hangover −64% PG attributed; zero-gacha 55%→82%; Jul-only milder (−22%)
+   - Raw gacha HC share only ~14% — attributed ₹ weights the whale pocket harder
+   - Control also −54% PG attributed — market-wide soft remains
+   - Rates (1–15): Jun-only Game ARPU ₹14.7k→₹7.4k, HC ARPPU ₹10.0k→₹6.9k; Jul-only Game ARPU ₹10.3k→₹29.2k in offer month; Control HC ARPPU ~₹2.6–2.7k flat
+
+*Takeaway:* Treat July HC softness as mix + Player Gacha demand, with June character IAPs as a meaningful secondary cannibalization channel for M12+ whales — not the sole driver. Avoid stacking heavy Player Gacha character IAPs immediately before expecting HC/gacha pack recovery; re-check SKU 5/6 depth and M12+ offer cadence into H2.
