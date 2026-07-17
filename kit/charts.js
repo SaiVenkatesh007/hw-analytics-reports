@@ -16,7 +16,12 @@ HWReport._chartMeta = HWReport._chartMeta || {};
 
 HWReport.fmt = {
   pct: function (v) { return v + '%'; },
-  pp: function (v) { return (v > 0 ? '+' : '') + v + 'pp'; },
+  pp: function (v) {
+    var n = Number(v);
+    if (!isFinite(n)) return String(v) + 'pp';
+    var cleaned = Math.round(n * 100) / 100;
+    return (cleaned > 0 ? '+' : '') + cleaned + 'pp';
+  },
   count: function (v) { return Number(v).toLocaleString(); },
   inr: function (v) {
     var n = Number(v);

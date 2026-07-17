@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('hw-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <title>Increased Wicket Chance — Jul 7–16 Redeploy Read</title>
-<meta name="description" content="Jul 7–16 redeploy read — median 2→3 holds; retention OK after Jul 14 scale-up toward 50% Exp.">
+<meta name="description" content="Jul 7–16 redeploy — median 2→3; retention OK; close-match up at low end; WR soft spot is batting-first at 0-50k / Proven.">
 <meta property="og:title" content="Increased Wicket Chance — Jul 7–16 Redeploy Read">
-<meta property="og:description" content="Jul 7–16 redeploy read — median 2→3 holds; retention OK after Jul 14 scale-up toward 50% Exp.">
+<meta property="og:description" content="Jul 7–16 redeploy — median 2→3; retention OK; close-match up at low end; WR soft spot is batting-first at 0-50k / Proven.">
 <meta property="og:url" content="https://saivenkatesh007.github.io/hw-analytics-reports/wicket_chance_ab_jul7_redeploy.html">
 <meta property="og:type" content="article">
 <link rel="icon" type="image/png" href="kit/favicon.png">
@@ -18,10 +18,11 @@
   <div class="brand"><div class="dot"></div><h1>Increased Wicket Chance — Jul 7–16 Redeploy Read</h1></div>
   <span class="meta">Human vs human · Matched Base = Exp per bracket · Jul 7–16 2026 · Base=0 / Exp=2</span>
 </header>
-<div class="caveat-banner">✓ Jul 7–16 redeploy read: human vs human anchors, matched Base=Exp per bracket, Base=0 / Exp=2. Exp scaled toward 50% from Jul 14. Same-day / next-day follow-up includes bots where noted.</div>
+<div class="caveat-banner">✓ Jul 7–16 redeploy: human vs human, matched Base=Exp per bracket, Base=0 / Exp=2. Exp scaled toward 50% from Jul 14. Per-team WR uses equal-weight team_id (≥5 matches/arm); opponents can be cross-arm.</div>
 
 <div class="tab-bar">
   <button class="tab-btn active" onclick="HWReport.switchTab('overview', this)">Overview</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('closewr', this)">Close + WR</button>
   <button class="tab-btn" onclick="HWReport.switchTab('innings', this)">Full Innings</button>
   <button class="tab-btn" onclick="HWReport.switchTab('init2', this)">First 2 Overs</button>
   <button class="tab-btn" onclick="HWReport.switchTab('shotsel', this)">Shot Selection</button>
@@ -33,8 +34,8 @@
 <div id="tab-overview" class="tab-content active">
   <div class="hero-section">
     <p class="hero-eyebrow">Game Analytics · PvP Experiment · Jul 7–16 Redeploy</p>
-    <h2 class="hero-title">Median 2→3 holds through Jul 16 —<br>retention OK after the scale-up.</h2>
-    <p class="hero-desc">Across Jul 7–16, Exp=2 holds a <strong>median wicket shift 2→3 in every bracket</strong> (+22–31% mean wickets), scores down 3–8%, innings flat. Same-day retention is fine aside from a Jul 14 scale-day blip; <strong>next-day retention is flat</strong> after scaling Exp toward 50%.</p>
+    <h2 class="hero-title">Median 2→3 holds — retention OK;<br>WR soft spot is batting-first at low end.</h2>
+    <p class="hero-desc">Across Jul 7–16, Exp=2 holds a <strong>median wicket shift 2→3 in every bracket</strong> (+22–31% mean wickets), scores down 3–8%, innings flat. Retention is fine after the Jul 14 scale-up. Games are slightly more competitive; the only clear WR cost is <strong>batting-first at 0–50k / Proven</strong> (~−4pp paired).</p>
     <div class="hero-stat-wrap">
       <p class="stat-scoreboard-label">Median wickets (all brackets)</p>
       <p class="stat-scoreboard up" data-value="3" data-suffix="" data-decimals="0">3</p>
@@ -82,14 +83,108 @@
         <div class="hw-table-wrap"><table class="hw-table comp-table"><thead><tr><th>Majority AB</th><th>Team-days</th><th>Returned D+1</th><th>Retention %</th></tr></thead><tbody><tr><td>0</td><td>133,643</td><td>122,100</td><td>91.36%</td></tr><tr><td>2</td><td>12,982</td><td>11,843</td><td>91.23%</td></tr></tbody></table></div>
       </div>
     </div>
+
 <div class="section">
       <div class="section-header"><p class="section-num">Key findings</p><h3 class="section-title">Narrative summary</h3></div>
       <div class="insights">
         <div class="insight good"><strong>Median wickets 2→3 through Jul 16:</strong> Holds in every bracket — e.g. 0–50k median 2→3, mean 2.56→3.31 (+29%). Effect stable across the window.</div>
         <div class="insight warn"><strong>Scores fall 3–8%; innings flat:</strong> Mean scores −7.9% (0–50k) to −3.1% (100k+). Balls faced ~26 — shorter scores, not shorter innings.</div>
         <div class="insight"><strong>Mild shot adaptation:</strong> Zeros/ones up ~+0.5–1.9pp; fours/sixes down ~−0.4–1.6pp. Strongest below 75k.</div>
-        <div class="insight good"><strong>Same-day retention fine:</strong> Overall Base 83.71% vs Exp 83.01% (−0.70pp). Pre Jul 14 flat; Jul 14 scale-day blip (−4.24pp); Jul 15–16 back to noise.</div>
-        <div class="insight good"><strong>Next-day retention flat after scale-up:</strong> Among ≥5-match team-days, Base 91.36% vs Exp 91.23% (−0.13pp). Exp N now usable (~13k team-days) after Jul 14 scale toward 50%.</div>
+        <div class="insight good"><strong>Retention OK after scale-up:</strong> Same-day −0.70pp overall (Jul 14 blip only); next-day Base 91.36% vs Exp 91.23% (−0.13pp).</div>
+        <div class="insight good"><strong>Slightly more competitive games:</strong> Close +0.85pp / one-sided −0.87pp — see <strong>Close + WR</strong> tab for charts by bracket and rank.</div>
+        <div class="insight warn"><strong>WR soft spot = batting first at low end:</strong> Paired −1.22pp overall; bat-first −1.49pp vs bowl-first −0.37pp. Softest: bat-first × 0–50k / Proven (~−4pp). Charts on <strong>Close + WR</strong>.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+
+<div id="tab-closewr" class="tab-content">
+  <main>
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">Close matches</p>
+        <h3 class="section-title">Competitiveness — Base vs Exp</h3>
+        <p class="section-sub">Matched sample · Phase 1 margins (bat ≤5/≥15 runs · bowl ≤3/≥12 balls)</p>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-card"><p class="kpi-label">Close % overall</p><p class="kpi-value up">56.55 → 57.40</p><p class="kpi-note">+0.85pp</p></div>
+        <div class="kpi-card"><p class="kpi-label">One-sided % overall</p><p class="kpi-value up">25.18 → 24.31</p><p class="kpi-note">−0.87pp</p></div>
+        <div class="kpi-card"><p class="kpi-label">Close Δ · Proven</p><p class="kpi-value up">+4.0pp</p><p class="kpi-note">rank softest lift</p></div>
+        <div class="kpi-card"><p class="kpi-label">Close Δ · 0–50k</p><p class="kpi-value up">+3.4pp</p><p class="kpi-note">power softest lift</p></div>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <p class="card-title">Close % by power bracket</p>
+          <div class="legend" id="cq-close-br-legend"></div>
+          <div class="chart-wrap"><canvas id="cq-close-br"></canvas></div>
+        </div>
+        <div class="card">
+          <p class="card-title">Close % by rep rank</p>
+          <div class="legend" id="cq-close-rk-legend"></div>
+          <div class="chart-wrap"><canvas id="cq-close-rk"></canvas></div>
+        </div>
+      </div>
+      <div class="two-col" style="margin-top:1rem">
+        <div class="card">
+          <p class="card-title">Δ Close / Δ One-sided by power bracket</p>
+          <p class="card-sub">Exp − Base (pp)</p>
+          <div class="chart-wrap"><canvas id="cq-delta-br"></canvas></div>
+        </div>
+        <div class="card">
+          <p class="card-title">Δ Close / Δ One-sided by rep rank</p>
+          <p class="card-sub">Exp − Base (pp)</p>
+          <div class="chart-wrap"><canvas id="cq-delta-rk"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <p class="section-num">Win rate</p>
+        <h3 class="section-title">Per-team paired WR (Exp − Base)</h3>
+        <p class="section-sub">Equal-weight team_id · ≥5 matches in both arms · opponents can be cross-arm</p>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-card"><p class="kpi-label">Paired overall</p><p class="kpi-value down">−1.22pp</p><p class="kpi-note">34,034 teams</p></div>
+        <div class="kpi-card"><p class="kpi-label">Batting First</p><p class="kpi-value down">−1.49pp</p><p class="kpi-note">median −1.67</p></div>
+        <div class="kpi-card"><p class="kpi-label">Bowling First</p><p class="kpi-value">−0.37pp</p><p class="kpi-note">median 0.00</p></div>
+        <div class="kpi-card"><p class="kpi-label">Softest cell</p><p class="kpi-value down">−3.9pp</p><p class="kpi-note">Bat 1st × 0–50k</p></div>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <p class="card-title">Paired WR Δ by power bracket</p>
+          <div class="chart-wrap"><canvas id="cq-wr-br"></canvas></div>
+          <p class="chart-footnote">Overall unpaired WR is flat (48.46% vs 48.44%). Soft spot is low power.</p>
+        </div>
+        <div class="card">
+          <p class="card-title">Paired WR Δ by rep rank</p>
+          <div class="chart-wrap"><canvas id="cq-wr-rk"></canvas></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:1rem">
+        <p class="card-title">Paired WR Δ by batting order × power bracket</p>
+        <p class="card-sub">Batting first owns the soft spot; bowling first flat to positive above 50k</p>
+        <div class="chart-wrap chart-wrap--tall"><canvas id="cq-wr-order-br"></canvas></div>
+      </div>
+      <div class="two-col" style="margin-top:1rem">
+        <div class="card">
+          <p class="card-title">Paired WR by batting order</p>
+          <div class="hw-table-wrap"><table class="hw-table comp-table"><thead><tr><th>Order</th><th>Teams</th><th>Mean Δ</th><th>Median Δ</th></tr></thead><tbody><tr><td>Batting First</td><td>19,365</td><td>−1.49pp</td><td>−1.67pp</td></tr><tr><td>Bowling First</td><td>19,234</td><td>−0.37pp</td><td>0.00pp</td></tr></tbody></table></div>
+        </div>
+        <div class="card">
+          <p class="card-title">Key cells (paired Δ)</p>
+          <div class="hw-table-wrap"><table class="hw-table comp-table"><thead><tr><th>Cell</th><th>Δ WR</th></tr></thead><tbody><tr><td>Bat 1st × 0–50k</td><td>−3.91pp</td></tr><tr><td>Bat 1st × Proven</td><td>−3.76pp</td></tr><tr><td>Bowl 1st × 0–50k</td><td>−2.76pp</td></tr><tr><td>Bowl 1st × 100k+</td><td>+0.67pp</td></tr></tbody></table></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><p class="section-num">Read</p><h3 class="section-title">What this means</h3></div>
+      <div class="insights">
+        <div class="insight good"><strong>Slightly more competitive games:</strong> Close +0.85pp / one-sided −0.87pp overall. Lift concentrated at 0–50k and Proven.</div>
+        <div class="insight warn"><strong>WR soft spot = batting first at low end:</strong> Paired overall −1.22pp. Batting first −1.49pp vs bowling first −0.37pp (flat). Softest cell: bat-first × 0–50k / Proven (~−4pp). Mid+ fine.</div>
+        <div class="insight"><strong>Tradeoff framing:</strong> Higher wickets tighten low-end games (close ↑) and cost a bit of bat-first WR there — acceptable if the median / retention story is the priority.</div>
       </div>
     </div>
   </main>
@@ -162,6 +257,65 @@ const RET_BY_DATE = {
   base: [82.45,84.45,84.28,83.23,83.77,83.78,83.64,85.28,83.56,82.02],
   exp: [82.48,84.56,84.19,83.54,83.91,83.67,83.65,81.04,83.23,82.14]
 };
+
+
+const RK = ['Proven','Accomplished','Remarkable','Masterful','Supreme+'];
+const CQ = {
+  br: BR.slice(),
+  rk: RK.slice(),
+  close0_br: [57.62, 57.68, 54.71, 55.69],
+  close2_br: [60.97, 58.31, 54.94, 55.08],
+  close0_rk: [57.15, 56.05, 56.44, 61.15, 51.45],
+  close2_rk: [61.18, 57.47, 56.32, 61.04, 51.38],
+  dClose_br: [3.35, 0.63, 0.23, -0.61],
+  dOne_br: [-2.79, -0.75, -0.43, 0.33],
+  dClose_rk: [4.03, 1.42, -0.12, -0.11, -0.07],
+  dOne_rk: [-3.48, -1.49, 0.09, -0.16, -0.15],
+  wrDelta_br: [-3.75, -0.62, -0.56, 0.20],
+  wrDelta_rk: [-3.74, -1.34, -0.40, 0.36, -0.16],
+  wrBat_br: [-3.91, -1.18, -1.20, -0.23],
+  wrBowl_br: [-2.76, -0.25, 0.40, 0.67]
+};
+
+function renderCloseWr() {
+  var c = HWReport.COLORS;
+  var closeBrLeg = document.getElementById('cq-close-br-legend');
+  var closeRkLeg = document.getElementById('cq-close-rk-legend');
+  if (closeBrLeg) closeBrLeg.innerHTML = HWReport.baseLegend();
+  if (closeRkLeg) closeRkLeg.innerHTML = HWReport.baseLegend();
+
+  HWReport.grouped('cq-close-br', CQ.br, CQ.close0_br, CQ.close2_br, c.BLUE, c.TEAL, {
+    yFmt: 'pct', ariaLabel: 'Close match rate by power bracket'
+  });
+  HWReport.grouped('cq-close-rk', CQ.rk, CQ.close0_rk, CQ.close2_rk, c.BLUE, c.TEAL, {
+    yFmt: 'pct', ariaLabel: 'Close match rate by rep rank'
+  });
+
+  HWReport.dualBar('cq-delta-br', CQ.br, CQ.dClose_br, CQ.dOne_br, {
+    label1: 'Δ Close', label2: 'Δ One-sided', yFmt: 'pp', ymin: -4, ymax: 5,
+    ariaLabel: 'Close and one-sided deltas by power bracket'
+  });
+  HWReport.dualBar('cq-delta-rk', CQ.rk, CQ.dClose_rk, CQ.dOne_rk, {
+    label1: 'Δ Close', label2: 'Δ One-sided', yFmt: 'pp', ymin: -4, ymax: 5,
+    ariaLabel: 'Close and one-sided deltas by rep rank'
+  });
+
+  HWReport.singleBar('cq-wr-br', CQ.br, CQ.wrDelta_br, c.CORAL, {
+    yFmt: 'pp', label: 'Paired Δ WR', signedColors: true,
+    ariaLabel: 'Paired win rate delta by power bracket'
+  });
+  HWReport.singleBar('cq-wr-rk', CQ.rk, CQ.wrDelta_rk, c.CORAL, {
+    yFmt: 'pp', label: 'Paired Δ WR', signedColors: true,
+    ariaLabel: 'Paired win rate delta by rep rank'
+  });
+
+  HWReport.dualBar('cq-wr-order-br', CQ.br, CQ.wrBat_br, CQ.wrBowl_br, {
+    label1: 'Batting First', label2: 'Bowling First', yFmt: 'pp', ymin: -5, ymax: 2,
+    ariaLabel: 'Paired win rate delta by batting order and power bracket'
+  });
+
+  HWReport.initCardChrome(document.getElementById('tab-closewr'));
+}
 
 document.getElementById('ov-wk-legend').innerHTML = HWReport.baseLegend();
 document.getElementById('ov-sc-legend').innerHTML = HWReport.baseLegend();
@@ -314,6 +468,8 @@ function renderActiveTab() {
   var vals = HWReport.filters.get();
   if (activeTab === 'overview') {
     renderOverview(vals);
+  } else if (activeTab === 'closewr') {
+    renderCloseWr();
   } else if (activeTab === 'innings') {
     switchSub('inn', vals.inn, null);
   } else if (activeTab === 'init2') {
@@ -336,6 +492,7 @@ HWReport.initAbTest(DD, {
       HWReport.filters.setDims(DIMS[name], true);
     } else {
       HWReport.filters.setBarVisible(false);
+      if (name === 'closewr') renderCloseWr();
     }
   },
 });
@@ -347,9 +504,11 @@ HWReport.filters.register('wc-render', {
 });
 
 document.addEventListener('hwreport:tabswitch', function (e) {
+  activeTab = e.detail.name;
   if (e.detail.name === 'overview' || e.detail.name === 'innings' || e.detail.name === 'init2' || e.detail.name === 'shotsel' || e.detail.name === 'dist') {
-    activeTab = e.detail.name;
     HWReport.filters.setDims(DIMS[e.detail.name], true);
+  } else if (e.detail.name === 'closewr') {
+    renderCloseWr();
   }
 });
 

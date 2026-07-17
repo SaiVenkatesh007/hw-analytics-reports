@@ -1,28 +1,33 @@
 Increased Wicket Chance — Jul 7–16 Redeploy Read
 Human vs human · Matched Base = Exp per bracket · 4 power brackets · Jul 7–16 2026 · Base=0 / Exp=2
 Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/wicket_chance_ab_jul7_redeploy.html
+Close + WR tab: charts for close/one-sided and paired WR by bracket, rank, batting order
 
 *Context: post-redeploy read through Jul 16 — Exp scaled toward 50% from Jul 14*
    - Human-vs-human anchors, matched Base=Exp per bracket
-   - Same-day next-match follow-up includes bot matches
-   - Next-day: team-days with ≥5 matches on D; majority arm; D+1 any PvP (bots allowed)
+   - Same-day / next-day follow-up includes bots where noted
+   - Close/one-sided: Phase 1 margins on matched sample
+   - Per-team WR: team_id proxy, ≥5 matches/arm; paired = both arms
 
 *1. Median wickets 2→3 holds through Jul 16*
    - Median 2→3 in every bracket; mean wickets +22–31% (e.g. 0–50k 2.56→3.31)
    - Scores −3.1% to −7.9%; balls faced flat (~26)
-   - Effect holds batting first and bowling first
 
 *2. Mild shot adaptation; mechanical lift on boundaries*
    - Zeros/ones up ~+0.5–1.9pp; fours/sixes down ~−0.4–1.6pp
    - Strongest below 75k; fours wicket rates +43–52% relative
 
-*3. Same-day continuation is fine*
-   - Overall: Base 83.71% vs Exp 83.01% (−0.70pp)
-   - Pre Jul 14 flat (~+0.06pp avg); Jul 14 scale-day blip (−4.24pp); Jul 15–16 back to noise
-   - Day-wise chart on dashboard marks the Jul 14 scale-up
+*3. Same-day / next-day retention OK*
+   - Same-day overall −0.70pp; Jul 14 scale-day blip only; Jul 15–16 back to noise
+   - Next-day (≥5-match days): Base 91.36% vs Exp 91.23% (−0.13pp)
 
-*4. Next-day retention flat after scale-up*
-   - Among ≥5-match team-days: Base 91.36% (n=133,643) vs Exp 91.23% (n=12,982) — −0.13pp
-   - Exp N now usable after Jul 14 scale toward 50%
+*4. Games slightly more competitive*
+   - Close 56.55% → 57.40% (+0.85pp); one-sided 25.18% → 24.31% (−0.87pp)
+   - Lift concentrated at 0–50k (+3.4pp close) and Proven (+4.0pp close)
 
-*Takeaway:* Hold Exp=2 — mechanical and median lift confirmed through Jul 16; retention OK after the scale-up.
+*5. Per-team WR soft spot is batting-first at low end*
+   - Unpaired overall flat (48.46% vs 48.44%); paired overall −1.22pp (n=34k teams)
+   - Paired batting first −1.49pp vs bowling first −0.37pp (flat)
+   - Soft spot: batting first × 0–50k −3.9pp / Proven −3.8pp; mid+ tiers fine
+
+*Takeaway:* Hold Exp=2 — mechanic and median lift confirmed; retention OK after scale-up. Accept a batting-first WR dip at low power / Proven as the tradeoff for tighter games there.
