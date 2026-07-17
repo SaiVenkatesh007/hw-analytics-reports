@@ -34,8 +34,8 @@
         "experiment",
         "wicket-chance"
       ],
-      "thesis": "Over Jul 7\u201316, Exp=2 holds median wickets 2\u21923 (+22\u201331% mean) with scores down 3\u20138%. Same-day retention fine aside from a Jul 14 scale-day blip; next-day retention flat after the Jul 14 scale-up.",
-      "description": "Jul 7\u201316 redeploy AB read \u2014 median 2\u21923 confirmed; retention OK after scaling Exp toward 50% on Jul 14.",
+      "thesis": "Over Jul 7\u201316, Exp=2 holds median wickets 2\u21923 with retention OK after the Jul 14 scale-up. Games are slightly more competitive; the only WR soft spot is batting-first at low power / Proven.",
+      "description": "Jul 7\u201316 redeploy AB read \u2014 median 2\u21923; retention OK; close-match up at low end; per-team WR soft spot is batting-first at 0-50k / Proven.",
       "handoff": "handoffs/wicket_chance_ab_jul7_redeploy.txt"
     },
     {

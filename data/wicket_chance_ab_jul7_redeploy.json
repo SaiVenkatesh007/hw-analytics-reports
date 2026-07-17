@@ -3,7 +3,7 @@
     "title": "Increased Wicket Chance \u2014 Jul 7\u201316 Redeploy Read",
     "meta_line": "Human vs human \u00b7 Matched Base = Exp per bracket \u00b7 Jul 7\u201316 2026 \u00b7 Base=0 / Exp=2",
     "date_range": "Jul 7\u201316 2026",
-    "filters": "Proven+, ARENAS, human vs human (opp_is_bot=0), matched samples per power bracket, wicket_chance_ab Base=0 Exp=2; Exp scaled toward 50% from Jul 14",
+    "filters": "Proven+, ARENAS, human vs human (opp_is_bot=0), matched samples per power bracket, wicket_chance_ab Base=0 Exp=2; Exp scaled toward 50% from Jul 14; close/one-sided Phase 1 margins; per-team WR equal-weight (\u22655 matches/arm)",
     "brackets": [
       "0-50k",
       "50k-75k",
@@ -21,8 +21,8 @@
       "experiment",
       "wicket-chance"
     ],
-    "thesis": "Over Jul 7\u201316, Exp=2 holds median wickets 2\u21923 (+22\u201331% mean) with scores down 3\u20138%. Same-day retention fine aside from a Jul 14 scale-day blip; next-day retention flat after the Jul 14 scale-up.",
-    "description": "Jul 7\u201316 redeploy AB read \u2014 median 2\u21923 confirmed; retention OK after scaling Exp toward 50% on Jul 14.",
+    "thesis": "Over Jul 7\u201316, Exp=2 holds median wickets 2\u21923 with retention OK after the Jul 14 scale-up. Games are slightly more competitive; the only WR soft spot is batting-first at low power / Proven.",
+    "description": "Jul 7\u201316 redeploy AB read \u2014 median 2\u21923; retention OK; close-match up at low end; per-team WR soft spot is batting-first at 0-50k / Proven.",
     "handoff": "handoffs/wicket_chance_ab_jul7_redeploy.txt"
   },
   "median_overall": {
@@ -1926,5 +1926,279 @@
         -1.7
       ]
     }
+  },
+  "close_onesided": {
+    "definition": "Phase 1 margins on matched pvp_balanced: bat-first \u22645/\u226515 runs; bowl-first \u22643/\u226512 balls remaining; 30-ball format for Proven+.",
+    "overall": [
+      {
+        "wicket_chance_ab": 0,
+        "matches": 463806,
+        "close_rate": 56.55,
+        "one_sided_rate": 25.18
+      },
+      {
+        "wicket_chance_ab": 2,
+        "matches": 459675,
+        "close_rate": 57.4,
+        "one_sided_rate": 24.31
+      }
+    ],
+    "by_power_bracket": [
+      {
+        "power_bracket": "0-50k",
+        "close_0": 57.62,
+        "close_2": 60.97,
+        "onesided_0": 23.16,
+        "onesided_2": 20.37,
+        "delta_close_pp": 3.35,
+        "delta_onesided_pp": -2.79
+      },
+      {
+        "power_bracket": "50k-75k",
+        "close_0": 57.68,
+        "close_2": 58.31,
+        "onesided_0": 24.26,
+        "onesided_2": 23.51,
+        "delta_close_pp": 0.63,
+        "delta_onesided_pp": -0.75
+      },
+      {
+        "power_bracket": "75k-100k",
+        "close_0": 54.71,
+        "close_2": 54.94,
+        "onesided_0": 27.18,
+        "onesided_2": 26.75,
+        "delta_close_pp": 0.23,
+        "delta_onesided_pp": -0.43
+      },
+      {
+        "power_bracket": "100k+",
+        "close_0": 55.69,
+        "close_2": 55.08,
+        "onesided_0": 26.48,
+        "onesided_2": 26.81,
+        "delta_close_pp": -0.61,
+        "delta_onesided_pp": 0.33
+      }
+    ],
+    "by_rep_rank": [
+      {
+        "rep_rank": "Proven",
+        "close_0": 57.15,
+        "close_2": 61.18,
+        "onesided_0": 24.5,
+        "onesided_2": 21.02,
+        "delta_close_pp": 4.03,
+        "delta_onesided_pp": -3.48
+      },
+      {
+        "rep_rank": "Accomplished",
+        "close_0": 56.05,
+        "close_2": 57.47,
+        "onesided_0": 25.86,
+        "onesided_2": 24.37,
+        "delta_close_pp": 1.42,
+        "delta_onesided_pp": -1.49
+      },
+      {
+        "rep_rank": "Remarkable",
+        "close_0": 56.44,
+        "close_2": 56.32,
+        "onesided_0": 25.23,
+        "onesided_2": 25.32,
+        "delta_close_pp": -0.12,
+        "delta_onesided_pp": 0.09
+      },
+      {
+        "rep_rank": "Masterful",
+        "close_0": 61.15,
+        "close_2": 61.04,
+        "onesided_0": 21.53,
+        "onesided_2": 21.37,
+        "delta_close_pp": -0.11,
+        "delta_onesided_pp": -0.16
+      },
+      {
+        "rep_rank": "Supreme+",
+        "close_0": 51.45,
+        "close_2": 51.38,
+        "onesided_0": 29.13,
+        "onesided_2": 28.98,
+        "delta_close_pp": -0.07,
+        "delta_onesided_pp": -0.15
+      }
+    ]
+  },
+  "per_team_wr": {
+    "definition": "team_id proxy; \u22655 matches per arm on full pvp (human vs human). Unpaired = equal-weight mean of per-team WR. Paired = teams with \u22655 in both arms. Opponents can be cross-arm.",
+    "n_sufficiency": [
+      {
+        "wicket_chance_ab": 0,
+        "teams": 55848,
+        "matches": 1552383
+      },
+      {
+        "wicket_chance_ab": 2,
+        "teams": 34369,
+        "matches": 454137
+      }
+    ],
+    "unpaired_overall": [
+      {
+        "wicket_chance_ab": 0,
+        "teams": 55848,
+        "mean_wr": 48.46,
+        "median_wr": 50.0,
+        "mean_matches": 27.8
+      },
+      {
+        "wicket_chance_ab": 2,
+        "teams": 34369,
+        "mean_wr": 48.44,
+        "median_wr": 50.0,
+        "mean_matches": 13.2
+      }
+    ],
+    "paired_overall": {
+      "paired_teams": 34034,
+      "mean_wr_0": 49.71,
+      "mean_wr_2": 48.49,
+      "mean_delta_pp": -1.22,
+      "median_delta_pp": -1.18,
+      "pct_negative_delta": 51.9
+    },
+    "paired_by_power_bracket": [
+      {
+        "majority_bracket": "0-50k",
+        "paired_teams": 8153,
+        "mean_delta_pp": -3.75
+      },
+      {
+        "majority_bracket": "50k-75k",
+        "paired_teams": 12474,
+        "mean_delta_pp": -0.62
+      },
+      {
+        "majority_bracket": "75k-100k",
+        "paired_teams": 7582,
+        "mean_delta_pp": -0.56
+      },
+      {
+        "majority_bracket": "100k+",
+        "paired_teams": 5825,
+        "mean_delta_pp": 0.2
+      }
+    ],
+    "paired_by_rep_rank": [
+      {
+        "majority_rank": "Proven",
+        "paired_teams": 7190,
+        "mean_delta_pp": -3.74
+      },
+      {
+        "majority_rank": "Accomplished",
+        "paired_teams": 9809,
+        "mean_delta_pp": -1.34
+      },
+      {
+        "majority_rank": "Remarkable",
+        "paired_teams": 7919,
+        "mean_delta_pp": -0.4
+      },
+      {
+        "majority_rank": "Masterful",
+        "paired_teams": 6142,
+        "mean_delta_pp": 0.36
+      },
+      {
+        "majority_rank": "Supreme+",
+        "paired_teams": 2974,
+        "mean_delta_pp": -0.16
+      }
+    ],
+    "paired_by_batting_order": [
+      {
+        "batting_order": "Batting First",
+        "paired_teams": 19365,
+        "mean_wr_0": 46.95,
+        "mean_wr_2": 45.46,
+        "mean_delta_pp": -1.49,
+        "median_delta_pp": -1.67,
+        "pct_negative_delta": 52.0
+      },
+      {
+        "batting_order": "Bowling First",
+        "paired_teams": 19234,
+        "mean_wr_0": 54.7,
+        "mean_wr_2": 54.33,
+        "mean_delta_pp": -0.37,
+        "median_delta_pp": 0.0,
+        "pct_negative_delta": 49.34
+      }
+    ],
+    "paired_batting_order_by_bracket": [
+      {
+        "batting_order": "Batting First",
+        "majority_bracket": "0-50k",
+        "mean_delta_pp": -3.91
+      },
+      {
+        "batting_order": "Batting First",
+        "majority_bracket": "50k-75k",
+        "mean_delta_pp": -1.18
+      },
+      {
+        "batting_order": "Batting First",
+        "majority_bracket": "75k-100k",
+        "mean_delta_pp": -1.2
+      },
+      {
+        "batting_order": "Batting First",
+        "majority_bracket": "100k+",
+        "mean_delta_pp": -0.23
+      },
+      {
+        "batting_order": "Bowling First",
+        "majority_bracket": "0-50k",
+        "mean_delta_pp": -2.76
+      },
+      {
+        "batting_order": "Bowling First",
+        "majority_bracket": "50k-75k",
+        "mean_delta_pp": -0.25
+      },
+      {
+        "batting_order": "Bowling First",
+        "majority_bracket": "75k-100k",
+        "mean_delta_pp": 0.4
+      },
+      {
+        "batting_order": "Bowling First",
+        "majority_bracket": "100k+",
+        "mean_delta_pp": 0.67
+      }
+    ],
+    "paired_batting_order_by_rank": [
+      {
+        "batting_order": "Batting First",
+        "majority_rank": "Proven",
+        "mean_delta_pp": -3.76
+      },
+      {
+        "batting_order": "Batting First",
+        "majority_rank": "Accomplished",
+        "mean_delta_pp": -2.08
+      },
+      {
+        "batting_order": "Bowling First",
+        "majority_rank": "Proven",
+        "mean_delta_pp": -2.75
+      },
+      {
+        "batting_order": "Bowling First",
+        "majority_rank": "Accomplished",
+        "mean_delta_pp": -1.19
+      }
+    ]
   }
 }
