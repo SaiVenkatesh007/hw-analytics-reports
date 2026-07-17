@@ -1,27 +1,28 @@
-Increased Wicket Chance — Jul 7–13 Redeploy Read
-Human vs human · Matched Base = Exp per bracket · 4 power brackets · Jul 7–13 2026 · Base=0 / Exp=2
+Increased Wicket Chance — Jul 7–16 Redeploy Read
+Human vs human · Matched Base = Exp per bracket · 4 power brackets · Jul 7–16 2026 · Base=0 / Exp=2
 Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/wicket_chance_ab_jul7_redeploy.html
 
-*Context: week-long post-redeploy read — confirms Jul 7–8 direction at larger N*
+*Context: post-redeploy read through Jul 16 — Exp scaled toward 50% from Jul 14*
    - Human-vs-human anchors, matched Base=Exp per bracket
    - Same-day next-match follow-up includes bot matches
-   - Next-day (5+ match days) Exp N still too thin at ~20% traffic
+   - Next-day: team-days with ≥5 matches on D; majority arm; D+1 any PvP (bots allowed)
 
-*1. Median wickets 2→3 holds over the full week*
-   - Median 2→3 in every bracket; mean wickets +22–30% (e.g. 0–50k 2.57→3.33)
-   - Scores −2.8% to −7.7%; balls faced flat (~26)
+*1. Median wickets 2→3 holds through Jul 16*
+   - Median 2→3 in every bracket; mean wickets +22–31% (e.g. 0–50k 2.56→3.31)
+   - Scores −3.1% to −7.9%; balls faced flat (~26)
    - Effect holds batting first and bowling first
 
 *2. Mild shot adaptation; mechanical lift on boundaries*
-   - Zeros/ones up ~+0.5–1.9pp; fours/sixes down ~−0.5–1.6pp
-   - Strongest below 75k; fours wicket counts up sharply
+   - Zeros/ones up ~+0.5–1.9pp; fours/sixes down ~−0.4–1.6pp
+   - Strongest below 75k; fours wicket rates +43–52% relative
 
-*3. Same-day continuation is neutral*
-   - Match-level same-day next-match retention: Base 83.68% vs Exp 83.74% (+0.06pp)
+*3. Same-day continuation is fine*
+   - Overall: Base 83.71% vs Exp 83.01% (−0.70pp)
+   - Pre Jul 14 flat (~+0.06pp avg); Jul 14 scale-day blip (−4.24pp); Jul 15–16 back to noise
+   - Day-wise chart on dashboard marks the Jul 14 scale-up
 
-*4. Next-day retention — not enough Exp base yet*
-   - Among team-days with ≥5 matches: Exp only ~2.7k team-days vs ~95k Base
-   - Too thin for a proper next-day read at current ~20% Exp share
-   - Suggest scale Exp to 50% so this cut can be read with confidence
+*4. Next-day retention flat after scale-up*
+   - Among ≥5-match team-days: Base 91.36% (n=133,643) vs Exp 91.23% (n=12,982) — −0.13pp
+   - Exp N now usable after Jul 14 scale toward 50%
 
-*Takeaway:* Hold Exp=2 — mechanical and median lift confirmed over Jul 7–13. Scale treatment to 50% to properly read next-day retention among heavy players.
+*Takeaway:* Hold Exp=2 — mechanical and median lift confirmed through Jul 16; retention OK after the scale-up.

@@ -7,6 +7,22 @@
   },
   "reports": [
     {
+      "slug": "wicket_chance_ab_jul7_redeploy",
+      "title": "Increased Wicket Chance \u2014 Jul 7\u201316 Redeploy Read",
+      "owner": "Venkatesh",
+      "date": "2026-07-17",
+      "date_label": "Jul 7\u201316 2026",
+      "tags": [
+        "pvp",
+        "ab-test",
+        "experiment",
+        "wicket-chance"
+      ],
+      "thesis": "Over Jul 7\u201316, Exp=2 holds median wickets 2\u21923 (+22\u201331% mean) with scores down 3\u20138%. Same-day retention fine aside from a Jul 14 scale-day blip; next-day retention flat after the Jul 14 scale-up.",
+      "description": "Jul 7\u201316 redeploy AB read \u2014 median 2\u21923 confirmed; retention OK after scaling Exp toward 50% on Jul 14.",
+      "handoff": "handoffs/wicket_chance_ab_jul7_redeploy.txt"
+    },
+    {
       "slug": "hc_revenue_drop_jul_vs_jun",
       "title": "HC Revenue Drop \u2014 Jul vs Jun 2026",
       "owner": "Venkatesh",
@@ -53,22 +69,6 @@
       "thesis": "Ship Masterful+ rank MM with whale timer; add cold-start/top-10 assists \u2014 biggest lift for non-whales and off-peak hours.",
       "description": "Extensive sim of proposed Masterful+ matchmaking: evening deep-dive + full-day hourly concentration, v1 vs v2.",
       "handoff": "handoffs/rank_mm_masterful_plus_sim.txt"
-    },
-    {
-      "slug": "wicket_chance_ab_jul7_redeploy",
-      "title": "Increased Wicket Chance \u2014 Jul 7\u201313 Redeploy Read",
-      "owner": "Venkatesh",
-      "date": "2026-07-14",
-      "date_label": "Jul 7\u201313 2026",
-      "tags": [
-        "pvp",
-        "ab-test",
-        "experiment",
-        "wicket-chance"
-      ],
-      "thesis": "Over Jul 7\u201313, Exp=2 holds median wickets at 2\u21923 with +22\u201330% mean lift and neutral same-day continuation. Scale Exp to 50% before relying on next-day retention.",
-      "description": "Jul 7\u201313 redeploy AB read \u2014 median 2\u21923 confirmed over a week; next-day retention underpowered at ~20% Exp.",
-      "handoff": "handoffs/wicket_chance_ab_jul7_redeploy.txt"
     },
     {
       "slug": "whale_mm_ab_phase2",
