@@ -1,33 +1,31 @@
-Increased Wicket Chance — Jul 7–16 Redeploy Read
-Human vs human · Matched Base = Exp per bracket · 4 power brackets · Jul 7–16 2026 · Base=0 / Exp=2
+Increased Wicket Chance — Jul 7–19 Redeploy Read
+Human vs human · Matched Base = Exp per bracket · 4 power brackets · Jul 7–19 2026 · Base=0 / Exp=2
 Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/wicket_chance_ab_jul7_redeploy.html
-Close + WR tab: charts for close/one-sided and paired WR by bracket, rank, batting order
 
-*Context: post-redeploy read through Jul 16 — Exp scaled toward 50% from Jul 14*
+*Context: redeploy read through Jul 19 — Exp scaled toward 50% from Jul 14*
    - Human-vs-human anchors, matched Base=Exp per bracket
-   - Same-day / next-day follow-up includes bots where noted
-   - Close/one-sided: Phase 1 margins on matched sample
-   - Per-team WR: team_id proxy, ≥5 matches/arm; paired = both arms
+   - Same-day next-match follow-up includes bot matches
+   - Next-day: team-days with ≥5 matches on D; majority arm; D+1 any PvP (bots allowed)
+   - Training module: Jul 14–19 post-scale only (see Post Match Training tab)
 
-*1. Median wickets 2→3 holds through Jul 16*
-   - Median 2→3 in every bracket; mean wickets +22–31% (e.g. 0–50k 2.56→3.31)
+*1. Median wickets 2→3 stays intact through Jul 19*
+   - Median 2→3 in every bracket; mean wickets +22–31%
    - Scores −3.1% to −7.9%; balls faced flat (~26)
 
-*2. Mild shot adaptation; mechanical lift on boundaries*
-   - Zeros/ones up ~+0.5–1.9pp; fours/sixes down ~−0.4–1.6pp
-   - Strongest below 75k; fours wicket rates +43–52% relative
+*2. Match competitiveness improves; WR soft spot unchanged*
+   - Close 56.45% → 57.34% (+0.89pp); one-sided −0.93pp
+   - Lift strongest at 0–50k / Proven
+   - Paired per-team WR −1.44pp overall; softest bat-first × 0–50k / Proven
 
-*3. Same-day / next-day retention OK*
-   - Same-day overall −0.70pp; Jul 14 scale-day blip only; Jul 15–16 back to noise
-   - Next-day (≥5-match days): Base 91.36% vs Exp 91.23% (−0.13pp)
+*3. Retention is stable post scale-up*
+   - Same-day overall: Base 83.56% vs Exp 82.98% (−0.58pp)
+   - Jul 14 is the single dip (−4.24pp); Jul 15–19 reverts to noise
+   - Next-day (>=5-match team-days): Base 91.35% vs Exp 91.46% (+0.11pp)
 
-*4. Games slightly more competitive*
-   - Close 56.55% → 57.40% (+0.85pp); one-sided 25.18% → 24.31% (−0.87pp)
-   - Lift concentrated at 0–50k (+3.4pp close) and Proven (+4.0pp close)
+*4. Post-match training increases modestly in treatment (Jul 14–19 only)*
+   - User adoption: 50.09% → 50.52% (+0.43pp)
+   - Match-level training incidence: 11.27% → 11.55% (+0.28pp)
+   - Stronger in 0–50k (+1.69pp) and Proven (+1.91pp)
+   - Event intensity flat (0.28 per match)
 
-*5. Per-team WR soft spot is batting-first at low end*
-   - Unpaired overall flat (48.46% vs 48.44%); paired overall −1.22pp (n=34k teams)
-   - Paired batting first −1.49pp vs bowling first −0.37pp (flat)
-   - Soft spot: batting first × 0–50k −3.9pp / Proven −3.8pp; mid+ tiers fine
-
-*Takeaway:* Hold Exp=2 — mechanic and median lift confirmed; retention OK after scale-up. Accept a batting-first WR dip at low power / Proven as the tradeoff for tighter games there.
+*Takeaway:* Keep Exp=2 — mechanic + competitiveness delivered, retention OK after scale-up, and post-match training shows a modest treatment lift.

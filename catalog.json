@@ -7,6 +7,22 @@
   },
   "reports": [
     {
+      "slug": "wicket_chance_ab_jul7_redeploy",
+      "title": "Increased Wicket Chance \u2014 Jul 7\u201319 Redeploy Read",
+      "owner": "Venkatesh",
+      "date": "2026-07-20",
+      "date_label": "Jul 7\u201319 2026",
+      "tags": [
+        "pvp",
+        "ab-test",
+        "experiment",
+        "wicket-chance"
+      ],
+      "thesis": "Over Jul 7\u201319, Exp=2 sustains median wickets 2\u21923 with retention OK after the Jul 14 scale-up. Games are slightly more competitive; WR soft spot remains batting-first at 0\u201350k / Proven. Post-match training (Jul 14\u201319 only) shows a modest uplift in treatment.",
+      "description": "Jul 7\u201319 redeploy AB read \u2014 median 2\u21923; retention OK; close-match up at low end; WR soft spot is batting-first at 0-50k / Proven; post-match training modestly higher in treatment.",
+      "handoff": "handoffs/wicket_chance_ab_jul7_redeploy.txt"
+    },
+    {
       "slug": "rep_point_gain_loss_ab_initial",
       "title": "Rep Point Gain & Loss \u2014 A/B Initial Read",
       "owner": "Venkatesh",
@@ -21,22 +37,6 @@
       "thesis": "Hold at 10% Experiment \u2014 pinch is live; overall ARPU still ~\u22126%. Accomplished is the weak spot on intensity and spend; too early to expand.",
       "description": "Updated Jul 10\u201316 interim of Rep Point Gain & Loss AB (Control Base vs Experiment). Treatment hygiene clean; overall ARPU soft; Accomplished MPAU/ARPU lag; Remarkable ARPU still up with mild retention soft.",
       "handoff": "handoffs/rep_point_gain_loss_ab_initial.txt"
-    },
-    {
-      "slug": "wicket_chance_ab_jul7_redeploy",
-      "title": "Increased Wicket Chance \u2014 Jul 7\u201316 Redeploy Read",
-      "owner": "Venkatesh",
-      "date": "2026-07-17",
-      "date_label": "Jul 7\u201316 2026",
-      "tags": [
-        "pvp",
-        "ab-test",
-        "experiment",
-        "wicket-chance"
-      ],
-      "thesis": "Over Jul 7\u201316, Exp=2 holds median wickets 2\u21923 with retention OK after the Jul 14 scale-up. Games are slightly more competitive; the only WR soft spot is batting-first at low power / Proven.",
-      "description": "Jul 7\u201316 redeploy AB read \u2014 median 2\u21923; retention OK; close-match up at low end; per-team WR soft spot is batting-first at 0-50k / Proven.",
-      "handoff": "handoffs/wicket_chance_ab_jul7_redeploy.txt"
     },
     {
       "slug": "hc_revenue_drop_jul_vs_jun",
