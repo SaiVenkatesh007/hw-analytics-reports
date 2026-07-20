@@ -1,9 +1,9 @@
 {
   "meta": {
-    "title": "Increased Wicket Chance \u2014 Jul 7\u201316 Redeploy Read",
-    "meta_line": "Human vs human \u00b7 Matched Base = Exp per bracket \u00b7 Jul 7\u201316 2026 \u00b7 Base=0 / Exp=2",
-    "date_range": "Jul 7\u201316 2026",
-    "filters": "Proven+, ARENAS, human vs human (opp_is_bot=0), matched samples per power bracket, wicket_chance_ab Base=0 Exp=2; Exp scaled toward 50% from Jul 14; close/one-sided Phase 1 margins; per-team WR equal-weight (\u22655 matches/arm)",
+    "title": "Increased Wicket Chance \u2014 Jul 7\u201319 Redeploy Read",
+    "meta_line": "Human vs human \u00b7 Matched Base = Exp per bracket \u00b7 Jul 7\u201319 2026 \u00b7 Base=0 / Exp=2",
+    "date_range": "Jul 7\u201319 2026",
+    "filters": "Proven+, ARENAS, human vs human (opp_is_bot=0), matched samples per power bracket, wicket_chance_ab Base=0 Exp=2; Exp scaled toward 50% from Jul 14; close/one-sided Phase 1 margins; per-team WR equal-weight (\u22655 matches/arm); training module Jul 14\u201319 post-scale",
     "brackets": [
       "0-50k",
       "50k-75k",
@@ -13,16 +13,16 @@
     "source_notebook": "Wicket Chance by Power Bracket.ipynb",
     "slug": "wicket_chance_ab_jul7_redeploy",
     "owner": "Venkatesh",
-    "date": "2026-07-17",
-    "date_label": "Jul 7\u201316 2026",
+    "date": "2026-07-20",
+    "date_label": "Jul 7\u201319 2026",
     "tags": [
       "pvp",
       "ab-test",
       "experiment",
       "wicket-chance"
     ],
-    "thesis": "Over Jul 7\u201316, Exp=2 holds median wickets 2\u21923 with retention OK after the Jul 14 scale-up. Games are slightly more competitive; the only WR soft spot is batting-first at low power / Proven.",
-    "description": "Jul 7\u201316 redeploy AB read \u2014 median 2\u21923; retention OK; close-match up at low end; per-team WR soft spot is batting-first at 0-50k / Proven.",
+    "thesis": "Over Jul 7\u201319, Exp=2 sustains median wickets 2\u21923 with retention OK after the Jul 14 scale-up. Games are slightly more competitive; WR soft spot remains batting-first at 0\u201350k / Proven. Post-match training (Jul 14\u201319 only) shows a modest uplift in treatment.",
+    "description": "Jul 7\u201319 redeploy AB read \u2014 median 2\u21923; retention OK; close-match up at low end; WR soft spot is batting-first at 0-50k / Proven; post-match training modestly higher in treatment.",
     "handoff": "handoffs/wicket_chance_ab_jul7_redeploy.txt"
   },
   "median_overall": {
@@ -95,77 +95,77 @@
   },
   "retention": {
     "definition": "Match-level same-day next match; follow-up pool includes bot matches",
-    "note": "Overall Exp \u22120.70pp vs Base. Pre Jul 14 flat (+0.06pp avg). Jul 14 scale-day \u22124.24pp; Jul 15\u201316 back to noise.",
+    "note": "Overall Exp \u22120.58pp vs Base. Pre Jul 14 flat (+0.06pp avg). Jul 14 scale-day \u22124.24pp; Jul 15\u201319 back to noise.",
     "overall": [
       {
         "wicket_chance_ab": 0,
-        "matches": 1592037,
-        "matches_with_next_match": 1332693,
-        "next_match_retention_pct": 83.71
+        "matches": 1933777,
+        "matches_with_next_match": 1615858,
+        "next_match_retention_pct": 83.56
       },
       {
         "wicket_chance_ab": 2,
-        "matches": 514618,
-        "matches_with_next_match": 427184,
-        "next_match_retention_pct": 83.01
+        "matches": 789888,
+        "matches_with_next_match": 655447,
+        "next_match_retention_pct": 82.98
       }
     ],
     "by_bracket": [
       {
         "wicket_chance_ab": 0,
         "power_bracket": "0-50k",
-        "matches": 478467,
-        "matches_with_next_match": 396980,
-        "next_match_retention_pct": 82.97
+        "matches": 589353,
+        "matches_with_next_match": 488175,
+        "next_match_retention_pct": 82.83
       },
       {
         "wicket_chance_ab": 0,
         "power_bracket": "50k-75k",
-        "matches": 490685,
-        "matches_with_next_match": 404548,
-        "next_match_retention_pct": 82.45
+        "matches": 594589,
+        "matches_with_next_match": 489523,
+        "next_match_retention_pct": 82.33
       },
       {
         "wicket_chance_ab": 0,
         "power_bracket": "75k-100k",
-        "matches": 329272,
-        "matches_with_next_match": 276886,
-        "next_match_retention_pct": 84.09
+        "matches": 397534,
+        "matches_with_next_match": 333695,
+        "next_match_retention_pct": 83.94
       },
       {
         "wicket_chance_ab": 0,
         "power_bracket": "100k+",
-        "matches": 293613,
-        "matches_with_next_match": 254279,
-        "next_match_retention_pct": 86.6
+        "matches": 352301,
+        "matches_with_next_match": 304465,
+        "next_match_retention_pct": 86.42
       },
       {
         "wicket_chance_ab": 2,
         "power_bracket": "0-50k",
-        "matches": 103089,
-        "matches_with_next_match": 84388,
-        "next_match_retention_pct": 81.86
+        "matches": 155748,
+        "matches_with_next_match": 127306,
+        "next_match_retention_pct": 81.74
       },
       {
         "wicket_chance_ab": 2,
         "power_bracket": "50k-75k",
-        "matches": 179662,
-        "matches_with_next_match": 146746,
-        "next_match_retention_pct": 81.68
+        "matches": 276834,
+        "matches_with_next_match": 226354,
+        "next_match_retention_pct": 81.77
       },
       {
         "wicket_chance_ab": 2,
         "power_bracket": "75k-100k",
-        "matches": 122796,
-        "matches_with_next_match": 102409,
-        "next_match_retention_pct": 83.4
+        "matches": 189544,
+        "matches_with_next_match": 158001,
+        "next_match_retention_pct": 83.36
       },
       {
         "wicket_chance_ab": 2,
         "power_bracket": "100k+",
-        "matches": 109071,
-        "matches_with_next_match": 93641,
-        "next_match_retention_pct": 85.85
+        "matches": 167762,
+        "matches_with_next_match": 143786,
+        "next_match_retention_pct": 85.71
       }
     ],
     "by_date": [
@@ -238,82 +238,103 @@
         "exp_ret_pct": 82.14,
         "delta_pp": 0.12,
         "period": "post-scale"
+      },
+      {
+        "date": "2026-07-17",
+        "base_ret_pct": 82.54,
+        "exp_ret_pct": 82.76,
+        "delta_pp": 0.22,
+        "period": "post-scale"
+      },
+      {
+        "date": "2026-07-18",
+        "base_ret_pct": 82.93,
+        "exp_ret_pct": 82.94,
+        "delta_pp": 0.01,
+        "period": "post-scale"
+      },
+      {
+        "date": "2026-07-19",
+        "base_ret_pct": 83.09,
+        "exp_ret_pct": 83.07,
+        "delta_pp": -0.02,
+        "period": "post-scale"
       }
     ]
   },
   "retention_d1": {
-    "definition": "Team-days with >=5 matches on D; majority AB that day; returned if >=1 PvP match on D+1 (bots allowed). Anchors Jul 7\u201315 (D+1 coverage through Jul 17).",
-    "note": "Flat after Jul 14 scale-up. Exp N now usable (~13k team-days).",
+    "definition": "Team-days with >=5 matches on D; majority AB that day; returned if >=1 PvP match on D+1 (bots allowed). Anchors Jul 7\u201318 (D+1 coverage through Jul 20).",
+    "note": "Flat post scale-up with larger Exp N.",
     "overall": [
       {
         "majority_ab": 0,
-        "team_days": 133643,
-        "retained": 122100,
-        "retention_pct": 91.36
+        "team_days": 160274,
+        "retained": 146406,
+        "retention_pct": 91.35
       },
       {
         "majority_ab": 2,
-        "team_days": 12982,
-        "retained": 11843,
-        "retention_pct": 91.23
+        "team_days": 31631,
+        "retained": 28931,
+        "retention_pct": 91.46
       }
     ],
     "by_bracket": [
       {
         "majority_ab": 0,
         "majority_bracket": "0-50k",
-        "team_days": 38411,
-        "retained": 34841,
-        "retention_pct": 90.71
+        "team_days": 47987,
+        "retained": 43456,
+        "retention_pct": 90.56
       },
       {
         "majority_ab": 0,
         "majority_bracket": "50k-75k",
-        "team_days": 40490,
-        "retained": 36652,
-        "retention_pct": 90.52
+        "team_days": 47785,
+        "retained": 43291,
+        "retention_pct": 90.6
       },
       {
         "majority_ab": 0,
         "majority_bracket": "75k-100k",
-        "team_days": 28969,
-        "retained": 26385,
-        "retention_pct": 91.08
+        "team_days": 34162,
+        "retained": 31122,
+        "retention_pct": 91.1
       },
       {
         "majority_ab": 0,
         "majority_bracket": "100k+",
-        "team_days": 25773,
-        "retained": 24222,
-        "retention_pct": 93.98
+        "team_days": 30340,
+        "retained": 28537,
+        "retention_pct": 94.06
       },
       {
         "majority_ab": 2,
         "majority_bracket": "0-50k",
-        "team_days": 1741,
-        "retained": 1582,
-        "retention_pct": 90.87
+        "team_days": 4257,
+        "retained": 3821,
+        "retention_pct": 89.76
       },
       {
         "majority_ab": 2,
         "majority_bracket": "50k-75k",
-        "team_days": 4825,
-        "retained": 4361,
-        "retention_pct": 90.38
+        "team_days": 11252,
+        "retained": 10200,
+        "retention_pct": 90.65
       },
       {
         "majority_ab": 2,
         "majority_bracket": "75k-100k",
-        "team_days": 3502,
-        "retained": 3168,
-        "retention_pct": 90.46
+        "team_days": 8672,
+        "retained": 7909,
+        "retention_pct": 91.2
       },
       {
         "majority_ab": 2,
         "majority_bracket": "100k+",
-        "team_days": 2914,
-        "retained": 2732,
-        "retention_pct": 93.75
+        "team_days": 7450,
+        "retained": 7001,
+        "retention_pct": 93.97
       }
     ]
   },
@@ -1932,15 +1953,15 @@
     "overall": [
       {
         "wicket_chance_ab": 0,
-        "matches": 463806,
-        "close_rate": 56.55,
-        "one_sided_rate": 25.18
+        "matches": 712265,
+        "close_rate": 56.45,
+        "one_sided_rate": 25.27
       },
       {
         "wicket_chance_ab": 2,
-        "matches": 459675,
-        "close_rate": 57.4,
-        "one_sided_rate": 24.31
+        "matches": 705969,
+        "close_rate": 57.34,
+        "one_sided_rate": 24.34
       }
     ],
     "by_power_bracket": [
@@ -2027,7 +2048,87 @@
         "delta_close_pp": -0.07,
         "delta_onesided_pp": -0.15
       }
-    ]
+    ],
+    "charts": {
+      "close_br_base": [
+        57.44,
+        57.59,
+        54.68,
+        55.6
+      ],
+      "close_br_exp": [
+        61.04,
+        58.21,
+        54.87,
+        55.06
+      ],
+      "one_br_base": [
+        23.19,
+        24.39,
+        27.21,
+        26.59
+      ],
+      "one_br_exp": [
+        20.31,
+        23.52,
+        26.78,
+        26.92
+      ],
+      "dClose_br": [
+        3.6,
+        0.62,
+        0.19,
+        -0.54
+      ],
+      "dOne_br": [
+        -2.88,
+        -0.87,
+        -0.43,
+        0.33
+      ],
+      "close_rk_base": [
+        57.01,
+        55.85,
+        56.42,
+        61.4,
+        51.59
+      ],
+      "close_rk_exp": [
+        61.28,
+        57.31,
+        56.17,
+        61.4,
+        51.87
+      ],
+      "one_rk_base": [
+        24.63,
+        26.01,
+        25.35,
+        21.3,
+        28.95
+      ],
+      "one_rk_exp": [
+        20.94,
+        24.4,
+        25.41,
+        21.12,
+        28.71
+      ],
+      "dClose_rk": [
+        4.27,
+        1.46,
+        -0.25,
+        0.0,
+        0.28
+      ],
+      "dOne_rk": [
+        -3.69,
+        -1.61,
+        0.06,
+        -0.18,
+        -0.24
+      ]
+    }
   },
   "per_team_wr": {
     "definition": "team_id proxy; \u22655 matches per arm on full pvp (human vs human). Unpaired = equal-weight mean of per-team WR. Paired = teams with \u22655 in both arms. Opponents can be cross-arm.",
@@ -2060,12 +2161,12 @@
       }
     ],
     "paired_overall": {
-      "paired_teams": 34034,
-      "mean_wr_0": 49.71,
-      "mean_wr_2": 48.49,
-      "mean_delta_pp": -1.22,
-      "median_delta_pp": -1.18,
-      "pct_negative_delta": 51.9
+      "paired_teams": 42790,
+      "mean_wr_0": 49.37,
+      "mean_wr_2": 47.93,
+      "mean_delta_pp": -1.44,
+      "median_delta_pp": -1.42,
+      "pct_negative_delta": 52.9
     },
     "paired_by_power_bracket": [
       {
@@ -2199,6 +2300,320 @@
         "majority_rank": "Accomplished",
         "mean_delta_pp": -1.19
       }
-    ]
+    ],
+    "charts": {
+      "paired_delta_br": [
+        -4.05,
+        -0.84,
+        -0.52,
+        0.34
+      ],
+      "paired_delta_rk": [
+        -4.01,
+        -1.48,
+        -0.45,
+        0.7,
+        -0.25
+      ],
+      "bo_delta": [
+        -1.62,
+        -0.56
+      ],
+      "bo_br_bat": [
+        -3.98,
+        -1.11,
+        -1.3,
+        -0.26
+      ],
+      "bo_br_bowl": [
+        -3.42,
+        -0.24,
+        0.56,
+        0.77
+      ],
+      "bo_rk_bat": [
+        -4.17,
+        -1.79,
+        -0.84,
+        -0.2,
+        -0.93
+      ],
+      "bo_rk_bowl": [
+        -3.22,
+        -1.19,
+        0.23,
+        1.52,
+        0.43
+      ]
+    }
+  },
+  "training_post_match": {
+    "window": "Jul 14\u201319 2026 (post-scale)",
+    "main_read_window": "Jul 7\u201319 2026",
+    "scope_note": "Main AB / retention / close+WR use Jul 7\u201319. Training is scoped only to Jul 14\u201319 after Exp scaled toward ~50%, with a re-matched sample for that window.",
+    "note": "Attributed UCL PLAYER_TRAINING_COST events after anchor match and before next match. Jul 19 daily row is partial-day.",
+    "attribution": {
+      "ucl_rows": 601302,
+      "attributed_rows": 297355,
+      "attribution_rate_pct": 49.45,
+      "unique_matches_with_training": 113589,
+      "matched_matches": 1053664
+    },
+    "user_adoption": [
+      {
+        "wicket_chance_ab": 0,
+        "users": 61108,
+        "pct_users_training": 50.09,
+        "pct_users_mid": 11.32,
+        "pct_users_lower": 12.54
+      },
+      {
+        "wicket_chance_ab": 2,
+        "users": 60023,
+        "pct_users_training": 50.52,
+        "pct_users_mid": 11.52,
+        "pct_users_lower": 12.99
+      }
+    ],
+    "match_frequency": [
+      {
+        "wicket_chance_ab": 0,
+        "matches": 526832,
+        "pct_matches_training": 11.27,
+        "train_events_per_match": 0.28,
+        "tp_sink_per_match": 8108.0,
+        "median_mins_to_first_train": 418.9
+      },
+      {
+        "wicket_chance_ab": 2,
+        "matches": 526832,
+        "pct_matches_training": 11.55,
+        "train_events_per_match": 0.28,
+        "tp_sink_per_match": 8131.0,
+        "median_mins_to_first_train": 418.6
+      }
+    ],
+    "by_power_bracket": [
+      {
+        "wicket_chance_ab": 0,
+        "power_bracket": "0-50k",
+        "pct_matches_training": 15.12
+      },
+      {
+        "wicket_chance_ab": 2,
+        "power_bracket": "0-50k",
+        "pct_matches_training": 16.81
+      },
+      {
+        "wicket_chance_ab": 0,
+        "power_bracket": "50k-75k",
+        "pct_matches_training": 14.7
+      },
+      {
+        "wicket_chance_ab": 2,
+        "power_bracket": "50k-75k",
+        "pct_matches_training": 14.62
+      },
+      {
+        "wicket_chance_ab": 0,
+        "power_bracket": "75k-100k",
+        "pct_matches_training": 8.64
+      },
+      {
+        "wicket_chance_ab": 2,
+        "power_bracket": "75k-100k",
+        "pct_matches_training": 8.58
+      },
+      {
+        "wicket_chance_ab": 0,
+        "power_bracket": "100k+",
+        "pct_matches_training": 4.94
+      },
+      {
+        "wicket_chance_ab": 2,
+        "power_bracket": "100k+",
+        "pct_matches_training": 4.91
+      }
+    ],
+    "by_rep_rank": [
+      {
+        "wicket_chance_ab": 0,
+        "rep_rank": "Proven",
+        "pct_matches_training": 18.61
+      },
+      {
+        "wicket_chance_ab": 2,
+        "rep_rank": "Proven",
+        "pct_matches_training": 20.52
+      },
+      {
+        "wicket_chance_ab": 0,
+        "rep_rank": "Accomplished",
+        "pct_matches_training": 14.88
+      },
+      {
+        "wicket_chance_ab": 2,
+        "rep_rank": "Accomplished",
+        "pct_matches_training": 15.35
+      },
+      {
+        "wicket_chance_ab": 0,
+        "rep_rank": "Remarkable",
+        "pct_matches_training": 9.52
+      },
+      {
+        "wicket_chance_ab": 2,
+        "rep_rank": "Remarkable",
+        "pct_matches_training": 9.52
+      },
+      {
+        "wicket_chance_ab": 0,
+        "rep_rank": "Masterful",
+        "pct_matches_training": 6.33
+      },
+      {
+        "wicket_chance_ab": 2,
+        "rep_rank": "Masterful",
+        "pct_matches_training": 6.02
+      },
+      {
+        "wicket_chance_ab": 0,
+        "rep_rank": "Supreme+",
+        "pct_matches_training": 5.25
+      },
+      {
+        "wicket_chance_ab": 2,
+        "rep_rank": "Supreme+",
+        "pct_matches_training": 5.38
+      }
+    ],
+    "by_date": [
+      {
+        "date": "2026-07-14",
+        "base_pct": 12.03,
+        "exp_pct": 12.48,
+        "delta_pp": 0.45
+      },
+      {
+        "date": "2026-07-15",
+        "base_pct": 12.7,
+        "exp_pct": 13.29,
+        "delta_pp": 0.59
+      },
+      {
+        "date": "2026-07-16",
+        "base_pct": 12.88,
+        "exp_pct": 13.45,
+        "delta_pp": 0.57
+      },
+      {
+        "date": "2026-07-17",
+        "base_pct": 12.88,
+        "exp_pct": 13.0,
+        "delta_pp": 0.12
+      },
+      {
+        "date": "2026-07-18",
+        "base_pct": 11.44,
+        "exp_pct": 11.86,
+        "delta_pp": 0.42
+      },
+      {
+        "date": "2026-07-19",
+        "base_pct": 5.62,
+        "exp_pct": 5.61,
+        "delta_pp": -0.01
+      }
+    ],
+    "charts": {
+      "brackets": [
+        "0-50k",
+        "50k-75k",
+        "75k-100k",
+        "100k+"
+      ],
+      "pct_matches_training_base": [
+        15.12,
+        14.7,
+        8.64,
+        4.94
+      ],
+      "pct_matches_training_exp": [
+        16.81,
+        14.62,
+        8.58,
+        4.91
+      ],
+      "delta_pp_by_bracket": [
+        1.69,
+        -0.08,
+        -0.06,
+        -0.03
+      ],
+      "rep_ranks": [
+        "Proven",
+        "Accomplished",
+        "Remarkable",
+        "Masterful",
+        "Supreme+"
+      ],
+      "pct_matches_training_rep_base": [
+        18.61,
+        14.88,
+        9.52,
+        6.33,
+        5.25
+      ],
+      "pct_matches_training_rep_exp": [
+        20.52,
+        15.35,
+        9.52,
+        6.02,
+        5.38
+      ],
+      "delta_pp_by_rep": [
+        1.91,
+        0.47,
+        0.0,
+        -0.31,
+        0.13
+      ],
+      "day_labels": [
+        "Jul 14",
+        "Jul 15",
+        "Jul 16",
+        "Jul 17",
+        "Jul 18",
+        "Jul 19"
+      ],
+      "day_base": [
+        12.03,
+        12.7,
+        12.88,
+        12.88,
+        11.44,
+        5.62
+      ],
+      "day_exp": [
+        12.48,
+        13.29,
+        13.45,
+        13.0,
+        11.86,
+        5.61
+      ],
+      "overall_labels": [
+        "Users training %",
+        "Matches training %"
+      ],
+      "overall_base": [
+        50.09,
+        11.27
+      ],
+      "overall_exp": [
+        50.52,
+        11.55
+      ]
+    }
   }
 }
