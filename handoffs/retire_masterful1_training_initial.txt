@@ -1,0 +1,28 @@
+Retire @ Masterful 1 — Training Behaviour (Initial)
+697 users · Remarkable 3 → Masterful 1 · ±30d around rank-up · Jun 1–19, 2026 cohort
+
+Dashboard: https://saivenkatesh007.github.io/hw-analytics-reports/retire_masterful1_training_initial.html
+
+*Context: Initial exposure read — Masterful 1 unlocks Retire a Player. Compare training 30d before vs after first Masterful 1. Hypothesis: users train more unique players (esp. batsmen / finishers) after exposure.*
+   - Cohort: first REPUTATION_LEAGUE 15→16 between Jun 1–19, 2026 · N=697
+   - Training = sum of levelUps on PLAYER_TRAINING_COST TP sinks; batsman/bowler via char classification
+   - Exposure by rank-up only — not confirmed Retire usage
+
+*1. No batting roster expansion after Retire unlock*
+   - Unique batsmen: mean 3.2 → 3.1, median flat at 3
+   - Unique players overall: mean 6.7 → 6.0, median stays 6
+
+*2. Intensity rises for the typical user (depth, not breadth)*
+   - Overall median level-ups 71 → 80; batsman median 40 → 44
+   - Batsman share of level-ups 50.5% → 52.8% — mild tilt, still on ~3 batsmen
+
+*3. Cohort is highly engaged*
+   - 100% train in ±30d window; median 149 level-ups across 9 unique players
+   - Even Q1 median = 76 level-ups across 6 players
+
+*4. Next steps*
+   - Tag actual Retire usage (not just rank exposure)
+   - Compare Retire users vs non-users on unique batsmen + batsman level-ups Before/After
+   - Optional: finisher / lineup exposure and trained batsman mix (finishers vs openers)
+
+*Takeaway:* Do not treat exposure-only Before/After as proof Retire expands batting investment. Next: usage-based split (Retire users vs non-users) on unique batsmen trained.
