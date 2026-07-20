@@ -1,0 +1,191 @@
+{
+  "meta": {
+    "title": "Retire @ Masterful 1 — Training Behaviour (Initial)",
+    "slug": "retire_masterful1_training_initial",
+    "meta_line": "697 users · Remarkable 3 → Masterful 1 · ±30d around rank-up · Jun 1–19, 2026 cohort",
+    "date_range": "2026-06-01 – 2026-06-19 (cohort); training ±30d per user",
+    "filters": "REPUTATION_LEAGUE 15→16; PLAYER_TRAINING_COST TP sink; levelUps from extra_data; batsman/bowler via char classification",
+    "source_notebook": "Training due to Retire.ipynb",
+    "owner": "Venkatesh",
+    "date": "2026-07-20",
+    "date_label": "Jul 20, 2026",
+    "tags": [
+      "retire",
+      "training",
+      "masterful",
+      "initial"
+    ],
+    "thesis": "Rank-up exposure to Retire does not expand unique batsmen trained — users train hard on a similar roster size; next step is usage-based (actual Retire actions), not exposure-only.",
+    "description": "Initial Before/After training read around Masterful 1 unlock of Retire a Player — breadth (unique players/batsmen) vs intensity (level-ups).",
+    "handoff": "handoffs/retire_masterful1_training_initial.txt"
+  },
+  "overall": {
+    "cohort_n": 697,
+    "pct_training": 100.0,
+    "level_ups_mean": 175.7,
+    "level_ups_q50": 149.0,
+    "level_ups_q25": 103.0,
+    "level_ups_q75": 218.0,
+    "unique_players_mean": 10.0,
+    "unique_players_q50": 9.0,
+    "batsman_level_ups_mean": 90.6,
+    "batsman_level_ups_q50": 75.0,
+    "bowler_level_ups_mean": 85.0,
+    "bowler_level_ups_q50": 73.0,
+    "batsman_unique_mean": 5.0,
+    "batsman_unique_q50": 5.0,
+    "bowler_unique_mean": 5.0,
+    "bowler_unique_q50": 5.0,
+    "unique_batsmen_median_before": 3.0,
+    "unique_batsmen_median_after": 3.0,
+    "unique_players_mean_delta": -0.7
+  },
+  "thesis": {
+    "headline": "Retire unlock at Masterful 1 does not broaden batting training — depth up, roster breadth flat.",
+    "recommendation": "Do not treat exposure-only Before/After as proof Retire expands batting investment. Next: split users who actually use Retire vs non-users and re-check unique batsmen trained.",
+    "caveats": [
+      "This is feature exposure by rank-up, not confirmed Retire usage.",
+      "Before/After windows are ±30 days around first Masterful 1 — not causal isolation of Retire alone.",
+      "Training = sum of levelUps on PLAYER_TRAINING_COST TP sinks."
+    ]
+  },
+  "before_after": {
+    "labels": ["Before", "After"],
+    "pct_training": [98.7, 99.0],
+    "level_ups_mean": [88.9, 86.7],
+    "level_ups_q50": [71.0, 80.0],
+    "unique_players_mean": [6.7, 6.0],
+    "unique_players_q50": [6.0, 6.0],
+    "batsman_level_ups_mean": [44.9, 45.8],
+    "batsman_level_ups_q50": [40.0, 44.0],
+    "bowler_level_ups_mean": [44.1, 41.0],
+    "bowler_level_ups_q50": [39.0, 42.0],
+    "batsman_unique_mean": [3.2, 3.1],
+    "batsman_unique_q50": [3.0, 3.0],
+    "bowler_unique_mean": [3.4, 3.0],
+    "bowler_unique_q50": [3.0, 3.0],
+    "batsman_share_of_level_ups": [50.5, 52.8]
+  },
+  "phase_detail": [
+    {
+      "phase": "Before",
+      "segment": "Overall",
+      "pct_training": 98.7,
+      "level_ups_mean": 88.9,
+      "level_ups_q25": 49.0,
+      "level_ups_q50": 71.0,
+      "level_ups_q75": 107.0,
+      "unique_players_mean": 6.7,
+      "unique_players_q50": 6.0
+    },
+    {
+      "phase": "Before",
+      "segment": "Batsman",
+      "pct_training": 95.0,
+      "level_ups_mean": 44.9,
+      "level_ups_q25": 15.0,
+      "level_ups_q50": 40.0,
+      "level_ups_q75": 57.0,
+      "unique_players_mean": 3.2,
+      "unique_players_q50": 3.0
+    },
+    {
+      "phase": "Before",
+      "segment": "Bowler",
+      "pct_training": 95.3,
+      "level_ups_mean": 44.1,
+      "level_ups_q25": 16.0,
+      "level_ups_q50": 39.0,
+      "level_ups_q75": 57.0,
+      "unique_players_mean": 3.4,
+      "unique_players_q50": 3.0
+    },
+    {
+      "phase": "After",
+      "segment": "Overall",
+      "pct_training": 99.0,
+      "level_ups_mean": 86.7,
+      "level_ups_q25": 47.0,
+      "level_ups_q50": 80.0,
+      "level_ups_q75": 117.0,
+      "unique_players_mean": 6.0,
+      "unique_players_q50": 6.0
+    },
+    {
+      "phase": "After",
+      "segment": "Batsman",
+      "pct_training": 95.0,
+      "level_ups_mean": 45.8,
+      "level_ups_q25": 14.0,
+      "level_ups_q50": 44.0,
+      "level_ups_q75": 62.0,
+      "unique_players_mean": 3.1,
+      "unique_players_q50": 3.0
+    },
+    {
+      "phase": "After",
+      "segment": "Bowler",
+      "pct_training": 95.1,
+      "level_ups_mean": 41.0,
+      "level_ups_q25": 14.0,
+      "level_ups_q50": 42.0,
+      "level_ups_q75": 56.0,
+      "unique_players_mean": 3.0,
+      "unique_players_q50": 3.0
+    },
+    {
+      "phase": "Overall",
+      "segment": "Overall",
+      "pct_training": 100.0,
+      "level_ups_mean": 175.7,
+      "level_ups_q25": 103.0,
+      "level_ups_q50": 149.0,
+      "level_ups_q75": 218.0,
+      "unique_players_mean": 10.0,
+      "unique_players_q50": 9.0
+    },
+    {
+      "phase": "Overall",
+      "segment": "Batsman",
+      "pct_training": 99.4,
+      "level_ups_mean": 90.6,
+      "level_ups_q25": 49.0,
+      "level_ups_q50": 75.0,
+      "level_ups_q75": 114.0,
+      "unique_players_mean": 5.0,
+      "unique_players_q50": 5.0
+    },
+    {
+      "phase": "Overall",
+      "segment": "Bowler",
+      "pct_training": 99.7,
+      "level_ups_mean": 85.0,
+      "level_ups_q25": 49.0,
+      "level_ups_q50": 73.0,
+      "level_ups_q75": 106.0,
+      "unique_players_mean": 5.0,
+      "unique_players_q50": 5.0
+    }
+  ],
+  "quartiles": {
+    "labels": ["Q1", "Q2", "Q3", "Q4"],
+    "users": [181, 168, 176, 172],
+    "level_ups_mean": [73.6, 126.5, 179.1, 327.5],
+    "level_ups_q50": [76.0, 127.0, 176.0, 274.0],
+    "unique_players_mean": [6.0, 8.6, 10.2, 15.3],
+    "unique_players_q50": [6.0, 8.0, 10.0, 14.0]
+  },
+  "next_steps": [
+    "Tag actual Retire usage (retire action / event) in the post-Masterful 1 window — not just rank exposure.",
+    "Compare Retire users vs non-users on unique batsmen trained and batsman level-ups (Before vs After).",
+    "Optional: lineup / finisher exposure after Retire (does retiring weak bats improve finisher usage?).",
+    "Optional: power / rarity mix of trained batsmen — finishers vs openers — if Retire is reallocating investment."
+  ],
+  "method": {
+    "cohort": "First REPUTATION_LEAGUE transition 15→16 (Remarkable 3 → Masterful 1) between Jun 1–19, 2026 · N=697",
+    "window": "Per-user ±30 days around rank_up_date (Before = D-30…D-1; After = D0…D+30)",
+    "training": "hws_logs.ucl · SOFT_CURRENCY catalogue 5 · PLAYER_TRAINING_COST · quantity < 0 · level_ups = extra_data.levelUps",
+    "classification": "Mongo players.character → char copy.json classification (1=Batsman, 2=Bowler)",
+    "primary_metric": "Unique players / unique batsmen trained (breadth) — Retire hypothesis; level-ups as intensity"
+  }
+}
