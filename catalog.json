@@ -8,18 +8,18 @@
   "reports": [
     {
       "slug": "retire_masterful1_training_initial",
-      "title": "Retire @ Masterful 1 \u2014 Training Behaviour (Initial)",
+      "title": "Retire @ Masterful 1 \u2014 Training & Lineup Power",
       "owner": "Venkatesh",
-      "date": "2026-07-20",
-      "date_label": "Jul 20, 2026",
+      "date": "2026-07-21",
+      "date_label": "Jul 21, 2026",
       "tags": [
         "retire",
         "training",
         "masterful",
         "initial"
       ],
-      "thesis": "Rank-up exposure to Retire does not expand unique batsmen trained \u2014 users train hard on a similar roster size; next step is usage-based (actual Retire actions), not exposure-only.",
-      "description": "Initial Before/After training read around Masterful 1 unlock of Retire a Player \u2014 breadth (unique players/batsmen) vs intensity (level-ups).",
+      "thesis": "Neither training breadth nor lineup power shape shows Retire-driven batting optimisation at cohort level \u2014 next step is a usage-conditioned split on heavy Retire users vs non-users.",
+      "description": "Training breadth (\u00b130d) and lineup power shape (Latest Before vs D+20\u201330 After) around Masterful 1 unlock of Retire a Player.",
       "handoff": "handoffs/retire_masterful1_training_initial.txt"
     },
     {
