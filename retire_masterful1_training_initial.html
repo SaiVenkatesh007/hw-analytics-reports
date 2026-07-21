@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){try{var t=localStorage.getItem('hw-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
-<title>Retire @ Masterful 1 — Training Behaviour (Initial)</title>
-<meta name="description" content="Initial Before/After training read around Masterful 1 unlock of Retire — unique batsmen breadth vs intensity.">
-<meta property="og:title" content="Retire @ Masterful 1 — Training Behaviour (Initial)">
-<meta property="og:description" content="Rank-up exposure to Retire does not expand unique batsmen trained; next step is usage-based.">
+<title>Retire @ Masterful 1 — Training & Lineup Power</title>
+<meta name="description" content="Training breadth (±30d) and lineup power shape (D+20–30 After) around Masterful 1 unlock of Retire a Player.">
+<meta property="og:title" content="Retire @ Masterful 1 — Training & Lineup Power">
+<meta property="og:description" content="Neither training breadth nor lineup power shape shows Retire-driven batting optimisation at cohort level; next step is usage-split.">
 <meta property="og:url" content="https://saivenkatesh007.github.io/hw-analytics-reports/retire_masterful1_training_initial.html">
 <meta property="og:type" content="article">
 <link rel="icon" type="image/png" href="kit/favicon.png">
@@ -15,8 +15,8 @@
 </head>
 <body data-report-slug="retire_masterful1_training_initial" data-report-owner="Venkatesh">
 <header>
-  <div class="brand"><div class="dot"></div><h1>Retire @ Masterful 1 — Training Behaviour (Initial)</h1></div>
-  <span class="meta">697 users · Remarkable 3 → Masterful 1 · ±30d around rank-up · Jun 1–19, 2026 cohort</span>
+  <div class="brand"><div class="dot"></div><h1>Retire @ Masterful 1 — Training & Lineup Power</h1></div>
+  <span class="meta">697 users · Remarkable 3 → Masterful 1 · ±30d training · D+20–30 lineup · Jun 1–19, 2026 cohort</span>
 </header>
 <div class="caveat-banner"><strong>Initial exposure read only.</strong> Masterful 1 unlocks Retire a Player — this compares training 30d before vs after first hit of Masterful 1, <em>not</em> confirmed Retire usage. Hypothesis under test: users train more unique players (esp. batsmen / finishers) after exposure.</div>
 
@@ -24,6 +24,7 @@
   <button class="tab-btn active" onclick="HWReport.switchTab('overview', this)">Overview</button>
   <button class="tab-btn" onclick="HWReport.switchTab('before-after', this)">Before vs After</button>
   <button class="tab-btn" onclick="HWReport.switchTab('quartiles', this)">Quartiles</button>
+  <button class="tab-btn" onclick="HWReport.switchTab('lineup', this)">Lineup Power</button>
   <button class="tab-btn" onclick="HWReport.switchTab('next', this)">Next steps</button>
   <button class="tab-btn" onclick="HWReport.switchTab('method', this)">Method</button>
 </div>
@@ -31,11 +32,11 @@
 <div id="tab-overview" class="tab-content active">
   <div class="hero-section">
     <p class="hero-eyebrow">Game Analytics · Retire · Masterful 1</p>
-    <h2 class="hero-title">Retire unlock does not broaden batting training —<br>depth up, roster breadth flat.</h2>
-    <p class="hero-desc">Among 697 users who reached Masterful 1, unique batsmen trained stay at median <strong>3</strong> before and after unlock. Median level-ups rise after (71 → 80), but that investment lands on a similar-sized set of players — depth, not expansion. Do not treat this as proof Retire expands batting investment until we split actual Retire users vs non-users.</p>
+    <h2 class="hero-title">Retire unlock: training depth up, roster breadth flat —<br>lineup shape unchanged at cohort level.</h2>
+    <p class="hero-desc">Among 697 users who reached Masterful 1, unique batsmen trained stay at median <strong>3</strong> before and after unlock. Lineup power rises uniformly across Top2 / Mid2 / Lower2 buckets, with Lower2/Top2 ratio flat at <strong>0.53</strong> — the power gap between finishers and openers does not close. Retire adopters (37 users, match-level proxy) show a <strong>+9% Lower2 power lift</strong> and a closing gap, but the cohort-wide read is neutral. Next step: build the actual Retire usage cohort.</p>
     <div class="hero-stat-wrap">
-      <p class="stat-scoreboard-label">Δ unique batsmen trained (median, Before → After)</p>
-      <p class="stat-scoreboard neutral" data-value="0" data-suffix="" data-decimals="0">0</p>
+      <p class="stat-scoreboard-label">Lower2/Top2 power ratio (Before → After, cohort median)</p>
+      <p class="stat-scoreboard neutral" data-value="0.53" data-suffix="" data-decimals="2">0.53</p>
     </div>
   </div>
   <main>
@@ -52,17 +53,18 @@
     <div class="section">
       <div class="section-header"><p class="section-num">Key findings</p><h3 class="section-title">What exposure shows</h3></div>
       <div class="insights">
-        <div class="insight warn"><strong>No batting roster expansion after Retire unlock:</strong> unique batsmen mean 3.2 → 3.1, median flat at 3. If Retire helped users invest in finishers via a wider batting set, we would expect unique batsmen up — that signal is absent.</div>
-        <div class="insight warn"><strong>Unique players overall flat-to-down:</strong> mean 6.7 → 6.0, median stays 6. Breadth does not increase post-exposure.</div>
-        <div class="insight"><strong>Intensity rises for the typical user:</strong> overall median level-ups 71 → 80; batsman median 40 → 44. Users train harder on a similar roster — depth, not expansion.</div>
-        <div class="insight"><strong>Mild tilt toward batsman levels:</strong> batsman share of level-ups 50.5% → 52.8%. Directionally consistent with batting focus, but still on ~3 batsmen.</div>
-        <div class="insight good"><strong>Cohort is highly engaged:</strong> 100% train in ±30d; even Q1 median is 76 level-ups across 6 players. The Retire question is about allocation, not whether they train.</div>
+        <div class="insight warn"><strong>Training breadth flat:</strong> unique batsmen trained median stays at 3 before and after Retire unlock. No roster expansion signal.</div>
+        <div class="insight"><strong>Training intensity rises:</strong> median level-ups 71 → 80 overall; batsman share 50.5% → 52.8%. Users train harder on the same ~3 batsmen.</div>
+        <div class="insight warn"><strong>Lineup power shape unchanged (cohort):</strong> Lower2/Top2 ratio flat at 0.53, power CV flat at 0.27. Total batting power rises +10% but proportionally — all tiers grow together, not Lower2 catching up.</div>
+        <div class="insight warn"><strong>Gap widens slightly at cohort level:</strong> Top2−Lower2 gap 4,444 → 4,674 (+230). The typical user's lineup becomes more, not less, top-heavy.</div>
+        <div class="insight good"><strong>Retire adopters (proxy, N=37) show a different signal:</strong> Lower2 mean +9% (+821), Top2−Lower2 gap closes by 6 points. Small sample, but directionally aligned with the Retire hypothesis.</div>
+        <div class="insight good"><strong>70% roster overlap before→after:</strong> moderate churn (~1.2 new batsmen per user); not a wholesale team rebuild, so lineup changes are organic investment shifts.</div>
       </div>
     </div>
     <div class="section">
       <div class="section-header"><p class="section-num">Recommendation</p><h3 class="section-title">One call</h3></div>
       <div class="insights">
-        <div class="insight warn"><strong>Do not read exposure-only Before/After as evidence that Retire expands batting investment.</strong> Next priority: tag actual Retire usage and compare Retire users vs non-users on unique batsmen trained (and batsman level-ups) before vs after Masterful 1.</div>
+        <div class="insight warn"><strong>Cohort-level reads (both training and lineup) show no Retire-driven optimisation.</strong> The only directional signal is in the small Retire-proxy group. Next priority: build the actual Retire usage cohort (cumulative retire actions per user) and compare heavy Retire users vs zero-Retire users on Lower2 power and unique batsmen trained.</div>
       </div>
     </div>
   </main>
@@ -105,6 +107,43 @@
   </main>
 </div>
 
+<div id="tab-lineup" class="tab-content">
+  <div class="caveat-banner"><strong>Lineup snapshot method:</strong> Latest match D-30…D-1 (Before) vs latest match D+20…D+30 (After) per user. Paired N=637. Retire adopters proxy = retired_players_count &gt; 0 on After match (N=37, match-level flag only — not cumulative Retire usage).</div>
+  <main>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Power buckets</p><h3 class="section-title">Batting lineup: Top2 / Mid2 / Lower2 mean power</h3></div>
+      <div class="two-col">
+        <div class="card"><p class="card-title">Mean power by bucket</p><div class="chart-wrap"><canvas id="chart-buckets-mean"></canvas></div></div>
+        <div class="card"><p class="card-title">Median power by bucket</p><div class="chart-wrap"><canvas id="chart-buckets-median"></canvas></div></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Shape metrics</p><h3 class="section-title">Power distribution shape — Before vs After</h3></div>
+      <div class="two-col">
+        <div class="card"><p class="card-title">Lower2 / Top2 ratio</p><div class="chart-wrap"><canvas id="chart-ratio"></canvas></div></div>
+        <div class="card"><p class="card-title">Top2 − Lower2 gap (mean)</p><div class="chart-wrap"><canvas id="chart-gap"></canvas></div></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Retire adopters</p><h3 class="section-title">Match-level Retire proxy (N=37) — power shape</h3></div>
+      <div class="insights">
+        <div class="insight good"><strong>Lower2 power +9%:</strong> mean 5,724 → 6,545 (+821) — largest lift across all buckets for this sub-group.</div>
+        <div class="insight good"><strong>Gap nearly closes:</strong> Top2−Lower2 gap 4,265 → 4,259 (−6). Contrast with cohort-wide gap widening of +230.</div>
+        <div class="insight"><strong>Lower2/Top2 ratio improves:</strong> 0.57 → 0.61. Finisher/opener convergence aligns with the Retire hypothesis direction.</div>
+        <div class="insight warn"><strong>N=37 only (match-level flag):</strong> This is cumulative Retire actions ≥ 1 within those two snapshot matches — not the full post-Masterful 1 Retire behaviour. Build the actual usage cohort to validate.</div>
+      </div>
+      <div id="table-lineup" class="section-gap"></div>
+    </div>
+    <div class="section">
+      <div class="section-header"><p class="section-num">Roster churn</p><h3 class="section-title">Batting lineup continuity</h3></div>
+      <div class="insights">
+        <div class="insight"><strong>70% roster overlap:</strong> ~4 of 6 batsmen persist across the 30-day gap. Not a wholesale rebuild — changes are incremental investment shifts.</div>
+        <div class="insight"><strong>~1.2 new batsmen per user:</strong> moderate churn consistent with organic training + occasional Retire action.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
 <div id="tab-next" class="tab-content">
   <main>
     <div class="section">
@@ -114,8 +153,8 @@
     <div class="section">
       <div class="section-header"><p class="section-num">Why this matters</p><h3 class="section-title">Product lens</h3></div>
       <div class="insights">
-        <div class="insight"><strong>Retire’s intended loop:</strong> clear weaker bats → finishers see more use → users invest training into a better batting set. Exposure alone does not show that investment broadening.</div>
-        <div class="insight warn"><strong>Usage gap:</strong> Until we know who actually retired a player after Masterful 1, we cannot attribute Before/After training shifts to the feature vs general post-rank-up grind.</div>
+        <div class="insight"><strong>Retire’s intended loop:</strong> clear weaker bats → finishers see more use → users invest training into a better batting set. Cohort-level read shows no broadening — only the 37-user Retire-proxy sub-group shows a directional signal.</div>
+        <div class="insight warn"><strong>Usage gap:</strong> Until we build the true Retire usage cohort from actual retire events, the Lower2 lift (+9%) seen in proxy users cannot be generalised.</div>
       </div>
     </div>
   </main>
@@ -143,18 +182,23 @@
 <script>
 const DD = {
   "meta": {
-    "title": "Retire @ Masterful 1 — Training Behaviour (Initial)",
+    "title": "Retire @ Masterful 1 \u2014 Training & Lineup Power",
     "slug": "retire_masterful1_training_initial",
-    "meta_line": "697 users · Remarkable 3 → Masterful 1 · ±30d around rank-up · Jun 1–19, 2026 cohort",
-    "date_range": "2026-06-01 – 2026-06-19 (cohort); training ±30d per user",
-    "filters": "REPUTATION_LEAGUE 15→16; PLAYER_TRAINING_COST TP sink; levelUps from extra_data; batsman/bowler via char classification",
-    "source_notebook": "Training due to Retire.ipynb",
+    "meta_line": "697 users \u00b7 Remarkable 3 \u2192 Masterful 1 \u00b7 \u00b130d training \u00b7 D+20\u201330 lineup \u00b7 Jun 1\u201319, 2026 cohort",
+    "date_range": "2026-06-01 \u2013 2026-06-19 (cohort); training \u00b130d; lineup Latest Before vs D+20\u201330 After",
+    "filters": "REPUTATION_LEAGUE 15\u219216; PLAYER_TRAINING_COST TP sink; Mongo matchmps lineup internalPower; human ARENAS status=2",
+    "source_notebook": "Training due to Retire.ipynb; Training due to Retire [Lineup Power].ipynb",
     "owner": "Venkatesh",
-    "date": "2026-07-20",
-    "date_label": "Jul 20, 2026",
-    "tags": ["retire", "training", "masterful", "initial"],
-    "thesis": "Rank-up exposure to Retire does not expand unique batsmen trained — users train hard on a similar roster size; next step is usage-based (actual Retire actions), not exposure-only.",
-    "description": "Initial Before/After training read around Masterful 1 unlock of Retire a Player — breadth (unique players/batsmen) vs intensity (level-ups).",
+    "date": "2026-07-21",
+    "date_label": "Jul 21, 2026",
+    "tags": [
+      "retire",
+      "training",
+      "masterful",
+      "initial"
+    ],
+    "thesis": "Neither training breadth nor lineup power shape shows Retire-driven batting optimisation at cohort level \u2014 next step is a usage-conditioned split on heavy Retire users vs non-users.",
+    "description": "Training breadth (\u00b130d) and lineup power shape (Latest Before vs D+20\u201330 After) around Masterful 1 unlock of Retire a Player.",
     "handoff": "handoffs/retire_masterful1_training_initial.txt"
   },
   "overall": {
@@ -179,62 +223,291 @@ const DD = {
     "unique_players_mean_delta": -0.7
   },
   "thesis": {
-    "headline": "Retire unlock at Masterful 1 does not broaden batting training — depth up, roster breadth flat.",
-    "recommendation": "Do not treat exposure-only Before/After as proof Retire expands batting investment. Next: split users who actually use Retire vs non-users and re-check unique batsmen trained.",
+    "headline": "Retire unlock: training depth up, roster breadth flat \u2014 lineup shape unchanged at cohort level.",
+    "recommendation": "Cohort-level reads (training + lineup) show no Retire-driven optimisation. Next: build actual Retire usage cohort and compare heavy Retire users vs zero-Retire on Lower2 power and unique batsmen trained.",
     "caveats": [
       "This is feature exposure by rank-up, not confirmed Retire usage.",
-      "Before/After windows are ±30 days around first Masterful 1 — not causal isolation of Retire alone.",
-      "Training = sum of levelUps on PLAYER_TRAINING_COST TP sinks."
+      "Training windows are \u00b130 days; lineup After is latest match in D+20\u2026D+30 \u2014 not causal isolation of Retire alone.",
+      "Training = sum of levelUps on PLAYER_TRAINING_COST TP sinks.",
+      "Retire adopters proxy = retired_players_count > 0 on After snapshot match (N=37) \u2014 match-level flag only."
     ]
   },
   "before_after": {
-    "labels": ["Before", "After"],
-    "pct_training": [98.7, 99.0],
-    "level_ups_mean": [88.9, 86.7],
-    "level_ups_q50": [71.0, 80.0],
-    "unique_players_mean": [6.7, 6.0],
-    "unique_players_q50": [6.0, 6.0],
-    "batsman_level_ups_mean": [44.9, 45.8],
-    "batsman_level_ups_q50": [40.0, 44.0],
-    "bowler_level_ups_mean": [44.1, 41.0],
-    "bowler_level_ups_q50": [39.0, 42.0],
-    "batsman_unique_mean": [3.2, 3.1],
-    "batsman_unique_q50": [3.0, 3.0],
-    "bowler_unique_mean": [3.4, 3.0],
-    "bowler_unique_q50": [3.0, 3.0],
-    "batsman_share_of_level_ups": [50.5, 52.8]
+    "labels": [
+      "Before",
+      "After"
+    ],
+    "pct_training": [
+      98.7,
+      99.0
+    ],
+    "level_ups_mean": [
+      88.9,
+      86.7
+    ],
+    "level_ups_q50": [
+      71.0,
+      80.0
+    ],
+    "unique_players_mean": [
+      6.7,
+      6.0
+    ],
+    "unique_players_q50": [
+      6.0,
+      6.0
+    ],
+    "batsman_level_ups_mean": [
+      44.9,
+      45.8
+    ],
+    "batsman_level_ups_q50": [
+      40.0,
+      44.0
+    ],
+    "bowler_level_ups_mean": [
+      44.1,
+      41.0
+    ],
+    "bowler_level_ups_q50": [
+      39.0,
+      42.0
+    ],
+    "batsman_unique_mean": [
+      3.2,
+      3.1
+    ],
+    "batsman_unique_q50": [
+      3.0,
+      3.0
+    ],
+    "bowler_unique_mean": [
+      3.4,
+      3.0
+    ],
+    "bowler_unique_q50": [
+      3.0,
+      3.0
+    ],
+    "batsman_share_of_level_ups": [
+      50.5,
+      52.8
+    ]
   },
   "phase_detail": [
-    {"phase":"Before","segment":"Overall","pct_training":98.7,"level_ups_mean":88.9,"level_ups_q25":49.0,"level_ups_q50":71.0,"level_ups_q75":107.0,"unique_players_mean":6.7,"unique_players_q50":6.0},
-    {"phase":"Before","segment":"Batsman","pct_training":95.0,"level_ups_mean":44.9,"level_ups_q25":15.0,"level_ups_q50":40.0,"level_ups_q75":57.0,"unique_players_mean":3.2,"unique_players_q50":3.0},
-    {"phase":"Before","segment":"Bowler","pct_training":95.3,"level_ups_mean":44.1,"level_ups_q25":16.0,"level_ups_q50":39.0,"level_ups_q75":57.0,"unique_players_mean":3.4,"unique_players_q50":3.0},
-    {"phase":"After","segment":"Overall","pct_training":99.0,"level_ups_mean":86.7,"level_ups_q25":47.0,"level_ups_q50":80.0,"level_ups_q75":117.0,"unique_players_mean":6.0,"unique_players_q50":6.0},
-    {"phase":"After","segment":"Batsman","pct_training":95.0,"level_ups_mean":45.8,"level_ups_q25":14.0,"level_ups_q50":44.0,"level_ups_q75":62.0,"unique_players_mean":3.1,"unique_players_q50":3.0},
-    {"phase":"After","segment":"Bowler","pct_training":95.1,"level_ups_mean":41.0,"level_ups_q25":14.0,"level_ups_q50":42.0,"level_ups_q75":56.0,"unique_players_mean":3.0,"unique_players_q50":3.0},
-    {"phase":"Overall","segment":"Overall","pct_training":100.0,"level_ups_mean":175.7,"level_ups_q25":103.0,"level_ups_q50":149.0,"level_ups_q75":218.0,"unique_players_mean":10.0,"unique_players_q50":9.0},
-    {"phase":"Overall","segment":"Batsman","pct_training":99.4,"level_ups_mean":90.6,"level_ups_q25":49.0,"level_ups_q50":75.0,"level_ups_q75":114.0,"unique_players_mean":5.0,"unique_players_q50":5.0},
-    {"phase":"Overall","segment":"Bowler","pct_training":99.7,"level_ups_mean":85.0,"level_ups_q25":49.0,"level_ups_q50":73.0,"level_ups_q75":106.0,"unique_players_mean":5.0,"unique_players_q50":5.0}
+    {
+      "phase": "Before",
+      "segment": "Overall",
+      "pct_training": 98.7,
+      "level_ups_mean": 88.9,
+      "level_ups_q25": 49.0,
+      "level_ups_q50": 71.0,
+      "level_ups_q75": 107.0,
+      "unique_players_mean": 6.7,
+      "unique_players_q50": 6.0
+    },
+    {
+      "phase": "Before",
+      "segment": "Batsman",
+      "pct_training": 95.0,
+      "level_ups_mean": 44.9,
+      "level_ups_q25": 15.0,
+      "level_ups_q50": 40.0,
+      "level_ups_q75": 57.0,
+      "unique_players_mean": 3.2,
+      "unique_players_q50": 3.0
+    },
+    {
+      "phase": "Before",
+      "segment": "Bowler",
+      "pct_training": 95.3,
+      "level_ups_mean": 44.1,
+      "level_ups_q25": 16.0,
+      "level_ups_q50": 39.0,
+      "level_ups_q75": 57.0,
+      "unique_players_mean": 3.4,
+      "unique_players_q50": 3.0
+    },
+    {
+      "phase": "After",
+      "segment": "Overall",
+      "pct_training": 99.0,
+      "level_ups_mean": 86.7,
+      "level_ups_q25": 47.0,
+      "level_ups_q50": 80.0,
+      "level_ups_q75": 117.0,
+      "unique_players_mean": 6.0,
+      "unique_players_q50": 6.0
+    },
+    {
+      "phase": "After",
+      "segment": "Batsman",
+      "pct_training": 95.0,
+      "level_ups_mean": 45.8,
+      "level_ups_q25": 14.0,
+      "level_ups_q50": 44.0,
+      "level_ups_q75": 62.0,
+      "unique_players_mean": 3.1,
+      "unique_players_q50": 3.0
+    },
+    {
+      "phase": "After",
+      "segment": "Bowler",
+      "pct_training": 95.1,
+      "level_ups_mean": 41.0,
+      "level_ups_q25": 14.0,
+      "level_ups_q50": 42.0,
+      "level_ups_q75": 56.0,
+      "unique_players_mean": 3.0,
+      "unique_players_q50": 3.0
+    },
+    {
+      "phase": "Overall",
+      "segment": "Overall",
+      "pct_training": 100.0,
+      "level_ups_mean": 175.7,
+      "level_ups_q25": 103.0,
+      "level_ups_q50": 149.0,
+      "level_ups_q75": 218.0,
+      "unique_players_mean": 10.0,
+      "unique_players_q50": 9.0
+    },
+    {
+      "phase": "Overall",
+      "segment": "Batsman",
+      "pct_training": 99.4,
+      "level_ups_mean": 90.6,
+      "level_ups_q25": 49.0,
+      "level_ups_q50": 75.0,
+      "level_ups_q75": 114.0,
+      "unique_players_mean": 5.0,
+      "unique_players_q50": 5.0
+    },
+    {
+      "phase": "Overall",
+      "segment": "Bowler",
+      "pct_training": 99.7,
+      "level_ups_mean": 85.0,
+      "level_ups_q25": 49.0,
+      "level_ups_q50": 73.0,
+      "level_ups_q75": 106.0,
+      "unique_players_mean": 5.0,
+      "unique_players_q50": 5.0
+    }
   ],
   "quartiles": {
-    "labels": ["Q1", "Q2", "Q3", "Q4"],
-    "users": [181, 168, 176, 172],
-    "level_ups_mean": [73.6, 126.5, 179.1, 327.5],
-    "level_ups_q50": [76.0, 127.0, 176.0, 274.0],
-    "unique_players_mean": [6.0, 8.6, 10.2, 15.3],
-    "unique_players_q50": [6.0, 8.0, 10.0, 14.0]
+    "labels": [
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q4"
+    ],
+    "users": [
+      181,
+      168,
+      176,
+      172
+    ],
+    "level_ups_mean": [
+      73.6,
+      126.5,
+      179.1,
+      327.5
+    ],
+    "level_ups_q50": [
+      76.0,
+      127.0,
+      176.0,
+      274.0
+    ],
+    "unique_players_mean": [
+      6.0,
+      8.6,
+      10.2,
+      15.3
+    ],
+    "unique_players_q50": [
+      6.0,
+      8.0,
+      10.0,
+      14.0
+    ]
+  },
+  "lineup": {
+    "paired_n": 637,
+    "before_window": "D-30 \u2026 D-1 (latest match)",
+    "after_window": "D+20 \u2026 D+30 (latest match)",
+    "retire_adopters_n": 37,
+    "roster_overlap_pct": 70.2,
+    "new_bats_mean": 1.17,
+    "buckets": {
+      "labels": [
+        "Top2",
+        "Mid2",
+        "Lower2"
+      ],
+      "mean_before": [
+        9451.3,
+        7208.2,
+        5007.5
+      ],
+      "mean_after": [
+        10244.3,
+        7996.6,
+        5570.2
+      ],
+      "mean_delta": [
+        793.0,
+        788.4,
+        562.7
+      ],
+      "median_before": [
+        9250.0,
+        7050.0,
+        5175.0
+      ],
+      "median_after": [
+        10100.0,
+        7925.0,
+        5800.0
+      ]
+    },
+    "shape": {
+      "lower2_top2_ratio_before": 0.53,
+      "lower2_top2_ratio_after": 0.53,
+      "top2_lower2_gap_before": 4444,
+      "top2_lower2_gap_after": 4674,
+      "lower2_share_before": 0.26,
+      "lower2_share_after": 0.27,
+      "power_cv_before": 0.27,
+      "power_cv_after": 0.27,
+      "total_bat_power_before": 43334,
+      "total_bat_power_after": 47622
+    },
+    "retire_users": {
+      "lower2_mean_before": 5723.65,
+      "lower2_mean_after": 6544.59,
+      "lower2_mean_delta": 820.95,
+      "ratio_before": 0.57,
+      "ratio_after": 0.61,
+      "gap_before": 4264.86,
+      "gap_after": 4258.78,
+      "gap_delta": -6.08
+    }
   },
   "next_steps": [
-    "Tag actual Retire usage (retire action / event) in the post-Masterful 1 window — not just rank exposure.",
-    "Compare Retire users vs non-users on unique batsmen trained and batsman level-ups (Before vs After).",
-    "Optional: lineup / finisher exposure after Retire (does retiring weak bats improve finisher usage?).",
-    "Optional: power / rarity mix of trained batsmen — finishers vs openers — if Retire is reallocating investment."
+    "Build a usage cohort: cumulative Retire actions per user post-Masterful 1 (not match-level flag) \u2014 compare heavy Retire users vs zero-Retire users on Lower2 power and batting breadth.",
+    "Optional: true batting order finisher exposure from ball-by-ball (BBB) \u2014 does retiring weak bats push finishers higher up the actual batting order?",
+    "Optional: power / rarity mix of trained batsmen \u2014 finishers vs openers."
   ],
   "method": {
-    "cohort": "First REPUTATION_LEAGUE transition 15→16 (Remarkable 3 → Masterful 1) between Jun 1–19, 2026 · N=697",
-    "window": "Per-user ±30 days around rank_up_date (Before = D-30…D-1; After = D0…D+30)",
-    "training": "hws_logs.ucl · SOFT_CURRENCY catalogue 5 · PLAYER_TRAINING_COST · quantity < 0 · level_ups = extra_data.levelUps",
-    "classification": "Mongo players.character → char copy.json classification (1=Batsman, 2=Bowler)",
-    "primary_metric": "Unique players / unique batsmen trained (breadth) — Retire hypothesis; level-ups as intensity"
+    "cohort": "First REPUTATION_LEAGUE transition 15\u219216 (Remarkable 3 \u2192 Masterful 1) between Jun 1\u201319, 2026 \u00b7 N=697",
+    "training_window": "Per-user \u00b130 days around rank_up_date (Before = D-30\u2026D-1; After = D0\u2026D+30)",
+    "lineup_window": "Latest Before = last match D-30\u2026D-1; Latest After = last match D+20\u2026D+30 \u00b7 paired N=637",
+    "training_source": "hws_logs.ucl \u00b7 SOFT_CURRENCY catalogue 5 \u00b7 PLAYER_TRAINING_COST \u00b7 quantity < 0 \u00b7 level_ups = extra_data.levelUps",
+    "lineup_source": "Mongo superstars.matchmps \u00b7 team snapshot lineup internalPower + retired_players_count",
+    "bucket_definition": "Batsmen (classification=1) sorted by internalPower desc per match/team \u00b7 Top2 ranks 1\u20132 / Mid2 3\u20134 / Lower2 5\u20136",
+    "retire_flag": "retired_players_count > 0 on After snapshot match (match-level proxy only \u2014 37 users)"
   }
 };
 
@@ -322,6 +595,45 @@ const DD = {
     div.className = 'insight warn';
     div.textContent = c;
     caveatsEl.appendChild(div);
+  });
+
+
+  // Lineup power charts
+  var lp = DD.lineup;
+  var bk = lp.buckets;
+
+  HWReport.dualBar('chart-buckets-mean', bk.labels, bk.mean_before, bk.mean_after, {
+    label1: 'Before (mean)', label2: 'After D+20-30 (mean)', yFmt: 'count', ariaLabel: 'Mean power by bucket'
+  });
+
+  HWReport.dualBar('chart-buckets-median', bk.labels, bk.median_before, bk.median_after, {
+    label1: 'Before (median)', label2: 'After D+20-30 (median)', yFmt: 'count', ariaLabel: 'Median power by bucket'
+  });
+
+  HWReport.singleBar('chart-ratio', ['Before', 'After'], [lp.shape.lower2_top2_ratio_before, lp.shape.lower2_top2_ratio_after], C.TEAL, {
+    yFmt: 'raw', min: 0.45, max: 0.65, ariaLabel: 'Lower2/Top2 ratio Before vs After'
+  });
+
+  HWReport.singleBar('chart-gap', ['Before', 'After'], [lp.shape.top2_lower2_gap_before, lp.shape.top2_lower2_gap_after], C.BLUE, {
+    yFmt: 'count', ariaLabel: 'Top2 minus Lower2 gap Before vs After'
+  });
+
+  HWReport.table('table-lineup', {
+    columns: [
+      { label: 'Group', rowHeader: true },
+      { label: 'Lower2 Before', fmt: 'raw' },
+      { label: 'Lower2 After', fmt: 'raw' },
+      { label: 'Lower2/Top2 ratio Before', fmt: 'raw' },
+      { label: 'Lower2/Top2 ratio After', fmt: 'raw' },
+      { label: 'Gap Before', fmt: 'raw' },
+      { label: 'Gap After', fmt: 'raw' }
+    ],
+    rows: [
+      ['Cohort (N=' + lp.paired_n + ')', '-', '-', lp.shape.lower2_top2_ratio_before, lp.shape.lower2_top2_ratio_after, lp.shape.top2_lower2_gap_before, lp.shape.top2_lower2_gap_after],
+      ['Retire proxy (N=' + lp.retire_adopters_n + ')', lp.retire_users.lower2_mean_before.toFixed(0), lp.retire_users.lower2_mean_after.toFixed(0),
+       lp.retire_users.ratio_before, lp.retire_users.ratio_after,
+       lp.retire_users.gap_before.toFixed(0), lp.retire_users.gap_after.toFixed(0)]
+    ]
   });
 
   if (HWReport.initScoreboard) HWReport.initScoreboard();
