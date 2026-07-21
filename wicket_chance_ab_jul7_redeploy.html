@@ -93,7 +93,7 @@
         <div class="insight"><strong>Mild shot adaptation:</strong> Zeros/ones up ~+0.5–1.9pp; fours/sixes down ~−0.4–1.6pp. Strongest below 75k.</div>
         <div class="insight good"><strong>Retention OK after scale-up:</strong> Same-day −0.70pp overall (Jul 14 blip only); next-day Base 91.36% vs Exp 91.23% (−0.13pp).</div>
         <div class="insight good"><strong>Slightly more competitive games:</strong> Close +0.89pp / one-sided −0.93pp — see <strong>Close + WR</strong> tab for charts by bracket and rank.</div>
-        <div class="insight warn"><strong>WR soft spot = batting first at low end:</strong> Paired −1.22pp overall; bat-first −1.49pp vs bowl-first −0.37pp. Softest: bat-first × 0–50k / Proven (~−4pp). Charts on <strong>Close + WR</strong>.</div>
+        <div class="insight warn"><strong>WR soft spot = batting first at low end:</strong> Paired −1.44pp overall; bat-first −1.62pp vs bowl-first −0.56pp. Softest: bat-first × 0–50k / Proven (~−4pp). Charts on <strong>Close + WR</strong>.</div>
       </div>
     </div>
   </main>
@@ -143,39 +143,60 @@
     <div class="section">
       <div class="section-header">
         <p class="section-num">Win rate</p>
-        <h3 class="section-title">Per-team paired WR (Exp − Base)</h3>
+        <h3 class="section-title">Per-team paired WR — Base vs Exp</h3>
         <p class="section-sub">Equal-weight team_id · ≥5 matches in both arms · opponents can be cross-arm</p>
       </div>
       <div class="kpi-row">
-        <div class="kpi-card"><p class="kpi-label">Paired overall</p><p class="kpi-value down">−1.22pp</p><p class="kpi-note">34,034 teams</p></div>
-        <div class="kpi-card"><p class="kpi-label">Batting First</p><p class="kpi-value down">−1.49pp</p><p class="kpi-note">median −1.67</p></div>
-        <div class="kpi-card"><p class="kpi-label">Bowling First</p><p class="kpi-value">−0.37pp</p><p class="kpi-note">median 0.00</p></div>
-        <div class="kpi-card"><p class="kpi-label">Softest cell</p><p class="kpi-value down">−3.9pp</p><p class="kpi-note">Bat 1st × 0–50k</p></div>
+        <div class="kpi-card"><p class="kpi-label">Paired overall</p><p class="kpi-value down">49.37 → 47.93</p><p class="kpi-note">−1.44pp · 42,790 teams</p></div>
+        <div class="kpi-card"><p class="kpi-label">Batting First</p><p class="kpi-value down">46.54 → 44.92</p><p class="kpi-note">−1.62pp</p></div>
+        <div class="kpi-card"><p class="kpi-label">Bowling First</p><p class="kpi-value">54.06 → 53.50</p><p class="kpi-note">−0.56pp</p></div>
+        <div class="kpi-card"><p class="kpi-label">Softest cell</p><p class="kpi-value down">−4.0pp</p><p class="kpi-note">Bat 1st × 0–50k</p></div>
       </div>
       <div class="two-col">
         <div class="card">
+          <p class="card-title">Paired WR % by power bracket</p>
+          <div class="legend" id="cq-wr-br-legend"></div>
+          <div class="chart-wrap"><canvas id="cq-wr-level-br"></canvas></div>
+        </div>
+        <div class="card">
+          <p class="card-title">Paired WR % by rep rank</p>
+          <div class="legend" id="cq-wr-rk-legend"></div>
+          <div class="chart-wrap"><canvas id="cq-wr-level-rk"></canvas></div>
+        </div>
+      </div>
+      <div class="two-col" style="margin-top:1rem">
+        <div class="card">
           <p class="card-title">Paired WR Δ by power bracket</p>
+          <p class="card-sub">Exp − Base (pp)</p>
           <div class="chart-wrap"><canvas id="cq-wr-br"></canvas></div>
-          <p class="chart-footnote">Overall unpaired WR is flat (48.46% vs 48.44%). Soft spot is low power.</p>
+          <p class="chart-footnote">Overall unpaired WR is flat (48.40% vs 47.86%). Soft spot is low power.</p>
         </div>
         <div class="card">
           <p class="card-title">Paired WR Δ by rep rank</p>
+          <p class="card-sub">Exp − Base (pp)</p>
           <div class="chart-wrap"><canvas id="cq-wr-rk"></canvas></div>
         </div>
       </div>
-      <div class="card" style="margin-top:1rem">
-        <p class="card-title">Paired WR Δ by batting order × power bracket</p>
-        <p class="card-sub">Batting first owns the soft spot; bowling first flat to positive above 50k</p>
-        <div class="chart-wrap chart-wrap--tall"><canvas id="cq-wr-order-br"></canvas></div>
+      <div class="two-col" style="margin-top:1rem">
+        <div class="card">
+          <p class="card-title">Paired WR % by batting order</p>
+          <div class="legend" id="cq-wr-bo-legend"></div>
+          <div class="chart-wrap"><canvas id="cq-wr-level-bo"></canvas></div>
+        </div>
+        <div class="card">
+          <p class="card-title">Paired WR Δ by batting order × power bracket</p>
+          <p class="card-sub">Batting first owns the soft spot; bowling first flat to positive above 50k</p>
+          <div class="chart-wrap chart-wrap--tall"><canvas id="cq-wr-order-br"></canvas></div>
+        </div>
       </div>
       <div class="two-col" style="margin-top:1rem">
         <div class="card">
           <p class="card-title">Paired WR by batting order</p>
-          <div class="hw-table-wrap"><table class="hw-table comp-table"><thead><tr><th>Order</th><th>Teams</th><th>Mean Δ</th><th>Median Δ</th></tr></thead><tbody><tr><td>Batting First</td><td>19,365</td><td>−1.49pp</td><td>−1.67pp</td></tr><tr><td>Bowling First</td><td>19,234</td><td>−0.37pp</td><td>0.00pp</td></tr></tbody></table></div>
+          <div class="hw-table-wrap"><table class="hw-table comp-table"><thead><tr><th>Order</th><th>Teams</th><th>Base</th><th>Exp</th><th>Mean Δ</th></tr></thead><tbody><tr><td>Batting First</td><td>28,228</td><td>46.54%</td><td>44.92%</td><td>−1.62pp</td></tr><tr><td>Bowling First</td><td>28,174</td><td>54.06%</td><td>53.50%</td><td>−0.56pp</td></tr></tbody></table></div>
         </div>
         <div class="card">
           <p class="card-title">Key cells (paired Δ)</p>
-          <div class="hw-table-wrap"><table class="hw-table comp-table"><thead><tr><th>Cell</th><th>Δ WR</th></tr></thead><tbody><tr><td>Bat 1st × 0–50k</td><td>−3.91pp</td></tr><tr><td>Bat 1st × Proven</td><td>−3.76pp</td></tr><tr><td>Bowl 1st × 0–50k</td><td>−2.76pp</td></tr><tr><td>Bowl 1st × 100k+</td><td>+0.67pp</td></tr></tbody></table></div>
+          <div class="hw-table-wrap"><table class="hw-table comp-table"><thead><tr><th>Cell</th><th>Δ WR</th></tr></thead><tbody><tr><td>Bat 1st × 0–50k</td><td>−3.98pp</td></tr><tr><td>Bat 1st × Proven</td><td>−4.17pp</td></tr><tr><td>Bowl 1st × 0–50k</td><td>−3.42pp</td></tr><tr><td>Bowl 1st × 100k+</td><td>+0.77pp</td></tr></tbody></table></div>
         </div>
       </div>
     </div>
@@ -184,7 +205,7 @@
       <div class="section-header"><p class="section-num">Read</p><h3 class="section-title">What this means</h3></div>
       <div class="insights">
         <div class="insight good"><strong>Slightly more competitive games:</strong> Close +0.89pp / one-sided −0.93pp overall. Lift concentrated at 0–50k and Proven.</div>
-        <div class="insight warn"><strong>WR soft spot = batting first at low end:</strong> Paired overall −1.22pp. Batting first −1.49pp vs bowling first −0.37pp (flat). Softest cell: bat-first × 0–50k / Proven (~−4pp). Mid+ fine.</div>
+        <div class="insight warn"><strong>WR soft spot = batting first at low end:</strong> Paired overall −1.44pp (49.37%→47.93%). Batting first −1.62pp vs bowling first −0.56pp. Softest cell: bat-first × 0–50k / Proven (~−4pp). Mid+ fine.</div>
         <div class="insight"><strong>Tradeoff framing:</strong> Higher wickets tighten low-end games (close ↑) and cost a bit of bat-first WR there — acceptable if the median / retention story is the priority.</div>
       </div>
     </div>
@@ -339,6 +360,7 @@ const TRAIN = {"brackets":["0-50k","50k-75k","75k-100k","100k+"],"pct_matches_tr
 const CQ = {
   br: BR.slice(),
   rk: RK.slice(),
+  bo: ['Batting First', 'Bowling First'],
   close0_br: [57.62, 57.68, 54.71, 55.69],
   close2_br: [60.97, 58.31, 54.94, 55.08],
   close0_rk: [57.15, 56.05, 56.44, 61.15, 51.45],
@@ -347,10 +369,16 @@ const CQ = {
   dOne_br: [-2.79, -0.75, -0.43, 0.33],
   dClose_rk: [4.27, 1.46, -0.25, 0.00, 0.28],
   dOne_rk: [-3.48, -1.49, 0.09, -0.16, -0.15],
-  wrDelta_br: [-3.75, -0.62, -0.56, 0.20],
-  wrDelta_rk: [-3.74, -1.34, -0.40, 0.36, -0.16],
-  wrBat_br: [-3.91, -1.18, -1.20, -0.23],
-  wrBowl_br: [-2.76, -0.25, 0.40, 0.67]
+  wr0_br: [49.70, 48.25, 52.08, 47.77],
+  wr2_br: [45.65, 47.41, 51.56, 48.11],
+  wr0_rk: [49.55, 50.93, 49.51, 42.35, 57.37],
+  wr2_rk: [45.54, 49.45, 49.06, 42.93, 57.16],
+  wr0_bo: [46.54, 54.06],
+  wr2_bo: [44.92, 53.50],
+  wrDelta_br: [-4.05, -0.84, -0.52, 0.34],
+  wrDelta_rk: [-4.01, -1.48, -0.45, 0.58, -0.21],
+  wrBat_br: [-3.98, -1.11, -1.30, -0.26],
+  wrBowl_br: [-3.42, -0.24, 0.56, 0.77]
 };
 
 
@@ -394,6 +422,23 @@ function renderCloseWr() {
   HWReport.dualBar('cq-delta-rk', CQ.rk, CQ.dClose_rk, CQ.dOne_rk, {
     label1: 'Δ Close', label2: 'Δ One-sided', yFmt: 'pp', ymin: -4, ymax: 5,
     ariaLabel: 'Close and one-sided deltas by rep rank'
+  });
+
+  var wrBrLeg = document.getElementById('cq-wr-br-legend');
+  var wrRkLeg = document.getElementById('cq-wr-rk-legend');
+  var wrBoLeg = document.getElementById('cq-wr-bo-legend');
+  if (wrBrLeg) wrBrLeg.innerHTML = HWReport.baseLegend();
+  if (wrRkLeg) wrRkLeg.innerHTML = HWReport.baseLegend();
+  if (wrBoLeg) wrBoLeg.innerHTML = HWReport.baseLegend();
+
+  HWReport.grouped('cq-wr-level-br', CQ.br, CQ.wr0_br, CQ.wr2_br, c.BLUE, c.TEAL, {
+    yFmt: 'pct', ariaLabel: 'Paired win rate by power bracket Base vs Exp'
+  });
+  HWReport.grouped('cq-wr-level-rk', CQ.rk, CQ.wr0_rk, CQ.wr2_rk, c.BLUE, c.TEAL, {
+    yFmt: 'pct', ariaLabel: 'Paired win rate by rep rank Base vs Exp'
+  });
+  HWReport.grouped('cq-wr-level-bo', CQ.bo, CQ.wr0_bo, CQ.wr2_bo, c.BLUE, c.TEAL, {
+    yFmt: 'pct', ariaLabel: 'Paired win rate by batting order Base vs Exp'
   });
 
   HWReport.singleBar('cq-wr-br', CQ.br, CQ.wrDelta_br, c.CORAL, {
